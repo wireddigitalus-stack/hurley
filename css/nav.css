@@ -11,14 +11,16 @@
   display: flex;
   align-items: center;
   padding: 0 clamp(1.25rem, 5vw, 3rem);
-  transition: background var(--dur-slow), backdrop-filter var(--dur-slow), border-color var(--dur-slow);
-  border-bottom: 1px solid transparent;
+  background: #fff;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  transition: background var(--dur-slow), box-shadow var(--dur-slow);
 }
 #site-nav.scrolled {
-  background: rgba(8,8,8,0.88);
+  background: rgba(255,255,255,0.97);
   backdrop-filter: blur(20px) saturate(1.4);
   -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  border-bottom-color: var(--bg-border);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+  border-bottom-color: rgba(0,0,0,0.06);
 }
 
 .nav-inner {
@@ -47,8 +49,8 @@
   letter-spacing: -0.05em;
 }
 .nav-logo-text { font-size: 0.78rem; font-weight: 700; line-height: 1.2; }
-.nav-logo-text .name { color: var(--off-white); }
-.nav-logo-text .llc { color: var(--text-muted); font-weight: 500; }
+.nav-logo-text .name { color: #111; }
+.nav-logo-text .llc { color: #888; font-weight: 500; }
 
 .nav-links {
   display: flex;
@@ -60,10 +62,10 @@
   border-radius: var(--radius-sm);
   font-size: var(--text-sm);
   font-weight: 600;
-  color: var(--text-secondary);
+  color: #444;
   transition: color var(--dur-fast), background var(--dur-fast);
 }
-.nav-link:hover, .nav-link.active { color: var(--off-white); background: rgba(255,255,255,0.05); }
+.nav-link:hover, .nav-link.active { color: var(--gold); background: rgba(201,168,76,0.08); }
 
 .nav-cta { margin-left: var(--space-4); }
 
@@ -81,7 +83,7 @@
 #nav-toggle span {
   display: block;
   width: 22px; height: 2px;
-  background: var(--off-white);
+  background: #222;
   border-radius: 2px;
   transition: all var(--dur-base);
 }
@@ -95,7 +97,7 @@
   position: fixed;
   inset: 0;
   z-index: 999;
-  background: rgba(8,8,8,0.96);
+  background: rgba(255,255,255,0.98);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   flex-direction: column;
@@ -114,7 +116,7 @@
 .mobile-nav-link {
   font-size: var(--text-2xl);
   font-weight: 800;
-  color: var(--off-white);
+  color: #111;
   letter-spacing: -0.03em;
   padding: var(--space-3) var(--space-8);
   border-radius: var(--radius-md);
