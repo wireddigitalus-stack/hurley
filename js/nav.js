@@ -1,8 +1,8 @@
 /* HURLEY ENTERPRISE LLC — Navigation JS */
 (function () {
   'use strict';
-  const nav      = document.getElementById('site-nav');
-  const toggle   = document.getElementById('nav-toggle');
+  const nav      = document.getElementById('site-nav') || document.getElementById('main-nav');
+  const toggle   = document.getElementById('nav-toggle') || document.getElementById('nav-hamburger');
   const menu     = document.getElementById('mobile-menu');
   const body     = document.body;
   const progress = document.getElementById('scroll-progress');
@@ -25,8 +25,9 @@
   menu?.addEventListener('click', (e) => { if (e.target === menu) closeMenu(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu?.classList.contains('open')) closeMenu(); });
 
+  // Mark active link — works for both .nav-link class and bare anchors in .nav-links
   const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-link').forEach(link => {
+  document.querySelectorAll('.nav-link, .nav-links a').forEach(link => {
     const href = link.getAttribute('href')?.split('/').pop() || '';
     if (href === currentPath || (currentPath === '' && href === 'index.html')) link.classList.add('active');
   });

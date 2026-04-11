@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Development & Construction | Hurley Enterprise LLC | Bristol TN/VA</title>
+  <meta name="description" content="Hurley Enterprise LLC is a licensed commercial developer with 20+ years in the Tri-Cities. Ground-up construction, tenant improvement, historic renovation, and site development across Bristol TN/VA, Kingsport and Johnson City.">
+  <meta property="og:title" content="Development & Construction | Hurley Enterprise LLC">
+  <meta property="og:description" content="Nearly 1 million sq. ft. of commercial & residential portfolio. We don't cut corners — from ground-up builds to full renovations across the Tri-Cities.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://hurleyenterprisellc.com/development-construction.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/chatbot.css">
+
+  <style>
+    /* ── Page-specific styles ── */
+    .dev-hero {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(165deg, #0a0a0a 0%, #111109 50%, #0d0d0d 100%);
+      padding: 8rem 1.5rem 5rem;
+      text-align: center;
+    }
+    .dev-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 70%),
+        url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1800&q=60') center/cover no-repeat;
+      opacity: 0.18;
+    }
+    .dev-hero-inner { position: relative; z-index: 1; max-width: 780px; }
+    .dev-hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 999px; padding: 0.4em 1.1em;
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem;
+    }
+    .dev-hero h1 {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 900; letter-spacing: -0.03em; line-height: 1.08;
+      color: var(--off-white); margin-bottom: 1.25rem;
+    }
+    .dev-hero h1 span { color: var(--gold); }
+    .dev-hero p {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--text-secondary); line-height: 1.7;
+      max-width: 620px; margin: 0 auto 2.5rem;
+    }
+    .dev-hero-stats {
+      display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .dev-stat { text-align: center; }
+    .dev-stat-num {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900; letter-spacing: -0.04em;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      line-height: 1;
+    }
+    .dev-stat-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.3rem; }
+
+    /* Mission section */
+    .mission-section {
+      background: var(--bg-elevated);
+      border-top: 1px solid var(--bg-border);
+      border-bottom: 1px solid var(--bg-border);
+    }
+    .mission-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: 5rem 1.5rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    @media(max-width:700px){ .mission-inner { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.25rem; } }
+    .mission-label { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+    .mission-heading { font-size: clamp(1.6rem, 4vw, 2.5rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 1.25rem; }
+    .mission-heading em { font-style: normal; color: var(--gold); }
+    .mission-body p { font-size: 1rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1rem; }
+    .mission-body p:last-child { margin-bottom: 0; }
+    .mission-quote {
+      background: rgba(201,168,76,0.06);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 12px 12px 0;
+      padding: 1.5rem;
+    }
+    .mission-quote blockquote {
+      font-size: 1.15rem; font-weight: 700; color: var(--off-white);
+      line-height: 1.6; font-style: italic; margin-bottom: 0.75rem;
+    }
+    .mission-quote cite { font-size: 0.78rem; color: var(--gold); font-style: normal; font-weight: 800; letter-spacing: 0.05em; }
+
+    /* Services grid */
+    .services-section { padding: 5rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+    .services-section-head { text-align: center; margin-bottom: 3.5rem; }
+    .services-section-head h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+    .services-section-head p { font-size: 1rem; color: var(--text-secondary); max-width: 560px; margin: 0 auto; line-height: 1.7; }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;
+    }
+    .service-card {
+      background: var(--bg-elevated); border: 1px solid var(--bg-border);
+      border-radius: 20px; padding: 2rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .service-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-4px); }
+    .service-icon {
+      width: 52px; height: 52px; background: rgba(201,168,76,0.1);
+      border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 1.25rem;
+    }
+    .service-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.6rem; }
+    .service-card p { font-size: 0.88rem; color: var(--text-secondary); line-height: 1.68; }
+
+    /* Standards section */
+    .standards-section {
+      background: linear-gradient(135deg, #0e0e0a 0%, #121210 100%);
+      border-top: 1px solid var(--bg-border);
+      border-bottom: 1px solid var(--bg-border);
+      padding: 5rem 1.5rem;
+    }
+    .standards-inner { max-width: 1100px; margin: 0 auto; }
+    .standards-inner h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+    .standards-inner > p { font-size: 1rem; color: var(--text-secondary); line-height: 1.7; max-width: 640px; margin-bottom: 3rem; }
+    .standards-list {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem;
+    }
+    .standard-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: rgba(255,255,255,0.03); border: 1px solid var(--bg-border);
+      border-radius: 14px; padding: 1.25rem;
+    }
+    .standard-check {
+      width: 28px; height: 28px; background: rgba(201,168,76,0.15);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--gold); font-size: 0.9rem; font-weight: 900;
+    }
+    .standard-item h4 { font-size: 0.9rem; font-weight: 800; margin-bottom: 0.25rem; }
+    .standard-item p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* CTA */
+    .dev-cta {
+      text-align: center; padding: 6rem 1.5rem;
+      max-width: 700px; margin: 0 auto;
+    }
+    .dev-cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 1rem; }
+    .dev-cta p { font-size: 1rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 2rem; }
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--gold); color: #000;
+      padding: 0.95em 2em; border-radius: 12px;
+      font-size: 0.95rem; font-weight: 800; text-decoration: none;
+      transition: all 0.2s; -webkit-tap-highlight-color: transparent;
+    }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: transparent; color: var(--off-white);
+      border: 1.5px solid var(--bg-border-mid);
+      padding: 0.95em 2em; border-radius: 12px;
+      font-size: 0.95rem; font-weight: 700; text-decoration: none;
+      transition: all 0.2s; margin-left: 0.75rem;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Hurley Enterprise LLC Home">
+        <img src="https://static.wixstatic.com/media/44d8da_1a754c453e70444c89adea2857351ed3~mv2.png/v1/fill/w_236,h_58,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/hurley%20enter%20horozontal.png" alt="Hurley Enterprise LLC" width="160" height="40">
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="development-construction.html" class="active">Development</a></li>
+        <li><a href="we-buy-property.html">We Buy Property</a></li>
+        <li><a href="for-sale-lease.html">For Sale &amp; Lease</a></li>
+      </ul>
+      <a href="contact.html" class="nav-cta" id="nav-cta-btn">Contact Us</a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="dev-hero" id="dev-hero">
+    <div class="dev-hero-inner" data-animate="fadeUp">
+      <div class="dev-hero-eyebrow">🏗️ Licensed Developer · Tri-Cities Region</div>
+      <h1>We Build. We <span>Restore.</span><br>We Deliver.</h1>
+      <p>From ground-up commercial construction to historic renovation, Hurley Enterprise LLC has redefined development standards across Bristol TN/VA, Kingsport, and Johnson City for over two decades.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="contact.html" class="btn-gold">Start a Project →</a>
+        <a href="for-sale-lease.html" class="btn-outline">View Portfolio</a>
+      </div>
+      <div class="dev-hero-stats">
+        <div class="dev-stat"><div class="dev-stat-num">1M+</div><div class="dev-stat-label">Sq. Ft. Portfolio</div></div>
+        <div class="dev-stat"><div class="dev-stat-num">20+</div><div class="dev-stat-label">Years Experience</div></div>
+        <div class="dev-stat"><div class="dev-stat-num">$M</div><div class="dev-stat-label">Assets Managed</div></div>
+        <div class="dev-stat"><div class="dev-stat-num">TN·VA</div><div class="dev-stat-label">Tri-Cities Region</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION -->
+  <section class="mission-section" aria-labelledby="mission-heading">
+    <div class="mission-inner">
+      <div class="mission-body" data-animate="fadeUp">
+        <div class="mission-label">Our Philosophy</div>
+        <h2 class="mission-heading" id="mission-heading">We're Changing the Game — <em>Without Cutting Corners</em></h2>
+        <p>Hurley Enterprise LLC is changing the game by simplifying the process for our clients. We understand that people do business with people — understanding your needs and having a clear project plan lets our team of experts help simplify the process from concept to completion.</p>
+        <p>Whether you need ground-up construction, commercial tenant improvement, historic building restoration, or residential renovation, we bring the same uncompromising standard to every project. If we don't have it… we'll go get it.</p>
+        <p>Our commercial portfolio spans nearly <strong style="color:var(--off-white)">1 million square feet</strong> of development across the Tri-Cities region, specializing in retail outlets, storefronts, office and event spaces, warehousing, and manufacturing facilities.</p>
+      </div>
+      <div class="mission-quote" data-animate="fadeUp" data-delay="150">
+        <blockquote>"As industry leaders in construction &amp; development, we don't cut any corners. Our residential properties feature new crown molding, trim, and baseboards. We always renovate from the inside out — new appliances, fixtures, and finishes. Our homes are top-notch."</blockquote>
+        <cite>— Hurley Enterprise LLC Development Team</cite>
+        <div style="margin-top:1.5rem;display:flex;flex-direction:column;gap:0.75rem;">
+          <div style="display:flex;align-items:center;gap:0.75rem;padding:0.85rem 1rem;background:rgba(255,255,255,0.04);border-radius:10px;">
+            <span style="font-size:1.2rem">🏆</span>
+            <div>
+              <div style="font-size:0.78rem;font-weight:800;color:var(--off-white)">Successfully Managing Millions in Assets</div>
+              <div style="font-size:0.7rem;color:var(--text-muted)">Construction &amp; development projects across the Tri-Cities</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;padding:0.85rem 1rem;background:rgba(255,255,255,0.04);border-radius:10px;">
+            <span style="font-size:1.2rem">📍</span>
+            <div>
+              <div style="font-size:0.78rem;font-weight:800;color:var(--off-white)">Bristol TN/VA · Kingsport · Johnson City</div>
+              <div style="font-size:0.7rem;color:var(--text-muted)">Tri-Cities region specialists with deep local knowledge</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section style="padding:5rem 1.5rem;" aria-labelledby="services-heading">
+    <div class="services-inner" style="max-width:1100px;margin:0 auto;">
+      <div class="services-section-head" data-animate="fadeUp">
+        <div class="mission-label" style="display:block;text-align:center;margin-bottom:0.75rem;">What We Do</div>
+        <h2 id="services-heading">Full-Spectrum Development Services</h2>
+        <p>From raw land to ribbon-cutting — we handle every phase of commercial and residential development in the Tri-Cities market.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card" data-animate="fadeUp" data-delay="0">
+          <div class="service-icon">🏗️</div>
+          <h3>Ground-Up Construction</h3>
+          <p>Complete new construction from site prep and foundation through final finishes. Commercial, industrial, and residential ground-up builds across Bristol TN/VA and the Tri-Cities MSA.</p>
+        </div>
+        <div class="service-card" data-animate="fadeUp" data-delay="75">
+          <div class="service-icon">🏢</div>
+          <h3>Commercial Tenant Improvement</h3>
+          <p>Custom build-outs tailored to your business — restaurant fit-outs, office suite configurations, retail storefronts, and warehouse conversions designed for maximum operational efficiency.</p>
+        </div>
+        <div class="service-card" data-animate="fadeUp" data-delay="150">
+          <div class="service-icon">🏛️</div>
+          <h3>Historic Renovation</h3>
+          <p>Breathing new life into Bristol's architectural heritage. From landmark commercial buildings to century-old residential properties — we specialize in preserving character while delivering modern performance.</p>
+        </div>
+        <div class="service-card" data-animate="fadeUp" data-delay="0">
+          <div class="service-icon">🏠</div>
+          <h3>Residential Renovation</h3>
+          <p>Full-scope residential remodels featuring new crown molding, trim, baseboards, updated kitchens, bathrooms, stainless appliances, and modern fixtures — top-notch results every time.</p>
+        </div>
+        <div class="service-card" data-animate="fadeUp" data-delay="75">
+          <div class="service-icon">📐</div>
+          <h3>Site Development</h3>
+          <p>Land acquisition, site planning, permitting, grading, utilities, and infrastructure development. We manage the full pre-construction process so your project starts on solid ground.</p>
+        </div>
+        <div class="service-card" data-animate="fadeUp" data-delay="150">
+          <div class="service-icon">🏭</div>
+          <h3>Industrial & Warehouse</h3>
+          <p>Large-format industrial development including tractor-trailer accessible facilities, high-clearance warehouses, loading dock configurations, and flex manufacturing space throughout the Tri-Cities corridor.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STANDARDS -->
+  <section class="standards-section" aria-labelledby="standards-heading">
+    <div class="standards-inner" data-animate="fadeUp">
+      <div class="mission-label">Our Standards</div>
+      <h2 id="standards-heading">No Shortcuts. Ever.</h2>
+      <p>Every Hurley Enterprise project is held to the same uncompromising standard — residential or commercial, renovation or new build. Here's what that looks like in practice.</p>
+      <div class="standards-list">
+        <div class="standard-item">
+          <div class="standard-check">✓</div>
+          <div><h4>Crown Molding &amp; Custom Trim</h4><p>Premium finish carpentry on every residential project — crown molding, baseboard, and casing details that elevate the entire space.</p></div>
+        </div>
+        <div class="standard-item">
+          <div class="standard-check">✓</div>
+          <div><h4>New Appliances &amp; Fixtures</h4><p>We renovate from the inside out — stainless steel appliances, modern plumbing fixtures, and updated electrical throughout.</p></div>
+        </div>
+        <div class="standard-item">
+          <div class="standard-check">✓</div>
+          <div><h4>Full Interior Renovation</h4><p>Not cosmetic patches — complete interior transformation from subfloor to ceiling, including all mechanical rough-in work.</p></div>
+        </div>
+        <div class="standard-item">
+          <div class="standard-check">✓</div>
+          <div><h4>Commercial-Grade Materials</h4><p>We specify materials built to last — not builder-grade shortcuts. Your investment holds its value because we build it right the first time.</p></div>
+        </div>
+        <div class="standard-item">
+          <div class="standard-check">✓</div>
+          <div><h4>Clear Project Communication</h4><p>Regular progress updates, transparent timelines, and direct access to our team — you're never left wondering about your project's status.</p></div>
+        </div>
+        <div class="standard-item">
+          <div class="standard-check">✓</div>
+          <div><h4>Local Code Compliance</h4><p>We know Tennessee and Virginia building codes inside and out. Licensed, insured, and fully permitted on every project.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HARD ROCK CONTEXT -->
+  <section style="padding:5rem 1.5rem;max-width:1100px;margin:0 auto;" aria-labelledby="casino-heading">
+    <div style="background:linear-gradient(135deg,rgba(201,168,76,0.06),rgba(201,168,76,0.02));border:1px solid rgba(201,168,76,0.2);border-radius:24px;padding:3rem 2.5rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;" data-animate="fadeUp">
+      <div>
+        <div class="mission-label">Market Opportunity · Bristol, VA</div>
+        <h2 id="casino-heading" style="font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:900;letter-spacing:-0.02em;margin-bottom:1rem;">Building at the Epicenter of Bristol's Growth</h2>
+        <p style="font-size:0.95rem;color:var(--text-secondary);line-height:1.75;margin-bottom:1.25rem;">The Hard Rock Hotel &amp; Casino Bristol has triggered the most significant economic transformation the Tri-Cities has experienced in decades. Commercial vacancy rates have dropped, property values are rising fast, and demand for quality development has never been stronger.</p>
+        <p style="font-size:0.95rem;color:var(--text-secondary);line-height:1.75;">Hurley Enterprise is positioned at the center of this transformation — with existing assets in the Hard Rock corridor and the development expertise to capitalize on the wave of growth coming to Bristol TN/VA.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div style="background:rgba(255,255,255,0.04);border:1px solid var(--bg-border);border-radius:14px;padding:1.25rem;">
+          <div style="font-size:0.65rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;">Commercial Vacancy Trend</div>
+          <div style="font-size:1.5rem;font-weight:900;color:var(--off-white);">18% → 11%</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);">Downtown Bristol VA, 12 months post-casino</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid var(--bg-border);border-radius:14px;padding:1.25rem;">
+          <div style="font-size:0.65rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;">Casino Economic Impact Zone</div>
+          <div style="font-size:1.5rem;font-weight:900;color:var(--off-white);">Active &amp; Growing</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);">Commonwealth Ave, State St, and surrounding corridors</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid var(--bg-border);border-radius:14px;padding:1.25rem;">
+          <div style="font-size:0.65rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;">New Hotel Development</div>
+          <div style="font-size:1.5rem;font-weight:900;color:var(--off-white);">The Bristol Hotel</div>
+          <div style="font-size:0.75rem;color:var(--text-muted);">Adding hospitality demand — retail &amp; restaurant opportunity</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:var(--bg-elevated);border-top:1px solid var(--bg-border);">
+    <div class="dev-cta" data-animate="fadeUp">
+      <div class="mission-label" style="display:block;margin-bottom:0.75rem;">Ready to Build?</div>
+      <h2>Let's Talk About Your Project</h2>
+      <p>Whether you're looking to develop raw land, renovate a commercial building, or build from the ground up — Hurley Enterprise LLC has the experience, relationships, and local knowledge to make it happen in the Tri-Cities.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="contact.html" class="btn-gold">Schedule a Consultation →</a>
+        <a href="tel:4237427219" class="btn-outline">📞 423-742-7219</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" style="display:inline-flex;text-decoration:none;">
+        <img src="https://static.wixstatic.com/media/44d8da_1a754c453e70444c89adea2857351ed3~mv2.png/v1/fill/w_236,h_58,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/hurley%20enter%20horozontal.png" alt="Hurley Enterprise LLC" style="height:34px;width:auto;display:block;" loading="lazy">
+      </a>
+      <p>Bristol TN/VA's premier commercial developer and real estate firm. Building the Tri-Cities since 2004.</p>
+    </div>
+    <div class="footer-links-pair">
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="development-construction.html">Development &amp; Construction</a></li>
+          <li><a href="for-sale-lease.html">Office &amp; Warehouse Leasing</a></li>
+          <li><a href="we-buy-property.html">We Buy Property</a></li>
+          <li><a href="market-report.html">Market Report</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Markets</h4>
+        <ul>
+          <li><a href="bristol-tn.html">Bristol, TN</a></li>
+          <li><a href="kingsport-tn.html">Kingsport, TN</a></li>
+          <li><a href="johnson-city-tn.html">Johnson City, TN</a></li>
+          <li><a href="service-areas.html">All Service Areas</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <div class="footer-contact-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>100 5th St., Suite 2W<br>Bristol, TN 37620</span>
+      </div>
+      <div class="footer-contact-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.13 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.46-.46a2 2 0 012.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0122 16.92z"/></svg>
+        <span><a href="tel:+14237427219" style="color:inherit;text-decoration:none;">423-742-7219</a></span>
+      </div>
+      <div class="footer-contact-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span><a href="mailto:info@hurleyenterprisellc.com" style="color:inherit;text-decoration:none;">info@hurleyenterprisellc.com</a></span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Hurley Enterprise LLC. All rights reserved. &nbsp;&middot;&nbsp; Bristol TN &amp; VA Commercial Real Estate</p>
+    <p><a href="sitemap.xml" style="color:#aaa;text-decoration:none;">Sitemap</a></p>
+  </div>
+</footer>
+
+  <script src="js/nav.js" defer></script>
+  <script src="js/animations.js" defer></script>
+  <script src="js/chatbot.js" defer></script>
+</body>
+</html>

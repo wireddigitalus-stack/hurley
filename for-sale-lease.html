@@ -28,7 +28,6 @@
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/mobile.css">
   <link rel="stylesheet" href="css/chatbot.css">
-  <link rel="stylesheet" href="css/social-proof.css">
   <script src="js/seo-schema.js" defer></script>
   <style>
     /* Page-specific enhancements */
@@ -79,6 +78,31 @@
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1.5rem;
     }
+    /* ── Uniform card heights ── */
+    #listings-grid {
+      align-items: stretch;
+    }
+    #listings-grid .listing-card {
+      display: flex;
+      flex-direction: column;
+    }
+    #listings-grid .listing-card .listing-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    #listings-grid .listing-card .btn {
+      margin-top: auto;
+    }
+    #listings-grid .listing-image {
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+    }
+    #listings-grid .listing-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   </style>
 </head>
 <body>
@@ -113,7 +137,7 @@
 
 <main>
   <!-- Hero -->
-  <div class="page-hero" style="min-height:38vh;">
+  <div class="page-hero" style="min-height:22vh;padding-top:5rem;padding-bottom:3rem;">
     <div class="page-hero-content">
       <p class="overline">Bristol TN &amp; VA · Tri-Cities Region</p>
       <h1>Properties For Sale &amp; Lease</h1>
@@ -150,7 +174,7 @@
   <div class="listings-grid stagger-reveal" style="margin-top:2rem;" id="listings-grid">
 
     <!-- ① CITY CENTRE — FEATURED -->
-    <article class="listing-card listing-card--featured" data-category="office" id="listing-city-centre" itemscope itemtype="https://schema.org/RealEstateListing">
+    <article class="listing-card" data-category="office" id="listing-city-centre" itemscope itemtype="https://schema.org/RealEstateListing">
       <div class="listing-image">
         <img src="https://static.wixstatic.com/media/44d8da_e89444c86aa94248adecf9f86cdfcb45~mv2.png/v1/fill/w_900,h_600,al_c,lg_1,q_85,enc_avif,quality_auto/City%2BCentre%2BEnterior.png"
              alt="City Centre Professional Office Suites at 100 5th Street Bristol TN 37620 — premium downtown Bristol Tennessee office space for lease"
@@ -160,9 +184,9 @@
           <span class="status-badge status-lease">For Lease</span>
         </div>
       </div>
-      <div class="listing-body" style="padding:2rem 2.25rem;">
+      <div class="listing-body">
         <p class="listing-type">Class A Office Suites · All-Inclusive · Downtown Bristol TN</p>
-        <h2 class="listing-name" itemprop="name" style="font-size:1.6rem;">City Centre Professional Office Suites</h2>
+        <h2 class="listing-name" itemprop="name">City Centre Professional Office Suites</h2>
         <p class="listing-location" itemprop="address">📍 100 5th St., Suite 2W — Bristol, TN 37620</p>
         <p class="listing-price">All-Inclusive Rent · Power · Water · Cleaning · Security · Fitness</p>
         <p class="listing-desc" itemprop="description">
@@ -504,40 +528,63 @@
 
 <footer id="site-footer">
   <div class="footer-inner">
+    <!-- Brand col -->
     <div class="footer-brand">
-      <a href="index.html" class="nav-logo" style="display:inline-flex;margin-bottom:1rem;">
-        <img src="https://static.wixstatic.com/media/44d8da_1a754c453e70444c89adea2857351ed3~mv2.png/v1/fill/w_236,h_58,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/hurley%20enter%20horozontal.png" alt="Hurley Enterprise LLC" style="height:32px;width:auto;" loading="lazy">
+      <a href="index.html" style="display:inline-flex;text-decoration:none;">
+        <img src="https://static.wixstatic.com/media/44d8da_1a754c453e70444c89adea2857351ed3~mv2.png/v1/fill/w_236,h_58,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/hurley%20enter%20horozontal.png" alt="Hurley Enterprise LLC" style="height:34px;width:auto;display:block;" loading="lazy">
       </a>
       <p>Bristol TN/VA's premier commercial developer and real estate firm. Building the Tri-Cities since 2004.</p>
     </div>
-    <div class="footer-col"><h4>Properties</h4><ul>
-      <li><a href="#listing-city-centre">City Centre — Office Suites</a></li>
-      <li><a href="#listing-628-state">628 State St — Kress Building</a></li>
-      <li><a href="#listing-foundation">The Foundation Event Venue</a></li>
-      <li><a href="#listing-cocacola">1916 W. State — Industrial</a></li>
-      <li><a href="#listing-centre-point">Center Point — Casino Corridor</a></li>
-    </ul></div>
-    <div class="footer-col"><h4>Services</h4><ul>
-      <li><a href="development-construction.html">Development &amp; Construction</a></li>
-      <li><a href="we-buy-property.html">We Buy Property</a></li>
-      <li><a href="market-report.html">2026 Market Report</a></li>
-      <li><a href="bristol-tn.html">Bristol TN Market</a></li>
-    </ul></div>
-    <div class="footer-col"><h4>Contact</h4>
-      <div class="footer-contact-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span>100 5th St., Suite 2W<br>Bristol, TN 37620</span></div>
-      <div class="footer-contact-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.13 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.46-.46a2 2 0 012.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0122 16.92z"/></svg><span><a href="tel:+14237427219" style="color:inherit;">423-742-7219</a></span></div>
+
+    <!-- Services + Markets stacked side-by-side -->
+    <div class="footer-links-pair">
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="development-construction.html">Development &amp; Construction</a></li>
+          <li><a href="for-sale-lease.html">Office &amp; Warehouse Leasing</a></li>
+          <li><a href="we-buy-property.html">We Buy Property</a></li>
+          <li><a href="market-report.html">Market Report</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Markets</h4>
+        <ul>
+          <li><a href="bristol-tn.html">Bristol, TN</a></li>
+          <li><a href="kingsport-tn.html">Kingsport, TN</a></li>
+          <li><a href="johnson-city-tn.html">Johnson City, TN</a></li>
+          <li><a href="service-areas.html">All Service Areas</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Contact col -->
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <div class="footer-contact-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>100 5th St., Suite 2W<br>Bristol, TN 37620</span>
+      </div>
+      <div class="footer-contact-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.13 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.46-.46a2 2 0 012.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0122 16.92z"/></svg>
+        <span><a href="tel:+14237427219" style="color:inherit;text-decoration:none;">423-742-7219</a></span>
+      </div>
+      <div class="footer-contact-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span><a href="mailto:info@hurleyenterprisellc.com" style="color:inherit;text-decoration:none;">info@hurleyenterprisellc.com</a></span>
+      </div>
     </div>
   </div>
+
   <div class="footer-bottom">
-    <p>&copy; 2026 Hurley Enterprise LLC. All rights reserved. · Bristol TN &amp; VA Commercial Real Estate</p>
-    <p><a href="sitemap.xml" style="color:#888;font-size:0.65rem;">Sitemap</a></p>
+    <p>&copy; 2026 Hurley Enterprise LLC. All rights reserved. &nbsp;&middot;&nbsp; Bristol TN &amp; VA Commercial Real Estate</p>
+    <p><a href="sitemap.xml" style="color:#aaa;text-decoration:none;">Sitemap</a></p>
   </div>
 </footer>
 
 <script src="js/nav.js" defer></script>
 <script src="js/animations.js" defer></script>
 <script src="js/chatbot.js" defer></script>
-<script src="js/social-proof.js" defer></script>
 <script>
 /* Filter functionality */
 document.querySelectorAll('.filter-btn').forEach(btn => {

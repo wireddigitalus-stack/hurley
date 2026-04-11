@@ -65,6 +65,9 @@
     popCard.setAttribute('role', 'dialog');
     popCard.setAttribute('aria-label', 'Chat with Riley');
     popCard.innerHTML = `
+      <button class="pop-card-close" id="pop-card-close" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
       <div class="pop-card-header">
         <div class="pop-card-avatar">R</div>
         <div><div class="pop-card-name">Riley</div><div class="pop-card-role">Hurley Enterprise Guide</div></div>
@@ -127,11 +130,14 @@
     const sendBtn   = document.getElementById('chat-send');
     const closeBtn  = document.getElementById('chat-close');
     const chipsZone = document.getElementById('chat-chips');
-    const popOpen   = document.getElementById('pop-card-open');
-    const popDismiss= document.getElementById('pop-card-dismiss');
+    const popOpen    = document.getElementById('pop-card-open');
+    const popDismiss = document.getElementById('pop-card-dismiss');
+    const popClose   = document.getElementById('pop-card-close');
 
     let popDismissed = false;
     let chatOpened   = false;
+
+    function dismissPop() { popCard.classList.remove('visible'); popDismissed = true; }
 
     // Show pop card after 6s
     setTimeout(() => {
@@ -139,7 +145,8 @@
     }, 6000);
 
     popOpen.addEventListener('click', () => { popCard.classList.remove('visible'); openChat(); });
-    popDismiss.addEventListener('click', () => { popCard.classList.remove('visible'); popDismissed = true; });
+    popDismiss.addEventListener('click', dismissPop);
+    popClose.addEventListener('click', dismissPop);
 
     function openChat() {
       chatOpened = true;

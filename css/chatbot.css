@@ -57,6 +57,8 @@
   transform: translateY(12px) scale(0.95);
   pointer-events: none;
   transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1), transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  /* Needed so the absolute ✕ button anchors to this card */
+  position: fixed;
 }
 #chat-pop-card::after {
   content: '';
@@ -131,6 +133,32 @@
 .pop-card-btn--primary:hover { background: var(--gold-light); }
 .pop-card-btn--dismiss { background: rgba(255,255,255,0.06); color: var(--text-muted); border: 1px solid var(--bg-border); }
 .pop-card-btn--dismiss:hover { color: var(--off-white); }
+
+/* ✕ close button — top-right corner of pop card */
+.pop-card-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  transition: background 0.18s, color 0.18s;
+  -webkit-tap-highlight-color: transparent;
+  /* Expand tap area for iPhone without affecting layout */
+  padding: 0;
+  min-width: 44px;
+  min-height: 44px;
+  margin: -8px -8px 0 0;
+}
+.pop-card-close:hover { background: rgba(255,255,255,0.14); color: var(--off-white); }
+.pop-card-close svg { width: 13px; height: 13px; pointer-events: none; }
 
 /* ── Chat window ────────────────────────────────────────────── */
 #chat-window {

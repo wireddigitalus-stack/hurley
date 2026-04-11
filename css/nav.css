@@ -3,7 +3,8 @@
    css/nav.css
    ============================================================ */
 
-#site-nav {
+#site-nav,
+#main-nav {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
@@ -15,7 +16,8 @@
   border-bottom: 1px solid rgba(0,0,0,0.08);
   transition: background var(--dur-slow), box-shadow var(--dur-slow);
 }
-#site-nav.scrolled {
+#site-nav.scrolled,
+#main-nav.scrolled {
   background: rgba(255,255,255,0.97);
   backdrop-filter: blur(20px) saturate(1.4);
   -webkit-backdrop-filter: blur(20px) saturate(1.4);
@@ -57,15 +59,18 @@
   align-items: center;
   gap: var(--space-1);
 }
-.nav-link {
+.nav-link,
+.nav-links a {
   padding: 0.45em 0.85em;
   border-radius: var(--radius-sm);
   font-size: var(--text-sm);
   font-weight: 600;
   color: #444;
+  text-decoration: none;
   transition: color var(--dur-fast), background var(--dur-fast);
 }
-.nav-link:hover, .nav-link.active { color: var(--gold); background: rgba(201,168,76,0.08); }
+.nav-link:hover, .nav-link.active,
+.nav-links a:hover, .nav-links a.active { color: var(--gold); background: rgba(201,168,76,0.08); }
 
 .nav-cta { margin-left: var(--space-4); }
 

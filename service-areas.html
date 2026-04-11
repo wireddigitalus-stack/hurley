@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Areas | Hurley Enterprise LLC | Tri-Cities TN/VA</title>
+  <meta name="description" content="Hurley Enterprise LLC serves the entire Tri-Cities region — Bristol TN & VA, Kingsport, Johnson City, Abingdon VA, Marion VA, and surrounding communities. Commercial real estate, development, leasing, and property acquisition.">
+  <meta property="og:title" content="Service Areas | Hurley Enterprise LLC | Tri-Cities TN/VA">
+  <link rel="canonical" href="https://hurleyenterprisellc.com/service-areas.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/chatbot.css">
+  <style>
+    .sa-hero {
+      padding: 9rem 1.5rem 5rem;
+      text-align: center;
+      background: linear-gradient(165deg, #0a0a0a 0%, #111109 100%);
+      position: relative;
+    }
+    .sa-hero::before {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(201,168,76,0.1) 0%, transparent 70%);
+      pointer-events:none;
+    }
+    .sa-hero > * { position:relative;z-index:1; }
+    .sa-eyebrow {
+      display:inline-flex;align-items:center;gap:0.5rem;
+      background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);
+      border-radius:999px;padding:0.4em 1.1em;
+      font-size:0.68rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;
+    }
+    .sa-hero h1 { font-size:clamp(2rem,6vw,3.5rem);font-weight:900;letter-spacing:-0.03em;line-height:1.1;margin-bottom:1rem; }
+    .sa-hero h1 span { color:var(--gold); }
+    .sa-hero p { font-size:1.05rem;color:var(--text-secondary);line-height:1.7;max-width:600px;margin:0 auto 2.5rem; }
+
+    .areas-grid {
+      max-width:1100px;margin:0 auto;padding:5rem 1.5rem;
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.25rem;
+    }
+    .area-card {
+      background:var(--bg-elevated);border:1px solid var(--bg-border);
+      border-radius:20px;padding:2rem;transition:border-color 0.3s,transform 0.3s;
+      text-decoration:none;color:inherit;display:block;
+    }
+    .area-card:hover { border-color:rgba(201,168,76,0.35);transform:translateY(-4px); }
+    .area-flag { font-size:2rem;margin-bottom:1rem; }
+    .area-card h2 { font-size:1.15rem;font-weight:800;margin-bottom:0.4rem; }
+    .area-state { font-size:0.68rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:0.85rem; }
+    .area-card p { font-size:0.85rem;color:var(--text-secondary);line-height:1.68;margin-bottom:1.1rem; }
+    .area-tags { display:flex;gap:0.4rem;flex-wrap:wrap; }
+    .area-tag {
+      padding:0.25em 0.7em;border-radius:999px;
+      font-size:0.62rem;font-weight:700;
+      background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.18);color:var(--gold);
+    }
+    .area-link {
+      display:inline-flex;align-items:center;gap:0.4rem;
+      font-size:0.78rem;font-weight:800;color:var(--gold);
+      margin-top:1.1rem;transition:gap 0.2s;
+    }
+    .area-card:hover .area-link { gap:0.7rem; }
+
+    .coverage-strip {
+      background:linear-gradient(135deg,rgba(201,168,76,0.06),rgba(201,168,76,0.02));
+      border-top:1px solid var(--bg-border);border-bottom:1px solid var(--bg-border);
+      padding:4rem 1.5rem;text-align:center;
+    }
+    .coverage-strip h2 { font-size:clamp(1.4rem,3.5vw,2rem);font-weight:900;letter-spacing:-0.02em;margin-bottom:0.75rem; }
+    .coverage-strip p { font-size:0.95rem;color:var(--text-secondary);line-height:1.7;max-width:580px;margin:0 auto 2rem; }
+    .city-list {
+      display:flex;flex-wrap:wrap;gap:0.6rem;justify-content:center;max-width:700px;margin:0 auto;
+    }
+    .city-pill {
+      padding:0.45em 1em;border-radius:999px;
+      background:rgba(255,255,255,0.05);border:1px solid var(--bg-border);
+      font-size:0.78rem;font-weight:700;color:var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" id="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Hurley Enterprise LLC Home">
+        <img src="https://static.wixstatic.com/media/44d8da_1a754c453e70444c89adea2857351ed3~mv2.png/v1/fill/w_236,h_58,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/hurley%20enter%20horozontal.png" alt="Hurley Enterprise LLC" width="160" height="40">
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="development-construction.html">Development</a></li>
+        <li><a href="we-buy-property.html">We Buy Property</a></li>
+        <li><a href="for-sale-lease.html">For Sale &amp; Lease</a></li>
+      </ul>
+      <a href="contact.html" class="nav-cta" id="nav-cta-btn">Contact Us</a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <section class="sa-hero">
+    <div class="sa-eyebrow">📍 Tri-Cities Region · TN &amp; VA</div>
+    <h1>We Serve the<br><span>Entire Tri-Cities</span></h1>
+    <p>From downtown Bristol to the Johnson City medical district — Hurley Enterprise LLC is the Tri-Cities' most active commercial real estate firm. We know every submarket, every corridor, and every opportunity.</p>
+    <a href="contact.html" style="display:inline-flex;align-items:center;gap:0.6rem;background:var(--gold);color:#000;padding:0.95em 2em;border-radius:12px;font-size:0.95rem;font-weight:800;text-decoration:none;transition:all 0.2s;">Contact Our Team →</a>
+  </section>
+
+  <div class="areas-grid">
+    <a href="bristol-tn.html" class="area-card" data-animate="fadeUp">
+      <div class="area-flag">🏙️</div>
+      <h2>Bristol, Tennessee</h2>
+      <div class="area-state">Tennessee</div>
+      <p>The Birthplace of Country Music. Downtown Bristol TN is home to our flagship City Centre office complex, Jamestown @ Shelby professional offices, and The Foundation Event Facility — all positioned to capitalize on the Hard Rock Casino's economic impact.</p>
+      <div class="area-tags">
+        <span class="area-tag">Office Space</span>
+        <span class="area-tag">Event Venues</span>
+        <span class="area-tag">We Buy Property</span>
+        <span class="area-tag">Development</span>
+      </div>
+      <div class="area-link">Explore Bristol TN →</div>
+    </a>
+    <a href="bristol-va.html" class="area-card" data-animate="fadeUp" data-delay="75">
+      <div class="area-flag">🎰</div>
+      <h2>Bristol, Virginia</h2>
+      <div class="area-state">Virginia</div>
+      <p>Home to the Hard Rock Hotel &amp; Casino Bristol, the largest private investment in Southwest Virginia history. Our Bristol VA properties — including Center Point and the 628 State Street entertainment corridor — sit directly in the casino's economic impact zone.</p>
+      <div class="area-tags">
+        <span class="area-tag">Casino Corridor</span>
+        <span class="area-tag">Retail</span>
+        <span class="area-tag">Warehouse</span>
+        <span class="area-tag">Residential</span>
+      </div>
+      <div class="area-link">Explore Bristol VA →</div>
+    </a>
+    <a href="kingsport-tn.html" class="area-card" data-animate="fadeUp" data-delay="150">
+      <div class="area-flag">🏭</div>
+      <h2>Kingsport, Tennessee</h2>
+      <div class="area-state">Tennessee</div>
+      <p>A thriving industrial and professional hub anchored by Eastman Chemical and a growing medical corridor. Hurley Enterprise serves Kingsport with commercial property acquisition, industrial development, and residential buy opportunities across the market.</p>
+      <div class="area-tags">
+        <span class="area-tag">Industrial</span>
+        <span class="area-tag">Commercial</span>
+        <span class="area-tag">We Buy Property</span>
+      </div>
+      <div class="area-link">Explore Kingsport →</div>
+    </a>
+    <a href="johnson-city-tn.html" class="area-card" data-animate="fadeUp" data-delay="0">
+      <div class="area-flag">🎓</div>
+      <h2>Johnson City, Tennessee</h2>
+      <div class="area-state">Tennessee</div>
+      <p>A dynamic university and medical market anchored by East Tennessee State University and Ballad Health. Strong rental demand, growing downtown scene, and continued commercial expansion make Johnson City a high-priority acquisition and development market.</p>
+      <div class="area-tags">
+        <span class="area-tag">University Market</span>
+        <span class="area-tag">Medical District</span>
+        <span class="area-tag">Residential</span>
+      </div>
+      <div class="area-link">Explore Johnson City →</div>
+    </a>
+    <a href="contact.html" class="area-card" data-animate="fadeUp" data-delay="75">
+      <div class="area-flag">🗺️</div>
+      <h2>Abingdon &amp; Marion, VA</h2>
+      <div class="area-state">Virginia</div>
+      <p>Extending our reach into Washington and Smyth Counties — we source and acquire properties in Abingdon, Marion, and surrounding Southwest Virginia communities. If you have a property anywhere in the region, we want to hear about it.</p>
+      <div class="area-tags">
+        <span class="area-tag">Southwest Virginia</span>
+        <span class="area-tag">Acquisition</span>
+        <span class="area-tag">We Buy Property</span>
+      </div>
+      <div class="area-link">Ask About Your Area →</div>
+    </a>
+    <a href="we-buy-property.html" class="area-card" data-animate="fadeUp" data-delay="150" style="border-color:rgba(201,168,76,0.2);background:rgba(201,168,76,0.04);">
+      <div class="area-flag">💰</div>
+      <h2>We Buy Anywhere in the Market</h2>
+      <div class="area-state" style="color:var(--gold);">Cash · Fast Close · Any Condition</div>
+      <p>Have a property outside our primary markets? We still want to talk. Hurley Enterprise buys residential, commercial, industrial, and land across the entire Tri-Cities MSA — cash offers, no repairs, close in 14 days.</p>
+      <div class="area-tags">
+        <span class="area-tag">Cash Offer</span>
+        <span class="area-tag">14-Day Close</span>
+        <span class="area-tag">Any Condition</span>
+      </div>
+      <div class="area-link">Get Your Cash Offer →</div>
+    </a>
+  </div>
+
+  <div class="coverage-strip">
+    <h2>Cities &amp; Communities We Serve</h2>
+    <p>Our team knows every neighborhood, zip code, and market condition across the Tri-Cities region — from the Hard Rock Casino corridor to rural Sullivan County.</p>
+    <div class="city-list">
+      <span class="city-pill">Bristol TN</span><span class="city-pill">Bristol VA</span>
+      <span class="city-pill">Kingsport TN</span><span class="city-pill">Johnson City TN</span>
+      <span class="city-pill">Abingdon VA</span><span class="city-pill">Marion VA</span>
+      <span class="city-pill">Blountville TN</span><span class="city-pill">Bluff City TN</span>
+      <span class="city-pill">Elizabethton TN</span><span class="city-pill">Gate City VA</span>
+      <span class="city-pill">Colonial Heights TN</span><span class="city-pill">Sullivan County TN</span>
+      <span class="city-pill">Washington County VA</span><span class="city-pill">Carter County TN</span>
+    </div>
+  </div>
+
+  <section style="text-align:center;padding:5rem 1.5rem;">
+    <div style="max-width:600px;margin:0 auto;" data-animate="fadeUp">
+      <div style="font-size:0.65rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem;">Ready to Connect?</div>
+      <h2 style="font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;letter-spacing:-0.02em;margin-bottom:1rem;">Your Market Experts Are a Call Away</h2>
+      <p style="color:var(--text-secondary);line-height:1.7;margin-bottom:2rem;">Whether you're leasing office space, selling a property, or planning a development project — Hurley Enterprise knows your market better than anyone. Let's talk.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="contact.html" style="display:inline-flex;align-items:center;gap:0.6rem;background:var(--gold);color:#000;padding:0.95em 2em;border-radius:12px;font-size:0.95rem;font-weight:800;text-decoration:none;transition:all 0.2s;">Contact Us →</a>
+        <a href="tel:4237427219" style="display:inline-flex;align-items:center;gap:0.6rem;background:transparent;color:var(--off-white);border:1.5px solid var(--bg-border-mid);padding:0.95em 2em;border-radius:12px;font-size:0.95rem;font-weight:700;text-decoration:none;">📞 423-742-7219</a>
+      </div>
+    </div>
+  </section>
+
+  <footer id="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" style="display:inline-flex;text-decoration:none;">
+        <img src="https://static.wixstatic.com/media/44d8da_1a754c453e70444c89adea2857351ed3~mv2.png/v1/fill/w_236,h_58,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/hurley%20enter%20horozontal.png" alt="Hurley Enterprise LLC" style="height:34px;width:auto;display:block;" loading="lazy">
+      </a>
+      <p>Bristol TN/VA's premier commercial developer and real estate firm. Building the Tri-Cities since 2004.</p>
+    </div>
+    <div class="footer-links-pair">
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="development-construction.html">Development &amp; Construction</a></li>
+          <li><a href="for-sale-lease.html">Office &amp; Warehouse Leasing</a></li>
+          <li><a href="we-buy-property.html">We Buy Property</a></li>
+          <li><a href="market-report.html">Market Report</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Markets</h4>
+        <ul>
+          <li><a href="bristol-tn.html">Bristol, TN</a></li>
+          <li><a href="kingsport-tn.html">Kingsport, TN</a></li>
+          <li><a href="johnson-city-tn.html">Johnson City, TN</a></li>
+          <li><a href="service-areas.html">All Service Areas</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <div class="footer-contact-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>100 5th St., Suite 2W<br>Bristol, TN 37620</span>
+      </div>
+      <div class="footer-contact-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.13 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.46-.46a2 2 0 012.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0122 16.92z"/></svg>
+        <span><a href="tel:+14237427219" style="color:inherit;text-decoration:none;">423-742-7219</a></span>
+      </div>
+      <div class="footer-contact-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span><a href="mailto:info@hurleyenterprisellc.com" style="color:inherit;text-decoration:none;">info@hurleyenterprisellc.com</a></span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Hurley Enterprise LLC. All rights reserved. &nbsp;&middot;&nbsp; Bristol TN &amp; VA Commercial Real Estate</p>
+    <p><a href="sitemap.xml" style="color:#aaa;text-decoration:none;">Sitemap</a></p>
+  </div>
+</footer>
+  <script src="js/nav.js" defer></script>
+  <script src="js/animations.js" defer></script>
+  <script src="js/chatbot.js" defer></script>
+</body>
+</html>

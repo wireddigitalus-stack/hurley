@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Hurley Enterprise — CEO Dashboard</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════════════
+       HURLEY ENTERPRISE — CEO COMMAND CENTER
+    ═══════════════════════════════════════════════════ */
+    :root {
+      --bg:         #080808;
+      --bg-1:       #0f0f0f;
+      --bg-2:       #141414;
+      --bg-3:       #1c1c1c;
+      --border:     rgba(255,255,255,0.07);
+      --border-md:  rgba(255,255,255,0.13);
+      --gold:       #C9A84C;
+      --gold-lt:    #E8C96A;
+      --gold-dim:   rgba(201,168,76,0.12);
+      --off-white:  #F5F3EE;
+      --t2:         #B0A99A;
+      --t3:         #6B6560;
+      --hot:        #FF4D4D;
+      --hot-dim:    rgba(255,77,77,0.11);
+      --warm:       #C9A84C;
+      --cool:       #3ECF8E;
+      --cool-dim:   rgba(62,207,142,0.11);
+      --info:       #5B9BD5;
+      --info-dim:   rgba(91,155,213,0.11);
+      --purple:     #9B7FE8;
+      --purple-dim: rgba(155,127,232,0.11);
+      --ease:       cubic-bezier(0.16,1,0.3,1);
+      --font:       'DM Sans', system-ui, -apple-system, sans-serif;
+      --r:          16px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; }
+    body { font-family: var(--font); background: var(--bg); color: var(--off-white); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: var(--font); cursor: pointer; border: none; background: none; }
+    input, select, textarea { font-family: var(--font); }
+
+    /* ── PIN SCREEN ─────────────────────────────── */
+    #pin-screen {
+      position: fixed; inset: 0; background: var(--bg); z-index: 9999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 2rem; gap: 1.75rem;
+      transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+    }
+    #pin-screen.unlocked { opacity: 0; transform: scale(1.04); pointer-events: none; }
+    .pin-logo { height: 34px; width: auto; filter: brightness(0) invert(1); opacity: 0.85; }
+    .pin-card {
+      background: var(--bg-2); border: 1px solid var(--border-md);
+      border-radius: 24px; padding: 2.25rem 1.75rem; width: 100%; max-width: 320px;
+      text-align: center; box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+    }
+    .pin-icon { font-size: 2.2rem; margin-bottom: 0.65rem; }
+    .pin-title { font-size: 1.15rem; font-weight: 800; margin-bottom: 0.2rem; }
+    .pin-sub { font-size: 0.8rem; color: var(--t2); margin-bottom: 1.75rem; }
+    .pin-dots { display: flex; justify-content: center; gap: 0.8rem; margin-bottom: 1.75rem; }
+    .pin-dot { width: 13px; height: 13px; border-radius: 50%; border: 2px solid var(--border-md); transition: all 0.2s; }
+    .pin-dot.filled { background: var(--gold); border-color: var(--gold); }
+    .pin-dot.error { background: var(--hot); border-color: var(--hot); animation: shake 0.35s; }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
+    .pin-keypad { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6rem; }
+    .pin-key {
+      background: var(--bg-3); border: 1px solid var(--border); border-radius: 13px;
+      height: 54px; font-size: 1.15rem; font-weight: 700; color: var(--off-white);
+      cursor: pointer; transition: all 0.15s; -webkit-tap-highlight-color: transparent;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pin-key:active { background: var(--gold-dim); border-color: var(--gold); transform: scale(0.93); }
+    .pin-key.zero { grid-column: 2; }
+    .pin-key.del { color: var(--t2); font-size: 0.82rem; font-weight: 800; }
+    .pin-error-msg { font-size: 0.75rem; color: var(--hot); margin-top: 0.85rem; height: 1.1em; }
+
+    /* ── TOPBAR ─────────────────────────────────── */
+    #topbar {
+      background: #fff; border-bottom: 1px solid rgba(0,0,0,0.08);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.85rem 1.25rem; position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 1px 12px rgba(0,0,0,0.07);
+    }
+    .tb-brand { display: flex; align-items: center; gap: 0.65rem; }
+    .tb-brand img { height: 26px; width: auto; }
+    .tb-label { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #aaa; }
+    .tb-right { display: flex; align-items: center; gap: 0.6rem; }
+    .tb-clock { font-size: 0.75rem; font-weight: 700; color: #777; font-variant-numeric: tabular-nums; }
+    .tb-btn {
+      width: 34px; height: 34px; background: #f4f4f4; border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 9px; display: flex; align-items: center; justify-content: center;
+      color: #999; cursor: pointer; transition: all 0.18s; -webkit-tap-highlight-color: transparent;
+    }
+    .tb-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+    .tb-btn svg { width: 14px; height: 14px; }
+
+    /* ── MAIN LAYOUT ────────────────────────────── */
+    #dash {
+      max-width: 960px; margin: 0 auto;
+      padding: 1.25rem 1rem 4rem;
+    }
+
+    /* ── GREETING CARD ──────────────────────────── */
+    .greeting-card {
+      background: linear-gradient(135deg, #131313 0%, #1b1a0a 55%, #141414 100%);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 22px; padding: 2rem 1.75rem;
+      margin-bottom: 1rem; position: relative; overflow: hidden;
+    }
+    .greeting-card::before {
+      content: ''; position: absolute; top: -50px; right: -50px;
+      width: 240px; height: 240px;
+      background: radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .greeting-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+    }
+    .g-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+    .g-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.5rem;
+    }
+    .g-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .g-name { font-size: clamp(1.6rem, 5vw, 2.2rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; }
+    .g-name em { font-style: normal; color: var(--gold); }
+    .g-brief { font-size: 0.88rem; color: var(--t2); line-height: 1.7; max-width: 520px; margin-top: 0.6rem; }
+    .g-brief strong { color: var(--off-white); }
+    .g-date { text-align: right; flex-shrink: 0; }
+    .g-date-day { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--t3); }
+    .g-date-full { font-size: 0.82rem; font-weight: 700; color: var(--t2); margin-top: 0.2rem; }
+    @media(max-width:480px){ .g-date { display: none; } }
+
+    /* ── PRIORITY BANNER ────────────────────────── */
+    .priority-banner {
+      background: linear-gradient(135deg, rgba(255,77,77,0.1), rgba(255,77,77,0.05));
+      border: 1px solid rgba(255,77,77,0.3); border-radius: 14px;
+      padding: 0.9rem 1.1rem; margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.85rem;
+      animation: pulse-border 2s ease-in-out infinite;
+    }
+    @keyframes pulse-border {
+      0%,100%{ box-shadow: 0 0 0 0 rgba(255,77,77,0); }
+      50%{ box-shadow: 0 0 0 4px rgba(255,77,77,0.1); }
+    }
+    .priority-banner.hidden { display: none; }
+    .priority-icon { font-size: 1.4rem; flex-shrink: 0; animation: wiggle 1.5s ease-in-out infinite; }
+    @keyframes wiggle { 0%,100%{transform:rotate(0)} 25%{transform:rotate(-8deg)} 75%{transform:rotate(8deg)} }
+    .priority-text { flex: 1; }
+    .priority-title { font-size: 0.88rem; font-weight: 800; color: var(--hot); }
+    .priority-sub { font-size: 0.75rem; color: var(--t2); margin-top: 0.15rem; }
+    .priority-action {
+      padding: 0.5em 1em; border-radius: 9px; font-size: 0.72rem; font-weight: 800;
+      background: var(--hot); color: #fff; cursor: pointer; white-space: nowrap;
+      border: none; -webkit-tap-highlight-color: transparent; transition: all 0.18s; min-height: 36px;
+    }
+    .priority-action:hover { background: #ff6b6b; }
+
+    /* ── STATS GRID ─────────────────────────────── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+    }
+    @media(max-width:520px){ .stats-grid { grid-template-columns: 1fr 1fr; } }
+    .stat-card {
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 1.1rem 1rem; text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: default;
+    }
+    .stat-card:hover { transform: translateY(-2px); border-color: var(--border-md); }
+    .stat-num { font-size: 1.7rem; font-weight: 900; letter-spacing: -0.04em; line-height: 1; margin-bottom: 0.3rem; }
+    .stat-label { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; color: var(--t3); }
+    .stat-sub { font-size: 0.68rem; color: var(--t3); margin-top: 0.2rem; }
+    .s-hot .stat-num    { color: var(--hot); }
+    .s-warm .stat-num   { color: var(--gold); }
+    .s-cool .stat-num   { color: var(--cool); }
+    .s-info .stat-num   { color: var(--info); }
+    .s-purple .stat-num { color: var(--purple); }
+    .s-white .stat-num  { color: var(--off-white); }
+
+    /* ── TWO-COL INSIGHTS ───────────────────────── */
+    .insights-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+    }
+    @media(max-width:600px){ .insights-row { grid-template-columns: 1fr; } }
+    .insight-card {
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 1.25rem;
+      display: flex; flex-direction: column; gap: 0.85rem;
+    }
+    .insight-title {
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--t3); margin-bottom: 0.1rem;
+    }
+
+    /* Bar chart rows */
+    .bar-row { display: flex; flex-direction: column; gap: 0.65rem; }
+    .bar-item { }
+    .bar-label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem; }
+    .bar-name { font-size: 0.78rem; font-weight: 700; color: var(--off-white); }
+    .bar-count { font-size: 0.72rem; font-weight: 800; color: var(--t2); }
+    .bar-track { height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 3px; transition: width 0.8s var(--ease); }
+
+    /* Activity feed */
+    .activity-feed { display: flex; flex-direction: column; gap: 0; max-height: 260px; overflow-y: auto; }
+    .activity-feed::-webkit-scrollbar { width: 3px; }
+    .activity-feed::-webkit-scrollbar-track { background: transparent; }
+    .activity-feed::-webkit-scrollbar-thumb { background: var(--border-md); border-radius: 2px; }
+    .act-item {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      padding: 0.65rem 0; border-bottom: 1px solid var(--border);
+    }
+    .act-item:last-child { border-bottom: none; }
+    .act-icon { font-size: 1rem; flex-shrink: 0; width: 22px; text-align: center; margin-top: 1px; }
+    .act-text { flex: 1; font-size: 0.78rem; color: var(--t2); line-height: 1.45; }
+    .act-text strong { color: var(--off-white); font-weight: 700; }
+    .act-time { font-size: 0.65rem; color: var(--t3); flex-shrink: 0; }
+
+    /* ── CONTROLS ───────────────────────────────── */
+    .controls-bar {
+      display: flex; align-items: center; gap: 0.55rem; margin-bottom: 1.1rem; flex-wrap: wrap;
+    }
+    .section-title { font-size: 0.88rem; font-weight: 800; flex: 1; min-width: 80px; }
+    .filter-btn {
+      padding: 0.45em 0.9em; border-radius: 999px;
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 0.05em;
+      cursor: pointer; border: 1px solid var(--border); background: var(--bg-2);
+      color: var(--t2); transition: all 0.18s; -webkit-tap-highlight-color: transparent;
+      min-height: 32px; white-space: nowrap;
+    }
+    .filter-btn.active, .filter-btn:hover { background: var(--gold-dim); border-color: var(--gold); color: var(--gold-lt); }
+    .add-btn {
+      padding: 0.5em 1em; border-radius: 9px;
+      font-size: 0.72rem; font-weight: 800;
+      background: var(--gold); color: #000; border: none;
+      cursor: pointer; transition: all 0.18s; -webkit-tap-highlight-color: transparent;
+      min-height: 34px; display: flex; align-items: center; gap: 0.3rem;
+    }
+    .add-btn:hover { background: var(--gold-lt); }
+    .add-btn svg { width: 12px; height: 12px; }
+
+    /* ── LEAD CARDS ─────────────────────────────── */
+    .lead-feed { display: flex; flex-direction: column; gap: 0.8rem; }
+    .lead-card {
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: var(--r); overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .lead-card:hover { border-color: var(--border-md); }
+    .lead-card.hot  { border-left: 3px solid var(--hot); }
+    .lead-card.warm { border-left: 3px solid var(--gold); }
+    .lead-card.cool { border-left: 3px solid var(--cool); }
+    .lead-card.info { border-left: 3px solid var(--info); }
+
+    .lc-header { display: flex; align-items: flex-start; gap: 0.9rem; padding: 1.1rem 1.1rem 0; }
+    .lc-avatar {
+      width: 40px; height: 40px; border-radius: 11px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 900; flex-shrink: 0;
+    }
+    .lead-card.hot  .lc-avatar { background: var(--hot-dim);    color: var(--hot); }
+    .lead-card.warm .lc-avatar { background: var(--gold-dim);   color: var(--gold); }
+    .lead-card.cool .lc-avatar { background: var(--cool-dim);   color: var(--cool); }
+    .lead-card.info .lc-avatar { background: var(--info-dim);   color: var(--info); }
+
+    .lc-meta { flex: 1; min-width: 0; }
+    .lc-name { font-size: 0.95rem; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .lc-contacts { display: flex; gap: 0.85rem; flex-wrap: wrap; margin: 0.2rem 0 0.3rem; }
+    .lc-ci { display: flex; align-items: center; gap: 0.25rem; font-size: 0.74rem; color: var(--t2); }
+    .lc-ci svg { width: 11px; height: 11px; flex-shrink: 0; }
+    .lc-ci a { color: var(--gold-lt); font-weight: 700; }
+    .lc-badges { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+
+    .badge {
+      display: inline-flex; align-items: center;
+      padding: 0.18em 0.55em; border-radius: 999px;
+      font-size: 0.6rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
+    }
+    .b-hot    { background: var(--hot-dim);    color: var(--hot);    border: 1px solid rgba(255,77,77,0.2); }
+    .b-warm   { background: var(--gold-dim);   color: var(--gold-lt);border: 1px solid rgba(201,168,76,0.2); }
+    .b-cool   { background: var(--cool-dim);   color: var(--cool);   border: 1px solid rgba(62,207,142,0.2); }
+    .b-info   { background: var(--info-dim);   color: var(--info);   border: 1px solid rgba(91,155,213,0.2); }
+    .b-src    { background: rgba(255,255,255,0.05); color: var(--t2); border: 1px solid var(--border); }
+    .b-type   { background: rgba(255,255,255,0.03); color: var(--t3); border: 1px solid var(--border); }
+
+    .lc-time { font-size: 0.65rem; color: var(--t3); font-weight: 600; flex-shrink: 0; }
+
+    .lc-body {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.55rem; padding: 0.85rem 1.1rem;
+    }
+    @media(max-width:440px){ .lc-body { grid-template-columns: 1fr; } }
+    .lc-detail {
+      background: rgba(255,255,255,0.025); border-radius: 9px;
+      padding: 0.6rem 0.75rem;
+    }
+    .lc-dl { font-size: 0.58rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--t3); margin-bottom: 0.2rem; }
+    .lc-dv { font-size: 0.8rem; font-weight: 700; color: var(--off-white); }
+    .lc-dv.offer { color: var(--gold-lt); font-size: 0.88rem; }
+
+    .lc-status-sel {
+      width: 100%; background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 9px; padding: 0.5rem 0.75rem; font-size: 0.75rem; font-weight: 700;
+      color: var(--off-white); outline: none; -webkit-appearance: none; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B6560' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 0.6rem center; background-size: 13px; padding-right: 2rem;
+      transition: border-color 0.2s; grid-column: 1/-1;
+    }
+    .lc-status-sel:focus { border-color: var(--gold); }
+    .lc-status-sel option { background: #1c1c1c; }
+
+    .lc-notes-row { display: flex; gap: 0.4rem; grid-column: 1/-1; align-items: flex-start; }
+    .lc-notes {
+      flex: 1; background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 9px; padding: 0.55rem 0.75rem; font-size: 0.76rem; color: var(--off-white);
+      line-height: 1.5; resize: none; outline: none; min-height: 58px;
+      transition: border-color 0.2s;
+    }
+    .lc-notes::placeholder { color: var(--t3); }
+    .lc-notes:focus { border-color: var(--gold); }
+    .save-btn {
+      padding: 0.5em 0.8em; border-radius: 8px; font-size: 0.68rem; font-weight: 800;
+      background: var(--gold); color: #000; border: none; cursor: pointer; transition: all 0.18s;
+      white-space: nowrap; min-height: 36px; -webkit-tap-highlight-color: transparent;
+    }
+    .save-btn:hover { background: var(--gold-lt); }
+    .save-btn.saved { background: var(--cool); }
+
+    .lc-actions {
+      display: flex; gap: 0.5rem; flex-wrap: wrap;
+      padding: 0.75rem 1.1rem 1.1rem; border-top: 1px solid var(--border);
+    }
+    .act-btn {
+      flex: 1; min-width: 100px; padding: 0.6em 0.85em;
+      border-radius: 9px; font-size: 0.7rem; font-weight: 800;
+      cursor: pointer; border: 1px solid var(--border); background: var(--bg-3);
+      color: var(--t2); display: flex; align-items: center; justify-content: center;
+      gap: 0.35rem; transition: all 0.18s; -webkit-tap-highlight-color: transparent; min-height: 38px;
+    }
+    .act-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+    .act-btn:hover { border-color: var(--border-md); color: var(--off-white); }
+    .act-btn.call { background: var(--cool-dim); border-color: rgba(62,207,142,0.25); color: var(--cool); }
+    .act-btn.call:hover { background: rgba(62,207,142,0.2); }
+    .act-btn.monday { background: var(--gold-dim); border-color: rgba(201,168,76,0.25); color: var(--gold-lt); }
+    .act-btn.monday:hover { background: rgba(201,168,76,0.2); }
+    .act-btn.del { color: rgba(255,77,77,0.5); }
+    .act-btn.del:hover { color: var(--hot); border-color: rgba(255,77,77,0.3); }
+
+    /* ── EMPTY STATE ────────────────────────────── */
+    .empty-state { text-align: center; padding: 3.5rem 1.5rem; color: var(--t3); }
+    .empty-state .ei { font-size: 2.2rem; margin-bottom: 0.85rem; }
+    .empty-state h3 { font-size: 0.95rem; color: var(--t2); margin-bottom: 0.4rem; }
+    .empty-state p { font-size: 0.8rem; line-height: 1.65; max-width: 260px; margin: 0 auto; }
+
+    /* ── ADD LEAD MODAL ─────────────────────────── */
+    .overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      z-index: 500; display: flex; align-items: flex-end; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.28s;
+    }
+    .overlay.open { opacity: 1; pointer-events: all; }
+    .modal-sheet {
+      background: var(--bg-2); border: 1px solid var(--border-md);
+      border-radius: 22px 22px 0 0; padding: 1.25rem 1.25rem 3rem;
+      width: 100%; max-width: 520px; max-height: 92dvh; overflow-y: auto;
+      transform: translateY(40px); transition: transform 0.32s var(--ease);
+    }
+    .overlay.open .modal-sheet { transform: translateY(0); }
+    .modal-handle { width: 36px; height: 4px; background: var(--border-md); border-radius: 2px; margin: 0 auto 1.25rem; }
+    .modal-title { font-size: 1rem; font-weight: 800; margin-bottom: 1.25rem; }
+    .mf { margin-bottom: 0.85rem; }
+    .ml { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; color: var(--t3); margin-bottom: 0.35rem; display: block; }
+    .mi, .ms {
+      width: 100%; background: rgba(255,255,255,0.04); border: 1.5px solid var(--border);
+      border-radius: 11px; padding: 0.8rem 0.9rem; font-size: 0.88rem; font-weight: 600;
+      color: var(--off-white); outline: none; transition: border-color 0.2s; -webkit-appearance: none; min-height: 48px;
+    }
+    .mi::placeholder { color: var(--t3); font-weight: 400; }
+    .mi:focus, .ms:focus { border-color: var(--gold); }
+    .ms {
+      appearance: none; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B6560' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 0.9rem center;
+      background-size: 15px; padding-right: 2.25rem;
+    }
+    .ms option { background: #1c1c1c; }
+    .mrow { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+    .modal-submit {
+      width: 100%; background: var(--gold); color: #000; border: none;
+      border-radius: 13px; padding: 0.95rem; font-size: 0.9rem; font-weight: 800;
+      cursor: pointer; margin-top: 1rem; min-height: 50px; transition: all 0.18s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .modal-submit:hover { background: var(--gold-lt); }
+    .modal-cancel {
+      width: 100%; background: transparent; color: var(--t2);
+      border: 1px solid var(--border); border-radius: 13px;
+      padding: 0.8rem; font-size: 0.84rem; font-weight: 700;
+      cursor: pointer; margin-top: 0.45rem; min-height: 46px; transition: all 0.18s;
+    }
+    .modal-cancel:hover { border-color: var(--border-md); color: var(--off-white); }
+
+    /* ── TOAST ──────────────────────────────────── */
+    .toast {
+      position: fixed; bottom: calc(1.25rem + env(safe-area-inset-bottom)); left: 50%;
+      transform: translateX(-50%) translateY(16px);
+      background: var(--bg-3); border: 1px solid var(--border-md);
+      border-radius: 11px; padding: 0.65rem 1.1rem; font-size: 0.8rem; font-weight: 700;
+      color: var(--off-white); z-index: 600; white-space: nowrap; opacity: 0; pointer-events: none;
+      transition: all 0.28s var(--ease); box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast.ok { border-color: rgba(62,207,142,0.4); color: var(--cool); }
+    .toast.info { border-color: var(--gold-dim); color: var(--gold-lt); }
+  </style>
+</head>
+<body>
+
+<!-- PIN SCREEN -->
+<div id="pin-screen">
+  <img class="pin-logo" src="https://static.wixstatic.com/media/44d8da_1a754c453e70444c89adea2857351ed3~mv2.png/v1/fill/w_236,h_58,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/hurley%20enter%20horozontal.png" alt="Hurley Enterprise">
+  <div class="pin-card">
+    <div class="pin-icon">🔐</div>
+    <div class="pin-title">CEO Dashboard</div>
+    <div class="pin-sub">Enter your access PIN to continue</div>
+    <div class="pin-dots">
+      <div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div>
+      <div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div>
+    </div>
+    <div class="pin-keypad">
+      <button class="pin-key" onclick="pinP('1')">1</button>
+      <button class="pin-key" onclick="pinP('2')">2</button>
+      <button class="pin-key" onclick="pinP('3')">3</button>
+      <button class="pin-key" onclick="pinP('4')">4</button>
+      <button class="pin-key" onclick="pinP('5')">5</button>
+      <button class="pin-key" onclick="pinP('6')">6</button>
+      <button class="pin-key" onclick="pinP('7')">7</button>
+      <button class="pin-key" onclick="pinP('8')">8</button>
+      <button class="pin-key" onclick="pinP('9')">9</button>
+      <button class="pin-key zero" onclick="pinP('0')">0</button>
+      <button class="pin-key del" onclick="pinDel()">⌫</button>
+    </div>
+    <div class="pin-error-msg" id="pin-err"></div>
+  </div>
+</div>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="tb-brand">
+    <img src="https://static.wixstatic.com/media/44d8da_1a754c453e70444c89adea2857351ed3~mv2.png/v1/fill/w_236,h_58,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/hurley%20enter%20horozontal.png" alt="Hurley Enterprise">
+    <div class="tb-label">CEO Command Center</div>
+  </div>
+  <div class="tb-right">
+    <div class="tb-clock" id="tb-clock">—</div>
+    <a href="index.html" class="tb-btn" title="Back to site">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </a>
+    <button class="tb-btn" onclick="lockDash()" title="Lock dashboard">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- MAIN DASHBOARD -->
+<div id="dash">
+
+  <!-- GREETING CARD -->
+  <div class="greeting-card" style="margin-top:1.25rem;">
+    <div class="g-top">
+      <div>
+        <div class="g-eyebrow"><span class="g-dot"></span><span id="g-time-label">Live · Eastern Time</span></div>
+        <div class="g-name" id="g-name">Good Morning, <em>Allen</em></div>
+        <div class="g-brief" id="g-brief">Loading your daily brief…</div>
+      </div>
+      <div class="g-date">
+        <div class="g-date-day" id="g-day"></div>
+        <div class="g-date-full" id="g-date"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIORITY BANNER -->
+  <div class="priority-banner hidden" id="priority-banner">
+    <div class="priority-icon">🚨</div>
+    <div class="priority-text">
+      <div class="priority-title" id="priority-title">Hot leads waiting</div>
+      <div class="priority-sub" id="priority-sub">These sellers are motivated — call now before they go elsewhere.</div>
+    </div>
+    <button class="priority-action" onclick="setFilter('hot')">View Hot →</button>
+  </div>
+
+  <!-- STATS GRID -->
+  <div class="stats-grid">
+    <div class="stat-card s-hot">
+      <div class="stat-num" id="s-hot">0</div>
+      <div class="stat-label">🔥 Hot Leads</div>
+      <div class="stat-sub" id="s-hot-sub">Urgent follow-up</div>
+    </div>
+    <div class="stat-card s-warm">
+      <div class="stat-num" id="s-warm">0</div>
+      <div class="stat-label">🌡 Warm Leads</div>
+      <div class="stat-sub" id="s-warm-sub">Nurture this week</div>
+    </div>
+    <div class="stat-card s-cool">
+      <div class="stat-num" id="s-new">0</div>
+      <div class="stat-label">🆕 New Today</div>
+      <div class="stat-sub">Last 24 hours</div>
+    </div>
+    <div class="stat-card s-white">
+      <div class="stat-num" id="s-total">0</div>
+      <div class="stat-label">📋 Total Pipeline</div>
+      <div class="stat-sub">Active (excl. closed)</div>
+    </div>
+    <div class="stat-card s-purple">
+      <div class="stat-num" id="s-value">$0</div>
+      <div class="stat-label">💰 Est. Value</div>
+      <div class="stat-sub">Low-end offer range</div>
+    </div>
+    <div class="stat-card s-info">
+      <div class="stat-num" id="s-contacted">0</div>
+      <div class="stat-label">📞 Contacted</div>
+      <div class="stat-sub">Waiting on response</div>
+    </div>
+  </div>
+
+  <!-- INSIGHTS ROW: Source breakdown + Activity Feed -->
+  <div class="insights-row">
+
+    <!-- Lead breakdown -->
+    <div class="insight-card">
+      <div class="insight-title">Lead Source & Type Breakdown</div>
+      <div class="bar-row" id="source-bars"></div>
+      <div style="margin-top:0.5rem;border-top:1px solid var(--border);padding-top:0.75rem;">
+        <div class="insight-title" style="margin-bottom:0.5rem;">Property Type Mix</div>
+        <div class="bar-row" id="type-bars"></div>
+      </div>
+    </div>
+
+    <!-- Activity feed -->
+    <div class="insight-card">
+      <div class="insight-title" style="margin-bottom:0.25rem;">Live Activity Feed</div>
+      <div class="activity-feed" id="activity-feed"></div>
+    </div>
+
+  </div>
+
+  <!-- LEAD PIPELINE -->
+  <div class="controls-bar">
+    <div class="section-title">Lead Pipeline</div>
+    <button class="filter-btn active" id="f-all"        onclick="setFilter('all')">All</button>
+    <button class="filter-btn"        id="f-hot"        onclick="setFilter('hot')">🔥 Hot</button>
+    <button class="filter-btn"        id="f-warm"       onclick="setFilter('warm')">🌡 Warm</button>
+    <button class="filter-btn"        id="f-evaluator"  onclick="setFilter('evaluator')">🏠 Evaluator</button>
+    <button class="filter-btn"        id="f-riley"      onclick="setFilter('riley')">💬 Riley</button>
+    <button class="add-btn"           onclick="openModal()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add Lead
+    </button>
+  </div>
+
+  <div class="lead-feed" id="lead-feed"></div>
+
+</div><!-- /dash -->
+
+<!-- ADD LEAD MODAL -->
+<div class="overlay" id="overlay" onclick="handleOvClick(event)">
+  <div class="modal-sheet" id="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">➕ Add Manual Lead</div>
+    <div class="mrow">
+      <div class="mf"><label class="ml">First Name</label><input type="text" class="mi" id="ml-fn" placeholder="John"></div>
+      <div class="mf"><label class="ml">Last Name</label><input type="text" class="mi" id="ml-ln" placeholder="Smith"></div>
+    </div>
+    <div class="mf"><label class="ml">Phone Number</label><input type="tel" class="mi" id="ml-ph" placeholder="423-555-0100" inputmode="tel"></div>
+    <div class="mf"><label class="ml">Email (optional)</label><input type="email" class="mi" id="ml-em" placeholder="john@example.com"></div>
+    <div class="mf"><label class="ml">Property Address</label><input type="text" class="mi" id="ml-ad" placeholder="123 Main St, Bristol TN"></div>
+    <div class="mrow">
+      <div class="mf"><label class="ml">Property Type</label>
+        <select class="ms" id="ml-ty">
+          <option value="residential">🏠 Residential</option>
+          <option value="commercial">🏢 Commercial</option>
+          <option value="industrial">🏭 Industrial</option>
+          <option value="land">🌿 Land / Lot</option>
+        </select>
+      </div>
+      <div class="mf"><label class="ml">Lead Source</label>
+        <select class="ms" id="ml-src">
+          <option value="riley">💬 Riley Chat</option>
+          <option value="evaluator">🏠 Evaluator</option>
+          <option value="phone">📞 Phone Call</option>
+          <option value="referral">🤝 Referral</option>
+          <option value="walkin">🚶 Walk-In</option>
+        </select>
+      </div>
+    </div>
+    <div class="mf"><label class="ml">Situation</label>
+      <select class="ms" id="ml-sit">
+        <option value="speed">⚡ Needs to sell quickly</option>
+        <option value="estate">📋 Estate / Inherited</option>
+        <option value="distressed">🔑 Distressed / Behind payments</option>
+        <option value="relocating">✈️ Relocating / Downsizing</option>
+        <option value="investor">💼 Portfolio liquidation</option>
+        <option value="other">💬 Other</option>
+      </select>
+    </div>
+    <div class="mf"><label class="ml">Notes</label><input type="text" class="mi" id="ml-no" placeholder="Initial contact details, condition, timeline…"></div>
+    <button class="modal-submit" onclick="submitManualLead()">Add to Pipeline →</button>
+    <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ════════════════════════════════════════════════════
+   HURLEY CEO COMMAND CENTER — v2
+   Enhanced: pipeline value, priority alerts, source
+   breakdown charts, activity feed, live clock
+════════════════════════════════════════════════════ */
+
+const CFG = {
+  name:       'Allen',
+  pin:        '1234',
+  mondayUrl:  'https://hurleyenterprise.monday.com/boards/',
+  leadsKey:   'hurley_leads',
+  authKey:    'hurley_auth',
+  version:    '2',
+};
+
+// Clear stale session from old dashboard version
+(function migrateVersion() {
+  const v = localStorage.getItem('hurley_dash_version');
+  if (v !== CFG.version) {
+    localStorage.removeItem(CFG.authKey);
+    localStorage.setItem('hurley_dash_version', CFG.version);
+  }
+  // Force PIN screen if ?lock param is present (used by Admin link on main site)
+  if (new URLSearchParams(window.location.search).has('lock')) {
+    localStorage.removeItem(CFG.authKey);
+    // Clean the URL so refreshing doesn't re-lock
+    history.replaceState(null, '', window.location.pathname);
+  }
+})();
+
+/* ── DEMO DATA ────────────────────────────────── */
+const DEMO = [
+  { id:'d1', source:'evaluator', status:'new', timestamp: new Date(Date.now()-28*60000).toISOString(),
+    contact:{firstName:'Mike',lastName:'Garrett',phone:'423-321-0182',email:'mgarrett@email.com'},
+    property:{type:'residential',street:'2210 Randolph St',city:'Bristol',state:'VA',condition:'poor',situation:'distressed',beds:'3',baths:'1',sqft:'1200',year:'1971'},
+    offerRange:'$65,000 – $90,000', notes:''},
+  { id:'d2', source:'riley', status:'contacted', timestamp: new Date(Date.now()-2*3600000).toISOString(),
+    contact:{firstName:'Sandra',lastName:'Hollis',phone:'423-321-0241',email:''},
+    property:{type:'commercial',street:'417 State St',city:'Bristol',state:'TN',condition:'good',situation:'relocating'},
+    offerRange:'', notes:'Chatted with Riley — empty retail on State St. Wants to close before June.'},
+  { id:'d3', source:'evaluator', status:'new', timestamp: new Date(Date.now()-5*3600000).toISOString(),
+    contact:{firstName:'James',lastName:'Coffey',phone:'276-321-0093',email:'jcoffey@outlook.com'},
+    property:{type:'residential',street:'2416 Bradley St',city:'Bristol',state:'VA',condition:'fair',situation:'estate',beds:'4',baths:'2',sqft:'1680',year:'1965'},
+    offerRange:'$95,000 – $130,000', notes:'Estate — inherited from parent. Motivated but not in rush.'},
+  { id:'d4', source:'riley', status:'new', timestamp: new Date(Date.now()-8*3600000).toISOString(),
+    contact:{firstName:'Tanya',lastName:'Blevins',phone:'423-321-0317',email:'tanya.b@gmail.com'},
+    property:{type:'residential',street:'812 Cumberland St',city:'Bristol',state:'TN',condition:'good',situation:'other'},
+    offerRange:'', notes:'Curious about cash offer. Not urgent. Came through Riley chat.'},
+  { id:'d5', source:'evaluator', status:'qualified', timestamp: new Date(Date.now()-24*3600000).toISOString(),
+    contact:{firstName:'Roger',lastName:'Estep',phone:'276-321-0044',email:'roger.estep@biz.net'},
+    property:{type:'industrial',street:'1844 W State St',city:'Bristol',state:'VA',condition:'fair',situation:'speed',sqftCom:'18000',units:'1',leased:'no'},
+    offerRange:'$280,000 – $390,000', notes:'Business relocating. Wants to move fast. Follow up Mon AM.'},
+  { id:'d6', source:'phone', status:'new', timestamp: new Date(Date.now()-30*60000).toISOString(),
+    contact:{firstName:'Darlene',lastName:'Yates',phone:'423-321-0599',email:''},
+    property:{type:'land',street:'Old Jonesboro Rd',city:'Kingsport',state:'TN',condition:'excellent',situation:'investor'},
+    offerRange:'$45,000 – $80,000', notes:'Called in — 4 acres of land near Kingsport. Investor liquidating.'},
+];
+
+/* ── ACTIVITY FEED DATA (moved from social-proof.js) ── */
+const ACTIVITY = [
+  { icon:'🏢', text:'<strong>Sarah M.</strong> inquired about City Centre office suites', time:'2 min ago' },
+  { icon:'🔑', text:'<strong>James T.</strong> scheduled a tour at Jamestown @ Shelby', time:'8 min ago' },
+  { icon:'🎰', text:'New inquiry on <strong>Center Point</strong> — Hard Rock Casino corridor', time:'11 min ago' },
+  { icon:'🏭', text:'<strong>Marcus R.</strong> requested info on the former Coca-Cola building', time:'14 min ago' },
+  { icon:'🍕', text:'Restaurant group inquired about <strong>628 State Street</strong>', time:'19 min ago' },
+  { icon:'💼', text:'Local <strong>law firm</strong> inquired about City Centre executive suites', time:'23 min ago' },
+  { icon:'🏠', text:'Investor asked about <strong>Bradley Street</strong> residential portfolio', time:'31 min ago' },
+  { icon:'🏗️', text:'Developer requested <strong>construction consultation</strong>', time:'35 min ago' },
+  { icon:'💰', text:'Property owner received <strong>cash offer within 24 hrs</strong>', time:'44 min ago' },
+  { icon:'🎰', text:'Hospitality group looking at <strong>Commonwealth Ave</strong> retail', time:'48 min ago' },
+  { icon:'🏡', text:'Buyer touring <strong>2409 Randolph St</strong> this weekend', time:'52 min ago' },
+  { icon:'🍺', text:'Craft brewery exploring <strong>628 State Street</strong>', time:'58 min ago' },
+  { icon:'📋', text:'Healthcare provider asking about <strong>Jamestown @ Shelby</strong>', time:'1 hr ago' },
+  { icon:'🏭', text:'Logistics firm requesting <strong>warehouse specs</strong> — Bristol VA', time:'1.2 hrs ago' },
+  { icon:'🎪', text:'Corporate event <strong>booked</strong> at The Foundation Facility', time:'1.8 hrs ago' },
+  { icon:'📈', text:'Market Report <strong>downloaded</strong> — Bristol TN investor', time:'2.2 hrs ago' },
+  { icon:'🔑', text:'New <strong>lease signed</strong> on City Centre Suite 4A', time:'2.5 hrs ago' },
+];
+
+/* ── PIN ─────────────────────────────────────── */
+let pinStr = '';
+function pinP(d) {
+  if (pinStr.length >= 4) return;
+  pinStr += d;
+  updateDots();
+  if (pinStr.length === 4) setTimeout(checkPin, 110);
+}
+function pinDel() { pinStr = pinStr.slice(0,-1); updateDots(); }
+function updateDots() {
+  for (let i=0;i<4;i++) {
+    const el = document.getElementById('pd'+i);
+    el.classList.toggle('filled', i < pinStr.length);
+    el.classList.remove('error');
+  }
+}
+function checkPin() {
+  const correct = localStorage.getItem('hurley_pin') || CFG.pin;
+  if (pinStr === correct) {
+    localStorage.setItem(CFG.authKey, Date.now());
+    document.getElementById('pin-screen').classList.add('unlocked');
+    setTimeout(() => document.getElementById('pin-screen').style.display='none', 440);
+    initDash();
+  } else {
+    for(let i=0;i<4;i++) document.getElementById('pd'+i).classList.add('error');
+    document.getElementById('pin-err').textContent = 'Incorrect PIN — try again';
+    setTimeout(() => { pinStr=''; updateDots(); document.getElementById('pin-err').textContent=''; }, 950);
+  }
+}
+function lockDash() {
+  localStorage.removeItem(CFG.authKey);
+  pinStr=''; updateDots();
+  const ps = document.getElementById('pin-screen');
+  ps.style.display=''; ps.classList.remove('unlocked');
+}
+(function() {
+  const a = localStorage.getItem(CFG.authKey);
+  if (a && Date.now()-parseInt(a) < 8*3600000) {
+    document.getElementById('pin-screen').style.display='none';
+    initDash();
+  }
+})();
+
+/* ── DATA ────────────────────────────────────── */
+function getLeads() {
+  try {
+    const raw = localStorage.getItem(CFG.leadsKey);
+    const d = raw ? JSON.parse(raw) : [];
+    if (!d.length) { saveLeads(DEMO); return DEMO; }
+    return d;
+  } catch(e) { return DEMO; }
+}
+function saveLeads(l) { localStorage.setItem(CFG.leadsKey, JSON.stringify(l)); }
+function updateLead(id, ch) {
+  const l = getLeads(); const i = l.findIndex(x=>x.id===id);
+  if(i!==-1){ l[i]={...l[i],...ch}; saveLeads(l); }
+}
+
+/* ── HELPERS ─────────────────────────────────── */
+function temp(lead) {
+  const s=lead.property?.situation, c=lead.property?.condition;
+  if(s==='distressed'||s==='speed'||c==='poor') return 'hot';
+  if(s==='estate'||s==='relocating'||s==='investor') return 'warm';
+  return 'cool';
+}
+function tLabel(t) {
+  return {hot:{c:'b-hot',l:'🔥 Hot'},warm:{c:'b-warm',l:'🌡 Warm'},cool:{c:'b-cool',l:'🆕 New'}}[t]||{c:'b-cool',l:'🆕 New'};
+}
+function srcLabel(s) {
+  return {evaluator:'🏠 Evaluator',riley:'💬 Riley',phone:'📞 Phone',referral:'🤝 Referral',walkin:'🚶 Walk-In'}[s]||s;
+}
+function typeLabel(t) {
+  return {residential:'🏠 Residential',commercial:'🏢 Commercial',industrial:'🏭 Industrial',land:'🌿 Land'}[t]||t;
+}
+function sitLabel(s) {
+  return {speed:'⚡ Sell fast',estate:'📋 Estate/Inherited',distressed:'🔑 Distressed',relocating:'✈️ Relocating',investor:'💼 Portfolio',other:'💬 Other'}[s]||s;
+}
+function condLabel(c) {
+  return {excellent:'✨ Excellent',good:'👍 Good',fair:'🔧 Fair',poor:'🏚 Needs Work'}[c]||c;
+}
+function relTime(iso) {
+  const d=Date.now()-new Date(iso).getTime(), m=Math.floor(d/60000), h=Math.floor(d/3600000), dy=Math.floor(d/86400000);
+  if(m<1) return 'just now'; if(m<60) return m+'m ago'; if(h<24) return h+'h ago'; return dy+'d ago';
+}
+function parseOffer(str) {
+  if(!str) return 0;
+  const m=str.match(/\$([0-9,]+)/);
+  return m ? parseInt(m[1].replace(/,/g,'')) : 0;
+}
+function fmtVal(n) {
+  if(n>=1000000) return '$'+(n/1000000).toFixed(1)+'M';
+  if(n>=1000) return '$'+(n/1000).toFixed(0)+'K';
+  return '$'+n;
+}
+
+/* ── CLOCK & GREETING ────────────────────────── */
+function estNow() {
+  return new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'}));
+}
+function updateClock() {
+  const d=estNow(), h=d.getHours(), m=d.getMinutes();
+  const ampm=h>=12?'PM':'AM', h12=h%12||12;
+  document.getElementById('tb-clock').textContent=`${h12}:${m.toString().padStart(2,'0')} ${ampm} EST`;
+}
+function setGreeting() {
+  const d=estNow(), h=d.getHours();
+  const g=h>=5&&h<12?'Good Morning':h>=12&&h<17?'Good Afternoon':h>=17&&h<21?'Good Evening':'Working Late';
+  document.getElementById('g-name').innerHTML=`${g}, <em>${CFG.name}</em>`;
+  const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('g-day').textContent=days[d.getDay()];
+  document.getElementById('g-date').textContent=`${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+}
+
+/* ── STATS & BRIEF ───────────────────────────── */
+function updateStats() {
+  const all  = getLeads();
+  const live = all.filter(l=>l.status!=='closed'&&l.status!=='dead');
+  const hot  = live.filter(l=>temp(l)==='hot');
+  const warm = live.filter(l=>temp(l)==='warm');
+  const now  = new Date();
+  const today= live.filter(l=>new Date(l.timestamp).toDateString()===now.toDateString());
+  const contacted = live.filter(l=>l.status==='contacted'||l.status==='qualified'||l.status==='offer_sent');
+  const pipeVal = live.reduce((acc,l)=>acc+parseOffer(l.offerRange),0);
+
+  document.getElementById('s-hot').textContent      = hot.length;
+  document.getElementById('s-warm').textContent     = warm.length;
+  document.getElementById('s-new').textContent      = today.length;
+  document.getElementById('s-total').textContent    = live.length;
+  document.getElementById('s-value').textContent    = fmtVal(pipeVal);
+  document.getElementById('s-contacted').textContent= contacted.length;
+  document.getElementById('s-hot-sub').textContent  = hot.length===1?'Call immediately':hot.length>1?'Call immediately':'None right now';
+  document.getElementById('s-warm-sub').textContent = warm.length>0?`${warm.length} leads to nurture`:'Check back soon';
+
+  // Priority banner
+  const urgentHot = hot.filter(l=>(Date.now()-new Date(l.timestamp).getTime())>2*3600000);
+  const banner = document.getElementById('priority-banner');
+  if(urgentHot.length>0) {
+    banner.classList.remove('hidden');
+    document.getElementById('priority-title').textContent =
+      `${urgentHot.length} hot lead${urgentHot.length>1?'s':''} waiting over 2 hours — call now`;
+    document.getElementById('priority-sub').textContent =
+      urgentHot.map(l=>`${l.contact?.firstName} ${l.contact?.lastName||''} · ${l.contact?.phone||''}`).join(' | ');
+  } else { banner.classList.add('hidden'); }
+
+  // Daily brief
+  let brief = live.length===0
+    ? 'Your pipeline is clear — a great day to create new opportunities.'
+    : `You have <strong>${live.length} active lead${live.length!==1?'s':''}</strong> in the pipeline`;
+  if(hot.length) brief+=`, including <strong style="color:var(--hot)">${hot.length} hot lead${hot.length>1?'s':''}</strong> needing immediate follow-up`;
+  if(today.length) brief+=`. <strong>${today.length} new ${today.length>1?'leads came':'lead came'} in today</strong>`;
+  if(pipeVal>0) brief+=`. Estimated pipeline value: <strong style="color:var(--gold-lt)">${fmtVal(pipeVal)}</strong>`;
+  brief+='.';
+  document.getElementById('g-brief').innerHTML=brief;
+
+  renderBreakdown(live);
+}
+
+/* ── BREAKDOWN CHARTS ────────────────────────── */
+function renderBreakdown(leads) {
+  const srcCount={evaluator:0,riley:0,phone:0,referral:0,walkin:0};
+  const typCount={residential:0,commercial:0,industrial:0,land:0};
+  leads.forEach(l=>{
+    if(srcCount[l.source]!==undefined) srcCount[l.source]++;
+    if(l.property?.type && typCount[l.property.type]!==undefined) typCount[l.property.type]++;
+  });
+  const maxS=Math.max(...Object.values(srcCount),1);
+  const maxT=Math.max(...Object.values(typCount),1);
+  const srcColors={'evaluator':'var(--gold)','riley':'var(--info)','phone':'var(--cool)','referral':'var(--purple)','walkin':'var(--t2)'};
+  const typColors={'residential':'var(--gold)','commercial':'var(--info)','industrial':'var(--hot)','land':'var(--cool)'};
+
+  document.getElementById('source-bars').innerHTML=Object.entries(srcCount)
+    .filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1])
+    .map(([k,v])=>`
+    <div class="bar-item">
+      <div class="bar-label-row"><span class="bar-name">${srcLabel(k)}</span><span class="bar-count">${v}</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(v/maxS)*100}%;background:${srcColors[k]||'var(--gold)'}"></div></div>
+    </div>`).join('') || '<div style="color:var(--t3);font-size:0.78rem">No data yet</div>';
+
+  document.getElementById('type-bars').innerHTML=Object.entries(typCount)
+    .filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1])
+    .map(([k,v])=>`
+    <div class="bar-item">
+      <div class="bar-label-row"><span class="bar-name">${typeLabel(k)}</span><span class="bar-count">${v}</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(v/maxT)*100}%;background:${typColors[k]||'var(--gold)'}"></div></div>
+    </div>`).join('') || '<div style="color:var(--t3);font-size:0.78rem">No data yet</div>';
+}
+
+/* ── ACTIVITY FEED ───────────────────────────── */
+function renderActivityFeed() {
+  // Merge real lead events with static activity
+  const leads = getLeads().slice(0,5).map(l=>({
+    icon: l.source==='evaluator'?'🏠':'💬',
+    text: `<strong>${l.contact?.firstName||'Someone'} ${l.contact?.lastName||''}</strong> submitted ${l.source==='evaluator'?'an evaluator':'a chat inquiry'} — ${typeLabel(l.property?.type||'residential')}`,
+    time: relTime(l.timestamp)
+  }));
+  const all=[...leads,...ACTIVITY].slice(0,18);
+  document.getElementById('activity-feed').innerHTML=all.map(a=>`
+    <div class="act-item">
+      <div class="act-icon">${a.icon}</div>
+      <div class="act-text">${a.text}</div>
+      <div class="act-time">${a.time}</div>
+    </div>`).join('');
+}
+
+/* ── RENDER LEADS ────────────────────────────── */
+let activeFilter='all';
+function setFilter(f) {
+  activeFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById('f-'+f);
+  if(el) el.classList.add('active');
+  renderLeads();
+}
+function renderLeads() {
+  const feed=document.getElementById('lead-feed');
+  let leads=getLeads();
+  if(activeFilter==='hot')       leads=leads.filter(l=>temp(l)==='hot');
+  if(activeFilter==='warm')      leads=leads.filter(l=>temp(l)==='warm');
+  if(activeFilter==='evaluator') leads=leads.filter(l=>l.source==='evaluator');
+  if(activeFilter==='riley')     leads=leads.filter(l=>l.source==='riley');
+
+  if(!leads.length){
+    feed.innerHTML=`<div class="empty-state"><div class="ei">📭</div><h3>No leads here</h3><p>Leads from the evaluator and Riley chatbot appear here automatically.</p></div>`;
+    return;
+  }
+  feed.innerHTML=leads.map(buildCard).join('');
+  leads.forEach(l=>{
+    const ss=document.getElementById('ss-'+l.id);
+    if(ss){ ss.value=l.status||'new'; ss.onchange=e=>{ updateLead(l.id,{status:e.target.value}); updateStats(); toast('Status updated','ok'); }; }
+    const nt=document.getElementById('nt-'+l.id);
+    if(nt) nt.value=l.notes||'';
+  });
+}
+function buildCard(l) {
+  const t=temp(l), tb=tLabel(t);
+  const name=`${l.contact?.firstName||''} ${l.contact?.lastName||''}`.trim()||'Unknown';
+  const init=name.charAt(0).toUpperCase();
+  const addr=l.property?.street?`${l.property.street}, ${l.property.city||'Bristol'} ${l.property.state||'TN'}`:l.property?.address||'—';
+  let details='';
+  if(l.property?.type)      details+=det('Property Type',typeLabel(l.property.type));
+  if(l.property?.situation) details+=det('Situation',sitLabel(l.property.situation));
+  if(l.property?.beds)      details+=det('Details',`${l.property.beds} BR / ${l.property.baths||'—'} BA${l.property.sqft?' · '+parseInt(l.property.sqft).toLocaleString()+' sqft':''}`);
+  else if(l.property?.sqftCom) details+=det('Square Footage',parseInt(l.property.sqftCom).toLocaleString()+' sqft');
+  if(l.property?.condition) details+=det('Condition',condLabel(l.property.condition));
+  if(l.offerRange)          details+=det('Est. Cash Offer',l.offerRange,'offer');
+  details+=`<select class="lc-status-sel" id="ss-${l.id}">
+    <option value="new">🆕 New — Needs Contact</option>
+    <option value="contacted">📞 Contacted</option>
+    <option value="qualified">✅ Qualified</option>
+    <option value="offer_sent">💰 Offer Sent</option>
+    <option value="closed">🏁 Closed / Won</option>
+    <option value="dead">❌ Dead / Lost</option>
+  </select>
+  <div class="lc-notes-row">
+    <textarea class="lc-notes" id="nt-${l.id}" placeholder="Add notes…" rows="2"></textarea>
+    <button class="save-btn" onclick="saveNote('${l.id}')">Save</button>
+  </div>`;
+
+  const callBtn=l.contact?.phone?`<a href="tel:${l.contact.phone}" class="act-btn call"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.13 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.46-.46a2 2 0 012.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0122 16.92z"/></svg>Call ${l.contact.phone}</a>`:'' ;
+
+  return `<div class="lead-card ${t}" id="card-${l.id}">
+    <div class="lc-header">
+      <div class="lc-avatar">${init}</div>
+      <div class="lc-meta">
+        <div class="lc-name">${name}</div>
+        <div class="lc-contacts">
+          ${l.contact?.phone?`<div class="lc-ci"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.13 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.46-.46a2 2 0 012.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0122 16.92z"/></svg><a href="tel:${l.contact.phone}">${l.contact.phone}</a></div>`:''}
+          ${l.contact?.email?`<div class="lc-ci"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>${l.contact.email}</div>`:''}
+          <div class="lc-ci"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>${addr}</div>
+        </div>
+        <div class="lc-badges">
+          <span class="badge ${tb.c}">${tb.l}</span>
+          <span class="badge b-src">${srcLabel(l.source)}</span>
+          ${l.property?.type?`<span class="badge b-type">${typeLabel(l.property.type)}</span>`:''}
+        </div>
+      </div>
+      <div class="lc-time">${relTime(l.timestamp)}</div>
+    </div>
+    <div class="lc-body">${details}</div>
+    <div class="lc-actions">
+      ${callBtn}
+      <button class="act-btn monday" onclick="pushMonday('${l.id}')">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Push to Monday
+      </button>
+      <button class="act-btn del" onclick="archiveLead('${l.id}')">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
+        Archive
+      </button>
+    </div>
+  </div>`;
+}
+function det(label,value,cls='') {
+  return `<div class="lc-detail"><div class="lc-dl">${label}</div><div class="lc-dv ${cls}">${value}</div></div>`;
+}
+function saveNote(id) {
+  const el=document.getElementById('nt-'+id); if(!el) return;
+  updateLead(id,{notes:el.value});
+  const btn=el.nextElementSibling;
+  if(btn){btn.textContent='Saved ✓';btn.classList.add('saved');setTimeout(()=>{btn.textContent='Save';btn.classList.remove('saved');},2000);}
+}
+function archiveLead(id) {
+  const leads=getLeads().filter(l=>l.id!==id); saveLeads(leads);
+  renderLeads(); updateStats(); toast('Lead archived','info');
+}
+function pushMonday(id) {
+  const l=getLeads().find(x=>x.id===id); if(!l) return;
+  const name=`${l.contact?.firstName||''} ${l.contact?.lastName||''}`.trim();
+  window.open(CFG.mondayUrl,'_blank');
+  toast('Opening Monday.com →','info');
+  updateLead(id,{status:'contacted'}); renderLeads(); updateStats();
+}
+
+/* ── MODAL ───────────────────────────────────── */
+function openModal() {
+  document.getElementById('overlay').classList.add('open');
+  setTimeout(()=>document.getElementById('ml-fn').focus(),320);
+}
+function closeModal() { document.getElementById('overlay').classList.remove('open'); }
+function handleOvClick(e) { if(e.target===document.getElementById('overlay')) closeModal(); }
+function submitManualLead() {
+  const fn=document.getElementById('ml-fn').value.trim();
+  const ph=document.getElementById('ml-ph').value.trim();
+  if(!fn||!ph){toast('Name and phone are required','info');return;}
+  const lead={
+    id:'m_'+Date.now(), source:document.getElementById('ml-src').value,
+    status:'new', timestamp:new Date().toISOString(),
+    contact:{firstName:fn,lastName:document.getElementById('ml-ln').value.trim(),phone:ph,email:document.getElementById('ml-em').value.trim()},
+    property:{type:document.getElementById('ml-ty').value,address:document.getElementById('ml-ad').value.trim(),situation:document.getElementById('ml-sit').value},
+    offerRange:'', notes:document.getElementById('ml-no').value.trim(),
+  };
+  const leads=getLeads();
+  // Remove demo leads on first real entry
+  const real=leads.filter(l=>!l.id.startsWith('d'));
+  real.unshift(lead); saveLeads(real.length?real:[lead]);
+  closeModal(); renderLeads(); updateStats(); renderActivityFeed();
+  toast('Lead added to pipeline ✓','ok');
+  ['ml-fn','ml-ln','ml-ph','ml-em','ml-ad','ml-no'].forEach(id=>document.getElementById(id).value='');
+}
+
+/* ── TOAST ───────────────────────────────────── */
+function toast(msg,type='') {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className=`toast ${type} show`;
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+/* ── INIT ────────────────────────────────────── */
+function initDash() {
+  setGreeting(); updateClock();
+  setInterval(updateClock, 15000);
+  setInterval(()=>{ renderLeads(); renderActivityFeed(); }, 60000);
+  updateStats(); renderLeads(); renderActivityFeed();
+}
+</script>
+</body>
+</html>
