@@ -177,25 +177,33 @@
     develop:    ["Ground-up construction","Historic renovation","Tenant improvement","Development timeline","Get a quote"],
     market:     ["Casino corridor listings","Vacancy rate data","Get market report","Top investments 2026","Tell me about Bristol"],
     residential:["Bradley St portfolio","Randolph St homes","Investor returns?","Casino proximity?","Schedule a showing"],
-    tour:       ["📞 Call 423-742-7219","Drop my number","Tell me about City Centre","628 State St","Other properties"],
+    tour:       ["📞 Call 423-742-7219","City Centre details","628 State St","Other properties","Maybe another time"],
     contact:    ["Call 423-742-7219","Send a message","Office hours","Our location","Start a chat"],
     venue:      ["Capacity details","Pricing?","Corporate packages","Book the Foundation","Other properties"],
     industrial: ["45,500 sqft warehouse","Loading dock specs","Office portion?","Investment potential","Schedule a tour"],
   };
 
   /* ── NLP: score-based matching ──────────────────────────────── */
+  // Phrases that signal navigation/questions, not a person's name
+  const NAV_PATTERN = /^(tell|show|what|how|where|who|when|can|is|are|do|does|i|get|give|help|about|more|yes|no|maybe|sure|ok|okay|schedule|book|view|see|list|find|info|details|pricing|price|available|please)/i;
+
   function getReply(q) {
     const lower = q.toLowerCase().replace(/[^\w\s]/g, ' ');
     const words = lower.split(/\s+/);
 
     // ── Lead capture flow ─────────────────────────────────────
+    // Only treat input as a name if it doesn't look like a question/command
     if (ctx.askedName && !ctx.capturedName) {
       const potential = q.trim();
-      if (potential.length > 1) {
+      if (potential.length > 1 && !NAV_PATTERN.test(potential)) {
         ctx.capturedName = potential;
         ctx.askedName    = false;
         ctx.askedPhone   = true;
-        return `Nice to meet you, **${ctx.capturedName.split(' ')[0]}**! 😊 And what's the best phone number to reach you? (We'll have someone call you shortly — no pressure at all)`;
+        return `Nice to meet you, **${ctx.capturedName.split(' ')[0]}**! 😊 And what's the best phone number to reach you? We'll have someone call you within a few hours — no pressure.`;
+      }
+      // If it looks like a navigation phrase, drop out of capture mode and answer normally
+      if (NAV_PATTERN.test(potential)) {
+        ctx.askedName = false; // reset — don't block navigation
       }
     }
     if (ctx.askedPhone && !ctx.capturedPhone) {
@@ -204,9 +212,11 @@
         ctx.capturedPhone = q.trim();
         ctx.askedPhone    = false;
         saveLead();
-        return `Perfect — got it! ✅ **${ctx.capturedName ? ctx.capturedName.split(' ')[0] : 'Someone'}** from our team will reach out to you at **${ctx.capturedPhone}** shortly — usually within a couple hours during business hours.\n\nAnything else I can help you with while you have me here?`;
+        return `Perfect — got it! ✅ **${ctx.capturedName ? ctx.capturedName.split(' ')[0] : 'Someone'}** from our team will reach out at **${ctx.capturedPhone}** shortly — usually within a couple hours during business hours.\n\nAnything else I can help you with?`;
+      } else if (!NAV_PATTERN.test(q.trim())) {
+        return "Just need a phone number I can pass along — or call us direct: <a href='tel:+14237427219' style='color:var(--gold);font-weight:700;'>423-742-7219</a>";
       } else {
-        return "Just need a phone number I can pass along — even approximate is fine. (Or call us direct at <a href='tel:+14237427219' style='color:var(--gold);font-weight:700;'>423-742-7219</a>)";
+        ctx.askedPhone = false; // navigation phrase — drop capture mode
       }
     }
 
@@ -288,7 +298,12 @@
   }
 
   /* ── Get context-aware chips ────────────────────────────────── */
+  const CHIPS_CAPTURE_NAME  = ["My name is…", "📞 Call me instead", "Maybe later"];
+  const CHIPS_CAPTURE_PHONE = ["📞 Call 423-742-7219", "Skip for now", "Use contact form"];
+
   function getChips() {
+    if (ctx.askedName  && !ctx.capturedName)  return CHIPS_CAPTURE_NAME;
+    if (ctx.askedPhone && !ctx.capturedPhone) return CHIPS_CAPTURE_PHONE;
     return CHIPS_BY_INTENT[ctx.intent] || CHIPS_DEFAULT;
   }
 
