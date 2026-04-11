@@ -1,0 +1,74 @@
+/* ============================================================
+   HURLEY ENTERPRISE LLC — Social Proof Ticker CSS
+   css/social-proof.css
+   ============================================================ */
+
+#social-proof-ticker {
+  position: fixed;
+  bottom: clamp(1.25rem, 4vw, 1.75rem);
+  left: clamp(1.25rem, 4vw, 1.75rem);
+  z-index: 1050;
+  max-width: 300px;
+  opacity: 0;
+  transform: translateX(-110%);
+  transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1);
+  pointer-events: none;
+}
+#social-proof-ticker.visible {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.sp-card {
+  background: rgba(14,14,14,0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-left: 3px solid var(--gold);
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+
+.sp-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--gold-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+.sp-content { flex: 1; min-width: 0; }
+.sp-action {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--off-white);
+  line-height: 1.4;
+  margin-bottom: 0.2rem;
+}
+.sp-time {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+@supports (padding: max(0px)) {
+  #social-proof-ticker {
+    bottom: max(clamp(1.25rem, 4vw, 1.75rem), env(safe-area-inset-bottom));
+    left: max(clamp(1.25rem, 4vw, 1.75rem), env(safe-area-inset-left));
+  }
+}
+
+@media (max-width: 480px) {
+  #social-proof-ticker {
+    max-width: calc(100vw - 5.5rem);
+  }
+}
