@@ -1413,8 +1413,10 @@ function submitEvaluator() {
     localStorage.setItem('hurley_leads', JSON.stringify(real));
   } catch(e) { console.warn('Lead save failed:', e); }
 
-  // Show success UI
-  document.getElementById('eval-track').closest('.eval-steps-viewport').style.display = 'none';
+  // Show success UI — hide the steps viewport and release its fixed height
+  const viewport = document.getElementById('eval-track').closest('.eval-steps-viewport');
+  viewport.style.display = 'none';
+  viewport.style.height  = '';          // let card grow to fit success content
   document.getElementById('eval-header').style.display = 'none';
   document.getElementById('eval-progress-fill').style.width = '100%';
   const successStep = document.getElementById('success-step');
