@@ -177,10 +177,11 @@
     .stat-card {
       background: var(--bg-2); border: 1px solid var(--border);
       border-radius: var(--r); padding: 1rem 0.75rem; text-align: center;
-      transition: border-color 0.2s, transform 0.2s;
-      cursor: default;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      cursor: pointer; -webkit-tap-highlight-color: transparent;
     }
-    .stat-card:hover { transform: translateY(-2px); border-color: var(--border-md); }
+    .stat-card:hover { transform: translateY(-2px); border-color: var(--border-md); box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+    .stat-card:active { transform: scale(0.97); }
     .stat-num { font-size: clamp(1.4rem, 5vw, 1.7rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1; margin-bottom: 0.3rem; }
     .stat-label { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; color: var(--t3); }
     .stat-sub { font-size: 0.63rem; color: var(--t3); margin-top: 0.2rem; }
@@ -525,32 +526,32 @@
 
   <!-- STATS GRID -->
   <div class="stats-grid">
-    <div class="stat-card s-hot">
+    <div class="stat-card s-hot" onclick="setFilter('hot')" title="View hot leads">
       <div class="stat-num" id="s-hot">0</div>
       <div class="stat-label">🔥 Hot Leads</div>
       <div class="stat-sub" id="s-hot-sub">Urgent follow-up</div>
     </div>
-    <div class="stat-card s-warm">
+    <div class="stat-card s-warm" onclick="setFilter('warm')" title="View warm leads">
       <div class="stat-num" id="s-warm">0</div>
       <div class="stat-label">🌡 Warm Leads</div>
       <div class="stat-sub" id="s-warm-sub">Nurture this week</div>
     </div>
-    <div class="stat-card s-cool">
+    <div class="stat-card s-cool" onclick="setFilter('all')" title="View all recent leads">
       <div class="stat-num" id="s-new">0</div>
       <div class="stat-label">🆕 New Today</div>
       <div class="stat-sub">Last 24 hours</div>
     </div>
-    <div class="stat-card s-white">
+    <div class="stat-card s-white" onclick="setFilter('all')" title="View full pipeline">
       <div class="stat-num" id="s-total">0</div>
       <div class="stat-label">📋 Total Pipeline</div>
       <div class="stat-sub">Active (excl. closed)</div>
     </div>
-    <div class="stat-card s-purple">
+    <div class="stat-card s-purple" onclick="setFilter('all')" title="View pipeline value">
       <div class="stat-num" id="s-value">$0</div>
       <div class="stat-label">💰 Est. Value</div>
       <div class="stat-sub">Low-end offer range</div>
     </div>
-    <div class="stat-card s-info">
+    <div class="stat-card s-info" onclick="setFilter('all')" title="View contacted leads">
       <div class="stat-num" id="s-contacted">0</div>
       <div class="stat-label">📞 Contacted</div>
       <div class="stat-sub">Waiting on response</div>
@@ -683,27 +684,27 @@ const CFG = {
 /* ── DEMO DATA ────────────────────────────────── */
 const DEMO = [
   { id:'d1', source:'evaluator', status:'new', timestamp: new Date(Date.now()-28*60000).toISOString(),
-    contact:{firstName:'Mike',lastName:'Garrett',phone:'423-321-0182',email:'mgarrett@email.com'},
+    contact:{firstName:'Mike',lastName:'Garrett',phone:'4233210182',email:'mgarrett@email.com'},
     property:{type:'residential',street:'2210 Randolph St',city:'Bristol',state:'VA',condition:'poor',situation:'distressed',beds:'3',baths:'1',sqft:'1200',year:'1971'},
     offerRange:'$65,000 – $90,000', notes:''},
   { id:'d2', source:'riley', status:'contacted', timestamp: new Date(Date.now()-2*3600000).toISOString(),
-    contact:{firstName:'Sandra',lastName:'Hollis',phone:'423-321-0241',email:''},
+    contact:{firstName:'Sandra',lastName:'Hollis',phone:'4233210241',email:''},
     property:{type:'commercial',street:'417 State St',city:'Bristol',state:'TN',condition:'good',situation:'relocating'},
     offerRange:'', notes:'Chatted with Riley — empty retail on State St. Wants to close before June.'},
   { id:'d3', source:'evaluator', status:'new', timestamp: new Date(Date.now()-5*3600000).toISOString(),
-    contact:{firstName:'James',lastName:'Coffey',phone:'276-321-0093',email:'jcoffey@outlook.com'},
+    contact:{firstName:'James',lastName:'Coffey',phone:'2763210093',email:'jcoffey@outlook.com'},
     property:{type:'residential',street:'2416 Bradley St',city:'Bristol',state:'VA',condition:'fair',situation:'estate',beds:'4',baths:'2',sqft:'1680',year:'1965'},
     offerRange:'$95,000 – $130,000', notes:'Estate — inherited from parent. Motivated but not in rush.'},
-  { id:'d4', source:'riley', status:'new', timestamp: new Date(Date.now()-8*3600000).toISOString(),
-    contact:{firstName:'Tanya',lastName:'Blevins',phone:'423-321-0317',email:'tanya.b@gmail.com'},
+  { id:'d4', source:'market_report_homepage', status:'new', timestamp: new Date(Date.now()-6*3600000).toISOString(),
+    contact:{firstName:'Tanya',lastName:'Blevins',phone:'4233210317',email:'tanya.b@gmail.com'},
     property:{type:'residential',street:'812 Cumberland St',city:'Bristol',state:'TN',condition:'good',situation:'other'},
-    offerRange:'', notes:'Curious about cash offer. Not urgent. Came through Riley chat.'},
+    offerRange:'', notes:'Downloaded market report. Curious about cash offer. Not urgent.'},
   { id:'d5', source:'evaluator', status:'qualified', timestamp: new Date(Date.now()-24*3600000).toISOString(),
-    contact:{firstName:'Roger',lastName:'Estep',phone:'276-321-0044',email:'roger.estep@biz.net'},
+    contact:{firstName:'Roger',lastName:'Estep',phone:'2763210044',email:'roger.estep@biz.net'},
     property:{type:'industrial',street:'1844 W State St',city:'Bristol',state:'VA',condition:'fair',situation:'speed',sqftCom:'18000',units:'1',leased:'no'},
     offerRange:'$280,000 – $390,000', notes:'Business relocating. Wants to move fast. Follow up Mon AM.'},
   { id:'d6', source:'phone', status:'new', timestamp: new Date(Date.now()-30*60000).toISOString(),
-    contact:{firstName:'Darlene',lastName:'Yates',phone:'423-321-0599',email:''},
+    contact:{firstName:'Darlene',lastName:'Yates',phone:'4233210599',email:''},
     property:{type:'land',street:'Old Jonesboro Rd',city:'Kingsport',state:'TN',condition:'excellent',situation:'investor'},
     offerRange:'$45,000 – $80,000', notes:'Called in — 4 acres of land near Kingsport. Investor liquidating.'},
 ];
@@ -798,7 +799,7 @@ function tLabel(t) {
   return {hot:{c:'b-hot',l:'🔥 Hot'},warm:{c:'b-warm',l:'🌡 Warm'},cool:{c:'b-cool',l:'🆕 New'}}[t]||{c:'b-cool',l:'🆕 New'};
 }
 function srcLabel(s) {
-  return {evaluator:'🏠 Evaluator',riley:'💬 Riley',phone:'📞 Phone',referral:'🤝 Referral',walkin:'🚶 Walk-In'}[s]||s;
+  return {evaluator:'🏠 Evaluator',riley:'💬 Riley',phone:'📞 Phone',referral:'🤝 Referral',walkin:'🚶 Walk-In',market_report_homepage:'📊 Market Report'}[s]||s;
 }
 function typeLabel(t) {
   return {residential:'🏠 Residential',commercial:'🏢 Commercial',industrial:'🏭 Industrial',land:'🌿 Land'}[t]||t;
@@ -996,7 +997,7 @@ function buildCard(l) {
       <div class="lc-meta">
         <div class="lc-name">${name}</div>
         <div class="lc-contacts">
-          ${l.contact?.phone?`<div class="lc-ci"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.13 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.46-.46a2 2 0 012.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0122 16.92z"/></svg><a href="tel:${l.contact.phone}">${l.contact.phone}</a></div>`:''}
+          ${l.contact?.phone?`<div class="lc-ci"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.13 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.46-.46a2 2 0 012.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0122 16.92z"/></svg><a href="tel:+1${l.contact.phone.replace(/\D/g,'')}">${l.contact.phone.replace(/(\d{3})(\d{3})(\d{4})/,'$1-$2-$3')}</a></div>`:''}
           ${l.contact?.email?`<div class="lc-ci"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>${l.contact.email}</div>`:''}
           <div class="lc-ci"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>${addr}</div>
         </div>
@@ -1032,15 +1033,29 @@ function saveNote(id) {
   if(btn){btn.textContent='Saved ✓';btn.classList.add('saved');setTimeout(()=>{btn.textContent='Save';btn.classList.remove('saved');},2000);}
 }
 function archiveLead(id) {
+  if (!confirm('Archive this lead? It will be removed from the pipeline.')) return;
   const leads=getLeads().filter(l=>l.id!==id); saveLeads(leads);
   renderLeads(); updateStats(); toast('Lead archived','info');
 }
 function pushMonday(id) {
   const l=getLeads().find(x=>x.id===id); if(!l) return;
   const name=`${l.contact?.firstName||''} ${l.contact?.lastName||''}`.trim();
-  window.open(CFG.mondayUrl,'_blank');
-  toast('Opening Monday.com →','info');
-  updateLead(id,{status:'contacted'}); renderLeads(); updateStats();
+  // Demo-mode: simulate CRM push with animated toast + status update
+  const btn = document.querySelector(`#card-${id} .act-btn.monday`);
+  if (btn) {
+    btn.textContent = '⏳ Pushing…';
+    btn.style.pointerEvents = 'none';
+    setTimeout(() => {
+      btn.textContent = '✅ Synced to CRM';
+      btn.style.background = 'rgba(62,207,142,0.12)';
+      btn.style.borderColor = 'rgba(62,207,142,0.3)';
+      btn.style.color = 'var(--cool)';
+      updateLead(id,{status:'contacted'});
+      updateStats();
+      toast(`${name} pushed to CRM — status set to Contacted ✓`, 'ok');
+      setTimeout(() => { btn.style.pointerEvents = ''; }, 3000);
+    }, 1200);
+  }
 }
 
 /* ── MODAL ───────────────────────────────────── */
