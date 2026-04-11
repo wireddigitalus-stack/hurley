@@ -1,0 +1,19 @@
+/* HURLEY ENTERPRISE LLC — Mobile CSS */
+@media (max-width: 768px) {
+  .hero-actions { flex-direction: column; }
+  .hero-actions .btn { width: 100%; justify-content: center; }
+  .stats-strip { grid-template-columns: repeat(2, 1fr); }
+  .listings-grid { grid-template-columns: 1fr; padding: 0 var(--space-4); }
+  .listing-specs { grid-template-columns: 1fr; }
+  /* Sticky CTA — removed */
+}
+@media (max-width: 480px) {
+  .hero-headline { font-size: 2.4rem; }
+  .stats-strip { grid-template-columns: 1fr 1fr; }
+  .stat-number { font-size: 1.8rem; }
+  .services-grid { grid-template-columns: 1fr; }
+}
+@supports (padding: max(0px)) {
+  /* Sticky CTA — removed */
+  #site-nav { padding-left: max(var(--container-px), env(safe-area-inset-left)); padding-right: max(var(--container-px), env(safe-area-inset-right)); }
+}

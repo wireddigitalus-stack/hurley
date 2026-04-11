@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /huley-enterprise-api/
+Disallow: /.env
+Allow: /css/
+Allow: /js/
+Allow: /img/
+Sitemap: https://www.hurleyenterprisellc.com/sitemap.xml
+Crawl-delay: 1
