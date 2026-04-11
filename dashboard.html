@@ -447,6 +447,156 @@
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     .toast.ok { border-color: rgba(62,207,142,0.4); color: var(--cool); }
     .toast.info { border-color: var(--gold-dim); color: var(--gold-lt); }
+
+    /* ── LEAD TABLE ─────────────────────────────── */
+    .lead-table-wrap {
+      margin-top: 2rem; border: 1px solid var(--border);
+      border-radius: var(--r); overflow: hidden;
+    }
+    .lt-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 1.1rem; border-bottom: 1px solid var(--border);
+      gap: 0.75rem; flex-wrap: wrap;
+    }
+    .lt-title { font-size: 0.85rem; font-weight: 800; }
+    .lt-search {
+      flex: 1; min-width: 160px; max-width: 280px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 9px; padding: 0.5rem 0.75rem 0.5rem 2rem;
+      font-size: 0.78rem; color: var(--off-white); outline: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B6560' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: 0.6rem center; background-size: 13px;
+      transition: border-color 0.2s;
+    }
+    .lt-search::placeholder { color: var(--t3); }
+    .lt-search:focus { border-color: var(--gold); }
+    .lt-table { width: 100%; border-collapse: collapse; }
+    .lt-table th {
+      font-size: 0.58rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--t3); padding: 0.6rem 1rem; text-align: left;
+      border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.015);
+    }
+    .lt-table td {
+      padding: 0.7rem 1rem; font-size: 0.76rem; color: var(--t2);
+      border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle;
+    }
+    .lt-table tr:last-child td { border-bottom: none; }
+    .lt-table tr:hover td { background: rgba(255,255,255,0.03); }
+    .lt-name { font-weight: 800; color: var(--off-white); }
+    .lt-phone a { color: var(--gold-lt); font-weight: 700; text-decoration: none; }
+    .lt-action {
+      padding: 0.3em 0.7em; border-radius: 7px; font-size: 0.65rem; font-weight: 800;
+      cursor: pointer; border: 1px solid var(--border); background: var(--bg-3);
+      color: var(--t2); white-space: nowrap; transition: all 0.18s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .lt-action.call { border-color: rgba(62,207,142,0.3); color: var(--cool); background: var(--cool-dim); }
+    .lt-action.push { border-color: rgba(97,97,255,0.3); color: #a09eff; background: rgba(97,97,255,0.08); }
+    .lt-empty { text-align: center; padding: 2rem; color: var(--t3); font-size: 0.8rem; }
+    @media(max-width:600px){
+      .lt-table th:nth-child(3),.lt-table td:nth-child(3),
+      .lt-table th:nth-child(4),.lt-table td:nth-child(4) { display: none; }
+    }
+
+    /* ── MONDAY MODAL ───────────────────────────── */
+    #monday-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.82);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      z-index: 600; display: flex; align-items: center; justify-content: center;
+      padding: 1.25rem; opacity: 0; pointer-events: none;
+      transition: opacity 0.28s;
+    }
+    #monday-overlay.open { opacity: 1; pointer-events: all; }
+    .monday-sheet {
+      background: #1c1a2e; border: 1px solid rgba(97,97,255,0.25);
+      border-radius: 18px; width: 100%; max-width: 560px;
+      transform: scale(0.94) translateY(12px);
+      transition: transform 0.32s cubic-bezier(0.16,1,0.3,1);
+      overflow: hidden;
+    }
+    #monday-overlay.open .monday-sheet { transform: scale(1) translateY(0); }
+    .mon-topbar {
+      background: #161631; padding: 0.85rem 1.1rem;
+      display: flex; align-items: center; gap: 0.75rem;
+      border-bottom: 1px solid rgba(97,97,255,0.15);
+    }
+    .mon-logo {
+      font-size: 0.75rem; font-weight: 900; letter-spacing: -0.01em;
+      color: #fff; background: linear-gradient(135deg,#ff5ac4,#ff642e,#ffcb00);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      font-size: 1.05rem;
+    }
+    .mon-board-name { font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.6); }
+    .mon-close {
+      margin-left: auto; background: none; border: none; color: rgba(255,255,255,0.4);
+      font-size: 1.1rem; cursor: pointer; padding: 0.2rem; line-height: 1;
+    }
+    .mon-body { padding: 1.1rem; }
+    .mon-group-label {
+      font-size: 0.6rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase;
+      color: #6161ff; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem;
+    }
+    .mon-group-label::after { content: ''; flex: 1; height: 1px; background: rgba(97,97,255,0.2); }
+    .mon-cols {
+      display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 2px; margin-bottom: 2px;
+    }
+    .mon-col-hd {
+      font-size: 0.58rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3); padding: 0.35rem 0.5rem;
+      background: rgba(255,255,255,0.03); border-radius: 4px 4px 0 0;
+    }
+    .mon-row {
+      display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 2px; border-radius: 8px; overflow: hidden;
+      border: 1px solid rgba(97,97,255,0.3);
+      animation: mon-slide-in 0.45s cubic-bezier(0.16,1,0.3,1) 0.3s both;
+    }
+    @keyframes mon-slide-in {
+      from { opacity:0; transform: translateX(-16px); }
+      to   { opacity:1; transform: translateX(0); }
+    }
+    .mon-cell {
+      padding: 0.65rem 0.5rem; font-size: 0.73rem; font-weight: 600;
+      background: rgba(97,97,255,0.08); color: var(--off-white);
+      display: flex; align-items: center;
+    }
+    .mon-cell:first-child { font-weight: 800; gap: 0.4rem; }
+    .mon-dot-new {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #6161ff; flex-shrink: 0; animation: blink 1.2s ease-in-out 3;
+    }
+    .mon-status-pill {
+      font-size: 0.6rem; font-weight: 800; padding: 0.2em 0.6em;
+      border-radius: 5px; background: rgba(62,207,142,0.2);
+      color: #3ecf8e; white-space: nowrap;
+    }
+    .mon-success {
+      margin-top: 0.9rem; padding: 0.75rem 1rem;
+      background: rgba(62,207,142,0.08); border: 1px solid rgba(62,207,142,0.2);
+      border-radius: 10px; display: flex; align-items: center; gap: 0.65rem;
+      animation: mon-slide-in 0.4s cubic-bezier(0.16,1,0.3,1) 0.8s both;
+    }
+    .mon-success-icon { font-size: 1.3rem; }
+    .mon-success-text { font-size: 0.78rem; color: #3ecf8e; font-weight: 700; }
+    .mon-success-sub { font-size: 0.68rem; color: rgba(62,207,142,0.7); margin-top: 0.1rem; }
+    .mon-footer {
+      padding: 0.85rem 1.1rem; border-top: 1px solid rgba(97,97,255,0.12);
+      display: flex; gap: 0.5rem; justify-content: flex-end;
+    }
+    .mon-btn-close {
+      padding: 0.55em 1.25em; border-radius: 8px; font-size: 0.75rem; font-weight: 800;
+      background: #6161ff; color: #fff; border: none; cursor: pointer;
+      transition: background 0.18s;
+    }
+    .mon-btn-close:hover { background: #7b7bff; }
+    .mon-btn-open {
+      padding: 0.55em 1.25em; border-radius: 8px; font-size: 0.75rem; font-weight: 700;
+      background: transparent; color: rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,255,255,0.12); cursor: pointer;
+      transition: all 0.18s;
+    }
+    .mon-btn-open:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
   </style>
 </head>
 <body>
@@ -599,7 +749,67 @@
 
   <div class="lead-feed" id="lead-feed"></div>
 
+  <!-- ── SEARCHABLE LEAD TABLE ── -->
+  <div class="lead-table-wrap" style="margin-bottom:2rem;">
+    <div class="lt-header">
+      <div class="lt-title">📋 All Leads — Quick Search</div>
+      <input class="lt-search" id="lt-search" type="search" placeholder="Search name, phone, address…" oninput="renderTable()">
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="lt-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Property</th>
+            <th>Source</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="lt-body"></tbody>
+      </table>
+    </div>
+  </div>
+
 </div><!-- /dash -->
+
+<!-- MONDAY.COM MOCK MODAL -->
+<div id="monday-overlay" onclick="handleMonClick(event)">
+  <div class="monday-sheet" id="monday-sheet">
+    <div class="mon-topbar">
+      <span class="mon-logo">monday.com</span>
+      <span class="mon-board-name">Hurley Enterprise · Sales Pipeline</span>
+      <button class="mon-close" onclick="closeMon()">✕</button>
+    </div>
+    <div class="mon-body">
+      <div class="mon-group-label">Incoming Leads</div>
+      <div class="mon-cols">
+        <div class="mon-col-hd">Task / Lead</div>
+        <div class="mon-col-hd">Status</div>
+        <div class="mon-col-hd">Phone</div>
+        <div class="mon-col-hd">Source</div>
+      </div>
+      <div class="mon-row" id="mon-row">
+        <div class="mon-cell"><span class="mon-dot-new"></span><span id="mon-name">—</span></div>
+        <div class="mon-cell"><span class="mon-status-pill">New Lead</span></div>
+        <div class="mon-cell" id="mon-phone" style="font-size:0.68rem;color:rgba(255,255,255,0.6);">—</div>
+        <div class="mon-cell" id="mon-src" style="font-size:0.68rem;color:rgba(255,255,255,0.5);">—</div>
+      </div>
+      <div class="mon-success">
+        <div class="mon-success-icon">✅</div>
+        <div>
+          <div class="mon-success-text">Successfully pushed to Sales Pipeline</div>
+          <div class="mon-success-sub">Board updated · Status set to Contacted · Assigned to Allen Hurley</div>
+        </div>
+      </div>
+    </div>
+    <div class="mon-footer">
+      <button class="mon-btn-open" onclick="closeMon()">Maybe later</button>
+      <button class="mon-btn-close" onclick="closeMon()">Open Board →</button>
+    </div>
+  </div>
+</div>
 
 <!-- ADD LEAD MODAL -->
 <div class="overlay" id="overlay" onclick="handleOvClick(event)">
@@ -1041,27 +1251,65 @@ function saveNote(id) {
 function archiveLead(id) {
   if (!confirm('Archive this lead? It will be removed from the pipeline.')) return;
   const leads=getLeads().filter(l=>l.id!==id); saveLeads(leads);
-  renderLeads(); updateStats(); toast('Lead archived','info');
+  renderLeads(); updateStats(); renderTable(); toast('Lead archived','info');
 }
 function pushMonday(id) {
   const l=getLeads().find(x=>x.id===id); if(!l) return;
   const name=`${l.contact?.firstName||''} ${l.contact?.lastName||''}`.trim();
-  // Demo-mode: simulate CRM push with animated toast + status update
+  const phone=(l.contact?.phone||'').replace(/(\/d{3})(\d{3})(\d{4})/,'$1-$2-$3');
+  // Populate and open Monday.com mock modal
+  document.getElementById('mon-name').textContent  = name || 'Lead';
+  document.getElementById('mon-phone').textContent = l.contact?.phone?.replace(/(\d{3})(\d{3})(\d{4})/,'$1-$2-$3') || '—';
+  document.getElementById('mon-src').textContent   = srcLabel(l.source) || '—';
+  document.getElementById('monday-overlay').classList.add('open');
+  // Animate the lead card button
   const btn = document.querySelector(`#card-${id} .act-btn.monday`);
   if (btn) {
-    btn.textContent = '⏳ Pushing…';
-    btn.style.pointerEvents = 'none';
-    setTimeout(() => {
-      btn.textContent = '✅ Synced to CRM';
-      btn.style.background = 'rgba(62,207,142,0.12)';
-      btn.style.borderColor = 'rgba(62,207,142,0.3)';
-      btn.style.color = 'var(--cool)';
-      updateLead(id,{status:'contacted'});
-      updateStats();
-      toast(`${name} pushed to CRM — status set to Contacted ✓`, 'ok');
-      setTimeout(() => { btn.style.pointerEvents = ''; }, 3000);
-    }, 1200);
+    btn.textContent='⏳ Pushing…'; btn.style.pointerEvents='none';
+    setTimeout(()=>{
+      btn.textContent='✅ Synced'; btn.style.background='rgba(62,207,142,0.12)';
+      btn.style.borderColor='rgba(62,207,142,0.3)'; btn.style.color='var(--cool)';
+      setTimeout(()=>{ btn.style.pointerEvents=''; },3000);
+    },1400);
   }
+  updateLead(id,{status:'contacted'}); updateStats(); renderTable();
+}
+function closeMon() { document.getElementById('monday-overlay').classList.remove('open'); }
+function handleMonClick(e) { if(e.target===document.getElementById('monday-overlay')) closeMon(); }
+
+/* ── LEAD TABLE ─────────────────────────────── */
+function renderTable() {
+  const q=(document.getElementById('lt-search')?.value||'').toLowerCase().trim();
+  const all=getLeads();
+  const filtered=q ? all.filter(l=>{
+    const name=`${l.contact?.firstName||''} ${l.contact?.lastName||''}`.toLowerCase();
+    const phone=(l.contact?.phone||'').toLowerCase();
+    const addr=(l.property?.street||l.property?.address||'').toLowerCase();
+    const city=(l.property?.city||'').toLowerCase();
+    return name.includes(q)||phone.includes(q)||addr.includes(q)||city.includes(q);
+  }) : all;
+  const tbody=document.getElementById('lt-body');
+  if(!tbody) return;
+  if(!filtered.length){ tbody.innerHTML=`<tr><td colspan="6" class="lt-empty">No leads match your search.</td></tr>`; return; }
+  tbody.innerHTML=filtered.map(l=>{
+    const name=`${l.contact?.firstName||''} ${l.contact?.lastName||''}`.trim()||'Unknown';
+    const phone=l.contact?.phone?(l.contact.phone.replace(/(\d{3})(\d{3})(\d{4})/,'$1-$2-$3')):'—';
+    const addr=l.property?.street?`${l.property.street}, ${l.property.city||''}`:l.property?.address||'—';
+    const t=temp(l);
+    const statusColors={new:'color:var(--gold)',contacted:'color:var(--info)',qualified:'color:var(--cool)',offer_sent:'color:var(--cool)',closed:'color:var(--t3)',dead:'color:var(--t3)'};
+    const statusLabels={new:'🆕 New',contacted:'📞 Contacted',qualified:'✅ Qualified',offer_sent:'💰 Offer Sent',closed:'🏁 Closed',dead:'❌ Dead'};
+    return `<tr>
+      <td><span class="lt-name">${name}</span></td>
+      <td class="lt-phone">${l.contact?.phone?`<a href="tel:+1${l.contact.phone.replace(/\D/g,'")}">${phone}</a>`:phone}</td>
+      <td style="font-size:0.72rem;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${addr}</td>
+      <td><span style="font-size:0.68rem;">${srcLabel(l.source)}</span></td>
+      <td><span style="font-size:0.7rem;font-weight:700;${statusColors[l.status||'new']||''};">${statusLabels[l.status||'new']||l.status}</span></td>
+      <td style="display:flex;gap:0.35rem;flex-wrap:nowrap;">
+        ${l.contact?.phone?`<a href="tel:+1${l.contact.phone.replace(/\D/g,'')}" class="lt-action call">📞 Call</a>`:''}
+        <button class="lt-action push" onclick="pushMonday('${l.id}')">📋 Monday</button>
+      </td>
+    </tr>`;
+  }).join('');
 }
 
 /* ── MODAL ───────────────────────────────────── */
@@ -1102,8 +1350,8 @@ function toast(msg,type='') {
 function initDash() {
   setGreeting(); updateClock();
   setInterval(updateClock, 15000);
-  setInterval(()=>{ renderLeads(); renderActivityFeed(); }, 60000);
-  updateStats(); renderLeads(); renderActivityFeed();
+  setInterval(()=>{ renderLeads(); renderActivityFeed(); renderTable(); }, 60000);
+  updateStats(); renderLeads(); renderActivityFeed(); renderTable();
 }
 </script>
   <link rel="stylesheet" href="css/social-proof.css">
