@@ -188,6 +188,141 @@
     </div>
   </section>
 
+  <!-- ══ MARKET REPORT LEAD CAPTURE ══ -->
+  <section id="market-report-cta" style="padding:5rem 0;background:var(--bg-deep);border-top:1px solid var(--bg-border);">
+    <div class="container">
+      <div id="mr-card" style="max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;background:rgba(18,18,18,0.9);border:1px solid rgba(201,168,76,0.2);border-radius:24px;padding:3rem;box-shadow:0 32px 80px rgba(0,0,0,0.5);position:relative;overflow:hidden;">
+
+        <!-- Gold top bar -->
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--gold));"></div>
+
+        <!-- Left: Report mock -->
+        <div class="reveal" style="display:flex;flex-direction:column;gap:1.5rem;">
+          <div>
+            <span style="display:inline-block;font-size:0.62rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);border-radius:999px;padding:0.3em 0.85em;margin-bottom:1rem;">📊 Free Intelligence Report</span>
+            <h2 style="font-size:clamp(1.5rem,3vw,2.1rem);font-weight:900;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.75rem;">2026 Tri-Cities<br><span style="color:var(--gold);">Market Report</span></h2>
+            <p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.7;">The Hard Rock Casino is transforming Bristol's commercial market. Get the full data picture — free.</p>
+          </div>
+
+          <!-- Mini report mock card -->
+          <div style="background:linear-gradient(135deg,#151515 0%,#1c1c1c 100%);border:1px solid rgba(201,168,76,0.15);border-radius:12px;padding:1.25rem;">
+            <div style="height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:3px;margin-bottom:1rem;"></div>
+            <div style="font-size:0.6rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;">2026 Annual Report</div>
+            <div style="font-size:1rem;font-weight:900;color:var(--off-white);margin-bottom:0.5rem;line-height:1.2;">Tri-Cities Commercial<br>Real Estate Market</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-top:0.85rem;">
+              <div style="background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.12);border-radius:7px;padding:0.6rem;text-align:center;">
+                <strong style="display:block;font-size:1.05rem;font-weight:900;color:var(--gold);">18→11%</strong>
+                <span style="font-size:0.55rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;">Vacancy Drop</span>
+              </div>
+              <div style="background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.12);border-radius:7px;padding:0.6rem;text-align:center;">
+                <strong style="display:block;font-size:1.05rem;font-weight:900;color:var(--gold);">$845M</strong>
+                <span style="font-size:0.55rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;">Casino Impact</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Checklist -->
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.5rem;">
+            <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.8rem;color:var(--text-secondary);"><span style="color:var(--gold);font-weight:900;font-size:0.85rem;">✓</span> Hard Rock Casino economic impact data</li>
+            <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.8rem;color:var(--text-secondary);"><span style="color:var(--gold);font-weight:900;font-size:0.85rem;">✓</span> Vacancy &amp; rent growth by corridor</li>
+            <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.8rem;color:var(--text-secondary);"><span style="color:var(--gold);font-weight:900;font-size:0.85rem;">✓</span> Top 2026 investment opportunities</li>
+            <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.8rem;color:var(--text-secondary);"><span style="color:var(--gold);font-weight:900;font-size:0.85rem;">✓</span> New Bristol Hotel &amp; Casino analysis</li>
+          </ul>
+        </div>
+
+        <!-- Right: Capture form -->
+        <div class="reveal" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:2rem;">
+
+          <!-- Form state -->
+          <div id="mr-form-wrap">
+            <div style="font-size:1rem;font-weight:800;color:var(--off-white);margin-bottom:0.3rem;">Get Instant Access — Free</div>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:1.5rem;">Enter your name and contact info to unlock the full report.</p>
+
+            <form id="mr-home-form" novalidate style="display:flex;flex-direction:column;gap:0.85rem;">
+              <input type="text" id="mr-name" placeholder="Your Full Name *" required autocomplete="name" autocapitalize="words"
+                style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);color:var(--off-white);padding:0.85rem 1rem;border-radius:10px;font-family:inherit;font-size:0.95rem;width:100%;box-sizing:border-box;transition:border-color 0.2s;-webkit-appearance:none;min-height:50px;">
+              <input type="tel" id="mr-phone" placeholder="Phone Number *" required autocomplete="tel" inputmode="tel"
+                style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);color:var(--off-white);padding:0.85rem 1rem;border-radius:10px;font-family:inherit;font-size:0.95rem;width:100%;box-sizing:border-box;transition:border-color 0.2s;-webkit-appearance:none;min-height:50px;">
+              <input type="email" id="mr-email" placeholder="Email Address (optional)" autocomplete="email" inputmode="email"
+                style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);color:var(--off-white);padding:0.85rem 1rem;border-radius:10px;font-family:inherit;font-size:0.95rem;width:100%;box-sizing:border-box;transition:border-color 0.2s;-webkit-appearance:none;min-height:50px;">
+              <button type="submit" id="mr-submit" style="background:var(--gold);color:#000;border:none;padding:1rem;border-radius:10px;font-family:inherit;font-size:0.95rem;font-weight:800;cursor:pointer;width:100%;min-height:52px;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:background 0.2s,transform 0.15s;-webkit-tap-highlight-color:transparent;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:17px;height:17px;" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Unlock Free Report
+              </button>
+              <p style="font-size:0.65rem;color:var(--text-muted);text-align:center;margin:0;">🔒 Never shared. No spam. One-time access.</p>
+            </form>
+          </div>
+
+          <!-- Success state (hidden until submit) -->
+          <div id="mr-success-wrap" style="display:none;text-align:center;padding:1rem 0;">
+            <div style="width:54px;height:54px;border-radius:50%;background:rgba(201,168,76,0.12);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.4rem;">✓</div>
+            <h3 style="font-size:1.05rem;margin-bottom:0.4rem;color:var(--off-white);">Report Unlocked!</h3>
+            <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:1.5rem;">Click below to read the full 2026 Tri-Cities Market Report.</p>
+            <a href="market-report.html" id="mr-report-link" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;background:var(--gold);color:#000;padding:0.9rem 1.5rem;border-radius:10px;font-size:0.9rem;font-weight:800;text-decoration:none;transition:background 0.2s;margin-bottom:0.75rem;">
+              📊 Read the Full Report →
+            </a>
+            <a href="for-sale-lease.html" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;background:transparent;color:var(--gold);border:1px solid rgba(201,168,76,0.3);padding:0.75rem 1.5rem;border-radius:10px;font-size:0.8rem;font-weight:700;text-decoration:none;transition:background 0.2s;">
+              View Available Properties →
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    #mr-home-form input:focus { outline:none; border-color:rgba(201,168,76,0.5); }
+    #mr-home-form input::placeholder { color: rgba(255,255,255,0.3); }
+    @media (max-width: 700px) {
+      #mr-card { grid-template-columns: 1fr !important; gap: 2rem !important; padding: 2rem 1.5rem !important; }
+    }
+  </style>
+
+  <script>
+  document.getElementById('mr-home-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name  = document.getElementById('mr-name').value.trim();
+    const phone = document.getElementById('mr-phone').value.trim();
+    const email = document.getElementById('mr-email').value.trim();
+
+    // Validate name + phone
+    const nameEl  = document.getElementById('mr-name');
+    const phoneEl = document.getElementById('mr-phone');
+    if (!name)  { nameEl.style.borderColor  = 'rgba(248,113,113,0.6)'; nameEl.focus();  return; }
+    if (!phone) { phoneEl.style.borderColor = 'rgba(248,113,113,0.6)'; phoneEl.focus(); return; }
+
+    // Save lead to CEO dashboard localStorage
+    const lead = {
+      id:          'report_' + Date.now(),
+      source:      'market_report_homepage',
+      temperature: 'warm',
+      status:      'new',
+      timestamp:   new Date().toISOString(),
+      contact:     { firstName: name.split(' ')[0], lastName: name.split(' ').slice(1).join(' '), phone, email },
+      property:    {},
+      offerRange:  '',
+      notes:       'Requested 2026 Market Report from homepage'
+    };
+    try {
+      const existing = JSON.parse(localStorage.getItem('hurley_leads') || '[]');
+      existing.unshift(lead);
+      localStorage.setItem('hurley_leads', JSON.stringify(existing));
+    } catch(ex) { console.warn('Lead save failed', ex); }
+
+    // Reveal success + report link
+    document.getElementById('mr-form-wrap').style.display  = 'none';
+    document.getElementById('mr-success-wrap').style.display = 'block';
+
+    // Pulse the card border gold
+    const card = document.getElementById('mr-card');
+    card.style.borderColor = 'rgba(201,168,76,0.6)';
+    setTimeout(() => { card.style.borderColor = 'rgba(201,168,76,0.2)'; }, 2000);
+
+    console.log('Market report lead captured:', lead);
+  });
+  </script>
+
   <!-- CTA Banner -->
   <section class="section--sm" style="background:linear-gradient(135deg,rgba(201,168,76,0.06) 0%,transparent 60%);border-top:1px solid var(--bg-border);border-bottom:1px solid var(--bg-border);">
     <div class="container" style="text-align:center;">
