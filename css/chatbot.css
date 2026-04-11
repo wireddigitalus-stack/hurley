@@ -6,7 +6,7 @@
 /* ── Toggle button ──────────────────────────────────────────── */
 #chat-toggle {
   position: fixed;
-  bottom: clamp(1.25rem, 4vw, 1.75rem);
+  bottom: 5rem;
   right: clamp(1.25rem, 4vw, 1.75rem);
   z-index: 1100;
   width: 58px;
@@ -42,7 +42,7 @@
 /* ── Pop card (call-to-action) ──────────────────────────────── */
 #chat-pop-card {
   position: fixed;
-  bottom: calc(clamp(1.25rem, 4vw, 1.75rem) + 72px);
+  bottom: calc(5rem + 72px);
   right: clamp(1.25rem, 4vw, 1.75rem);
   z-index: 1099;
   width: 260px;
@@ -163,7 +163,7 @@
 /* ── Chat window ────────────────────────────────────────────── */
 #chat-window {
   position: fixed;
-  bottom: calc(clamp(1.25rem, 4vw, 1.75rem) + 72px);
+  bottom: calc(5rem + 72px);
   right: clamp(1.25rem, 4vw, 1.75rem);
   z-index: 1098;
   width: min(380px, calc(100vw - 2rem));
