@@ -504,7 +504,7 @@
     <div class="g-top">
       <div>
         <div class="g-eyebrow"><span class="g-dot"></span><span id="g-time-label">Live · Eastern Time</span></div>
-        <div class="g-name" id="g-name">Good Morning, <em>Allen</em></div>
+        <div class="g-name" id="g-name">Welcome, <em>Allen</em></div>
         <div class="g-brief" id="g-brief">Loading your daily brief…</div>
       </div>
       <div class="g-date">
@@ -835,9 +835,15 @@ function updateClock() {
   document.getElementById('tb-clock').textContent=`${h12}:${m.toString().padStart(2,'0')} ${ampm} EST`;
 }
 function setGreeting() {
-  const d=estNow(), h=d.getHours();
-  const g=h>=5&&h<12?'Good Morning':h>=12&&h<17?'Good Afternoon':h>=17&&h<21?'Good Evening':'Working Late';
-  document.getElementById('g-name').innerHTML=`${g}, <em>${CFG.name}</em>`;
+  const d=estNow(), h=d.getHours(), min=d.getMinutes();
+  // Time-specific greeting
+  let g, eyebrow;
+  if      (h >= 5  && h < 12) { g = 'Good Morning';    eyebrow = '\u2600\uFE0F Morning Brief';   }
+  else if (h >= 12 && h < 17) { g = 'Good Afternoon';  eyebrow = '\u2600\uFE0F Afternoon Brief'; }
+  else if (h >= 17 && h < 21) { g = 'Good Evening';    eyebrow = '\uD83C\uDF06 Evening Brief';   }
+  else                        { g = 'Working Late';     eyebrow = '\uD83C\uDF19 Late-Night Brief'; }
+  document.getElementById('g-name').innerHTML = `${g}, <em>${CFG.name}</em>`;
+  document.getElementById('g-time-label').textContent = `\u25CF\u00A0 ${eyebrow} \u00B7 Eastern Time`;
   const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
   document.getElementById('g-day').textContent=days[d.getDay()];
