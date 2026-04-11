@@ -78,11 +78,11 @@
       }, 500);
     }
 
-    // First show after 6s, then every 9s
+    // First show after 8s, then every 20s (3 per minute)
     setTimeout(() => {
       show();
-      setInterval(show, 9000);
-    }, 6000);
+      setInterval(show, 20000);
+    }, 8000);
   }
 
   if (document.readyState === 'loading') {
