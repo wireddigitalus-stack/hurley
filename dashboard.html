@@ -1053,7 +1053,7 @@ function setGreeting() {
   else if (h >= 17 && h < 21) { g = 'Good Evening';    eyebrow = '\uD83C\uDF06 Evening Brief';   }
   else                        { g = 'Working Late';     eyebrow = '\uD83C\uDF19 Late-Night Brief'; }
   document.getElementById('g-name').innerHTML = `${g}, <em>${CFG.name}</em>`;
-  document.getElementById('g-time-label').textContent = `\u25CF\u00A0 ${eyebrow} \u00B7 Eastern Time`;
+  document.getElementById('g-time-label').textContent = '●  ' + eyebrow + ' · Eastern Time';
   const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
   document.getElementById('g-day').textContent=days[d.getDay()];
@@ -1298,17 +1298,20 @@ function renderTable() {
     const t=temp(l);
     const statusColors={new:'color:var(--gold)',contacted:'color:var(--info)',qualified:'color:var(--cool)',offer_sent:'color:var(--cool)',closed:'color:var(--t3)',dead:'color:var(--t3)'};
     const statusLabels={new:'🆕 New',contacted:'📞 Contacted',qualified:'✅ Qualified',offer_sent:'💰 Offer Sent',closed:'🏁 Closed',dead:'❌ Dead'};
-    return `<tr>
-      <td><span class="lt-name">${name}</span></td>
-      <td class="lt-phone">${l.contact?.phone?`<a href="tel:+1${l.contact.phone.replace(/\D/g,'")}">${phone}</a>`:phone}</td>
-      <td style="font-size:0.72rem;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${addr}</td>
-      <td><span style="font-size:0.68rem;">${srcLabel(l.source)}</span></td>
-      <td><span style="font-size:0.7rem;font-weight:700;${statusColors[l.status||'new']||''};">${statusLabels[l.status||'new']||l.status}</span></td>
-      <td style="display:flex;gap:0.35rem;flex-wrap:nowrap;">
-        ${l.contact?.phone?`<a href="tel:+1${l.contact.phone.replace(/\D/g,'')}" class="lt-action call">📞 Call</a>`:''}
-        <button class="lt-action push" onclick="pushMonday('${l.id}')">📋 Monday</button>
-      </td>
-    </tr>`;
+    const pDigits = l.contact?.phone ? l.contact.phone.replace(/\D/g,'') : '';
+    const pLink   = pDigits ? '<a href="tel:+1' + pDigits + '">' + phone + '</a>' : phone;
+    const callBtn = pDigits ? '<a href="tel:+1' + pDigits + '" class="lt-action call">📞 Call</a>' : '';
+    return '<tr>'
+      + '<td><span class="lt-name">' + name + '</span></td>'
+      + '<td class="lt-phone">' + pLink + '</td>'
+      + '<td style="font-size:0.72rem;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + addr + '</td>'
+      + '<td><span style="font-size:0.68rem;">' + srcLabel(l.source) + '</span></td>'
+      + '<td><span style="font-size:0.7rem;font-weight:700;' + (statusColors[l.status||'new']||'') + ';">' + (statusLabels[l.status||'new']||l.status) + '</span></td>'
+      + '<td style="display:flex;gap:0.35rem;flex-wrap:nowrap;">'
+        + callBtn
+        + '<button class="lt-action push" onclick="pushMonday(\'' + l.id + '\')">📋 Monday</button>'
+      + '</td>'
+      + '</tr>';
   }).join('');
 }
 
