@@ -175,19 +175,22 @@
     .eval-back-btn svg { width: 14px; height: 14px; }
     .eval-back-btn.hidden { visibility: hidden; pointer-events: none; }
 
-    /* Steps viewport */
+    /* Steps viewport — height auto-fits active step */
     .eval-steps-viewport {
       overflow: hidden;
       position: relative;
+      transition: height 0.42s cubic-bezier(0.16,1,0.3,1);
     }
     .eval-steps-track {
       display: flex;
       transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
+      align-items: flex-start;
     }
     .eval-step {
       min-width: 100%;
       padding: 1.5rem 1.5rem 2rem;
       flex-shrink: 0;
+      box-sizing: border-box;
     }
 
     /* Step question label */
@@ -1279,6 +1282,17 @@ function goToStep(n) {
 function updateTrack() {
   const track = document.getElementById('eval-track');
   track.style.transform = `translateX(-${(currentStep - 1) * 100}%)`;
+  // Let the slide animation start, then measure the new active step's height
+  requestAnimationFrame(() => fitViewport());
+}
+
+function fitViewport() {
+  const viewport = document.querySelector('.eval-steps-viewport');
+  const steps    = document.querySelectorAll('.eval-step');
+  const active   = steps[currentStep - 1];
+  if (viewport && active) {
+    viewport.style.height = active.scrollHeight + 'px';
+  }
 }
 
 function updateProgress() {
@@ -1438,6 +1452,10 @@ function scrollToEval(e) {
 // Initialize
 updateProgress();
 updateHeader();
+// Set initial card height to match step 1 content
+requestAnimationFrame(() => fitViewport());
+// Re-fit on resize (e.g. orientation change on mobile)
+window.addEventListener('resize', () => fitViewport());
 
 // Auto-dismiss Riley pop card on this page — evaluator is the primary CTA
 // The Riley chat button (toggle) stays available, just the pop card is suppressed
