@@ -36,12 +36,12 @@
 .listing-name { font-size: var(--text-xl); font-weight: 800; margin-bottom: var(--space-2); }
 .listing-location { font-size: var(--text-sm); color: var(--text-secondary); margin-bottom: var(--space-2); }
 .listing-price { font-size: var(--text-sm); color: var(--gold-light); font-weight: 700; margin-bottom: var(--space-4); }
-.listing-desc { font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.7; margin-bottom: var(--space-4); flex: 1; }
-.listing-specs { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-bottom: var(--space-4); }
+.listing-desc { font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.7; margin-bottom: var(--space-4); }
+.listing-specs { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-bottom: var(--space-4); flex: 1; align-content: start; }
 .listing-spec { background: rgba(255,255,255,0.03); border-radius: var(--radius-sm); padding: var(--space-3); }
 .spec-label { display: block; font-size: 0.62rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: var(--space-1); }
 .spec-value { font-size: var(--text-sm); font-weight: 600; color: var(--off-white); }
-.listing-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-5); }
+.listing-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-3); }
 .listing-tag { padding: 0.25em 0.7em; border-radius: var(--radius-full); background: rgba(255,255,255,0.05); border: 1px solid var(--bg-border); font-size: 0.65rem; font-weight: 600; color: var(--text-secondary); }
 
 /* Why strip */
