@@ -761,7 +761,7 @@
 
       // Riley confirms in chat
       setTimeout(() => {
-        addMsg(`Perfect, ${name.split(' ')[0]}! 🙌 Allen's team has your number and will be in touch within 2 hours. In the meantime — any other questions I can answer for you?`, 'bot');
+        addMsg(`Perfect, ${name.split(' ')[0]}! 🙌 The Hurley team has your number and will be in touch within 2 hours. In the meantime — any other questions I can answer for you?`, 'bot');
       }, 600);
     };
 
