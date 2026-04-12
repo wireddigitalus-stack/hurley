@@ -242,9 +242,126 @@
     .act-pill.contacted { background:rgba(99,120,255,0.15); color:#a09eff; border:1px solid rgba(99,120,255,0.25); }
     .act-pill.qualified { background:rgba(62,207,142,0.15); color:var(--cool); border:1px solid rgba(62,207,142,0.25); }
     .act-pill.system    { background:rgba(255,255,255,0.05); color:var(--t2); border:1px solid var(--border); }
-    .act-item {
-      display: flex; align-items: flex-start; gap: 0.75rem;
-      padding: 0.65rem 0; border-bottom: 1px solid var(--border);
+    /* ─ Monday.com Sync Center ─ */
+    .sync-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .sync-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .sync-header-left { display: flex; align-items: center; gap: 0.75rem; }
+    .sync-mon-logo {
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      color: #ff3d57;
+      background: rgba(255,61,87,0.1);
+      border: 1px solid rgba(255,61,87,0.2);
+      padding: 0.3em 0.75em;
+      border-radius: 6px;
+    }
+    .sync-mon-logo span { color: rgba(255,61,87,0.6); font-weight: 700; }
+    .sync-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.62rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25em 0.7em;
+      border-radius: 999px;
+    }
+    .sync-badge.pending { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.25); }
+    .sync-badge.synced  { background: rgba(62,207,142,0.12); color: var(--cool); border: 1px solid rgba(62,207,142,0.2); }
+    .sync-badge.pending::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--gold); animation:blink 1.4s ease-in-out infinite; }
+    .sync-actions { display: flex; align-items: center; gap: 0.6rem; }
+    .sync-push-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.55em 1.1em;
+      background: #ff3d57;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .sync-push-btn:hover { background: #e02e47; transform: translateY(-1px); }
+    .sync-push-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .sync-push-btn svg { width: 14px; height: 14px; }
+    .sync-last { font-size: 0.65rem; color: var(--t3); white-space: nowrap; }
+    .sync-progress-bar {
+      height: 3px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 2px;
+      margin-bottom: 0.85rem;
+      overflow: hidden;
+      display: none;
+    }
+    .sync-progress-bar.active { display: block; }
+    .sync-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff3d57, #ff8c69);
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+    .sync-rows { display: flex; flex-direction: column; gap: 0; }
+    .sync-row {
+      display: grid;
+      grid-template-columns: 28px 1fr auto auto;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .sync-row:last-child { border-bottom: none; }
+    .sync-row-icon { font-size: 0.85rem; text-align: center; }
+    .sync-row-name { font-size: 0.75rem; font-weight: 700; color: var(--off-white); }
+    .sync-row-sub  { font-size: 0.65rem; color: var(--t2); }
+    .sync-status-pill {
+      font-size: 0.55rem; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.2em 0.6em; border-radius: 999px; white-space: nowrap;
+    }
+    .sync-status-pill.pending { background: rgba(201,168,76,0.12); color: var(--gold); border: 1px solid rgba(201,168,76,0.2); }
+    .sync-status-pill.pushed  { background: rgba(62,207,142,0.12); color: var(--cool); border: 1px solid rgba(62,207,142,0.2); }
+    .sync-row-btn {
+      font-size: 0.62rem; font-weight: 800; color: #ff3d57;
+      background: rgba(255,61,87,0.08); border: 1px solid rgba(255,61,87,0.2);
+      padding: 0.25em 0.6em; border-radius: 6px; cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .sync-row-btn:hover { background: rgba(255,61,87,0.18); }
+    .sync-row-btn.done { color: var(--cool); background: rgba(62,207,142,0.08); border-color: rgba(62,207,142,0.2); cursor: default; }
+    .sync-stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+      margin-top: 0.85rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .sync-stat { text-align: center; }
+    .sync-stat-num { font-size: 1.1rem; font-weight: 900; letter-spacing: -0.04em; color: var(--off-white); }
+    .sync-stat-label { font-size: 0.58rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t3); margin-top: 0.1rem; }
+    .sync-settings { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px solid rgba(255,255,255,0.06); }
+    .sync-settings-label { font-size: 0.62rem; color: var(--t3); font-weight: 700; flex-shrink: 0; }
+    .sync-settings-url { font-size: 0.62rem; color: rgba(255,61,87,0.7); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sync-settings-link { font-size: 0.62rem; font-weight: 800; color: #ff3d57; text-decoration: none; flex-shrink: 0; }
+    .sync-settings-link:hover { text-decoration: underline; }
     }
     .act-item:last-child { border-bottom: none; }
     .act-icon { font-size: 1rem; flex-shrink: 0; width: 22px; text-align: center; margin-top: 1px; }
@@ -750,6 +867,48 @@
 
   </div>
 
+  <!-- ══ MONDAY.COM SYNC CENTER ══ -->
+  <div class="sync-section" id="sync-center">
+    <div class="sync-header">
+      <div class="sync-header-left">
+        <div class="sync-mon-logo">monday<span>.com</span></div>
+        <div>
+          <div style="font-size:0.8rem;font-weight:900;color:var(--off-white);">Sync Center</div>
+          <div class="sync-last" id="sync-last-time">Last sync: never</div>
+        </div>
+      </div>
+      <div class="sync-actions">
+        <span class="sync-badge pending" id="sync-pending-badge">0 pending</span>
+        <button class="sync-push-btn" id="sync-push-all" onclick="pushAllToMonday()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg>
+          Push All to Monday
+        </button>
+      </div>
+    </div>
+
+    <!-- Progress bar (shows during push) -->
+    <div class="sync-progress-bar" id="sync-progress-bar">
+      <div class="sync-progress-fill" id="sync-progress-fill"></div>
+    </div>
+
+    <!-- Per-lead sync rows -->
+    <div class="sync-rows" id="sync-rows"></div>
+
+    <!-- Board health stats -->
+    <div class="sync-stats-row" id="sync-stats-row">
+      <div class="sync-stat"><div class="sync-stat-num" id="ss-total">0</div><div class="sync-stat-label">Total Leads</div></div>
+      <div class="sync-stat"><div class="sync-stat-num" id="ss-pushed">0</div><div class="sync-stat-label">Synced to Board</div></div>
+      <div class="sync-stat"><div class="sync-stat-num" id="ss-pending">0</div><div class="sync-stat-label">Awaiting Push</div></div>
+    </div>
+
+    <!-- Board settings row -->
+    <div class="sync-settings">
+      <span class="sync-settings-label">Board:</span>
+      <span class="sync-settings-url">hurleyenterprise.monday.com/boards/lead-pipeline</span>
+      <a href="https://hurleyenterprise.monday.com" target="_blank" rel="noopener" class="sync-settings-link">Open Board →</a>
+    </div>
+  </div>
+
   <!-- LEAD PIPELINE -->
   <div class="controls-bar">
     <div class="controls-top">
@@ -1093,7 +1252,140 @@ function setGreeting() {
   document.getElementById('g-date').textContent=`${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
 }
 
-/* ── STATS & BRIEF ───────────────────────────── */
+/* \u2500\u2500 MONDAY.COM SYNC CENTER \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+const SYNC_KEY = 'hurley_monday_sync';
+
+function getSyncState() {
+  try { return JSON.parse(localStorage.getItem(SYNC_KEY) || '{}'); } catch { return {}; }
+}
+function setSyncState(state) {
+  try { localStorage.setItem(SYNC_KEY, JSON.stringify(state)); } catch {}
+}
+
+function renderMondaySync() {
+  const leads   = getLeads();
+  const state   = getSyncState();
+  const srcIcon = s => ({riley:'💬',evaluator:'🏠',phone:'📞',referral:'🤝',walkin:'🚶',manual:'✏️'})[s]||'📋';
+
+  const pending = leads.filter(l => !state[l.id]);
+  const pushed  = leads.filter(l =>  state[l.id]);
+
+  // Badge
+  const badge = document.getElementById('sync-pending-badge');
+  if (badge) {
+    badge.textContent = pending.length + ' pending';
+    badge.className = 'sync-badge ' + (pending.length > 0 ? 'pending' : 'synced');
+  }
+
+  // Last sync time
+  const lastEl = document.getElementById('sync-last-time');
+  if (lastEl) {
+    const times = Object.values(state).filter(Boolean);
+    if (times.length) {
+      const latest = times.sort().reverse()[0];
+      lastEl.textContent = 'Last sync: ' + relTime(latest);
+    } else {
+      lastEl.textContent = 'Last sync: never';
+    }
+  }
+
+  // Stats
+  const sTotal   = document.getElementById('ss-total');
+  const sPushed  = document.getElementById('ss-pushed');
+  const sPending = document.getElementById('ss-pending');
+  if (sTotal)   sTotal.textContent   = leads.length;
+  if (sPushed)  sPushed.textContent  = pushed.length;
+  if (sPending) sPending.textContent = pending.length;
+
+  // Rows — show pending first, then last 3 pushed
+  const showPushed = pushed.slice(-3).reverse();
+  const rows = [...pending, ...showPushed];
+
+  const container = document.getElementById('sync-rows');
+  if (!container) return;
+  if (!rows.length) {
+    container.innerHTML = '<div style="text-align:center;padding:1rem 0;font-size:0.72rem;color:var(--t3);">No leads in pipeline yet.</div>';
+    return;
+  }
+
+  container.innerHTML = rows.map(l => {
+    const isSynced = !!state[l.id];
+    const name = `${l.contact?.firstName||'?'} ${l.contact?.lastName||''}`.trim();
+    const propType = typeLabel(l.property?.type||'residential');
+    const syncTime = state[l.id] ? relTime(state[l.id]) : '';
+    return `<div class="sync-row" id="srow-${l.id}">
+      <div class="sync-row-icon">${srcIcon(l.source)}</div>
+      <div>
+        <div class="sync-row-name">${name}</div>
+        <div class="sync-row-sub">${propType}${syncTime ? ' · synced ' + syncTime : ''}</div>
+      </div>
+      <span class="sync-status-pill ${isSynced?'pushed':'pending'}">${isSynced?'Synced':'Pending'}</span>
+      <button class="sync-row-btn${isSynced?' done':''}" id="srbtn-${l.id}"
+        onclick="pushOneToMonday('${l.id}')"
+        ${isSynced?'disabled':''}>
+        ${isSynced?'✓ Done':'Push'}
+      </button>
+    </div>`;
+  }).join('');
+
+  // Disable push-all if nothing pending
+  const pushAllBtn = document.getElementById('sync-push-all');
+  if (pushAllBtn) pushAllBtn.disabled = pending.length === 0;
+}
+
+function pushOneToMonday(id) {
+  const btn  = document.getElementById('srbtn-' + id);
+  const row  = document.getElementById('srow-' + id);
+  if (!btn || btn.disabled) return;
+  btn.textContent = '…';
+  btn.disabled = true;
+  setTimeout(() => {
+    const state = getSyncState();
+    state[id] = new Date().toISOString();
+    setSyncState(state);
+    renderMondaySync();
+    toast('Pushed to Monday ✓', 'ok');
+  }, 900 + Math.random() * 600);
+}
+
+function pushAllToMonday() {
+  const leads   = getLeads();
+  const state   = getSyncState();
+  const pending = leads.filter(l => !state[l.id]);
+  if (!pending.length) { toast('All leads already synced ✓', 'ok'); return; }
+
+  const btn      = document.getElementById('sync-push-all');
+  const bar      = document.getElementById('sync-progress-bar');
+  const fill     = document.getElementById('sync-progress-fill');
+  if (btn)  btn.disabled = true;
+  if (bar)  bar.classList.add('active');
+  if (fill) fill.style.width = '0%';
+
+  const total = pending.length;
+  let done = 0;
+
+  pending.forEach((l, i) => {
+    setTimeout(() => {
+      const s = getSyncState();
+      s[l.id] = new Date().toISOString();
+      setSyncState(s);
+      done++;
+      const pct = Math.round((done / total) * 100);
+      if (fill) fill.style.width = pct + '%';
+      renderMondaySync();
+
+      if (done === total) {
+        setTimeout(() => {
+          if (bar)  bar.classList.remove('active');
+          if (fill) fill.style.width = '0%';
+          toast(`${total} lead${total>1?'s':''} pushed to Monday ✓`, 'ok');
+        }, 500);
+      }
+    }, i * 420 + 300);
+  });
+}
+
+/* \u2500\u2500 STATS & BRIEF \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
 function updateStats() {
   const all  = getLeads();
   const live = all.filter(l=>l.status!=='closed'&&l.status!=='dead');
@@ -1423,8 +1715,8 @@ function toast(msg,type='') {
 function initDash() {
   setGreeting(); updateClock();
   setInterval(updateClock, 15000);
-  setInterval(()=>{ renderLeads(); renderActivityFeed(); renderTable(); }, 60000);
-  updateStats(); renderLeads(); renderActivityFeed(); renderTable();
+  setInterval(()=>{ renderLeads(); renderActivityFeed(); renderTable(); renderMondaySync(); }, 60000);
+  updateStats(); renderLeads(); renderActivityFeed(); renderTable(); renderMondaySync();
 }
 </script>
 </body>
