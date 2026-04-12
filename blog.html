@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commercial Real Estate Blog | Bristol TN/VA Market Insights | Hurley Enterprise LLC</title>
+  <meta name="description" content="Local commercial real estate market insights, investment analysis, and property news for Bristol TN/VA and the Tri-Cities region. From the Hurley Enterprise LLC team.">
+  <meta name="keywords" content="commercial real estate blog bristol tn, tri-cities real estate market, bristol va real estate news, hard rock casino bristol commercial, hurley enterprise blog">
+  <link rel="canonical" href="https://www.hurleyenterprisellc.com/blog.html">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.hurleyenterprisellc.com/blog.html">
+  <meta property="og:title" content="Real Estate Insights Blog | Hurley Enterprise LLC">
+  <meta property="og:description" content="Local market intelligence from Bristol TN/VA's premier commercial real estate developer.">
+  <meta property="og:image" content="https://www.hurleyenterprisellc.com/img/hurley-og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/nav.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/mobile.css">
+  <link rel="stylesheet" href="css/chatbot.css">
+  <style>
+    .blog-hero { background: linear-gradient(135deg,#0a0a0a 0%,#111008 60%,#0a0a0a 100%); padding: 5rem 0 3rem; position:relative; overflow:hidden; }
+    .blog-hero::before { content:''; position:absolute; top:-80px; right:-80px; width:500px; height:500px; background:radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%); pointer-events:none; }
+    .blog-grid { display:grid; grid-template-columns:1fr; gap:1.5rem; max-width:900px; margin:0 auto; }
+    .article-card { background:var(--bg-card); border:1px solid var(--bg-border); border-radius:16px; overflow:hidden; transition:border-color 0.2s, transform 0.2s; text-decoration:none; display:flex; flex-direction:column; }
+    .article-card:hover { border-color:rgba(201,168,76,0.35); transform:translateY(-3px); }
+    .article-card.featured { grid-column:1/-1; display:grid; grid-template-columns:1fr 1fr; }
+    @media(max-width:700px){ .article-card.featured { grid-template-columns:1fr; } }
+    .ac-img { aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; font-size:3rem; position:relative; overflow:hidden; }
+    .article-card.featured .ac-img { aspect-ratio:auto; min-height:260px; }
+    .ac-body { padding:1.75rem; display:flex; flex-direction:column; flex:1; }
+    .ac-cat { font-size:0.6rem; font-weight:900; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:0.75rem; }
+    .ac-title { font-size:1.15rem; font-weight:900; letter-spacing:-0.02em; line-height:1.25; margin-bottom:0.65rem; color:var(--off-white); }
+    .article-card.featured .ac-title { font-size:clamp(1.2rem,2.5vw,1.55rem); }
+    .ac-excerpt { font-size:0.82rem; color:var(--text-secondary); line-height:1.7; margin-bottom:1.25rem; flex:1; }
+    .ac-meta { display:flex; align-items:center; gap:0.75rem; font-size:0.68rem; color:var(--text-muted); flex-wrap:wrap; }
+    .ac-meta-dot { width:3px; height:3px; border-radius:50%; background:var(--text-muted); }
+    .ac-read-more { margin-top:1.1rem; font-size:0.75rem; font-weight:800; color:var(--gold); display:inline-flex; align-items:center; gap:0.35rem; }
+    .blog-cats { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:2.5rem; }
+    .blog-cat-btn { padding:0.4em 1em; border-radius:999px; font-size:0.68rem; font-weight:800; letter-spacing:0.05em; border:1px solid var(--bg-border); background:var(--bg-card); color:var(--text-secondary); cursor:pointer; transition:all 0.18s; }
+    .blog-cat-btn.active, .blog-cat-btn:hover { background:var(--gold-dim); border-color:rgba(201,168,76,0.4); color:var(--gold); }
+    .small-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; max-width:900px; margin:0 auto; }
+    .newsletter-card { background:linear-gradient(135deg,#13120a,#181407); border:1px solid rgba(201,168,76,0.18); border-radius:20px; padding:2.5rem; text-align:center; max-width:600px; margin:3rem auto 0; }
+  </style>
+</head>
+<body>
+<div id="scroll-progress"></div>
+
+<nav id="site-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Hurley Enterprise LLC Home">
+      <img src="https://static.wixstatic.com/media/44d8da_1a754c453e70444c89adea2857351ed3~mv2.png/v1/fill/w_236,h_58,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/hurley%20enter%20horozontal.png" alt="Hurley Enterprise LLC" style="height:36px;width:auto;display:block;" loading="eager">
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link">About Us</a></li>
+      <li><a href="development-construction.html" class="nav-link">Development</a></li>
+      <li><a href="we-buy-property.html" class="nav-link">We Buy Property</a></li>
+      <li><a href="for-sale-lease.html" class="nav-link">For Sale &amp; Lease</a></li>
+      <li><a href="market-report.html" class="nav-link" style="display:inline-flex;align-items:center;gap:0.35rem;">Market Report <span style="font-size:0.55rem;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;background:var(--gold);color:#000;padding:0.15em 0.45em;border-radius:999px;line-height:1.4;">FREE</span></a></li>
+    </ul>
+    <a href="contact.html" class="btn btn--primary nav-cta" id="nav-contact-cta">Contact Us</a>
+    <button id="nav-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div id="mobile-menu" role="dialog" aria-label="Mobile navigation">
+  <a href="index.html" class="mobile-nav-link">Home</a>
+  <a href="about.html" class="mobile-nav-link">About Us</a>
+  <a href="development-construction.html" class="mobile-nav-link">Development</a>
+  <a href="we-buy-property.html" class="mobile-nav-link">We Buy Property</a>
+  <a href="for-sale-lease.html" class="mobile-nav-link">For Sale &amp; Lease</a>
+  <a href="market-report.html" class="mobile-nav-link" style="color:var(--gold)!important;font-weight:800;">📊 Market Report — Free</a>
+  <a href="blog.html" class="mobile-nav-link" style="color:var(--gold)!important;font-weight:800;">✍️ Blog &amp; Insights</a>
+  <a href="contact.html" class="mobile-nav-link">Contact</a>
+</div>
+
+<main>
+  <!-- Blog Hero -->
+  <section class="blog-hero">
+    <div class="container">
+      <p class="overline reveal" style="margin-bottom:0.75rem;">Tri-Cities Real Estate Intelligence</p>
+      <h1 style="font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:-0.03em;line-height:1.05;margin-bottom:0.85rem;" class="reveal">Market Insights &amp; <span style="color:var(--gold);">Local Expert Analysis</span></h1>
+      <p style="color:var(--text-secondary);font-size:0.95rem;max-width:520px;line-height:1.75;" class="reveal">Investment analysis, market data, and commercial real estate guidance for Bristol TN/VA, Kingsport, and Johnson City — from a team that's been here since 2004.</p>
+    </div>
+  </section>
+
+  <!-- Articles -->
+  <section class="section">
+    <div class="container">
+
+      <!-- Category filters -->
+      <div class="blog-cats reveal">
+        <button class="blog-cat-btn active">All Topics</button>
+        <button class="blog-cat-btn">Market Analysis</button>
+        <button class="blog-cat-btn">Selling Your Property</button>
+        <button class="blog-cat-btn">Leasing &amp; Tenants</button>
+        <button class="blog-cat-btn">Investment</button>
+        <button class="blog-cat-btn">Development</button>
+      </div>
+
+      <!-- Featured article -->
+      <div class="stagger-reveal" style="max-width:900px;margin:0 auto;">
+        <a href="blog/hard-rock-casino-bristol-commercial-real-estate.html" class="article-card featured reveal" style="margin-bottom:1.5rem;">
+          <div class="ac-img" style="background:linear-gradient(135deg,#1a0f00,#2d1a00,#1a0f00);">
+            <div style="text-align:center;padding:2rem;">
+              <div style="font-size:3.5rem;margin-bottom:0.5rem;">🎰</div>
+              <div style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:rgba(201,168,76,0.6);">Hard Rock Bristol · Est. 2024</div>
+            </div>
+          </div>
+          <div class="ac-body">
+            <div class="ac-cat">Market Analysis · Featured</div>
+            <div class="ac-title">Hard Rock Casino Bristol: What It Means for Commercial Real Estate in the Tri-Cities</div>
+            <div class="ac-excerpt">The $400M Hard Rock Hotel &amp; Casino Bristol is the most significant economic event in the region's modern history. Here's exactly how it's reshaping vacancy rates, lease values, and investment opportunity across Bristol VA, Kingsport, and Johnson City.</div>
+            <div class="ac-meta">
+              <span>Allen Hurley, CEO</span>
+              <span class="ac-meta-dot"></span>
+              <span>March 15, 2026</span>
+              <span class="ac-meta-dot"></span>
+              <span>8 min read</span>
+            </div>
+            <span class="ac-read-more">Read Full Analysis →</span>
+          </div>
+        </a>
+
+        <!-- Two smaller articles -->
+        <div class="small-grid">
+          <a href="blog/sell-house-fast-bristol-va.html" class="article-card reveal">
+            <div class="ac-img" style="background:linear-gradient(135deg,#0a1200,#0f1f05,#0a1200);">
+              <div style="font-size:2.5rem;">🏠</div>
+            </div>
+            <div class="ac-body">
+              <div class="ac-cat">Selling Your Property</div>
+              <div class="ac-title">How to Sell Your House Fast in Bristol VA — Cash Offer in 24 Hours</div>
+              <div class="ac-excerpt">Divorce, estate, financial hardship, or just ready to move — there's a faster, simpler way to sell your Bristol VA home without repairs, realtors, or waiting months for a buyer.</div>
+              <div class="ac-meta">
+                <span>Hurley Enterprise Team</span>
+                <span class="ac-meta-dot"></span>
+                <span>Feb 28, 2026</span>
+                <span class="ac-meta-dot"></span>
+                <span>5 min read</span>
+              </div>
+              <span class="ac-read-more">Read Article →</span>
+            </div>
+          </a>
+
+          <a href="blog/office-space-bristol-tn-2026.html" class="article-card reveal">
+            <div class="ac-img" style="background:linear-gradient(135deg,#000e1a,#001528,#000e1a);">
+              <div style="font-size:2.5rem;">🏢</div>
+            </div>
+            <div class="ac-body">
+              <div class="ac-cat">Leasing &amp; Tenants</div>
+              <div class="ac-title">Office Space in Downtown Bristol TN: The 2026 Tenant's Guide</div>
+              <div class="ac-excerpt">Everything businesses need to know about leasing commercial office space in Bristol Tennessee — sizes, pricing, all-inclusive vs. NNN, and why the State Street corridor is booming.</div>
+              <div class="ac-meta">
+                <span>Hurley Enterprise Team</span>
+                <span class="ac-meta-dot"></span>
+                <span>Mar 28, 2026</span>
+                <span class="ac-meta-dot"></span>
+                <span>6 min read</span>
+              </div>
+              <span class="ac-read-more">Read Article →</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Newsletter CTA -->
+      <div class="newsletter-card reveal">
+        <div style="font-size:2rem;margin-bottom:0.75rem;">📊</div>
+        <h2 style="font-size:1.25rem;font-weight:900;letter-spacing:-0.02em;margin-bottom:0.5rem;">Get the Monthly Market Update</h2>
+        <p style="font-size:0.85rem;color:var(--text-secondary);line-height:1.7;margin-bottom:1.5rem;">Vacancy data, new listings, investment opportunities, and Hard Rock Casino corridor news — delivered to your inbox every month. Free.</p>
+        <a href="market-report.html" class="btn btn--primary" style="display:inline-flex;">Download the 2026 Market Report →</a>
+        <p style="font-size:0.7rem;color:var(--text-muted);margin-top:0.85rem;">No spam. Unsubscribe anytime. Your info stays private.</p>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer id="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" style="display:inline-flex;text-decoration:none;">
+        <img src="https://static.wixstatic.com/media/44d8da_1a754c453e70444c89adea2857351ed3~mv2.png/v1/fill/w_236,h_58,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/hurley%20enter%20horozontal.png" alt="Hurley Enterprise LLC" style="height:34px;width:auto;display:block;" loading="lazy">
+      </a>
+      <p>Bristol TN/VA's premier commercial developer. Building the Tri-Cities since 2004.</p>
+    </div>
+    <div class="footer-links-pair">
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="development-construction.html">Development &amp; Construction</a></li>
+          <li><a href="for-sale-lease.html">Office &amp; Warehouse Leasing</a></li>
+          <li><a href="we-buy-property.html">We Buy Property</a></li>
+          <li><a href="market-report.html">Market Report</a></li>
+          <li><a href="blog.html">Blog &amp; Insights</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Markets</h4>
+        <ul>
+          <li><a href="bristol-tn.html">Bristol, TN</a></li>
+          <li><a href="kingsport-tn.html">Kingsport, TN</a></li>
+          <li><a href="johnson-city-tn.html">Johnson City, TN</a></li>
+          <li><a href="service-areas.html">All Service Areas</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <div class="footer-contact-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>100 5th St., Suite 2W<br>Bristol, TN 37620</span>
+      </div>
+      <div class="footer-contact-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.13 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.46-.46a2 2 0 012.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0122 16.92z"/></svg>
+        <span><a href="tel:+14237427219" style="color:inherit;text-decoration:none;">423-742-7219</a></span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Hurley Enterprise LLC. All rights reserved.</p>
+    <div style="display:flex;align-items:center;gap:1.25rem;">
+      <a href="sitemap.xml" style="color:#aaa;font-size:0.7rem;text-decoration:none;">Sitemap</a>
+      <a href="dashboard.html" style="display:inline-flex;align-items:center;gap:0.35rem;color:#C9A84C;font-size:0.7rem;font-weight:700;text-decoration:none;padding:0.3em 0.75em;border:1px solid rgba(201,168,76,0.35);border-radius:999px;" onmouseover="this.style.background='rgba(201,168,76,0.1)'" onmouseout="this.style.background='transparent'">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:11px;height:11px;"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        CEO Dashboard
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/nav.js" defer></script>
+<script src="js/animations.js" defer></script>
+<script src="js/chatbot.js" defer></script>
+</body>
+</html>
