@@ -670,9 +670,114 @@
       return Math.min(500 + words * 16, 2000) + Math.random() * 250;
     }
 
-    // Conversation history for Gemini context (last 16 turns)
-    const chatHistory = [];
+    // ── Lead capture state ──────────────────────────────────────
+    const chatHistory    = [];
+    let exchangeCount    = 0;
+    let captureShown     = false;
+    let leadCaptured     = false;
+    let lastProperty     = '';
 
+    const HIGH_INTENT = /office|space|lease|rent|warehouse|retail|tour|price|pricing|available|property|properties|sell|offer|cash|buy|invest|venue|event|listing|sqft|square feet|city centre|jamestown|628|coca.cola|foundation|centre point|center point/i;
+
+    function detectProperty(text) {
+      if (/city centre|city center|100 5th/i.test(text))   return 'City Centre Office Suites';
+      if (/628|kress/i.test(text))                         return '628 State Street';
+      if (/jamestown|shelby/i.test(text))                   return 'Jamestown at Shelby';
+      if (/foundation|event venue/i.test(text))            return 'The Foundation Event Venue';
+      if (/centre point|center point|commonwealth|hard rock/i.test(text)) return 'Centre Point';
+      if (/coca.cola|1916|warehouse/i.test(text))          return 'Former Coca-Cola Building';
+      return '';
+    }
+
+    function injectCaptureCard() {
+      if (captureShown || leadCaptured) return;
+      captureShown = true;
+
+      const card = document.createElement('div');
+      card.id = 'riley-capture-card';
+      card.style.cssText = `
+        margin:0.75rem 0 0.25rem 2.6rem;
+        background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(201,168,76,0.03));
+        border:1px solid rgba(201,168,76,0.25);
+        border-radius:14px; padding:0.9rem 1rem; position:relative;
+      `;
+      card.innerHTML = `
+        <button onclick="document.getElementById('riley-capture-card').remove()" style="position:absolute;top:0.5rem;right:0.6rem;background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:0.75rem;">✕</button>
+        <p style="font-size:0.65rem;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;color:#C9A84C;margin:0 0 0.5rem;">📞 Want Allen's team to reach out?</p>
+        <p style="font-size:0.75rem;color:rgba(255,255,255,0.7);margin:0 0 0.65rem;line-height:1.4;">Drop your name and number — we'll call you within 2 hours.</p>
+        <div style="display:flex;flex-direction:column;gap:0.4rem;">
+          <input id="riley-cap-name" type="text" placeholder="Your name" autocomplete="name"
+            style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:0.5rem 0.7rem;font-size:0.78rem;color:#fff;font-family:inherit;outline:none;width:100%;box-sizing:border-box;">
+          <input id="riley-cap-phone" type="tel" placeholder="Phone number" autocomplete="tel"
+            style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:0.5rem 0.7rem;font-size:0.78rem;color:#fff;font-family:inherit;outline:none;width:100%;box-sizing:border-box;">
+          <button onclick="submitRileyLead()" style="background:#C9A84C;color:#000;border:none;border-radius:8px;padding:0.55rem;font-size:0.78rem;font-weight:900;cursor:pointer;margin-top:0.15rem;">
+            Connect Me with the Team →
+          </button>
+        </div>
+        <div id="riley-cap-success" style="display:none;text-align:center;padding:0.4rem 0 0;font-size:0.78rem;font-weight:700;color:#10b981;">
+          ✅ Got it! Expect a call from Allen's team within 2 hours.
+        </div>`;
+      messages.appendChild(card);
+      requestAnimationFrame(() => card.scrollIntoView({ block: 'start', behavior: 'smooth' }));
+    }
+
+    window.submitRileyLead = function() {
+      const name  = document.getElementById('riley-cap-name')?.value.trim();
+      const phone = document.getElementById('riley-cap-phone')?.value.trim();
+      if (!name || !phone) {
+        document.getElementById('riley-cap-name').style.borderColor  = '#ef4444';
+        document.getElementById('riley-cap-phone').style.borderColor = '#ef4444';
+        return;
+      }
+      leadCaptured = true;
+
+      // Push lead to CEO dashboard (localStorage)
+      try {
+        const leads = JSON.parse(localStorage.getItem('hurley_leads') || '[]');
+        leads.unshift({
+          id: 'chat_' + Date.now(),
+          source: 'riley_chat',
+          status: 'new',
+          timestamp: new Date().toISOString(),
+          contact: {
+            firstName: name.split(' ')[0],
+            lastName:  name.split(' ').slice(1).join(' ') || '',
+            phone
+          },
+          property: {
+            type: 'commercial',
+            situation: 'chat_inquiry',
+            address: lastProperty || 'Chat inquiry — see conversation'
+          },
+          heatScore: 8,
+          notes: `Riley chat lead. Property interest: ${lastProperty || 'General inquiry'}. Conversation: ${chatHistory.slice(-4).map(t=>t.role+': '+t.text.slice(0,60)).join(' | ')}`
+        });
+        localStorage.setItem('hurley_leads', JSON.stringify(leads));
+      } catch(e) {}
+
+      // Hide form, show success
+      document.getElementById('riley-capture-card').querySelectorAll('input,button:last-of-type').forEach(el => el.style.display = 'none');
+      document.getElementById('riley-cap-success').style.display = 'block';
+
+      // Riley confirms in chat
+      setTimeout(() => {
+        addMsg(`Perfect, ${name.split(' ')[0]}! 🙌 Allen's team has your number and will be in touch within 2 hours. In the meantime — any other questions I can answer for you?`, 'bot');
+      }, 600);
+    };
+
+    function checkLeadCapture(userText, botReply) {
+      if (captureShown || leadCaptured) return;
+      const combined = userText + ' ' + botReply;
+      const prop = detectProperty(combined);
+      if (prop) lastProperty = prop;
+      if (HIGH_INTENT.test(combined)) exchangeCount++;
+      // Show capture after 2 high-intent exchanges
+      if (exchangeCount >= 2) {
+        setTimeout(injectCaptureCard, 800);
+      }
+    }
+
+    // ── Main send handler ───────────────────────────────────────
     async function handleSend(text) {
       const q = (text || input.value).trim();
       if (!q) return;
@@ -681,7 +786,6 @@
       chipsZone.innerHTML = '';
       showTyping();
 
-      // Add user turn to history
       chatHistory.push({ role: 'user', text: q });
       if (chatHistory.length > 16) chatHistory.splice(0, 2);
 
@@ -698,13 +802,14 @@
         removeTyping();
         addMsg(reply, 'bot');
         buildChips(getChips());
+        checkLeadCapture(q, reply);
       } catch (err) {
-        // Fallback to rule-based if API unavailable
         const reply = getReply(q);
         chatHistory.push({ role: 'bot', text: reply });
         removeTyping();
         addMsg(reply, 'bot');
         buildChips(getChips());
+        checkLeadCapture(q, reply);
       }
     }
 
