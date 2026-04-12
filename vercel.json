@@ -1,7 +1,1 @@
-{
-  "functions": {
-    "api/riley.js": {
-      "runtime": "nodejs20.x"
-    }
-  }
-}
+{}
