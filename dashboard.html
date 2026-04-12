@@ -141,30 +141,84 @@
     .g-date-full { font-size: 0.82rem; font-weight: 700; color: var(--t2); margin-top: 0.2rem; }
     @media(max-width:480px){ .g-date { display: none; } }
 
-    /* ── PRIORITY BANNER ────────────────────────── */
+    /* ── PRIORITY BANNER (expandable) ───────────── */
     .priority-banner {
-      background: linear-gradient(135deg, rgba(255,77,77,0.1), rgba(255,77,77,0.05));
-      border: 1px solid rgba(255,77,77,0.3); border-radius: 14px;
-      padding: 0.9rem 1.1rem; margin-bottom: 1rem;
-      display: flex; align-items: center; gap: 0.85rem;
-      animation: pulse-border 2s ease-in-out infinite;
+      background: linear-gradient(135deg, rgba(255,77,77,0.10), rgba(255,77,77,0.04));
+      border: 1px solid rgba(255,77,77,0.32);
+      border-radius: 14px;
+      margin-bottom: 1rem;
+      animation: pulse-border 2.4s ease-in-out infinite;
+      overflow: hidden;
     }
     @keyframes pulse-border {
       0%,100%{ box-shadow: 0 0 0 0 rgba(255,77,77,0); }
-      50%{ box-shadow: 0 0 0 4px rgba(255,77,77,0.1); }
+      50%{ box-shadow: 0 0 0 5px rgba(255,77,77,0.09); }
     }
     .priority-banner.hidden { display: none; }
-    .priority-icon { font-size: 1.4rem; flex-shrink: 0; animation: wiggle 1.5s ease-in-out infinite; }
-    @keyframes wiggle { 0%,100%{transform:rotate(0)} 25%{transform:rotate(-8deg)} 75%{transform:rotate(8deg)} }
-    .priority-text { flex: 1; }
-    .priority-title { font-size: 0.88rem; font-weight: 800; color: var(--hot); }
-    .priority-sub { font-size: 0.75rem; color: var(--t2); margin-top: 0.15rem; }
-    .priority-action {
-      padding: 0.5em 1em; border-radius: 9px; font-size: 0.72rem; font-weight: 800;
-      background: var(--hot); color: #fff; cursor: pointer; white-space: nowrap;
-      border: none; -webkit-tap-highlight-color: transparent; transition: all 0.18s; min-height: 36px;
+    .pb-header {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.85rem 1.1rem;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
     }
-    .priority-action:hover { background: #ff6b6b; }
+    .pb-header:hover { background: rgba(255,77,77,0.04); }
+    .priority-icon { font-size: 1.3rem; flex-shrink: 0; animation: wiggle 1.8s ease-in-out infinite; }
+    @keyframes wiggle { 0%,100%{transform:rotate(0)} 25%{transform:rotate(-9deg)} 75%{transform:rotate(9deg)} }
+    .pb-title-wrap { flex: 1; min-width: 0; }
+    .priority-title { font-size: 0.88rem; font-weight: 800; color: var(--hot); line-height: 1.2; }
+    .pb-subtitle  { font-size: 0.68rem; color: var(--t2); margin-top: 0.1rem; }
+    .pb-chevron { font-size: 0.75rem; color: var(--hot); transition: transform 0.25s ease; flex-shrink: 0; }
+    .pb-chevron.open { transform: rotate(180deg); }
+    .pb-leads { display: none; flex-direction: column; border-top: 1px solid rgba(255,77,77,0.15); }
+    .pb-leads.open { display: flex; }
+    .pb-lead-row {
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 0.6rem; padding: 0.85rem 1.1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04); align-items: start;
+    }
+    .pb-lead-row:last-child { border-bottom: none; }
+    .pb-lead-name  { font-size: 0.82rem; font-weight: 800; color: var(--off-white); margin-bottom: 0.18rem; }
+    .pb-lead-meta  { display: flex; align-items: center; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.3rem; }
+    .pb-wait-badge {
+      font-size: 0.55rem; font-weight: 900; letter-spacing: 0.07em; text-transform: uppercase;
+      background: rgba(255,77,77,0.18); color: var(--hot); border: 1px solid rgba(255,77,77,0.3);
+      padding: 0.18em 0.55em; border-radius: 999px; white-space: nowrap;
+    }
+    .pb-type-badge {
+      font-size: 0.55rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+      background: rgba(255,255,255,0.05); color: var(--t2); border: 1px solid var(--border);
+      padding: 0.18em 0.55em; border-radius: 999px; white-space: nowrap;
+    }
+    .pb-lead-notes { font-size: 0.68rem; color: var(--t3); line-height: 1.5; }
+    .pb-lead-actions { display: flex; flex-direction: column; gap: 0.35rem; align-items: flex-end; flex-shrink: 0; }
+    .pb-call-btn {
+      display: flex; align-items: center; gap: 0.35rem;
+      padding: 0.5em 0.85em; background: var(--hot); color: #fff;
+      border: none; border-radius: 8px; font-size: 0.7rem; font-weight: 800;
+      cursor: pointer; white-space: nowrap; text-decoration: none;
+      -webkit-tap-highlight-color: transparent; transition: background 0.15s, transform 0.13s;
+    }
+    .pb-call-btn:hover { background: #e83535; transform: scale(1.03); }
+    .pb-dismiss-btn {
+      font-size: 0.6rem; font-weight: 700; color: var(--t3);
+      background: none; border: none; cursor: pointer; padding: 0.2em 0;
+      -webkit-tap-highlight-color: transparent; text-align: right;
+    }
+    .pb-dismiss-btn:hover { color: var(--t2); }
+    .pb-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.6rem 1.1rem; border-top: 1px solid rgba(255,77,77,0.12);
+      background: rgba(255,77,77,0.03);
+    }
+    .pb-footer-label { font-size: 0.62rem; color: var(--t3); font-weight: 700; }
+    .pb-dismiss-all-btn {
+      font-size: 0.62rem; font-weight: 800; color: var(--t3);
+      background: none; border: none; cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .pb-dismiss-all-btn:hover { color: var(--t2); }
+
 
     /* ── STATS GRID ─────────────────────────────── */
     .stats-grid {
@@ -799,14 +853,24 @@
     </div>
   </div>
 
-  <!-- PRIORITY BANNER -->
+  <!-- PRIORITY BANNER (expandable) -->
   <div class="priority-banner hidden" id="priority-banner">
-    <div class="priority-icon">🚨</div>
-    <div class="priority-text">
-      <div class="priority-title" id="priority-title">Hot leads waiting</div>
-      <div class="priority-sub" id="priority-sub">These sellers are motivated — call now before they go elsewhere.</div>
+    <!-- Collapsed header — click to expand -->
+    <div class="pb-header" id="pb-header" onclick="togglePriorityExpand()" role="button" aria-expanded="false" aria-controls="pb-leads">
+      <div class="priority-icon">🚨</div>
+      <div class="pb-title-wrap">
+        <div class="priority-title" id="priority-title">Hot leads waiting</div>
+        <div class="pb-subtitle" id="pb-subtitle">Tap to see details</div>
+      </div>
+      <span class="pb-chevron" id="pb-chevron">▼</span>
     </div>
-    <button class="priority-action" onclick="setFilter('hot')">View Hot →</button>
+    <!-- Expanded leads list -->
+    <div class="pb-leads" id="pb-leads"></div>
+    <!-- Footer bar (visible when expanded) -->
+    <div class="pb-footer" id="pb-footer" style="display:none;">
+      <span class="pb-footer-label">🔥 Priority follow-up required</span>
+      <button class="pb-dismiss-all-btn" onclick="dismissAllPriority()">Dismiss all</button>
+    </div>
   </div>
 
   <!-- STATS GRID -->
@@ -1405,16 +1469,50 @@ function updateStats() {
   document.getElementById('s-hot-sub').textContent  = hot.length===1?'Call immediately':hot.length>1?'Call immediately':'None right now';
   document.getElementById('s-warm-sub').textContent = warm.length>0?`${warm.length} leads to nurture`:'Check back soon';
 
-  // Priority banner
-  const urgentHot = hot.filter(l=>(Date.now()-new Date(l.timestamp).getTime())>2*3600000);
+  // Priority banner — expandable
+  const dismissed = JSON.parse(localStorage.getItem('pb_dismissed')||'[]');
+  const urgentHot = hot.filter(l=>(Date.now()-new Date(l.timestamp).getTime())>2*3600000 && !dismissed.includes(l.id));
   const banner = document.getElementById('priority-banner');
   if(urgentHot.length>0) {
     banner.classList.remove('hidden');
     document.getElementById('priority-title').textContent =
-      `${urgentHot.length} hot lead${urgentHot.length>1?'s':''} waiting over 2 hours — call now`;
-    document.getElementById('priority-sub').textContent =
-      urgentHot.map(l=>`${l.contact?.firstName} ${l.contact?.lastName||''} · ${l.contact?.phone||''}`).join(' | ');
+      `${urgentHot.length} hot lead${urgentHot.length>1?'s':''} waiting over 2 hours — call now!`;
+    document.getElementById('pb-subtitle').textContent =
+      urgentHot.map(l=>`${l.contact?.firstName||''} ${l.contact?.lastName||''}`.trim()).join(', ') + ' · tap to expand';
+
+    // Build per-lead rows
+    const hoursWaiting = l => {
+      const h = (Date.now()-new Date(l.timestamp).getTime())/3600000;
+      return h >= 24 ? Math.round(h/24)+'d' : Math.round(h*10)/10+'h';
+    };
+    document.getElementById('pb-leads').innerHTML = urgentHot.map(l => {
+      const name = `${l.contact?.firstName||'?'} ${l.contact?.lastName||''}`.trim();
+      const phone = l.contact?.phone || '';
+      const propType = typeLabel(l.property?.type||'residential');
+      const wait = hoursWaiting(l);
+      const notes = l.notes ? l.notes.slice(0,120)+(l.notes.length>120?'…':'') : 'No notes';
+      const addr = l.property?.street ? l.property.street+', '+l.property.city : (l.property?.address||'');
+      return `<div class="pb-lead-row" id="pbrow-${l.id}">
+        <div>
+          <div class="pb-lead-name">${name}</div>
+          <div class="pb-lead-meta">
+            <span class="pb-wait-badge">⏱ ${wait} waiting</span>
+            <span class="pb-type-badge">${propType}</span>
+            ${addr ? `<span class="pb-type-badge">${addr}</span>` : ''}
+          </div>
+          <div class="pb-lead-notes">${notes}</div>
+        </div>
+        <div class="pb-lead-actions">
+          ${phone
+            ? `<a href="tel:${phone.replace(/\D/g,'')}" class="pb-call-btn">📞 Call</a>`
+            : `<button class="pb-call-btn" onclick="toast('No phone on file — check notes','info')">No phone</button>`
+          }
+          <button class="pb-dismiss-btn" onclick="dismissPriorityLead('${l.id}')">Dismiss</button>
+        </div>
+      </div>`;
+    }).join('');
   } else { banner.classList.add('hidden'); }
+
 
   // Daily brief
   let brief = live.length===0
@@ -1615,6 +1713,48 @@ function archiveLead(id) {
   const leads=getLeads().filter(l=>l.id!==id); saveLeads(leads);
   renderLeads(); updateStats(); renderTable(); toast('Lead archived','info');
 }
+/* ── PRIORITY BANNER INTERACTIONS ─────────────── */
+let pbExpanded = false;
+function togglePriorityExpand() {
+  pbExpanded = !pbExpanded;
+  const leads   = document.getElementById('pb-leads');
+  const chevron = document.getElementById('pb-chevron');
+  const footer  = document.getElementById('pb-footer');
+  const header  = document.getElementById('pb-header');
+  if (pbExpanded) {
+    leads.classList.add('open');
+    chevron.classList.add('open');
+    if (footer) footer.style.display = 'flex';
+    header.setAttribute('aria-expanded','true');
+  } else {
+    leads.classList.remove('open');
+    chevron.classList.remove('open');
+    if (footer) footer.style.display = 'none';
+    header.setAttribute('aria-expanded','false');
+  }
+}
+
+function dismissPriorityLead(id) {
+  const d = JSON.parse(localStorage.getItem('pb_dismissed')||'[]');
+  if (!d.includes(id)) d.push(id);
+  localStorage.setItem('pb_dismissed', JSON.stringify(d));
+  const row = document.getElementById('pbrow-' + id);
+  if (row) { row.style.opacity='0'; row.style.transition='opacity 0.3s'; setTimeout(()=>{ row.remove(); updateStats(); }, 320); }
+  else { updateStats(); }
+}
+
+function dismissAllPriority() {
+  const leads = getLeads();
+  const hot   = leads.filter(l => temp(l)==='hot');
+  const urgent= hot.filter(l => (Date.now()-new Date(l.timestamp).getTime())>2*3600000);
+  const d = JSON.parse(localStorage.getItem('pb_dismissed')||'[]');
+  urgent.forEach(l => { if (!d.includes(l.id)) d.push(l.id); });
+  localStorage.setItem('pb_dismissed', JSON.stringify(d));
+  pbExpanded = false;
+  updateStats();
+  toast('Priority alerts dismissed', 'ok');
+}
+
 function pushMonday(id) {
   const l=getLeads().find(x=>x.id===id); if(!l) return;
   const name=`${l.contact?.firstName||''} ${l.contact?.lastName||''}`.trim();
