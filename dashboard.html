@@ -914,30 +914,42 @@ const CFG = {
 
 /* ── DEMO DATA ────────────────────────────────── */
 const DEMO = [
-  { id:'d1', source:'evaluator', status:'new', timestamp: new Date(Date.now()-28*60000).toISOString(),
-    contact:{firstName:'Mike',lastName:'Garrett',phone:'4233210182',email:'mgarrett@email.com'},
-    property:{type:'residential',street:'2210 Randolph St',city:'Bristol',state:'VA',condition:'poor',situation:'distressed',beds:'3',baths:'1',sqft:'1200',year:'1971'},
-    offerRange:'$65,000 – $90,000', notes:''},
-  { id:'d2', source:'riley', status:'contacted', timestamp: new Date(Date.now()-2*3600000).toISOString(),
-    contact:{firstName:'Sandra',lastName:'Hollis',phone:'4233210241',email:''},
+  // Hot — evaluator, distressed residential, 22 min ago
+  { id:'d1', source:'evaluator', status:'new', timestamp: new Date(Date.now()-22*60000).toISOString(),
+    contact:{firstName:'Michael',lastName:'Garrett',phone:'(423) 321-0182',email:'mgarrett@gmail.com'},
+    property:{type:'residential',street:'2210 Randolph St',city:'Bristol',state:'VA',condition:'poor',situation:'distressed',beds:'3',baths:'1',sqft:'1,190',year:'1968'},
+    offerRange:'$62,000 – $88,000',
+    notes:'Foundation issues, roof needs replacing. Seller aware of condition — wants out fast. No realtor. Prefers cash close, flexible on date. Called twice this week.'},
+  // Warm — Riley chatbot, commercial lease inquiry, 1.5 hrs ago
+  { id:'d2', source:'riley', status:'contacted', timestamp: new Date(Date.now()-90*60000).toISOString(),
+    contact:{firstName:'Sandra',lastName:'Hollis',phone:'(423) 321-0241',email:'shollis@hollisgrouptn.com'},
     property:{type:'commercial',street:'417 State St',city:'Bristol',state:'TN',condition:'good',situation:'relocating'},
-    offerRange:'', notes:'Chatted with Riley — empty retail on State St. Wants to close before June.'},
-  { id:'d3', source:'evaluator', status:'new', timestamp: new Date(Date.now()-5*3600000).toISOString(),
-    contact:{firstName:'James',lastName:'Coffey',phone:'2763210093',email:'jcoffey@outlook.com'},
-    property:{type:'residential',street:'2416 Bradley St',city:'Bristol',state:'VA',condition:'fair',situation:'estate',beds:'4',baths:'2',sqft:'1680',year:'1965'},
-    offerRange:'$95,000 – $130,000', notes:'Estate — inherited from parent. Motivated but not in rush.'},
-  { id:'d4', source:'market_report_homepage', status:'new', timestamp: new Date(Date.now()-6*3600000).toISOString(),
-    contact:{firstName:'Tanya',lastName:'Blevins',phone:'4233210317',email:'tanya.b@gmail.com'},
+    offerRange:'',
+    notes:'Chatted with Riley — asking about retail on State St, 2,000–3,500 sqft. Relocating consulting firm from Kingsport by June 1. Strong credit tenant. Follow up tomorrow AM.'},
+  // Estate sale — evaluator, 4.5 hrs ago
+  { id:'d3', source:'evaluator', status:'new', timestamp: new Date(Date.now()-4.5*3600000).toISOString(),
+    contact:{firstName:'James',lastName:'Coffey',phone:'(276) 321-0093',email:'jcoffey@outlook.com'},
+    property:{type:'residential',street:'2416 Bradley St',city:'Bristol',state:'VA',condition:'fair',situation:'estate',beds:'4',baths:'2',sqft:'1,680',year:'1962'},
+    offerRange:'$92,000 – $128,000',
+    notes:'Inherited from mother — estate sale, executor is James. Tenants on month-to-month. Wants offer before probate closes. Brother in disagreement on price — keep offer in writing.'},
+  // ⭐ WHALE — commercial 1031 exchange, $1.2M+ range, referred in
+  { id:'d4', source:'referral', status:'qualified', timestamp: new Date(Date.now()-6*3600000).toISOString(),
+    contact:{firstName:'David',lastName:'Marcum',phone:'(865) 214-7730',email:'dmarcum@precisionlogisticsllc.com'},
+    property:{type:'industrial',street:'Industrial Park Dr',city:'Kingsport',state:'TN',condition:'good',situation:'investor',sqftCom:'32000',units:'1',leased:'yes'},
+    offerRange:'$1,100,000 – $1,400,000',
+    notes:'⭐ HIGH VALUE — referred by Larry Hicks at First Bank. Regional logistics Co. seeking 25K–40K sqft warehouse near I-26. 1031 exchange buyer, pre-approved. Triple net preferred. Spoke 20 min — very engaged. Must close before Dec 31.'},
+  // Nurture — market report download, 7 hrs ago
+  { id:'d5', source:'manual', status:'new', timestamp: new Date(Date.now()-7*3600000).toISOString(),
+    contact:{firstName:'Tanya',lastName:'Blevins',phone:'(423) 321-0317',email:'tanya.blevins@gmail.com'},
     property:{type:'residential',street:'812 Cumberland St',city:'Bristol',state:'TN',condition:'good',situation:'other'},
-    offerRange:'', notes:'Downloaded market report. Curious about cash offer. Not urgent.'},
-  { id:'d5', source:'evaluator', status:'qualified', timestamp: new Date(Date.now()-24*3600000).toISOString(),
-    contact:{firstName:'Roger',lastName:'Estep',phone:'2763210044',email:'roger.estep@biz.net'},
-    property:{type:'industrial',street:'1844 W State St',city:'Bristol',state:'VA',condition:'fair',situation:'speed',sqftCom:'18000',units:'1',leased:'no'},
-    offerRange:'$280,000 – $390,000', notes:'Business relocating. Wants to move fast. Follow up Mon AM.'},
-  { id:'d6', source:'phone', status:'new', timestamp: new Date(Date.now()-30*60000).toISOString(),
-    contact:{firstName:'Darlene',lastName:'Yates',phone:'4233210599',email:''},
-    property:{type:'land',street:'Old Jonesboro Rd',city:'Kingsport',state:'TN',condition:'excellent',situation:'investor'},
-    offerRange:'$45,000 – $80,000', notes:'Called in — 4 acres of land near Kingsport. Investor liquidating.'},
+    offerRange:'',
+    notes:'Downloaded 2026 Market Report. Browsed We Buy Property page. No direct inquiry yet — good nurture candidate. Property appears owner-occupied.'},
+  // Phone call — land deal, this morning
+  { id:'d6', source:'phone', status:'contacted', timestamp: new Date(Date.now()-3.2*3600000).toISOString(),
+    contact:{firstName:'Darlene',lastName:'Yates',phone:'(423) 321-0599',email:''},
+    property:{type:'land',street:'Old Jonesboro Rd Parcel B',city:'Kingsport',state:'TN',condition:'excellent',situation:'investor'},
+    offerRange:'$48,000 – $82,000',
+    notes:'Called in — 4.2 acres on Old Jonesboro Rd, unimproved, no liens. Investor liquidating. Wants written offer by Friday. City water at road. Zoned B-2. Sent intro email, awaiting signed disclosure.'},
 ];
 
 /* ── ACTIVITY FEED DATA (moved from social-proof.js) ── */

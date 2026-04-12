@@ -276,9 +276,25 @@
 
   /* ── Save captured lead ─────────────────────────────────────── */
   function saveLead() {
+    const topicMap = {
+      citycentre:'City Centre office suite inquiry',
+      state628:'628 State Street restaurant/bar space',
+      jamestown:'Jamestown @ Shelby office space',
+      foundation:'The Foundation event venue',
+      cocacola:'1916 W. State St warehouse/industrial',
+      centerpoint:'Center Point Commonwealth Ave',
+      bradley:'Bradley Street residential portfolio',
+      randolph:'Randolph Street homes',
+      webuy:'Cash offer / sell property inquiry',
+      develop:'Development / construction project',
+      casino:'Hard Rock Casino corridor inquiry',
+      listings:'General property listings inquiry',
+      tour:'Tour request',
+      quote:'Offer / quote request',
+    };
     const lead = {
       id:          'riley_' + Date.now(),
-      source:      'riley_chatbot',
+      source:      'riley',
       temperature: 'hot',
       status:      'new',
       timestamp:   new Date().toISOString(),
@@ -288,7 +304,7 @@
         phone:     ctx.capturedPhone || '',
         email:     ''
       },
-      notes: `Riley chatbot lead. Last topic: ${ctx.lastTopic || 'general'}. Intent: ${ctx.intent || 'unknown'}.`
+      notes: `Riley chatbot lead — ${topicMap[ctx.lastTopic] || 'General inquiry'}. Intent: ${ctx.intent || 'unknown'}.`
     };
     try {
       const existing = JSON.parse(localStorage.getItem('hurley_leads') || '[]');
