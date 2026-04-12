@@ -10,8 +10,8 @@
   }
 }
 
-/* ── Tablet (≤ 768px) ─────────────────────────────────────── */
-@media (max-width: 768px) {
+/* ── Tablet (≤ 960px) ─────────────────────────────────────── */
+@media (max-width: 960px) {
 
   /* Section spacing — kill the 6rem dead space */
   .section      { padding: 3rem 0; }
