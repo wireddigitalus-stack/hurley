@@ -245,91 +245,174 @@
   </div>
 
   <!-- ══════════════════════════════════════
-       INTERACTIVE PROPERTY MAP
+       INTERACTIVE PROPERTY MAP — Mobile-optimised
   ══════════════════════════════════════ -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <section style="background:var(--bg-surface);border-bottom:1px solid var(--bg-border);padding:3rem 0 2.5rem;">
+
+  <section id="map-section" style="background:var(--bg-surface);border-bottom:1px solid var(--bg-border);padding:3rem 0 2.5rem;">
     <div class="container">
       <div class="section-header" style="text-align:center;margin-bottom:1.75rem;">
         <p class="overline">Bristol TN &amp; VA</p>
         <h2 style="font-size:clamp(1.4rem,2.5vw,2rem);margin:0.5rem 0;">Find Us on the Map</h2>
-        <p style="color:var(--text-muted);max-width:480px;margin:0 auto;font-size:0.88rem;">Click any gold pin to jump directly to that property listing.</p>
+        <p style="color:var(--text-muted);max-width:480px;margin:0 auto;font-size:0.88rem;" id="map-hint">Click any pin to jump to that listing.</p>
       </div>
-      <div id="hurley-map" style="height:440px;border-radius:16px;overflow:hidden;border:1px solid var(--bg-border);box-shadow:0 6px 32px rgba(0,0,0,0.25);"></div>
+
+      <!-- Map container — responsive height -->
+      <div style="position:relative;">
+        <div id="hurley-map" style="height:clamp(240px,45vw,440px);border-radius:16px;overflow:hidden;border:1px solid var(--bg-border);box-shadow:0 6px 32px rgba(0,0,0,0.22);"></div>
+
+        <!-- Gesture lock overlay (mobile only) -->
+        <div id="map-gesture-overlay" style="
+          display:none;position:absolute;inset:0;border-radius:16px;
+          background:rgba(0,0,0,0.45);backdrop-filter:blur(2px);
+          align-items:center;justify-content:center;flex-direction:column;
+          gap:0.5rem;z-index:9999;pointer-events:none;transition:opacity 0.3s;">
+          <div style="font-size:2rem;">✌️</div>
+          <div style="color:#fff;font-weight:700;font-size:0.9rem;text-shadow:0 1px 4px rgba(0,0,0,0.6);">Use 2 fingers to move the map</div>
+        </div>
+      </div>
+
+      <!-- Legend -->
       <div style="display:flex;flex-wrap:wrap;gap:0.5rem 1rem;justify-content:center;margin-top:1rem;padding:0 0.5rem;">
         <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.7rem;color:var(--text-muted);"><span style="width:10px;height:10px;border-radius:50%;background:#3b82f6;display:inline-block;flex-shrink:0;"></span> Office</span>
         <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.7rem;color:var(--text-muted);"><span style="width:10px;height:10px;border-radius:50%;background:#f97316;display:inline-block;flex-shrink:0;"></span> Restaurant &amp; Retail</span>
         <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.7rem;color:var(--text-muted);"><span style="width:10px;height:10px;border-radius:50%;background:#10b981;display:inline-block;flex-shrink:0;"></span> Event Venue</span>
-        <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.7rem;color:var(--text-muted);"><span style="width:10px;height:10px;border-radius:50%;background:#8b5cf6;display:inline-block;flex-shrink:0;"></span> Warehouse &amp; Industrial</span>
+        <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.7rem;color:var(--text-muted);"><span style="width:10px;height:10px;border-radius:50%;background:#8b5cf6;display:inline-block;flex-shrink:0;"></span> Warehouse</span>
         <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.7rem;color:var(--text-muted);"><span style="width:10px;height:10px;border-radius:50%;background:#C9A84C;display:inline-block;flex-shrink:0;"></span> Casino Corridor</span>
         <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.7rem;color:var(--text-muted);"><span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:inline-block;flex-shrink:0;"></span> Landmark</span>
       </div>
+
+      <!-- Mobile property card rail -->
+      <div id="map-card-rail" style="display:none;margin-top:1.25rem;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:0.5rem;">
+        <div style="display:flex;gap:0.75rem;padding:0 0.25rem;width:max-content;" id="map-card-inner"></div>
+      </div>
+      <p id="map-rail-hint" style="display:none;text-align:center;font-size:0.68rem;color:var(--text-muted);margin-top:0.4rem;">← Swipe to browse · Tap card to locate on map →</p>
+
     </div>
   </section>
+
   <style>
+  #map-card-rail::-webkit-scrollbar { display:none; }
+  .map-prop-card {
+    flex-shrink:0;width:160px;background:var(--bg-base);border:1.5px solid var(--bg-border);
+    border-radius:12px;padding:0.7rem 0.75rem;cursor:pointer;transition:border-color 0.2s,transform 0.15s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .map-prop-card:active { transform:scale(0.97); }
+  .map-prop-card.active { border-color:#C9A84C;box-shadow:0 0 0 2px rgba(201,168,76,0.25); }
+  .map-prop-card .mpc-type { font-size:0.6rem;font-weight:900;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:0.25rem; }
+  .map-prop-card .mpc-name { font-size:0.78rem;font-weight:700;color:var(--text-primary);line-height:1.3;margin-bottom:0.2rem; }
+  .map-prop-card .mpc-detail { font-size:0.65rem;color:var(--text-muted);line-height:1.4; }
   .leaflet-popup-content-wrapper.hurley-pw {
     background:#fff;border:2px solid #C9A84C;border-radius:12px;color:#111;
     box-shadow:0 6px 28px rgba(0,0,0,0.18);padding:0;overflow:hidden;
   }
   .leaflet-popup-content-wrapper.hurley-pw .leaflet-popup-content { margin:0; }
   .hurley-popup-tip-container .leaflet-popup-tip { background:#C9A84C; }
-  .leaflet-popup-close-button { color:#999 !important; font-size:16px !important; padding:6px 8px !important; }
+  .leaflet-popup-close-button { color:#999 !important;font-size:16px !important;padding:6px 8px !important; }
+  @media (max-width:768px) {
+    #map-card-rail, #map-rail-hint { display:block !important; }
+    #map-hint { font-size:0.78rem; }
+  }
   </style>
+
   <script>
   (function(){
+    const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
+
     function initMap() {
       if (typeof L === 'undefined') { setTimeout(initMap, 100); return; }
-      const map = L.map('hurley-map', { zoomControl: true, scrollWheelZoom: false })
-        .setView([36.597, -82.185], 13);
 
-      // Voyager theme — shows streets clearly, modern look
+      const map = L.map('hurley-map', {
+        zoomControl: true,
+        scrollWheelZoom: false,
+        dragging: !isMobile,           // disable single-finger drag on mobile
+        tap: false,                    // prevent tap delay on iOS
+        touchZoom: true,               // always allow pinch-zoom
+      }).setView([36.597, -82.185], isMobile ? 12 : 13);
+
       L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://carto.com">CARTO</a> &copy; <a href="https://openstreetmap.org">OSM</a>',
         maxZoom: 19
       }).addTo(map);
 
-      // Color scheme by property type
+      // ── Gesture lock on mobile ─────────────────────────────
+      const overlay  = document.getElementById('map-gesture-overlay');
+      const mapEl    = document.getElementById('hurley-map');
+      let overlayTimer;
+      let touchCount = 0;
+
+      if (isMobile) {
+        overlay.style.display = 'flex';
+
+        mapEl.addEventListener('touchstart', e => {
+          touchCount = e.touches.length;
+          if (touchCount >= 2) {
+            map.dragging.enable();
+            overlay.style.opacity = '0';
+            clearTimeout(overlayTimer);
+            overlayTimer = setTimeout(() => { overlay.style.display = 'none'; }, 400);
+          } else {
+            // Single finger — show overlay hint
+            overlay.style.display = 'flex';
+            overlay.style.opacity = '1';
+            map.dragging.disable();
+            clearTimeout(overlayTimer);
+            overlayTimer = setTimeout(() => { overlay.style.opacity = '0'; }, 1200);
+          }
+        }, { passive: true });
+
+        mapEl.addEventListener('touchend', () => {
+          touchCount = 0;
+          map.dragging.disable();
+        }, { passive: true });
+      }
+
+      // ── Color scheme ───────────────────────────────────────
       const COLORS = {
-        office:    { bg:'#3b82f6', text:'#fff', shadow:'rgba(59,130,246,0.55)', label:'Office' },
+        office:    { bg:'#3b82f6', text:'#fff', shadow:'rgba(59,130,246,0.55)',  label:'Office' },
         retail:    { bg:'#f97316', text:'#fff', shadow:'rgba(249,115,22,0.55)',  label:'Restaurant & Retail' },
         event:     { bg:'#10b981', text:'#fff', shadow:'rgba(16,185,129,0.55)', label:'Event Venue' },
-        warehouse: { bg:'#8b5cf6', text:'#fff', shadow:'rgba(139,92,246,0.55)', label:'Warehouse & Industrial' },
+        warehouse: { bg:'#8b5cf6', text:'#fff', shadow:'rgba(139,92,246,0.55)', label:'Warehouse' },
         casino:    { bg:'#C9A84C', text:'#000', shadow:'rgba(201,168,76,0.6)',  label:'Casino Corridor' },
         landmark:  { bg:'#ef4444', text:'#fff', shadow:'rgba(239,68,68,0.5)',   label:'Landmark' },
       };
 
+      const pinPad = isMobile ? '0.4rem 0.7rem' : '0.28rem 0.52rem';
+      const pinFont = isMobile ? '0.65rem' : '0.58rem';
+
       function makePin(label, type) {
-        const c = COLORS[type];
-        const clickable = type !== 'landmark';
+        const clr = COLORS[type];
         return L.divIcon({
           className: '',
-          html: `<div style="background:${c.bg};color:${c.text};font-size:0.58rem;font-weight:900;padding:0.28rem 0.52rem;border-radius:999px;white-space:nowrap;box-shadow:0 3px 12px ${c.shadow};letter-spacing:0.04em;cursor:${clickable?'pointer':'default'};border:1.5px solid rgba(255,255,255,0.3);">${label}</div>`,
-          iconAnchor: [0, 14]
+          html: `<div style="background:${clr.bg};color:${clr.text};font-size:${pinFont};font-weight:900;padding:${pinPad};border-radius:999px;white-space:nowrap;box-shadow:0 3px 14px ${clr.shadow};letter-spacing:0.04em;cursor:pointer;border:2px solid rgba(255,255,255,0.35);">${label}</div>`,
+          iconAnchor: [0, isMobile ? 18 : 14]
         });
       }
 
       const PROPS = [
         { lat:36.5952, lng:-82.1888, label:'City Centre',    type:'office',    anchor:'listing-city-centre',
-          name:'City Centre Office Suites', detail:'100 5th St · 120–6,000 sqft · All-inclusive rent' },
+          name:'City Centre Office Suites', detail:'100 5th St · 120–6,000 sqft · All-inclusive' },
         { lat:36.5950, lng:-82.1877, label:'628 State St',   type:'retail',    anchor:'listing-628-state',
-          name:'628 State Street (Kress)', detail:'Bristol TN · 8,500 sqft · Restaurant / Bar / Retail' },
+          name:'628 State Street', detail:'8,500 sqft · Restaurant/Bar/Retail' },
         { lat:36.5965, lng:-82.1843, label:'Jamestown',      type:'office',    anchor:'listing-jamestown',
-          name:'Jamestown at Shelby', detail:'815 Shelby St · 1,200–4,500 sqft · Zero CAM fees' },
+          name:'Jamestown at Shelby', detail:'1,200–4,500 sqft · Zero CAM fees' },
         { lat:36.5948, lng:-82.1880, label:'Foundation',     type:'event',     anchor:'listing-foundation',
-          name:'The Foundation Event Venue', detail:'620 State St · 15–100 guests · Bookings open' },
+          name:'The Foundation', detail:'Event venue · 15–100 guests' },
         { lat:36.5982, lng:-82.1655, label:'Centre Point',   type:'casino',    anchor:'listing-centre-point',
-          name:'Centre Point — Casino Corridor', detail:'Commonwealth Ave, Bristol VA · Directly across from Hard Rock 🎰' },
+          name:'Centre Point', detail:'Commonwealth Ave · Across from Hard Rock 🎰' },
         { lat:36.5970, lng:-82.2090, label:'Coca-Cola Bldg', type:'warehouse', anchor:'listing-cocacola',
-          name:'Former Coca-Cola Building', detail:'1916 W State St · 45,500 sqft warehouse + 8,000 sqft office' },
+          name:'Former Coca-Cola Building', detail:'45,500 sqft warehouse + 8K office' },
       ];
       const LANDMARKS = [
         { lat:36.5990, lng:-82.1640, label:'Hard Rock Casino',
-          name:'Hard Rock Hotel & Casino Bristol', detail:'Opened 2024 · $845M economic impact · Bristol VA' },
+          name:'Hard Rock Hotel & Casino Bristol', detail:'Opened 2024 · $845M economic impact' },
         { lat:36.5160, lng:-82.2553, label:'BMS Speedway',
-          name:'Bristol Motor Speedway', detail:'NASCAR · Major events year-round · Bristol TN' },
+          name:'Bristol Motor Speedway', detail:'NASCAR · Major events year-round' },
       ];
 
+      // ── Scroll + highlight listing ─────────────────────────
       function scrollToListing(anchor) {
         const el = document.getElementById(anchor);
         if (!el) return;
@@ -341,39 +424,79 @@
           setTimeout(() => { el.style.boxShadow = ''; el.style.transition = ''; }, 2200);
         }, 180);
       }
+      window._hurleyScroll = scrollToListing;
+
+      // ── Markers ────────────────────────────────────────────
+      const markerMap = {};
 
       PROPS.forEach(p => {
         const clr = COLORS[p.type];
         const m = L.marker([p.lat, p.lng], { icon: makePin(p.label, p.type) }).addTo(map);
-        const popup = L.popup({ className: 'hurley-pw', maxWidth: 250, offset: [0, -4] })
+        markerMap[p.anchor] = { marker: m, lat: p.lat, lng: p.lng };
+
+        const popup = L.popup({ className: 'hurley-pw', maxWidth: isMobile ? 200 : 250, offset: [0, -4] })
           .setContent(`<div style="padding:0;font-family:DM Sans,sans-serif;overflow:hidden;border-radius:10px;">
             <div style="background:${clr.bg};padding:0.5rem 0.85rem;">
-              <div style="font-size:0.65rem;font-weight:900;letter-spacing:0.07em;color:${clr.text};opacity:0.85;text-transform:uppercase;">${clr.label}</div>
-              <div style="font-size:0.9rem;font-weight:700;color:${clr.text};margin-top:0.1rem;">${p.name}</div>
+              <div style="font-size:0.62rem;font-weight:900;letter-spacing:0.07em;color:${clr.text};opacity:0.85;text-transform:uppercase;">${clr.label}</div>
+              <div style="font-size:${isMobile?'0.82rem':'0.9rem'};font-weight:700;color:${clr.text};margin-top:0.1rem;">${p.name}</div>
             </div>
-            <div style="padding:0.65rem 0.85rem;">
-              <div style="font-size:0.75rem;color:#555;margin-bottom:0.75rem;line-height:1.5;">${p.detail}</div>
-              <button onclick="window._hurleyScroll('${p.anchor}')" style="background:${clr.bg};color:${clr.text};border:none;border-radius:8px;padding:0.45rem 0.9rem;font-size:0.75rem;font-weight:900;cursor:pointer;width:100%;">View Listing ↓</button>
+            <div style="padding:0.6rem 0.85rem;">
+              <div style="font-size:0.73rem;color:#555;margin-bottom:0.65rem;line-height:1.45;">${p.detail}</div>
+              <button onclick="window._hurleyScroll('${p.anchor}')" style="background:${clr.bg};color:${clr.text};border:none;border-radius:8px;padding:0.5rem 0.9rem;font-size:0.75rem;font-weight:900;cursor:pointer;width:100%;-webkit-tap-highlight-color:transparent;">View Listing ↓</button>
             </div>
           </div>`);
         m.bindPopup(popup);
-        m.on('click', () => m.openPopup());
+        m.on('click', () => {
+          m.openPopup();
+          highlightCard(p.anchor);
+        });
       });
 
       LANDMARKS.forEach(p => {
         const m = L.marker([p.lat, p.lng], { icon: makePin(p.label, 'landmark') }).addTo(map);
         m.bindPopup(`<div style="padding:0.85rem;font-family:DM Sans,sans-serif;">
           <div style="font-size:0.88rem;font-weight:700;color:#111;margin-bottom:0.2rem;">${p.name}</div>
-          <div style="font-size:0.75rem;color:#555;line-height:1.4;">${p.detail}</div>
+          <div style="font-size:0.73rem;color:#555;line-height:1.4;">${p.detail}</div>
         </div>`, { className: 'hurley-pw', maxWidth: 230, offset: [0, -4] });
       });
 
-      window._hurleyScroll = scrollToListing;
+      // ── Mobile card rail ───────────────────────────────────
+      const rail = document.getElementById('map-card-inner');
+      let activeCard = null;
+
+      function highlightCard(anchor) {
+        document.querySelectorAll('.map-prop-card').forEach(c => c.classList.remove('active'));
+        const card = document.querySelector(`.map-prop-card[data-anchor="${anchor}"]`);
+        if (card) {
+          card.classList.add('active');
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }
+
+      PROPS.forEach(p => {
+        const clr = COLORS[p.type];
+        const card = document.createElement('div');
+        card.className = 'map-prop-card';
+        card.dataset.anchor = p.anchor;
+        card.innerHTML = `
+          <div class="mpc-type" style="color:${clr.bg};">${clr.label}</div>
+          <div class="mpc-name">${p.name}</div>
+          <div class="mpc-detail">${p.detail}</div>`;
+        card.addEventListener('click', () => {
+          const info = markerMap[p.anchor];
+          if (info) {
+            map.setView([info.lat, info.lng], 15, { animate: true });
+            setTimeout(() => info.marker.openPopup(), 350);
+          }
+          highlightCard(p.anchor);
+        });
+        rail.appendChild(card);
+      });
     }
+
     initMap();
   })();
   </script>
-
 
   <!-- Filter bar -->
   <div class="filter-bar" id="filter-tabs">
