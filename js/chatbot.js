@@ -606,7 +606,7 @@
     }
 
     function greet() {
-      addMsg("Hi! I'm **Riley** 👋 — your Hurley Enterprise local expert. I can help with:\n\n• 🏢 **Leasing** office, retail, warehouse & event space in Bristol TN/VA\n• 💵 **Selling your property** — fast cash offers, any condition\n• 📈 **Market intel** — Hard Rock Casino impact, vacancy trends, investment\n• 🏙️ **Bristol info** — history, economy, neighborhoods, things to do\n• 🏗️ **Development** — ground-up, renovation, tenant improvement\n\nWhat can I help you with?", 'bot');
+      addMsg("Hi! I'm **Riley** 👋 — your Hurley Enterprise local expert. I can help with?", 'bot');
     }
 
     function buildChips(chips) {
