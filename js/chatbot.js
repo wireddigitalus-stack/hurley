@@ -664,20 +664,44 @@
       return Math.min(500 + words * 16, 2000) + Math.random() * 250;
     }
 
-    function handleSend(text) {
+    // Conversation history for Gemini context (last 16 turns)
+    const chatHistory = [];
+
+    async function handleSend(text) {
       const q = (text || input.value).trim();
       if (!q) return;
       addMsg(q, 'user');
       input.value = '';
       chipsZone.innerHTML = '';
       showTyping();
-      const reply = getReply(q);
-      setTimeout(() => {
+
+      // Add user turn to history
+      chatHistory.push({ role: 'user', text: q });
+      if (chatHistory.length > 16) chatHistory.splice(0, 2);
+
+      try {
+        const res = await fetch('/api/riley', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: q, history: chatHistory.slice(0, -1) })
+        });
+        if (!res.ok) throw new Error('API error ' + res.status);
+        const data = await res.json();
+        const reply = data.reply || getReply(q);
+        chatHistory.push({ role: 'bot', text: reply });
         removeTyping();
         addMsg(reply, 'bot');
         buildChips(getChips());
         messages.scrollTop = messages.scrollHeight;
-      }, typingDelay(reply));
+      } catch (err) {
+        // Fallback to rule-based if API unavailable
+        const reply = getReply(q);
+        chatHistory.push({ role: 'bot', text: reply });
+        removeTyping();
+        addMsg(reply, 'bot');
+        buildChips(getChips());
+        messages.scrollTop = messages.scrollHeight;
+      }
     }
 
     sendBtn.addEventListener('click', () => handleSend());
