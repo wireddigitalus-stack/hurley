@@ -48,17 +48,30 @@
     </button>
   </div>
 </nav>
-<div id="mobile-menu" role="dialog" aria-label="Mobile navigation">
-  <a href="index.html" class="mobile-nav-link">Home</a>
+<div id="drawer-backdrop"></div>
+<div id="mobile-menu" role="dialog" aria-label="Mobile navigation" aria-modal="true">
+  <div class="drawer-header">
+    <a href="index.html" class="drawer-logo" aria-label="Hurley Enterprise LLC Home">
+      <img src="https://static.wixstatic.com/media/44d8da_1a754c453e70444c89adea2857351ed3~mv2.png/v1/fill/w_236,h_58,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/hurley%20enter%20horozontal.png" alt="Hurley Enterprise LLC" loading="lazy">
+    </a>
+    <button class="drawer-close" aria-label="Close navigation">✕</button>
+  </div>
+  <div class="drawer-links">
+      <a href="index.html" class="mobile-nav-link">Home</a>
   <a href="about.html" class="mobile-nav-link">About Us</a>
   <a href="development-construction.html" class="mobile-nav-link">Development</a>
   <a href="we-buy-property.html" class="mobile-nav-link">We Buy Property</a>
   <a href="for-sale-lease.html" class="mobile-nav-link">For Sale &amp; Lease</a>
-  <a href="market-report.html" class="mobile-nav-link" style="color:var(--gold)!important;font-weight:800;">📊 Market Report — Free</a>
-  <a href="blog.html" class="mobile-nav-link" style="font-weight:700;">✍️ Blog &amp; Insights</a>
+  <a href="blog.html" class="mobile-nav-link" style="font-weight:700;">Blog &amp; Insights</a>
   <a href="contact.html" class="mobile-nav-link">Contact</a>
-</div>
-<main>
+
+  <div class="drawer-rule"></div>
+  <a href="market-report.html" class="mobile-nav-link" style="color:var(--gold)!important;font-weight:800;">Market Report</a>
+  </div>
+  <div class="drawer-cta-wrap">
+    <a href="contact.html" class="btn btn--primary">Contact Us</a>
+  </div>
+</div><main>
   <div class="page-hero">
     <div class="page-hero-content">
       <p class="overline">Who We Are</p>
