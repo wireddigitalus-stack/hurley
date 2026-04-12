@@ -3,20 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Hurley Enterprise LLC | Commercial Real Estate & Development Since 2004</title>
-  <meta name="description" content="Hurley Enterprise LLC has served Bristol TN/VA since 2004. Award-winning commercial developer, property investor, and leasing specialist across the Tri-Cities region.">
-  <meta name="keywords" content="hurley enterprise llc bristol tn, about hurley enterprise, commercial real estate company bristol tennessee">
+  <title>About Hurley Enterprise LLC | Building the Tri-Cities Since 2004</title>
+  <meta name="description" content="Meet the Hurley Enterprise team — Bristol TN/VA's premier commercial developer since 2004. 20+ years experience, 1M+ sq ft managed, dual-state portfolio. Real people. Real results.">
+  <meta name="keywords" content="hurley enterprise llc about us, allen hurley bristol tn, commercial real estate team tri cities, development company bristol tennessee virginia">
   <link rel="canonical" href="https://www.hurleyenterprisellc.com/about.html">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.hurleyenterprisellc.com/about.html">
-  <meta property="og:title" content="About Hurley Enterprise LLC | Commercial Real Estate & Development Since 2004">
-  <meta property="og:description" content="Hurley Enterprise LLC has served Bristol TN/VA since 2004. Award-winning commercial developer, property investor, and leasing specialist across the Tri-Cities region.">
+  <meta property="og:title" content="About Hurley Enterprise LLC | Building the Tri-Cities Since 2004">
+  <meta property="og:description" content="Meet the team behind Bristol TN/VA's premier commercial developer. 20+ years of local expertise, 1M+ sq ft managed, and a hands-on approach to every deal.">
   <meta property="og:image" content="https://www.hurleyenterprisellc.com/img/hurley-og.jpg">
   <meta property="og:site_name" content="Hurley Enterprise LLC">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="About Hurley Enterprise LLC | Commercial Real Estate & Development Since 2004">
-  <meta name="twitter:description" content="Hurley Enterprise LLC has served Bristol TN/VA since 2004. Award-winning commercial developer, property investor, and leasing specialist across the Tri-Cities region.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -25,10 +23,222 @@
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/mobile.css">
-  <script src="js/seo-schema.js" defer></script>
   <link rel="stylesheet" href="css/chatbot.css">
+  <script src="js/seo-schema.js" defer></script>
+
+  <style>
+    /* ── About page specific styles ── */
+    .about-hero {
+      background: linear-gradient(160deg, #0a0a0e 0%, #111118 60%, #0d0d12 100%);
+      padding: 9rem 1.5rem 5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .about-hero .overline { margin-bottom: 0.75rem; }
+    .about-hero h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1.25rem; }
+    .about-hero p  { max-width: 640px; margin: 0 auto 2rem; color: var(--text-secondary); font-size: 1.05rem; line-height: 1.7; }
+
+    /* Stats bar */
+    .stats-bar {
+      background: var(--card, #17171f);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      padding: 2rem 1.5rem;
+    }
+    .stats-bar-inner {
+      max-width: 960px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem;
+      text-align: center;
+    }
+    .stat-item-num {
+      font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 900; letter-spacing: -0.04em;
+      color: var(--gold, #C9A84C); display: block; line-height: 1;
+    }
+    .stat-item-label {
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-muted, #888); margin-top: 0.4rem; display: block;
+    }
+    @media(max-width:600px){ .stats-bar-inner { grid-template-columns: 1fr 1fr; gap: 1.5rem; } }
+
+    /* Mission section */
+    .mission-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+    }
+    @media(max-width:800px){ .mission-grid { grid-template-columns: 1fr; gap: 2.5rem; } }
+    .mission-body p { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.25rem; }
+    .mission-body p:last-child { margin-bottom: 0; }
+
+    /* Values */
+    .values-grid {
+      display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem;
+    }
+    @media(max-width:500px){ .values-grid { grid-template-columns: 1fr; } }
+    .value-card {
+      background: rgba(201,168,76,0.05);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 14px; padding: 1.25rem 1.35rem;
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .value-num {
+      font-size: 1.8rem; font-weight: 900; color: var(--gold, #C9A84C);
+      line-height: 1; flex-shrink: 0; letter-spacing: -0.04em;
+    }
+    .value-title { font-size: 0.9rem; font-weight: 800; color: var(--text-primary, #f2f2f2); margin-bottom: 0.3rem; }
+    .value-desc  { font-size: 0.78rem; color: var(--text-secondary, #aaa); line-height: 1.6; }
+
+    /* Awards strip */
+    .awards-strip {
+      background: var(--bg-2, #12121a);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      padding: 2.5rem 1.5rem;
+    }
+    .awards-inner { max-width: 900px; margin: 0 auto; }
+    .awards-inner h3 { font-size: 0.65rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold, #C9A84C); text-align: center; margin-bottom: 1.5rem; }
+    .awards-list {
+      display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
+    }
+    .award-pill {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px; padding: 0.4em 0.9em;
+      font-size: 0.7rem; font-weight: 700; color: var(--text-secondary, #aaa);
+    }
+    .award-pill span { color: var(--gold, #C9A84C); font-size: 0.8rem; }
+
+    /* Team section */
+    .team-section { padding: 5rem 1.5rem; }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    @media(max-width:900px){ .team-grid { grid-template-columns: repeat(2,1fr); } }
+    @media(max-width:500px){ .team-grid { grid-template-columns: 1fr 1fr; gap: 1rem; } }
+
+    /* Leadership cards (larger) */
+    .team-grid.leadership {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem; margin-bottom: 2rem;
+    }
+    @media(max-width:700px){ .team-grid.leadership { grid-template-columns: 1fr; gap: 1.5rem; } }
+
+    .team-card {
+      background: var(--card, #17171f);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 18px; overflow: hidden;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    }
+    .team-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(201,168,76,0.3);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.15);
+    }
+    .team-photo-wrap {
+      width: 100%; padding-top: 100%; position: relative; overflow: hidden;
+      background: linear-gradient(160deg, #1a1a24, #111118);
+    }
+    .team-photo-wrap img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+      filter: grayscale(15%); transition: filter 0.3s, transform 0.4s;
+    }
+    .team-card:hover .team-photo-wrap img { filter: grayscale(0%); transform: scale(1.04); }
+    .team-photo-fallback {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; font-weight: 900; color: rgba(201,168,76,0.3);
+      font-family: 'DM Sans', sans-serif;
+    }
+    .team-info { padding: 1.1rem 1.25rem 1.25rem; }
+    .team-name  { font-size: 0.95rem; font-weight: 800; color: var(--text-primary, #f2f2f2); margin-bottom: 0.2rem; line-height: 1.2; }
+    .team-title {
+      font-size: 0.62rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--gold, #C9A84C); margin-bottom: 0.75rem;
+    }
+    .team-bio   { font-size: 0.75rem; color: var(--text-secondary, #aaa); line-height: 1.65; }
+
+    /* Leadership card larger */
+    .team-card.leader .team-photo-wrap { padding-top: 75%; }
+    .team-card.leader .team-name  { font-size: 1.05rem; }
+    .team-card.leader .team-info  { padding: 1.35rem 1.5rem 1.5rem; }
+    .team-card.leader .team-bio   { font-size: 0.78rem; }
+
+    /* Support team — smaller grid */
+    .team-grid.support { grid-template-columns: repeat(4,1fr); gap: 1.25rem; }
+    @media(max-width:800px){ .team-grid.support { grid-template-columns: repeat(2,1fr); } }
+    @media(max-width:480px){ .team-grid.support { grid-template-columns: 1fr 1fr; gap: 0.85rem; } }
+    .team-card.support .team-photo-wrap { padding-top: 100%; }
+    .team-card.support .team-name  { font-size: 0.82rem; }
+    .team-card.support .team-info  { padding: 0.85rem 1rem 1rem; }
+
+    /* Principal bio (Allen) — full width hero card */
+    .principal-card {
+      background: var(--card, #17171f);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 20px; overflow: hidden;
+      display: grid; grid-template-columns: 340px 1fr;
+      gap: 0; margin-bottom: 2.5rem;
+    }
+    @media(max-width:800px){ .principal-card { grid-template-columns: 1fr; } }
+    .principal-photo { position: relative; overflow: hidden; min-height: 380px; }
+    .principal-photo img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top center;
+      display: block; filter: grayscale(10%); transition: filter 0.3s;
+    }
+    .principal-photo:hover img { filter: grayscale(0%); }
+    .principal-info { padding: 2.5rem 2.25rem; display: flex; flex-direction: column; justify-content: center; }
+    .principal-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 999px; padding: 0.3em 0.85em;
+      font-size: 0.58rem; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold, #C9A84C); margin-bottom: 1rem; width: fit-content;
+    }
+    .principal-name { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 0.2rem; }
+    .principal-title { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold, #C9A84C); margin-bottom: 1.5rem; }
+    .principal-bio p { font-size: 0.83rem; color: var(--text-secondary, #aaa); line-height: 1.75; margin-bottom: 1rem; }
+    .principal-bio p:last-child { margin-bottom: 0; }
+    .principal-awards {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.25rem;
+    }
+    .pa-chip {
+      font-size: 0.58rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-secondary, #aaa); padding: 0.25em 0.7em; border-radius: 999px;
+    }
+
+    /* CTA section */
+    .about-cta {
+      background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.03));
+      border: 1px solid rgba(201,168,76,0.15); border-radius: 20px;
+      padding: 3.5rem 2rem; text-align: center; margin: 0 0 4rem;
+    }
+    .about-cta h2 { font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 1rem; }
+    .about-cta p  { color: var(--text-secondary, #aaa); max-width: 520px; margin: 0 auto 2rem; line-height: 1.7; }
+    .cta-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+
+    /* Section dividers */
+    .section-overline { font-size: 0.62rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold,#C9A84C); margin-bottom: 0.75rem; }
+    .section-heading  { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 1.25rem; }
+    .section-sub      { color: var(--text-secondary, #aaa); line-height: 1.7; max-width: 600px; }
+    .team-section-header { text-align: center; margin-bottom: 3rem; }
+    .team-section-header .section-sub { margin: 0 auto; }
+    .subsection-label {
+      font-size: 0.6rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted, #888); margin: 2.5rem 0 1.25rem; padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+  </style>
 </head>
-<body><div id="scroll-progress"></div>
+<body>
+<div id="scroll-progress"></div>
 <nav id="site-nav" role="navigation" aria-label="Main navigation">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo" aria-label="Hurley Enterprise LLC Home">
@@ -38,7 +248,7 @@
       <li><a href="about.html" class="nav-link">About Us</a></li>
       <li><a href="development-construction.html" class="nav-link">Development</a></li>
       <li><a href="we-buy-property.html" class="nav-link">We Buy Property</a></li>
-      <li><a href="for-sale-lease.html" class="nav-link">For Sale & Lease</a></li>
+      <li><a href="for-sale-lease.html" class="nav-link">For Sale &amp; Lease</a></li>
       <li><a href="market-report.html" class="nav-link" style="display:inline-flex;align-items:center;gap:0.35rem;">Market Report <span style="font-size:0.55rem;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;background:var(--gold);color:#000;padding:0.15em 0.45em;border-radius:999px;line-height:1.4;">FREE</span></a></li>
       <li><a href="blog.html" class="nav-link" style="display:inline-flex;align-items:center;gap:0.35rem;">Blog <span style="font-size:0.5rem;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;background:rgba(201,168,76,0.15);color:var(--gold);border:1px solid rgba(201,168,76,0.3);padding:0.15em 0.45em;border-radius:999px;line-height:1.4;">NEW</span></a></li>
     </ul>
@@ -55,57 +265,297 @@
     <button class="drawer-close" aria-label="Close navigation">✕</button>
   </div>
   <div class="drawer-links">
-      <a href="about.html" class="mobile-nav-link">About Us</a>
-  <a href="development-construction.html" class="mobile-nav-link">Development</a>
-  <a href="we-buy-property.html" class="mobile-nav-link">We Buy Property</a>
-  <a href="for-sale-lease.html" class="mobile-nav-link">For Sale &amp; Lease</a>
-  <a href="blog.html" class="mobile-nav-link" style="font-weight:700;">Blog &amp; Insights</a>
-  <a href="contact.html" class="mobile-nav-link">Contact</a>
-
-  <div class="drawer-rule"></div>
-  <a href="market-report.html" class="mobile-nav-link" style="color:var(--gold)!important;font-weight:800;">Market Report</a>
+    <a href="about.html" class="mobile-nav-link">About Us</a>
+    <a href="development-construction.html" class="mobile-nav-link">Development</a>
+    <a href="we-buy-property.html" class="mobile-nav-link">We Buy Property</a>
+    <a href="for-sale-lease.html" class="mobile-nav-link">For Sale &amp; Lease</a>
+    <a href="blog.html" class="mobile-nav-link" style="font-weight:700;">Blog &amp; Insights</a>
+    <a href="contact.html" class="mobile-nav-link">Contact</a>
+    <div class="drawer-rule"></div>
+    <a href="market-report.html" class="mobile-nav-link" style="color:var(--gold)!important;font-weight:800;">Market Report</a>
   </div>
   <div class="drawer-cta-wrap">
     <a href="contact.html" class="btn btn--primary">Contact Us</a>
   </div>
-</div><main>
-  <div class="page-hero">
-    <div class="page-hero-content">
-      <p class="overline">Who We Are</p>
-      <h1>Building the Tri-Cities of Tomorrow</h1>
-      <p>Hurley Enterprise LLC has been an entrepreneurial-based enterprise changing the game in regional development and construction since 2004.</p>
+</div>
+
+<main>
+
+  <!-- HERO -->
+  <section class="about-hero">
+    <p class="overline">Who We Are</p>
+    <h1>Building the Tri-Cities<br>of Tomorrow</h1>
+    <p>Hurley Enterprise LLC is an entrepreneurial-based enterprise changing the game in regional development, construction, and real estate across Bristol TN/VA since 2004.</p>
+    <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+      <a href="contact.html" class="btn btn--primary">Work With Us</a>
+      <a href="#team" class="btn btn--outline">Meet the Team</a>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stats-bar-inner">
+      <div class="reveal">
+        <span class="stat-item-num">2004</span>
+        <span class="stat-item-label">Year Founded</span>
+      </div>
+      <div class="reveal">
+        <span class="stat-item-num">20+</span>
+        <span class="stat-item-label">Years in Bristol</span>
+      </div>
+      <div class="reveal">
+        <span class="stat-item-num">1M+</span>
+        <span class="stat-item-label">Sq Ft Managed</span>
+      </div>
+      <div class="reveal">
+        <span class="stat-item-num">TN+VA</span>
+        <span class="stat-item-label">Dual-State Portfolio</span>
+      </div>
     </div>
   </div>
+
+  <!-- MISSION + VALUES -->
   <section class="section">
     <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;" class="reveal">
-        <div>
-          <p class="overline" style="margin-bottom:1rem;">Our Mission</p>
-          <h2 style="margin-bottom:1.5rem;">An Entrepreneurial-Based Enterprise</h2>
-          <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:1.5rem;">Hurley Enterprise LLC was founded on the principle that every property represents an opportunity — to create value, build community, and transform the Tri-Cities region. We operate across commercial development, residential renovation, strategic property acquisition, and premium commercial leasing.</p>
-          <p style="color:var(--text-secondary);line-height:1.8;">With over 20 years of experience in the Bristol TN/VA market, we bring unmatched local knowledge, contractor relationships, and a portfolio of landmark properties to every engagement.</p>
+      <div class="mission-grid reveal">
+        <!-- Left: Company story -->
+        <div class="mission-body">
+          <p class="section-overline">Our Story</p>
+          <h2 class="section-heading">An Entrepreneurial-Based Enterprise</h2>
+          <p>Hurley Enterprise is different — our team takes a hands-on approach, taking time to understand each client's needs and budget, then building a comprehensive plan to execute. We have a proven track record successfully managing millions of dollars in assets, construction and development projects.</p>
+          <p>Holding over 1 million square feet of commercial and residential property, we definitely know our way around the real estate world. We use our experience to attack each project from multiple angles — leveraging decades of expertise to simplify the process for our clients at the best value, with lightning fast speed.</p>
+          <p>Whether that's helping a seller close fast on a property, finding a business the perfect location, or delivering a ground-up development project — we go the extra mile because we believe that's simply part of the job.</p>
+          <blockquote style="border-left:3px solid var(--gold,#C9A84C);margin:1.5rem 0 0;padding:0.75rem 1.25rem;background:rgba(201,168,76,0.04);border-radius:0 10px 10px 0;">
+            <p style="font-style:italic;font-weight:700;color:var(--text-primary,#f2f2f2);margin:0;font-size:0.92rem;">"People do business with People — and Said Done means exactly what it says."</p>
+            <p style="font-size:0.7rem;color:var(--gold,#C9A84C);font-weight:800;margin:0.4rem 0 0;letter-spacing:0.05em;text-transform:uppercase;">— J. Allen Hurley II, CEO &amp; President</p>
+          </blockquote>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
-          <div class="card" style="text-align:center;"><span style="font-size:2.5rem;font-weight:900;color:var(--gold);display:block;">2004</span><span style="font-size:0.72rem;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;">Founded</span></div>
-          <div class="card" style="text-align:center;"><span style="font-size:2.5rem;font-weight:900;color:var(--gold);display:block;">20+</span><span style="font-size:0.72rem;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;">Years Serving Bristol</span></div>
-          <div class="card" style="text-align:center;"><span style="font-size:2.5rem;font-weight:900;color:var(--gold);display:block;">9</span><span style="font-size:0.72rem;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;">Active Properties</span></div>
-          <div class="card" style="text-align:center;"><span style="font-size:2.5rem;font-weight:900;color:var(--gold);display:block;">TN+VA</span><span style="font-size:0.72rem;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;">Dual-State Portfolio</span></div>
+
+        <!-- Right: Mission + Values -->
+        <div>
+          <p class="section-overline">Our Mission</p>
+          <h2 class="section-heading" style="font-size:clamp(1.2rem,3vw,1.6rem);">Provide real value through experience, simplicity, and speed.</h2>
+          <p style="color:var(--text-secondary,#aaa);line-height:1.7;margin-bottom:1.75rem;">We've simplified our business model down to four core principles — the foundation on which every project is built:</p>
+          <div class="values-grid">
+            <div class="value-card">
+              <div class="value-num">01</div>
+              <div>
+                <div class="value-title">Service</div>
+                <div class="value-desc">Hands-on client relationships. We learn your needs before we act.</div>
+              </div>
+            </div>
+            <div class="value-card">
+              <div class="value-num">02</div>
+              <div>
+                <div class="value-title">Quality</div>
+                <div class="value-desc">Premium execution on every project, every time.</div>
+              </div>
+            </div>
+            <div class="value-card">
+              <div class="value-num">03</div>
+              <div>
+                <div class="value-title">Value</div>
+                <div class="value-desc">Fair pricing backed by 20 years of local market intelligence.</div>
+              </div>
+            </div>
+            <div class="value-card">
+              <div class="value-num">04</div>
+              <div>
+                <div class="value-title">Speed</div>
+                <div class="value-desc">Fast deal and project completion — because your time matters.</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:1.75rem;">
+            <a href="contact.html" class="btn btn--primary">Contact Us Today</a>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- AWARDS STRIP -->
+  <div class="awards-strip">
+    <div class="awards-inner reveal">
+      <h3>Recognition &amp; Awards</h3>
+      <div class="awards-list">
+        <span class="award-pill"><span>🏆</span> Fortune 5000 Fastest Growing Private Companies</span>
+        <span class="award-pill"><span>🏅</span> ACG Emerging Corporate Growth Award</span>
+        <span class="award-pill"><span>📰</span> Business Journal Top 100</span>
+        <span class="award-pill"><span>🎓</span> TN Chancellor's Award — Excellence in Philanthropy</span>
+        <span class="award-pill"><span>🏛️</span> Historic Heritage Alliance — Adaptive Reuse</span>
+        <span class="award-pill"><span>🌟</span> Entrepreneur National Leadership Award</span>
+        <span class="award-pill"><span>🏠</span> Historical Preservation Award</span>
+        <span class="award-pill"><span>🤝</span> Community Ambassador</span>
+        <span class="award-pill"><span>👑</span> President's Award &amp; Outstanding Alumni</span>
+        <span class="award-pill"><span>❤️</span> Peg Brown Santa Pal Award 2019</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEET THE TEAM -->
+  <section class="team-section" id="team">
+    <div class="container">
+      <div class="team-section-header reveal">
+        <p class="section-overline">The People Behind the Work</p>
+        <h2 class="section-heading">Meet Our Team</h2>
+        <p class="section-sub">Hurley Enterprise is built on relationships — locally rooted, personally invested, and committed to delivering results for every client across the Tri-Cities.</p>
+      </div>
+
+      <!-- PRINCIPAL: Allen Hurley — featured card -->
+      <div class="principal-card reveal">
+        <div class="principal-photo">
+          <img src="https://static.wixstatic.com/media/44d8da_dc70f3e33d4843ef80c6c734ea69c169~mv2.png/v1/fill/w_425,h_418,fp_0.41_0.45,lg_1,q_85,enc_avif,quality_auto/aaaaaa.png"
+               alt="J. Allen Hurley II — CEO & President, Hurley Enterprise LLC"
+               loading="eager">
+        </div>
+        <div class="principal-info">
+          <div class="principal-badge">⭐ Founder &amp; Principal</div>
+          <h2 class="principal-name">J. Allen Hurley II</h2>
+          <p class="principal-title">CEO &amp; President</p>
+          <div class="principal-bio">
+            <p>J. Allen Hurley II is a successful entrepreneur across multiple industries — technology, real estate, automotive, and private equity. Hurley founded his first company in the Wireless Phone Industry out of a neighbor's garage, growing it to over 2,700 employees and a quarter-billion in annual sales. The company was recognized as a pioneer in reverse logistics, repair, and asset management and went public through acquisition in 2010.</p>
+            <p>As CEO of Hurley Enterprise LLC and Vision LLC, Allen leads a portfolio spanning commercial and residential real estate, digital technology, and start-up ventures across the Tri-Cities. His 32+ years as an entrepreneur have earned recognition in Fortune Magazine's 5000, the ACG Emerging Growth Award, and Business Journal Top 100, among many others.</p>
+            <p>A deeply committed community leader, Allen has received the Tennessee Chancellor's Award for Excellence in Philanthropy, the Historic Heritage Alliance Award for Adaptive Reuse, and serves on multiple non-profit boards across the region. He operates on a simple principle: <em>"Said Done."</em></p>
+          </div>
+          <div class="principal-awards">
+            <span class="pa-chip">Fortune 5000</span>
+            <span class="pa-chip">ACG Growth Award</span>
+            <span class="pa-chip">TN Philanthropy Award</span>
+            <span class="pa-chip">Historic Preservation</span>
+            <span class="pa-chip">32+ Years Entrepreneur</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEADERSHIP TEAM: 3 cards -->
+      <p class="subsection-label reveal">Leadership</p>
+      <div class="team-grid leadership reveal">
+        <!-- Jazmin Hurley -->
+        <div class="team-card leader">
+          <div class="team-photo-wrap">
+            <img src="https://static.wixstatic.com/media/44d8da_3e69b66a5dec47ed99fdf754fb874f79~mv2.avif/v1/fill/w_419,h_412,al_c,lg_1,q_80,enc_avif,quality_auto/jaz%20headshot_edited.avif"
+                 alt="Jazmin Hurley — Director, Hurley Enterprise LLC" loading="lazy">
+          </div>
+          <div class="team-info">
+            <p class="team-title">Director</p>
+            <h3 class="team-name">Jazmin Hurley</h3>
+            <p class="team-bio">Jazmin oversees administration and marketing at Hurley Enterprise, holding degrees in Small Business Management and Entrepreneurial Studies. Her streamlined operations and strategic marketing approach drive sustainable growth across the commercial and residential portfolio. A passionate community servant, Jazmin founded the Love'N'People 501(c)3 at age 12 — earning the Peg Brown Santa Pal Award in 2019.</p>
+          </div>
+        </div>
+
+        <!-- Noah Hurley -->
+        <div class="team-card leader">
+          <div class="team-photo-wrap">
+            <img src="https://static.wixstatic.com/media/44d8da_78071fa2797943d3bd8fc3a617ae72ab~mv2.png/v1/fill/w_425,h_418,al_c,lg_1,q_85,enc_avif,quality_auto/nh.png"
+                 alt="Noah Hurley — Project Director, Hurley Enterprise LLC" loading="lazy">
+          </div>
+          <div class="team-info">
+            <p class="team-title">Project Director</p>
+            <h3 class="team-name">Noah Hurley</h3>
+            <p class="team-bio">Noah serves as Director of Project Management, supervising everything from real estate acquisitions to transaction-based deals. A seasoned property manager with an eye for key details, Noah's hands-on experience in overseeing residential and commercial properties — including maintenance, operations, and upkeep — plays a pivotal role in enhancing property value and the success of the Hurley portfolio.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEADERSHIP TEAM: Denise (full width) -->
+      <div class="team-grid leadership reveal" style="grid-template-columns:1fr;">
+        <div class="team-card leader" style="display:grid;grid-template-columns:260px 1fr;gap:0;overflow:hidden;">
+          <div class="team-photo-wrap" style="width:260px;padding-top:0;min-height:280px;flex-shrink:0;">
+            <img src="https://static.wixstatic.com/media/44d8da_aee11fa05e9947f3b2f988dd052e1fdc~mv2.png/v1/fill/w_425,h_418,fp_0.65_0.37,lg_1,q_85,enc_avif,quality_auto/dm.png"
+                 alt="Denise Myers — Vice President, Hurley Enterprise LLC" loading="lazy"
+                 style="position:static;width:100%;height:100%;object-fit:cover;object-position:top center;display:block;">
+          </div>
+          <div class="team-info" style="display:flex;flex-direction:column;justify-content:center;">
+            <p class="team-title">Vice President</p>
+            <h3 class="team-name" style="font-size:1.05rem;">Denise Myers</h3>
+            <p class="team-bio">Denise holds her B.S. from East Tennessee State University and brings an extraordinary range of leadership experience — from 16 years managing Neurovascular Services at Bristol Regional Medical Center, to her current role as Executive Vice-President of Vision LLC. In her role, Denise is a key member of the executive team involved in tactical planning, strategic decision-making, and hands-on project development across all phases. She is a Rotarian, Bristol Chamber Board member, and Fellowship of Christian Athletes board executive.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUPPORT TEAM -->
+      <p class="subsection-label reveal">Operations &amp; Field Team</p>
+      <div class="team-grid support reveal">
+        <!-- Tonya Arnold -->
+        <div class="team-card support">
+          <div class="team-photo-wrap">
+            <img src="https://static.wixstatic.com/media/44d8da_ecef6108a4ff4df29302d66537d5761e~mv2.png/v1/fill/w_425,h_418,fp_0.59_0.50,lg_1,q_85,enc_avif,quality_auto/Tonya%20Arnold.png"
+                 alt="Tonya Arnold — Finance Director" loading="lazy">
+          </div>
+          <div class="team-info">
+            <p class="team-title">Finance Director</p>
+            <h3 class="team-name">Tonya Arnold</h3>
+            <p class="team-bio">Oversees financial operations across the Hurley Enterprise portfolio.</p>
+          </div>
+        </div>
+        <!-- Blake Watson -->
+        <div class="team-card support">
+          <div class="team-photo-wrap">
+            <img src="https://static.wixstatic.com/media/44d8da_47dc1dbb98014d1f9beef57916d1c36d~mv2.png/v1/fill/w_425,h_418,al_c,lg_1,q_85,enc_avif,quality_auto/Blake%20Watson.png"
+                 alt="Blake Watson — Superintendent" loading="lazy">
+          </div>
+          <div class="team-info">
+            <p class="team-title">Superintendent</p>
+            <h3 class="team-name">Blake Watson</h3>
+            <p class="team-bio">Leads field construction and site supervision on development projects.</p>
+          </div>
+        </div>
+        <!-- Fred Green -->
+        <div class="team-card support">
+          <div class="team-photo-wrap">
+            <img src="https://static.wixstatic.com/media/44d8da_13fcfd2d37254167b9bc668234c7d487~mv2.png/v1/fill/w_425,h_418,fp_0.67_0.36,lg_1,q_85,enc_avif,quality_auto/Fred%20Green_.png"
+                 alt="Fred Green — Maintenance Supervisor" loading="lazy">
+          </div>
+          <div class="team-info">
+            <p class="team-title">Maintenance Supervisor</p>
+            <h3 class="team-name">Fred Green</h3>
+            <p class="team-bio">Keeps the Hurley property portfolio in top condition across all locations.</p>
+          </div>
+        </div>
+        <!-- Sherril Keplinger -->
+        <div class="team-card support">
+          <div class="team-photo-wrap">
+            <img src="https://static.wixstatic.com/media/44d8da_8cf7a7efcf2d483fac8cb3757fe88895~mv2.png/v1/fill/w_425,h_418,fp_0.72_0.35,lg_1,q_85,enc_avif,quality_auto/Sherril%20Keplinger_.png"
+                 alt="Sherril Keplinger — Construction and Services" loading="lazy">
+          </div>
+          <div class="team-info">
+            <p class="team-title">Construction &amp; Services</p>
+            <h3 class="team-name">Sherril Keplinger</h3>
+            <p class="team-bio">Coordinates construction logistics and services delivery across active projects.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="about-cta reveal">
+        <p class="section-overline">Ready to Get Started?</p>
+        <h2>Let's Build Something Great Together</h2>
+        <p>Whether you're looking to lease space, sell a property, or explore a development opportunity — our team is ready to partner with you. Give us a call or drop us a message.</p>
+        <div class="cta-btns">
+          <a href="contact.html" class="btn btn--primary">Contact Us Today</a>
+          <a href="tel:+14237427219" class="btn btn--outline">📞 423-742-7219</a>
+        </div>
+        <p style="margin-top:1.25rem;font-size:0.72rem;color:var(--text-muted,#888);">Mon – Fri &nbsp;·&nbsp; 8:30 AM – 5:00 PM Eastern &nbsp;·&nbsp; 100 5th St., Suite 2W, Bristol, TN 37620</p>
+      </div>
+    </div>
+  </section>
+
 </main>
+
 <footer id="site-footer">
   <div class="footer-inner">
-    <!-- Brand col -->
     <div class="footer-brand">
       <a href="index.html" style="display:inline-flex;text-decoration:none;">
         <img src="https://static.wixstatic.com/media/44d8da_1a754c453e70444c89adea2857351ed3~mv2.png/v1/fill/w_236,h_58,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/hurley%20enter%20horozontal.png" alt="Hurley Enterprise LLC" style="height:34px;width:auto;display:block;" loading="lazy">
       </a>
       <p>Bristol TN/VA's premier commercial developer and real estate firm. Building the Tri-Cities since 2004.</p>
     </div>
-
-    <!-- Services + Markets stacked side-by-side -->
     <div class="footer-links-pair">
       <div class="footer-col">
         <h4>Services</h4>
@@ -127,8 +577,6 @@
         </ul>
       </div>
     </div>
-
-    <!-- Contact col -->
     <div class="footer-col">
       <h4>Contact</h4>
       <div class="footer-contact-item">
@@ -145,7 +593,6 @@
       </div>
     </div>
   </div>
-
   <div class="footer-bottom">
     <p>&copy; 2026 Hurley Enterprise LLC. All rights reserved. &nbsp;&middot;&nbsp; Bristol TN &amp; VA Commercial Real Estate</p>
     <div style="display:flex;align-items:center;gap:1.25rem;">
@@ -157,8 +604,9 @@
     </div>
   </div>
 </footer>
-  <script src="js/nav.js" defer></script>
-  <script src="js/animations.js" defer></script>
-  <script src="js/chatbot.js" defer></script>
+
+<script src="js/nav.js" defer></script>
+<script src="js/animations.js" defer></script>
+<script src="js/chatbot.js" defer></script>
 </body>
 </html>
