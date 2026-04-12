@@ -256,6 +256,119 @@
   </div>
 
   <!-- ══════════════════════════════════════
+       INTERACTIVE PROPERTY MAP
+  ══════════════════════════════════════ -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <section style="background:var(--bg-surface);border-bottom:1px solid var(--bg-border);padding:3rem 0 2.5rem;">
+    <div class="container">
+      <div class="section-header" style="text-align:center;margin-bottom:1.75rem;">
+        <p class="overline">Bristol TN &amp; VA</p>
+        <h2 style="font-size:clamp(1.4rem,2.5vw,2rem);margin:0.5rem 0;">Find Us on the Map</h2>
+        <p style="color:var(--text-muted);max-width:480px;margin:0 auto;font-size:0.88rem;">Click any gold pin to jump directly to that property listing.</p>
+      </div>
+      <div id="hurley-map" style="height:440px;border-radius:16px;overflow:hidden;border:1px solid var(--bg-border);box-shadow:0 6px 32px rgba(0,0,0,0.25);"></div>
+      <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;margin-top:1rem;">
+        <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.72rem;color:var(--text-muted);"><span style="width:11px;height:11px;border-radius:50%;background:#C9A84C;display:inline-block;"></span> Hurley Property — click to view</span>
+        <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.72rem;color:var(--text-muted);"><span style="width:11px;height:11px;border-radius:50%;background:#ef4444;display:inline-block;"></span> Key Landmark</span>
+      </div>
+    </div>
+  </section>
+  <style>
+  .leaflet-popup-content-wrapper.hurley-pw {
+    background:#fff;border:2px solid #C9A84C;border-radius:12px;color:#111;
+    box-shadow:0 6px 28px rgba(0,0,0,0.18);padding:0;overflow:hidden;
+  }
+  .leaflet-popup-content-wrapper.hurley-pw .leaflet-popup-content { margin:0; }
+  .hurley-popup-tip-container .leaflet-popup-tip { background:#C9A84C; }
+  .leaflet-popup-close-button { color:#999 !important; font-size:16px !important; padding:6px 8px !important; }
+  </style>
+  <script>
+  (function(){
+    function initMap() {
+      if (typeof L === 'undefined') { setTimeout(initMap, 100); return; }
+      const map = L.map('hurley-map', { zoomControl: true, scrollWheelZoom: false })
+        .setView([36.597, -82.185], 13);
+
+      // Voyager theme — shows streets clearly, modern look
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://carto.com">CARTO</a> &copy; <a href="https://openstreetmap.org">OSM</a>',
+        maxZoom: 19
+      }).addTo(map);
+
+      function makeIcon(label, isGold) {
+        const bg    = isGold ? '#C9A84C' : '#ef4444';
+        const color = isGold ? '#000'    : '#fff';
+        const shadow = isGold ? 'rgba(201,168,76,0.6)' : 'rgba(239,68,68,0.5)';
+        return L.divIcon({
+          className: '',
+          html: `<div style="background:${bg};color:${color};font-size:0.58rem;font-weight:900;padding:0.28rem 0.5rem;border-radius:999px;white-space:nowrap;box-shadow:0 2px 10px ${shadow};letter-spacing:0.04em;cursor:${isGold?'pointer':'default'};">${label}</div>`,
+          iconAnchor: [0, 14]
+        });
+      }
+
+      const PROPS = [
+        { lat:36.5952, lng:-82.1888, label:'City Centre',     anchor:'listing-city-centre',
+          name:'City Centre Office Suites', detail:'100 5th St · 120–6,000 sqft · All-inclusive' },
+        { lat:36.5950, lng:-82.1877, label:'628 State St',    anchor:'listing-628-state',
+          name:'628 State Street (Kress)', detail:'Bristol TN · 8,500 sqft · Restaurant/Bar/Retail' },
+        { lat:36.5965, lng:-82.1843, label:'Jamestown',       anchor:'listing-jamestown',
+          name:'Jamestown at Shelby', detail:'815 Shelby St · 1,200–4,500 sqft · No CAM fees' },
+        { lat:36.5948, lng:-82.1880, label:'Foundation',      anchor:'listing-foundation',
+          name:'The Foundation Event Venue', detail:'620 State St · 15–100 guests · Bookings open' },
+        { lat:36.5982, lng:-82.1655, label:'Centre Point',    anchor:'listing-centre-point',
+          name:'Centre Point — Casino Corridor', detail:'Commonwealth Ave Bristol VA · Across from Hard Rock 🎰' },
+        { lat:36.5970, lng:-82.2090, label:'Coca-Cola Bldg',  anchor:'listing-cocacola',
+          name:'Former Coca-Cola Building', detail:'1916 W State St · 45,500 sqft warehouse + 8K office' },
+      ];
+      const LANDMARKS = [
+        { lat:36.5990, lng:-82.1640, label:'Hard Rock Casino',
+          name:'Hard Rock Hotel & Casino Bristol', detail:'Opened 2024 · $845M economic impact · Bristol VA' },
+        { lat:36.5160, lng:-82.2553, label:'BMS Speedway',
+          name:'Bristol Motor Speedway', detail:'NASCAR · Major events year-round · Bristol TN' },
+      ];
+
+      function scrollToListing(anchor) {
+        const el = document.getElementById(anchor);
+        if (!el) return;
+        map.closePopup();
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.style.transition = 'box-shadow 0.3s ease';
+          el.style.boxShadow = '0 0 0 3px #C9A84C, 0 8px 40px rgba(201,168,76,0.35)';
+          setTimeout(() => { el.style.boxShadow = ''; }, 2000);
+        }, 150);
+      }
+
+      PROPS.forEach(p => {
+        const m = L.marker([p.lat, p.lng], { icon: makeIcon(p.label, true) }).addTo(map);
+        const popup = L.popup({ className: 'hurley-pw', maxWidth: 240, offset: [0, -4] })
+          .setContent(`<div style="padding:0.85rem 1rem;font-family:DM Sans,sans-serif;">
+            <div style="font-size:0.72rem;font-weight:900;letter-spacing:0.06em;color:#C9A84C;text-transform:uppercase;margin-bottom:0.25rem;">Available Now</div>
+            <div style="font-size:0.88rem;font-weight:700;color:#111;margin-bottom:0.2rem;">${p.name}</div>
+            <div style="font-size:0.75rem;color:#555;margin-bottom:0.75rem;line-height:1.4;">${p.detail}</div>
+            <button onclick="window._hurleyScroll('${p.anchor}')" style="background:#C9A84C;color:#000;border:none;border-radius:8px;padding:0.45rem 0.9rem;font-size:0.75rem;font-weight:900;cursor:pointer;width:100%;">View Listing ↓</button>
+          </div>`);
+        m.bindPopup(popup);
+        m.on('click', () => m.openPopup());
+      });
+
+      LANDMARKS.forEach(p => {
+        const m = L.marker([p.lat, p.lng], { icon: makeIcon(p.label, false) }).addTo(map);
+        m.bindPopup(`<div style="padding:0.85rem 1rem;font-family:DM Sans,sans-serif;">
+          <div style="font-size:0.88rem;font-weight:700;color:#111;margin-bottom:0.2rem;">${p.name}</div>
+          <div style="font-size:0.75rem;color:#555;line-height:1.4;">${p.detail}</div>
+        </div>`, { className: 'hurley-pw', maxWidth: 220, offset: [0, -4] });
+      });
+
+      window._hurleyScroll = scrollToListing;
+    }
+    initMap();
+  })();
+  </script>
+
+
+  <!-- ══════════════════════════════════════
        COMMERCIAL LISTINGS
   ══════════════════════════════════════ -->
   <div class="listings-grid stagger-reveal" style="margin-top:2rem;" id="listings-grid">
@@ -573,91 +686,7 @@
         <p class="listing-type">Residential · 3 BR / 2.5 BA · Fully Remodeled · Bristol VA</p>
         <h2 class="listing-name">2413 Randolph St — Bristol, VA</h2>
         <p class="listing-location">📍 2413 Randolph St, Bristol, VA</p>
-        <p class="listing-price" style="color:var(--text-muted);">SOLD — No Longer Available</p>
-        <p class="listing-desc">This beautifully remodeled 3-bedroom, 2.5-bathroom Bristol VA home has sold. We move fast — contact us about upcoming Bristol VA listings or to sell your property.</p>
-        <a href="contact.html" class="btn btn--ghost btn--sm" style="width:100%;justify-content:center;pointer-events:auto;">Get Notified of New Listings →</a>
-      </div>
-    </article>
-
-  </div><!-- /residential grid -->
-
-  <!-- Why Hurley strip -->
-  <section class="section--sm" style="background:var(--bg-surface);border-top:1px solid var(--bg-border);margin-top:2rem;">
-    <div class="container">
-      <p class="overline reveal" style="margin-bottom:1.25rem;text-align:center;">Why Lease or Buy with Hurley Enterprise</p>
-      <div class="why-hurley-grid stagger-reveal">
-        <div class="why-item">
-          <div class="why-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-          <div><div class="why-title">No Hidden Fees</div><p class="why-desc">Truly all-inclusive lease options. What you see is what you pay. No CAM ambushes.</p></div>
-        </div>
-        <div class="why-item">
-          <div class="why-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-          <div><div class="why-title">20+ Years Local</div><p class="why-desc">Deep roots in Bristol TN/VA since 2004. Relationships that move deals faster.</p></div>
-        </div>
-        <div class="why-item">
-          <div class="why-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
-          <div><div class="why-title">Cash Acquisition</div><p class="why-desc">Selling? We buy residential and commercial properties fast — cash, no repairs, 14 days.</p></div>
-        </div>
-        <div class="why-item">
-          <div class="why-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-          <div><div class="why-title">Casino-Driven Growth</div><p class="why-desc">We own the data on the Hard Rock Casino's commercial impact. Our portfolio is positioned to win.</p></div>
-        </div>
-      </div>
-      <div style="text-align:center;margin-top:2.5rem;" class="reveal">
-        <a href="contact.html" class="btn btn--primary">Talk to Our Team Today — 423-742-7219</a>
-        &nbsp;&nbsp;
-        <a href="market-report.html" class="btn btn--ghost" style="margin-top:0.5rem;">Download Free Market Report</a>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<footer id="site-footer">
-  <div class="footer-inner">
-    <!-- Brand col -->
-    <div class="footer-brand">
-      <a href="index.html" style="display:inline-flex;text-decoration:none;">
-        <img src="img/hurley-logo.avif" alt="Hurley Enterprise LLC" style="height:34px;width:auto;display:block;" loading="lazy">
-      </a>
-      <p>Bristol TN/VA's premier commercial developer and real estate firm. Building the Tri-Cities since 2004.</p>
-    </div>
-
-    <!-- Services + Markets stacked side-by-side -->
-    <div class="footer-links-pair">
-      <div class="footer-col">
-        <h4>Services</h4>
-        <ul>
-          <li><a href="development-construction.html">Development &amp; Construction</a></li>
-          <li><a href="for-sale-lease.html">Office &amp; Warehouse Leasing</a></li>
-          <li><a href="we-buy-property.html">We Buy Property</a></li>
-          <li><a href="market-report.html">Market Report</a></li>
-          <li><a href="blog.html">Blog &amp; Insights</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Markets</h4>
-        <ul>
-          <li><a href="bristol-tn.html">Bristol, TN</a></li>
-          <li><a href="kingsport-tn.html">Kingsport, TN</a></li>
-          <li><a href="johnson-city-tn.html">Johnson City, TN</a></li>
-          <li><a href="service-areas.html">All Service Areas</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Contact col -->
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <div class="footer-contact-item">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        <span>100 5th St., Suite 2W<br>Bristol, TN 37620</span>
-      </div>
-      <div class="footer-contact-item">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.13 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.46-.46a2 2 0 012.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0122 16.92z"/></svg>
-        <span><a href="tel:+14237427219" style="color:inherit;text-decoration:none;">423-742-7219</a></span>
-      </div>
-      <div class="footer-contact-item">
+      
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         <span><a href="mailto:info@hurleyenterprisellc.com" style="color:inherit;text-decoration:none;">info@hurleyenterprisellc.com</a></span>
       </div>
