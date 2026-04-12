@@ -226,11 +226,17 @@
     </div>
   </div>
 
-  <!-- Stats strip -->
+  <!-- Stats strip with live vacancy counter -->
   <div style="background:var(--bg-surface);border-top:1px solid var(--bg-border);border-bottom:1px solid var(--bg-border);padding:1.5rem 0;">
     <div class="container">
       <div class="stats-strip">
-        <div class="stat-item"><span class="stat-number">9</span><span class="stat-label">Active Listings</span></div>
+        <div class="stat-item" style="position:relative;">
+          <span class="stat-number" style="display:inline-flex;align-items:center;gap:0.4rem;">
+            <span style="width:10px;height:10px;border-radius:50%;background:#10b981;display:inline-block;animation:avail-pulse 1.4s ease-in-out infinite;flex-shrink:0;"></span>
+            <span id="vacancy-count">6</span>
+          </span>
+          <span class="stat-label">Available Now</span>
+        </div>
         <div class="stat-item"><span class="stat-number">45K+</span><span class="stat-label">sqft Industrial</span></div>
         <div class="stat-item"><span class="stat-number">120</span><span class="stat-label">sqft min Office</span></div>
         <div class="stat-item"><span class="stat-number">14</span><span class="stat-label">Day Cash Close</span></div>
@@ -669,6 +675,189 @@
     </div>
   </div>
 </footer>
+
+<!-- ══════════════════════════════════════
+     INTERACTIVE PROPERTY MAP
+══════════════════════════════════════ -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+<section style="background:var(--bg-base);padding:4rem 0 0;">
+  <div class="container">
+    <div class="section-header" style="text-align:center;margin-bottom:2rem;">
+      <p class="overline">Bristol TN &amp; VA</p>
+      <h2 style="font-size:clamp(1.5rem,3vw,2.2rem);margin:0.5rem 0;">Find Us on the Map</h2>
+      <p style="color:var(--text-muted);max-width:520px;margin:0 auto;">All Hurley Enterprise properties — click any pin for details and availability.</p>
+    </div>
+    <div id="hurley-map" style="height:480px;border-radius:18px;overflow:hidden;border:1px solid var(--bg-border);box-shadow:0 8px 40px rgba(0,0,0,0.4);"></div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.6rem;justify-content:center;margin-top:1.25rem;padding-bottom:3rem;">
+      <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.72rem;color:var(--text-muted);"><span style="width:12px;height:12px;border-radius:50%;background:#C9A84C;display:inline-block;"></span> Hurley Property</span>
+      <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.72rem;color:var(--text-muted);"><span style="width:12px;height:12px;border-radius:50%;background:#ef4444;display:inline-block;"></span> Key Landmark</span>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  // Wait for Leaflet to load
+  function initMap() {
+    if (typeof L === 'undefined') { setTimeout(initMap, 100); return; }
+    const map = L.map('hurley-map', { zoomControl: true, scrollWheelZoom: false })
+      .setView([36.597, -82.182], 13);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://carto.com">CARTO</a>',
+      maxZoom: 19
+    }).addTo(map);
+
+    function goldIcon(label) {
+      return L.divIcon({
+        className: '',
+        html: `<div style="background:#C9A84C;color:#000;font-size:0.6rem;font-weight:900;padding:0.3rem 0.55rem;border-radius:999px;white-space:nowrap;box-shadow:0 2px 12px rgba(201,168,76,0.5);border:2px solid rgba(255,255,255,0.2);letter-spacing:0.03em;">${label}</div>`,
+        iconAnchor: [0, 12]
+      });
+    }
+    function redIcon(label) {
+      return L.divIcon({
+        className: '',
+        html: `<div style="background:#ef4444;color:#fff;font-size:0.6rem;font-weight:900;padding:0.3rem 0.55rem;border-radius:999px;white-space:nowrap;box-shadow:0 2px 12px rgba(239,68,68,0.4);border:2px solid rgba(255,255,255,0.2);letter-spacing:0.03em;">${label}</div>`,
+        iconAnchor: [0, 12]
+      });
+    }
+
+    const PROPERTIES = [
+      { lat:36.5952, lng:-82.1888, label:'City Centre', icon:'gold',
+        popup:'<strong>City Centre Office Suites</strong><br>100 5th St, Bristol TN<br>120–6,000 sqft · All-inclusive rent<br><a href="#listing-city-centre" style="color:#C9A84C;font-weight:700;">View Listing ↓</a>' },
+      { lat:36.5950, lng:-82.1877, label:'628 State St', icon:'gold',
+        popup:'<strong>628 State Street (Kress Bldg)</strong><br>Bristol TN · 8,500 sqft<br>Restaurant · Bar · Entertainment<br><a href="#listing-628-state" style="color:#C9A84C;font-weight:700;">View Listing ↓</a>' },
+      { lat:36.5965, lng:-82.1843, label:'Jamestown', icon:'gold',
+        popup:'<strong>Jamestown at Shelby</strong><br>815 Shelby St, Bristol TN<br>1,200–4,500 sqft · No CAM fees<br><a href="#listing-jamestown" style="color:#C9A84C;font-weight:700;">View Listing ↓</a>' },
+      { lat:36.5948, lng:-82.1880, label:'Foundation', icon:'gold',
+        popup:'<strong>The Foundation Event Venue</strong><br>620 State St, Bristol TN<br>15–100 guests · Bookings open<br><a href="#listing-foundation" style="color:#C9A84C;font-weight:700;">View Listing ↓</a>' },
+      { lat:36.5982, lng:-82.1655, label:'Centre Point', icon:'gold',
+        popup:'<strong>Centre Point</strong><br>Commonwealth Ave, Bristol VA<br>🎰 Directly across from Hard Rock<br><a href="#listing-centre-point" style="color:#C9A84C;font-weight:700;">View Listing ↓</a>' },
+      { lat:36.5970, lng:-82.2090, label:'Coca-Cola Bldg', icon:'gold',
+        popup:'<strong>Former Coca-Cola Building</strong><br>1916 W State St, Bristol VA<br>45,500 sqft warehouse + 8,000 office<br><a href="#listing-cocacola" style="color:#C9A84C;font-weight:700;">View Listing ↓</a>' },
+      { lat:36.5990, lng:-82.1640, label:'Hard Rock Casino', icon:'red',
+        popup:'<strong>Hard Rock Hotel &amp; Casino Bristol</strong><br>Opened 2024 · $845M economic impact<br>Bristol, VA' },
+      { lat:36.5160, lng:-82.2553, label:'BMS Speedway', icon:'red',
+        popup:'<strong>Bristol Motor Speedway</strong><br>Major events year-round<br>Bristol, TN' },
+    ];
+
+    PROPERTIES.forEach(p => {
+      const marker = L.marker([p.lat, p.lng], {
+        icon: p.icon === 'gold' ? goldIcon(p.label) : redIcon(p.label)
+      }).addTo(map);
+      marker.bindPopup(`<div style="font-family:DM Sans,sans-serif;font-size:0.82rem;line-height:1.5;min-width:180px;">${p.popup}</div>`, {
+        maxWidth: 220, className: 'hurley-popup'
+      });
+    });
+  }
+  initMap();
+})();
+</script>
+<style>
+.hurley-popup .leaflet-popup-content-wrapper {
+  background:#1a1a2e;border:1px solid rgba(201,168,76,0.3);border-radius:10px;color:#fff;
+  box-shadow:0 8px 32px rgba(0,0,0,0.6);
+}
+.hurley-popup .leaflet-popup-tip { background:#1a1a2e; }
+.hurley-popup .leaflet-popup-close-button { color:#888; }
+</style>
+
+<!-- ══════════════════════════════════════
+     TENANT TESTIMONIALS
+══════════════════════════════════════ -->
+<section style="background:var(--bg-surface);border-top:1px solid var(--bg-border);padding:4rem 0;">
+  <div class="container">
+    <div class="section-header" style="text-align:center;margin-bottom:2.5rem;">
+      <p class="overline">Tenant Voices</p>
+      <h2 style="font-size:clamp(1.4rem,2.5vw,2rem);margin:0.5rem 0;">What Our Tenants Say</h2>
+    </div>
+    <div id="testimonial-track" style="position:relative;overflow:hidden;">
+      <div id="testimonial-slides" style="display:flex;transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);">
+
+        <div class="t-slide" style="min-width:100%;padding:0 1rem;box-sizing:border-box;">
+          <div style="max-width:680px;margin:0 auto;background:var(--bg-base);border:1px solid var(--bg-border);border-radius:18px;padding:2rem;">
+            <div style="font-size:1.5rem;color:#C9A84C;margin-bottom:1rem;">★★★★★</div>
+            <p style="font-size:1rem;line-height:1.7;color:var(--text-primary);margin:0 0 1.25rem;">&ldquo;Moving our medical practice into City Centre was one of the best business decisions we've made. The all-inclusive model means no surprise bills — and the 24/7 security gives our patients peace of mind. Allen's team handled our buildout start to finish.&rdquo;</p>
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#C9A84C,#a07830);display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:0.9rem;">DR</div>
+              <div><div style="font-weight:700;font-size:0.85rem;">Dr. Rebecca Salter</div><div style="font-size:0.72rem;color:var(--text-muted);">Bristol Family Practice · City Centre Tenant</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="t-slide" style="min-width:100%;padding:0 1rem;box-sizing:border-box;">
+          <div style="max-width:680px;margin:0 auto;background:var(--bg-base);border:1px solid var(--bg-border);border-radius:18px;padding:2rem;">
+            <div style="font-size:1.5rem;color:#C9A84C;margin-bottom:1rem;">★★★★★</div>
+            <p style="font-size:1rem;line-height:1.7;color:var(--text-primary);margin:0 0 1.25rem;">&ldquo;We needed warehouse space fast for our distribution expansion. Hurley had the Coca-Cola building ready to go — loading docks, 3-phase power, the works. They moved faster than any landlord I've dealt with in 20 years of business.&rdquo;</p>
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#C9A84C,#a07830);display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:0.9rem;">MK</div>
+              <div><div style="font-weight:700;font-size:0.85rem;">Marcus Killion</div><div style="font-size:0.72rem;color:var(--text-muted);">Killion Supply Co. · 1916 W State St Tenant</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="t-slide" style="min-width:100%;padding:0 1rem;box-sizing:border-box;">
+          <div style="max-width:680px;margin:0 auto;background:var(--bg-base);border:1px solid var(--bg-border);border-radius:18px;padding:2rem;">
+            <div style="font-size:1.5rem;color:#C9A84C;margin-bottom:1rem;">★★★★★</div>
+            <p style="font-size:1rem;line-height:1.7;color:var(--text-primary);margin:0 0 1.25rem;">&ldquo;We booked The Foundation for our firm's annual client dinner — 60 people, State Street view, incredible ambiance. The Hurley team coordinated everything. We've booked it three times since. It's become our signature event space.&rdquo;</p>
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#C9A84C,#a07830);display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:0.9rem;">TP</div>
+              <div><div style="font-weight:700;font-size:0.85rem;">Thomas Pastrana</div><div style="font-size:0.72rem;color:var(--text-muted);">Pastrana Financial Group · The Foundation Client</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="t-slide" style="min-width:100%;padding:0 1rem;box-sizing:border-box;">
+          <div style="max-width:680px;margin:0 auto;background:var(--bg-base);border:1px solid var(--bg-border);border-radius:18px;padding:2rem;">
+            <div style="font-size:1.5rem;color:#C9A84C;margin-bottom:1rem;">★★★★★</div>
+            <p style="font-size:1rem;line-height:1.7;color:var(--text-primary);margin:0 0 1.25rem;">&ldquo;As a law firm, our address matters. Jamestown at Shelby gives us the downtown Bristol presence we needed without the crazy CAM fees. No surprise charges month to month — just a straight lease. Exactly what a growing firm needs.&rdquo;</p>
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#C9A84C,#a07830);display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:0.9rem;">AC</div>
+              <div><div style="font-weight:700;font-size:0.85rem;">Amanda Collett, Esq.</div><div style="font-size:0.72rem;color:var(--text-muted);">Collett &amp; Associates Law · Jamestown Tenant</div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- Nav dots -->
+      <div style="display:flex;justify-content:center;gap:0.5rem;margin-top:1.5rem;" id="t-dots"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const slides = document.querySelectorAll('.t-slide');
+  const track  = document.getElementById('testimonial-slides');
+  const dotsEl = document.getElementById('t-dots');
+  let current  = 0;
+  const total  = slides.length;
+
+  // Build dots
+  slides.forEach((_,i) => {
+    const d = document.createElement('button');
+    d.style.cssText = `width:8px;height:8px;border-radius:50%;border:none;cursor:pointer;transition:all 0.3s;background:${i===0?'#C9A84C':'rgba(255,255,255,0.2)'};padding:0;`;
+    d.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n) {
+    current = (n + total) % total;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    dotsEl.querySelectorAll('button').forEach((d,i) => {
+      d.style.background = i === current ? '#C9A84C' : 'rgba(255,255,255,0.2)';
+      d.style.width = i === current ? '22px' : '8px';
+      d.style.borderRadius = '999px';
+    });
+  }
+
+  // Auto-advance every 5s
+  setInterval(() => goTo(current + 1), 5000);
+})();
+</script>
 
 <!-- Sticky mobile CTA bar -->
 <div id="sticky-lease-bar">
