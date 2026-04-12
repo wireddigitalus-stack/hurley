@@ -170,7 +170,7 @@
     .pb-subtitle  { font-size: 0.68rem; color: var(--t2); margin-top: 0.1rem; }
     .pb-chevron { font-size: 0.75rem; color: var(--hot); transition: transform 0.25s ease; flex-shrink: 0; }
     .pb-chevron.open { transform: rotate(180deg); }
-    .pb-leads { display: none; border-top: 1px solid rgba(255,77,77,0.15); }
+    .pb-leads { display: flex; flex-direction: column; border-top: 1px solid rgba(255,77,77,0.15); }
     .pb-leads.open { display: flex; flex-direction: column; }
     .pb-lead-row {
       display: grid; grid-template-columns: 1fr auto;
@@ -853,24 +853,17 @@
     </div>
   </div>
 
-  <!-- PRIORITY BANNER (expandable) -->
+  <!-- PRIORITY ALERT — always open, no toggle needed -->
   <div class="priority-banner hidden" id="priority-banner">
-    <!-- Collapsed header — click to expand -->
-    <div class="pb-header" id="pb-header" onclick="togglePriorityExpand()" role="button" aria-expanded="false" aria-controls="pb-leads">
+    <div class="pb-header">
       <div class="priority-icon">🚨</div>
       <div class="pb-title-wrap">
         <div class="priority-title" id="priority-title">Hot leads waiting</div>
-        <div class="pb-subtitle" id="pb-subtitle">Tap to see details</div>
+        <div class="pb-subtitle" id="pb-subtitle"></div>
       </div>
-      <span class="pb-chevron" id="pb-chevron">▼</span>
+      <button class="pb-dismiss-all-btn" onclick="dismissAllPriority()" style="margin-left:auto;font-size:0.62rem;font-weight:800;color:rgba(255,255,255,0.3);background:none;border:none;cursor:pointer;white-space:nowrap;padding:0 0.25rem;">Dismiss all</button>
     </div>
-    <!-- Expanded leads list -->
     <div class="pb-leads" id="pb-leads"></div>
-    <!-- Footer bar (visible when expanded) -->
-    <div class="pb-footer" id="pb-footer" style="display:none;">
-      <span class="pb-footer-label">🔥 Priority follow-up required</span>
-      <button class="pb-dismiss-all-btn" onclick="dismissAllPriority()">Dismiss all</button>
-    </div>
   </div>
 
   <!-- STATS GRID -->
@@ -1512,10 +1505,10 @@ function updateStats() {
       </div>`;
     }).join('');
 
-    // Auto-expand on first render so Allen sees it immediately
-    if (!pbExpanded) { togglePriorityExpand(); }
+    // Auto-expand removed — leads always show
 
   } else { banner.classList.add('hidden'); pbExpanded = false; }
+
 
 
 
