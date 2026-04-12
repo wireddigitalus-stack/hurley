@@ -606,7 +606,7 @@
     }
 
     function greet() {
-      addMsg("Hi! I'm **Riley** 👋 — your Hurley Enterprise local expert. I can help with?", 'bot');
+      addMsg("Hi! I'm **Riley** 👋 — your Hurley Enterprise local expert. How can I help you?", 'bot');
     }
 
     function buildChips(chips) {
