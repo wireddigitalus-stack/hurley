@@ -220,10 +220,28 @@
     .bar-fill { height: 100%; border-radius: 3px; transition: width 0.8s var(--ease); }
 
     /* Activity feed */
-    .activity-feed { display: flex; flex-direction: column; gap: 0; max-height: 260px; overflow-y: auto; }
-    .activity-feed::-webkit-scrollbar { width: 3px; }
-    .activity-feed::-webkit-scrollbar-track { background: transparent; }
-    .activity-feed::-webkit-scrollbar-thumb { background: var(--border-md); border-radius: 2px; }
+    /* ─ Activity Feed (full timeline card) ─ */
+    .activity-card { display:flex; flex-direction:column; height:auto; }
+    .activity-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem; }
+    .activity-live-dot { display:inline-flex; align-items:center; gap:0.35rem; font-size:0.62rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--cool); }
+    .activity-live-dot::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--cool); animation:blink 1.6s ease-in-out infinite; }
+    .activity-feed { display:flex; flex-direction:column; gap:0; max-height:320px; overflow-y:auto; }
+    .activity-feed::-webkit-scrollbar { width:3px; }
+    .activity-feed::-webkit-scrollbar-track { background:transparent; }
+    .activity-feed::-webkit-scrollbar-thumb { background:var(--border-md); border-radius:2px; }
+    .act-row { display:grid; grid-template-columns:36px 1fr auto; align-items:flex-start; gap:0.65rem; padding:0.75rem 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+    .act-row:last-child { border-bottom:none; }
+    .act-icon { width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.05); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.85rem; flex-shrink:0; margin-top:1px; }
+    .act-body { min-width:0; }
+    .act-name { font-size:0.78rem; font-weight:800; color:var(--off-white); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .act-desc { font-size:0.7rem; color:var(--t2); line-height:1.5; margin-top:0.1rem; }
+    .act-right { display:flex; flex-direction:column; align-items:flex-end; gap:0.3rem; flex-shrink:0; }
+    .act-time { font-size:0.62rem; color:var(--t3); white-space:nowrap; }
+    .act-pill { font-size:0.55rem; font-weight:900; letter-spacing:0.08em; text-transform:uppercase; padding:0.18em 0.55em; border-radius:999px; white-space:nowrap; }
+    .act-pill.new       { background:rgba(201,168,76,0.15); color:var(--gold); border:1px solid rgba(201,168,76,0.25); }
+    .act-pill.contacted { background:rgba(99,120,255,0.15); color:#a09eff; border:1px solid rgba(99,120,255,0.25); }
+    .act-pill.qualified { background:rgba(62,207,142,0.15); color:var(--cool); border:1px solid rgba(62,207,142,0.25); }
+    .act-pill.system    { background:rgba(255,255,255,0.05); color:var(--t2); border:1px solid var(--border); }
     .act-item {
       display: flex; align-items: flex-start; gap: 0.75rem;
       padding: 0.65rem 0; border-bottom: 1px solid var(--border);
@@ -721,9 +739,12 @@
       </div>
     </div>
 
-    <!-- Activity feed -->
-    <div class="insight-card">
-      <div class="insight-title" style="margin-bottom:0.25rem;">Live Activity Feed</div>
+    <!-- Latest Activity card -->
+    <div class="insight-card activity-card">
+      <div class="activity-header">
+        <div class="insight-title">Latest Activity</div>
+        <span class="activity-live-dot">Live</span>
+      </div>
       <div class="activity-feed" id="activity-feed"></div>
     </div>
 
@@ -1136,20 +1157,57 @@ function renderBreakdown(leads) {
 
 /* ── ACTIVITY FEED ───────────────────────────── */
 function renderActivityFeed() {
-  // Merge real lead events with static activity
-  const leads = getLeads().slice(0,5).map(l=>({
-    icon: l.source==='evaluator'?'🏠':'💬',
-    text: `<strong>${l.contact?.firstName||'Someone'} ${l.contact?.lastName||''}</strong> submitted ${l.source==='evaluator'?'an evaluator':'a chat inquiry'} — ${typeLabel(l.property?.type||'residential')}`,
-    time: relTime(l.timestamp)
-  }));
-  const all=[...leads,...ACTIVITY].slice(0,18);
-  document.getElementById('activity-feed').innerHTML=all.map(a=>`
-    <div class="act-item">
+  const statusPill = s => {
+    const labels = {new:'New',contacted:'Contacted',qualified:'Qualified',offer_sent:'Offer',closed:'Closed',dead:'Dead'};
+    const cls = ['new','contacted','qualified'].includes(s||'new') ? (s||'new') : 'system';
+    return `<span class="act-pill ${cls}">${labels[s||'new']||s}</span>`;
+  };
+  const srcIcon = s => ({riley:'💬',evaluator:'🏠',phone:'📞',referral:'🤝',walkin:'🚶',manual:'✏️'})[s]||'📋';
+  const srcDesc = s => ({riley:'Riley chatbot inquiry',evaluator:'Evaluator submission',phone:'Phone call lead',referral:'Referral',walkin:'Walk-in inquiry',manual:'Manually added'})[s]||'Lead inquiry';
+
+  // Real leads — most recent first
+  const leads = getLeads().slice(0,8);
+  const leadRows = leads.map(l => {
+    const name = `${l.contact?.firstName||'Anonymous'} ${l.contact?.lastName||''}`.trim();
+    const propType = typeLabel(l.property?.type||'residential');
+    const addr = l.property?.street ? ` · ${l.property.street}` : l.property?.address ? ` · ${l.property.address}` : '';
+    return `<div class="act-row">
+      <div class="act-icon">${srcIcon(l.source)}</div>
+      <div class="act-body">
+        <div class="act-name">${name}</div>
+        <div class="act-desc">${srcDesc(l.source)} · ${propType}${addr}</div>
+      </div>
+      <div class="act-right">
+        <span class="act-time">${relTime(l.timestamp)}</span>
+        ${statusPill(l.status)}
+      </div>
+    </div>`;
+  });
+
+  // System activity rows to pad if few leads
+  const systemRows = [
+    {icon:'🌐',name:'Site visitor',desc:'Viewed City Centre listing page',time:'4m ago'},
+    {icon:'📊',name:'Market Report',desc:'Downloaded — Bristol TN visitor',time:'11m ago'},
+    {icon:'🌐',name:'Site visitor',desc:'Browsed We Buy Property page',time:'19m ago'},
+    {icon:'📊',name:'Market Report',desc:'Downloaded — Kingsport visitor',time:'32m ago'},
+    {icon:'🌐',name:'Site visitor',desc:'Viewed For Sale & Lease listings',time:'48m ago'},
+  ].map(a => `<div class="act-row">
       <div class="act-icon">${a.icon}</div>
-      <div class="act-text">${a.text}</div>
-      <div class="act-time">${a.time}</div>
-    </div>`).join('');
+      <div class="act-body">
+        <div class="act-name">${a.name}</div>
+        <div class="act-desc">${a.desc}</div>
+      </div>
+      <div class="act-right">
+        <span class="act-time">${a.time}</span>
+        <span class="act-pill system">System</span>
+      </div>
+    </div>`);
+
+  const combined = [...leadRows, ...systemRows].slice(0, 12);
+  const el = document.getElementById('activity-feed');
+  if (el) el.innerHTML = combined.join('') || '<div style="color:var(--t3);font-size:0.78rem;padding:0.75rem 0;">No activity yet.</div>';
 }
+
 
 /* ── RENDER LEADS ────────────────────────────── */
 let activeFilter='all';
@@ -1357,7 +1415,5 @@ function initDash() {
   updateStats(); renderLeads(); renderActivityFeed(); renderTable();
 }
 </script>
-  <link rel="stylesheet" href="css/social-proof.css">
-  <script src="js/social-proof.js" defer></script>
 </body>
 </html>
