@@ -634,7 +634,15 @@
       }
       div.appendChild(bubble);
       messages.appendChild(div);
-      messages.scrollTop = messages.scrollHeight;
+      // User message: scroll to bottom. Bot message: scroll to TOP of new msg so user reads from start
+      if (who === 'user') {
+        messages.scrollTop = messages.scrollHeight;
+      } else {
+        requestAnimationFrame(() => {
+          div.scrollIntoView({ block: 'start', behavior: 'smooth' });
+        });
+      }
+      return div;
     }
 
     function showTyping() {
@@ -690,7 +698,6 @@
         removeTyping();
         addMsg(reply, 'bot');
         buildChips(getChips());
-        messages.scrollTop = messages.scrollHeight;
       } catch (err) {
         // Fallback to rule-based if API unavailable
         const reply = getReply(q);
@@ -698,7 +705,6 @@
         removeTyping();
         addMsg(reply, 'bot');
         buildChips(getChips());
-        messages.scrollTop = messages.scrollHeight;
       }
     }
 
