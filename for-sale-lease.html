@@ -268,9 +268,13 @@
         <p style="color:var(--text-muted);max-width:480px;margin:0 auto;font-size:0.88rem;">Click any gold pin to jump directly to that property listing.</p>
       </div>
       <div id="hurley-map" style="height:440px;border-radius:16px;overflow:hidden;border:1px solid var(--bg-border);box-shadow:0 6px 32px rgba(0,0,0,0.25);"></div>
-      <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;margin-top:1rem;">
-        <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.72rem;color:var(--text-muted);"><span style="width:11px;height:11px;border-radius:50%;background:#C9A84C;display:inline-block;"></span> Hurley Property — click to view</span>
-        <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.72rem;color:var(--text-muted);"><span style="width:11px;height:11px;border-radius:50%;background:#ef4444;display:inline-block;"></span> Key Landmark</span>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem 1rem;justify-content:center;margin-top:1rem;padding:0 0.5rem;">
+        <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.7rem;color:var(--text-muted);"><span style="width:10px;height:10px;border-radius:50%;background:#3b82f6;display:inline-block;flex-shrink:0;"></span> Office</span>
+        <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.7rem;color:var(--text-muted);"><span style="width:10px;height:10px;border-radius:50%;background:#f97316;display:inline-block;flex-shrink:0;"></span> Restaurant &amp; Retail</span>
+        <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.7rem;color:var(--text-muted);"><span style="width:10px;height:10px;border-radius:50%;background:#10b981;display:inline-block;flex-shrink:0;"></span> Event Venue</span>
+        <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.7rem;color:var(--text-muted);"><span style="width:10px;height:10px;border-radius:50%;background:#8b5cf6;display:inline-block;flex-shrink:0;"></span> Warehouse &amp; Industrial</span>
+        <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.7rem;color:var(--text-muted);"><span style="width:10px;height:10px;border-radius:50%;background:#C9A84C;display:inline-block;flex-shrink:0;"></span> Casino Corridor</span>
+        <span style="display:inline-flex;align-items:center;gap:0.4rem;font-size:0.7rem;color:var(--text-muted);"><span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:inline-block;flex-shrink:0;"></span> Landmark</span>
       </div>
     </div>
   </section>
@@ -296,30 +300,39 @@
         maxZoom: 19
       }).addTo(map);
 
-      function makeIcon(label, isGold) {
-        const bg    = isGold ? '#C9A84C' : '#ef4444';
-        const color = isGold ? '#000'    : '#fff';
-        const shadow = isGold ? 'rgba(201,168,76,0.6)' : 'rgba(239,68,68,0.5)';
+      // Color scheme by property type
+      const COLORS = {
+        office:    { bg:'#3b82f6', text:'#fff', shadow:'rgba(59,130,246,0.55)', label:'Office' },
+        retail:    { bg:'#f97316', text:'#fff', shadow:'rgba(249,115,22,0.55)',  label:'Restaurant & Retail' },
+        event:     { bg:'#10b981', text:'#fff', shadow:'rgba(16,185,129,0.55)', label:'Event Venue' },
+        warehouse: { bg:'#8b5cf6', text:'#fff', shadow:'rgba(139,92,246,0.55)', label:'Warehouse & Industrial' },
+        casino:    { bg:'#C9A84C', text:'#000', shadow:'rgba(201,168,76,0.6)',  label:'Casino Corridor' },
+        landmark:  { bg:'#ef4444', text:'#fff', shadow:'rgba(239,68,68,0.5)',   label:'Landmark' },
+      };
+
+      function makePin(label, type) {
+        const c = COLORS[type];
+        const clickable = type !== 'landmark';
         return L.divIcon({
           className: '',
-          html: `<div style="background:${bg};color:${color};font-size:0.58rem;font-weight:900;padding:0.28rem 0.5rem;border-radius:999px;white-space:nowrap;box-shadow:0 2px 10px ${shadow};letter-spacing:0.04em;cursor:${isGold?'pointer':'default'};">${label}</div>`,
+          html: `<div style="background:${c.bg};color:${c.text};font-size:0.58rem;font-weight:900;padding:0.28rem 0.52rem;border-radius:999px;white-space:nowrap;box-shadow:0 3px 12px ${c.shadow};letter-spacing:0.04em;cursor:${clickable?'pointer':'default'};border:1.5px solid rgba(255,255,255,0.3);">${label}</div>`,
           iconAnchor: [0, 14]
         });
       }
 
       const PROPS = [
-        { lat:36.5952, lng:-82.1888, label:'City Centre',     anchor:'listing-city-centre',
-          name:'City Centre Office Suites', detail:'100 5th St · 120–6,000 sqft · All-inclusive' },
-        { lat:36.5950, lng:-82.1877, label:'628 State St',    anchor:'listing-628-state',
-          name:'628 State Street (Kress)', detail:'Bristol TN · 8,500 sqft · Restaurant/Bar/Retail' },
-        { lat:36.5965, lng:-82.1843, label:'Jamestown',       anchor:'listing-jamestown',
-          name:'Jamestown at Shelby', detail:'815 Shelby St · 1,200–4,500 sqft · No CAM fees' },
-        { lat:36.5948, lng:-82.1880, label:'Foundation',      anchor:'listing-foundation',
+        { lat:36.5952, lng:-82.1888, label:'City Centre',    type:'office',    anchor:'listing-city-centre',
+          name:'City Centre Office Suites', detail:'100 5th St · 120–6,000 sqft · All-inclusive rent' },
+        { lat:36.5950, lng:-82.1877, label:'628 State St',   type:'retail',    anchor:'listing-628-state',
+          name:'628 State Street (Kress)', detail:'Bristol TN · 8,500 sqft · Restaurant / Bar / Retail' },
+        { lat:36.5965, lng:-82.1843, label:'Jamestown',      type:'office',    anchor:'listing-jamestown',
+          name:'Jamestown at Shelby', detail:'815 Shelby St · 1,200–4,500 sqft · Zero CAM fees' },
+        { lat:36.5948, lng:-82.1880, label:'Foundation',     type:'event',     anchor:'listing-foundation',
           name:'The Foundation Event Venue', detail:'620 State St · 15–100 guests · Bookings open' },
-        { lat:36.5982, lng:-82.1655, label:'Centre Point',    anchor:'listing-centre-point',
-          name:'Centre Point — Casino Corridor', detail:'Commonwealth Ave Bristol VA · Across from Hard Rock 🎰' },
-        { lat:36.5970, lng:-82.2090, label:'Coca-Cola Bldg',  anchor:'listing-cocacola',
-          name:'Former Coca-Cola Building', detail:'1916 W State St · 45,500 sqft warehouse + 8K office' },
+        { lat:36.5982, lng:-82.1655, label:'Centre Point',   type:'casino',    anchor:'listing-centre-point',
+          name:'Centre Point — Casino Corridor', detail:'Commonwealth Ave, Bristol VA · Directly across from Hard Rock 🎰' },
+        { lat:36.5970, lng:-82.2090, label:'Coca-Cola Bldg', type:'warehouse', anchor:'listing-cocacola',
+          name:'Former Coca-Cola Building', detail:'1916 W State St · 45,500 sqft warehouse + 8,000 sqft office' },
       ];
       const LANDMARKS = [
         { lat:36.5990, lng:-82.1640, label:'Hard Rock Casino',
@@ -334,31 +347,36 @@
         map.closePopup();
         setTimeout(() => {
           el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          el.style.transition = 'box-shadow 0.3s ease';
+          el.style.transition = 'box-shadow 0.4s ease';
           el.style.boxShadow = '0 0 0 3px #C9A84C, 0 8px 40px rgba(201,168,76,0.35)';
-          setTimeout(() => { el.style.boxShadow = ''; }, 2000);
-        }, 150);
+          setTimeout(() => { el.style.boxShadow = ''; el.style.transition = ''; }, 2200);
+        }, 180);
       }
 
       PROPS.forEach(p => {
-        const m = L.marker([p.lat, p.lng], { icon: makeIcon(p.label, true) }).addTo(map);
-        const popup = L.popup({ className: 'hurley-pw', maxWidth: 240, offset: [0, -4] })
-          .setContent(`<div style="padding:0.85rem 1rem;font-family:DM Sans,sans-serif;">
-            <div style="font-size:0.72rem;font-weight:900;letter-spacing:0.06em;color:#C9A84C;text-transform:uppercase;margin-bottom:0.25rem;">Available Now</div>
-            <div style="font-size:0.88rem;font-weight:700;color:#111;margin-bottom:0.2rem;">${p.name}</div>
-            <div style="font-size:0.75rem;color:#555;margin-bottom:0.75rem;line-height:1.4;">${p.detail}</div>
-            <button onclick="window._hurleyScroll('${p.anchor}')" style="background:#C9A84C;color:#000;border:none;border-radius:8px;padding:0.45rem 0.9rem;font-size:0.75rem;font-weight:900;cursor:pointer;width:100%;">View Listing ↓</button>
+        const clr = COLORS[p.type];
+        const m = L.marker([p.lat, p.lng], { icon: makePin(p.label, p.type) }).addTo(map);
+        const popup = L.popup({ className: 'hurley-pw', maxWidth: 250, offset: [0, -4] })
+          .setContent(`<div style="padding:0;font-family:DM Sans,sans-serif;overflow:hidden;border-radius:10px;">
+            <div style="background:${clr.bg};padding:0.5rem 0.85rem;">
+              <div style="font-size:0.65rem;font-weight:900;letter-spacing:0.07em;color:${clr.text};opacity:0.85;text-transform:uppercase;">${clr.label}</div>
+              <div style="font-size:0.9rem;font-weight:700;color:${clr.text};margin-top:0.1rem;">${p.name}</div>
+            </div>
+            <div style="padding:0.65rem 0.85rem;">
+              <div style="font-size:0.75rem;color:#555;margin-bottom:0.75rem;line-height:1.5;">${p.detail}</div>
+              <button onclick="window._hurleyScroll('${p.anchor}')" style="background:${clr.bg};color:${clr.text};border:none;border-radius:8px;padding:0.45rem 0.9rem;font-size:0.75rem;font-weight:900;cursor:pointer;width:100%;">View Listing ↓</button>
+            </div>
           </div>`);
         m.bindPopup(popup);
         m.on('click', () => m.openPopup());
       });
 
       LANDMARKS.forEach(p => {
-        const m = L.marker([p.lat, p.lng], { icon: makeIcon(p.label, false) }).addTo(map);
-        m.bindPopup(`<div style="padding:0.85rem 1rem;font-family:DM Sans,sans-serif;">
+        const m = L.marker([p.lat, p.lng], { icon: makePin(p.label, 'landmark') }).addTo(map);
+        m.bindPopup(`<div style="padding:0.85rem;font-family:DM Sans,sans-serif;">
           <div style="font-size:0.88rem;font-weight:700;color:#111;margin-bottom:0.2rem;">${p.name}</div>
           <div style="font-size:0.75rem;color:#555;line-height:1.4;">${p.detail}</div>
-        </div>`, { className: 'hurley-pw', maxWidth: 220, offset: [0, -4] });
+        </div>`, { className: 'hurley-pw', maxWidth: 230, offset: [0, -4] });
       });
 
       window._hurleyScroll = scrollToListing;
