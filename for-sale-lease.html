@@ -262,14 +262,16 @@
       <div style="position:relative;">
         <div id="hurley-map" style="height:clamp(240px,45vw,440px);border-radius:16px;overflow:hidden;border:1px solid var(--bg-border);box-shadow:0 6px 32px rgba(0,0,0,0.22);"></div>
 
-        <!-- Gesture lock overlay (mobile only) -->
-        <div id="map-gesture-overlay" style="
-          display:none;position:absolute;inset:0;border-radius:16px;
-          background:rgba(0,0,0,0.45);backdrop-filter:blur(2px);
-          align-items:center;justify-content:center;flex-direction:column;
-          gap:0.5rem;z-index:9999;pointer-events:none;transition:opacity 0.3s;">
-          <div style="font-size:2rem;">✌️</div>
-          <div style="color:#fff;font-weight:700;font-size:0.9rem;text-shadow:0 1px 4px rgba(0,0,0,0.6);">Use 2 fingers to move the map</div>
+        <!-- Gesture toast (modern, non-blocking) -->
+        <div id="map-gesture-toast" style="
+          position:absolute;bottom:12px;left:50%;transform:translateX(-50%) translateY(8px);
+          background:rgba(15,15,25,0.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+          color:#fff;font-size:0.72rem;font-weight:600;letter-spacing:0.02em;
+          padding:0.45rem 1rem;border-radius:999px;white-space:nowrap;
+          display:none;opacity:0;transition:opacity 0.25s ease,transform 0.25s ease;
+          z-index:9999;pointer-events:none;border:1px solid rgba(255,255,255,0.12);
+          box-shadow:0 4px 16px rgba(0,0,0,0.3);">
+          ✌️ &nbsp;Use 2 fingers to move
         </div>
       </div>
 
@@ -337,34 +339,40 @@
         maxZoom: 19
       }).addTo(map);
 
-      // ── Gesture lock on mobile ─────────────────────────────
-      const overlay  = document.getElementById('map-gesture-overlay');
-      const mapEl    = document.getElementById('hurley-map');
-      let overlayTimer;
-      let touchCount = 0;
+      // ── Gesture toast on mobile (non-blocking) ────────────
+      const toast  = document.getElementById('map-gesture-toast');
+      const mapEl  = document.getElementById('hurley-map');
+      let toastTimer, toastShown = false;
+
+      function showToast() {
+        if (!toast) return;
+        clearTimeout(toastTimer);
+        toast.style.display = 'block';
+        requestAnimationFrame(() => {
+          toast.style.opacity = '1';
+          toast.style.transform = 'translateX(-50%) translateY(0)';
+        });
+        toastTimer = setTimeout(hideToast, 1800);
+      }
+      function hideToast() {
+        if (!toast) return;
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(8px)';
+        setTimeout(() => { toast.style.display = 'none'; }, 260);
+      }
 
       if (isMobile) {
-        overlay.style.display = 'flex';
-
         mapEl.addEventListener('touchstart', e => {
-          touchCount = e.touches.length;
-          if (touchCount >= 2) {
+          if (e.touches.length >= 2) {
             map.dragging.enable();
-            overlay.style.opacity = '0';
-            clearTimeout(overlayTimer);
-            overlayTimer = setTimeout(() => { overlay.style.display = 'none'; }, 400);
+            hideToast();
           } else {
-            // Single finger — show overlay hint
-            overlay.style.display = 'flex';
-            overlay.style.opacity = '1';
             map.dragging.disable();
-            clearTimeout(overlayTimer);
-            overlayTimer = setTimeout(() => { overlay.style.opacity = '0'; }, 1200);
+            showToast();
           }
         }, { passive: true });
 
         mapEl.addEventListener('touchend', () => {
-          touchCount = 0;
           map.dragging.disable();
         }, { passive: true });
       }
