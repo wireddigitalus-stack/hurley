@@ -79,30 +79,99 @@
       gap: 1.5rem;
     }
     /* ── Uniform card heights ── */
-    #listings-grid {
-      align-items: stretch;
+    #listings-grid { align-items: stretch; }
+    #listings-grid .listing-card { display: flex; flex-direction: column; }
+    #listings-grid .listing-card .listing-body { flex: 1; display: flex; flex-direction: column; }
+    #listings-grid .listing-card .btn { margin-top: auto; }
+    #listings-grid .listing-image { aspect-ratio: 16 / 10; overflow: hidden; }
+    #listings-grid .listing-image img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ── Available Now badge ── */
+    .avail-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4);
+      color: #10b981; border-radius: 999px;
+      font-size: 0.6rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.3em 0.75em; margin-bottom: 0.6rem; width: fit-content;
     }
-    #listings-grid .listing-card {
-      display: flex;
-      flex-direction: column;
+    .avail-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: #10b981;
+      animation: avail-pulse 1.4s ease-in-out infinite;
     }
-    #listings-grid .listing-card .listing-body {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+    @keyframes avail-pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.4; transform: scale(1.5); }
     }
-    #listings-grid .listing-card .btn {
-      margin-top: auto;
+
+    /* ── Tour request inline form ── */
+    .tour-form {
+      margin-top: 0.85rem;
+      background: rgba(201,168,76,0.05);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 14px; padding: 1rem 1rem 0.85rem;
     }
-    #listings-grid .listing-image {
-      aspect-ratio: 16 / 10;
-      overflow: hidden;
+    .tour-form-title {
+      font-size: 0.65rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--gold, #C9A84C); margin-bottom: 0.65rem;
     }
-    #listings-grid .listing-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .tour-form-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .tour-form-row input, .tour-form-row select {
+      flex: 1; min-width: 120px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px; padding: 0.55rem 0.75rem;
+      font-size: 0.78rem; color: inherit; font-family: inherit;
+      outline: none; transition: border-color 0.2s;
     }
+    .tour-form-row input:focus, .tour-form-row select:focus { border-color: var(--gold, #C9A84C); }
+    .tour-form-row input::placeholder { color: #888; }
+    .tour-submit {
+      width: 100%; margin-top: 0.5rem;
+      background: var(--gold, #C9A84C); color: #000;
+      border: none; border-radius: 8px; padding: 0.65rem;
+      font-size: 0.8rem; font-weight: 900; cursor: pointer;
+      letter-spacing: 0.04em; transition: opacity 0.18s;
+    }
+    .tour-submit:hover { opacity: 0.85; }
+    .tour-success {
+      display: none; text-align: center; padding: 0.5rem 0;
+      font-size: 0.8rem; font-weight: 700; color: #10b981;
+    }
+
+    /* ── Sticky mobile CTA bar ── */
+    #sticky-lease-bar {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 900;
+      background: linear-gradient(135deg, #0d0d10, #141420);
+      border-top: 1px solid rgba(201,168,76,0.3);
+      padding: 0.75rem 1.1rem calc(0.75rem + env(safe-area-inset-bottom));
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.5);
+    }
+    #sticky-lease-bar .slb-inner {
+      display: flex; align-items: center; gap: 0.6rem; max-width: 500px; margin: 0 auto;
+    }
+    #sticky-lease-bar .slb-text {
+      flex: 1; min-width: 0;
+    }
+    #sticky-lease-bar .slb-headline {
+      font-size: 0.75rem; font-weight: 900; color: #fff;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    #sticky-lease-bar .slb-sub {
+      font-size: 0.62rem; color: rgba(255,255,255,0.5); margin-top: 0.1rem;
+    }
+    #sticky-lease-bar .slb-btns { display: flex; gap: 0.4rem; flex-shrink: 0; }
+    #sticky-lease-bar .slb-call {
+      background: var(--gold, #C9A84C); color: #000;
+      border: none; border-radius: 8px; padding: 0.55rem 0.9rem;
+      font-size: 0.75rem; font-weight: 900; cursor: pointer; white-space: nowrap;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;
+    }
+    #sticky-lease-bar .slb-dismiss {
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.5); border-radius: 8px;
+      padding: 0.55rem 0.6rem; font-size: 0.75rem; cursor: pointer;
+    }
+    @media (min-width: 769px) { #sticky-lease-bar { display: none !important; } }
   </style>
 </head>
 <body>
@@ -601,11 +670,26 @@
   </div>
 </footer>
 
+<!-- Sticky mobile CTA bar -->
+<div id="sticky-lease-bar">
+  <div class="slb-inner">
+    <div class="slb-text">
+      <div class="slb-headline">🏢 5 Spaces Available in Bristol</div>
+      <div class="slb-sub">Office · Retail · Warehouse · Event Venue</div>
+    </div>
+    <div class="slb-btns">
+      <a href="tel:+14237427219" class="slb-call">📞 Call Now</a>
+      <button class="slb-dismiss" id="slb-dismiss-btn">✕</button>
+    </div>
+  </div>
+</div>
+
+
 <script src="js/nav.js" defer></script>
 <script src="js/animations.js" defer></script>
 <script src="js/chatbot.js" defer></script>
 <script>
-/* Filter functionality */
+/* ── Filter functionality ── */
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-btn').forEach(b => {
@@ -625,6 +709,112 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     });
   });
 });
+
+/* ── 1. Available Now badges + Tour forms on all for-lease cards ── */
+const LEASE_IDS = [
+  { id: 'listing-city-centre', space: 'Office suites from 120 sqft' },
+  { id: 'listing-628-state',   space: '8,500 sqft restaurant/retail' },
+  { id: 'listing-jamestown',   space: 'Suites from 1,200 sqft' },
+  { id: 'listing-foundation',  space: 'Event venue — bookings open' },
+  { id: 'listing-centre-point',space: 'Hard Rock corridor retail' },
+];
+LEASE_IDS.forEach(({ id, space }) => {
+  const card = document.getElementById(id);
+  if (!card) return;
+  const body = card.querySelector('.listing-body');
+  const cta  = card.querySelector('.btn');
+  if (!body || !cta) return;
+
+  // Badge
+  const badge = document.createElement('div');
+  badge.className = 'avail-badge';
+  badge.innerHTML = '<div class="avail-dot"></div> Available Now';
+  body.insertBefore(badge, body.firstChild);
+
+  // Replace generic CTA with tour form
+  cta.remove();
+  const formId = id + '-form';
+  const form = document.createElement('div');
+  form.className = 'tour-form';
+  form.innerHTML = `
+    <div class="tour-form-title">📅 Request a Tour — ${space}</div>
+    <div class="tour-form-row">
+      <input type="text"  id="${formId}-name"  placeholder="Your name" autocomplete="name">
+      <input type="tel"   id="${formId}-phone" placeholder="Phone number" autocomplete="tel">
+    </div>
+    <div class="tour-form-row" style="margin-top:0.5rem;">
+      <select id="${formId}-day">
+        <option value="">Best day to visit</option>
+        <option>This week</option>
+        <option>Monday</option>
+        <option>Tuesday</option>
+        <option>Wednesday</option>
+        <option>Thursday</option>
+        <option>Friday</option>
+        <option>Saturday</option>
+      </select>
+    </div>
+    <button class="tour-submit" onclick="submitTour('${formId}','${id}')">
+      Request Tour →
+    </button>
+    <div class="tour-success" id="${formId}-success">
+      ✅ Got it! Allen's team will call you within 2 hours.
+    </div>`;
+  body.appendChild(form);
+});
+
+function submitTour(formId, listingId) {
+  const name  = document.getElementById(formId + '-name')?.value.trim();
+  const phone = document.getElementById(formId + '-phone')?.value.trim();
+  if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+  // Dashboard integration — push lead
+  try {
+    const leads = JSON.parse(localStorage.getItem('hurley_leads') || '[]');
+    leads.unshift({
+      id: 'tour_' + Date.now(),
+      source: 'evaluator',
+      status: 'new',
+      timestamp: new Date().toISOString(),
+      contact: { firstName: name.split(' ')[0], lastName: name.split(' ').slice(1).join(' '), phone },
+      property: { type: 'commercial', situation: 'lease_inquiry', address: listingId },
+      notes: 'Tour request from listings page'
+    });
+    localStorage.setItem('hurley_leads', JSON.stringify(leads));
+  } catch(e) {}
+  document.querySelector('#' + formId + ' .tour-submit').style.display = 'none';
+  document.getElementById(formId + '-success').style.display = 'block';
+}
+
+/* ── 2. Sticky mobile CTA bar ── */
+const bar = document.getElementById('sticky-lease-bar');
+if (bar && window.innerWidth < 769) {
+  bar.style.display = 'block';
+  document.getElementById('slb-dismiss-btn').addEventListener('click', () => {
+    bar.style.transform = 'translateY(120%)';
+    bar.style.transition = 'transform 0.3s ease';
+    setTimeout(() => bar.style.display = 'none', 320);
+  });
+}
+
+/* ── 3. Riley auto-trigger after 30s on this page ── */
+const RILEY_TRIGGER_KEY = 'riley_leasing_triggered';
+if (!sessionStorage.getItem(RILEY_TRIGGER_KEY)) {
+  setTimeout(() => {
+    sessionStorage.setItem(RILEY_TRIGGER_KEY, '1');
+    const toggle = document.getElementById('riley-toggle');
+    if (toggle && !document.getElementById('riley-window')?.classList.contains('open')) {
+      toggle.click();
+      // After Riley opens, inject a leasing-specific prompt
+      setTimeout(() => {
+        const input = document.getElementById('riley-input');
+        if (input) {
+          input.value = 'What office space is available right now?';
+          input.dispatchEvent(new Event('input'));
+        }
+      }, 500);
+    }
+  }, 30000);
+}
 </script>
 
 </body>
