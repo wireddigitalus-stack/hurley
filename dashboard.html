@@ -236,6 +236,10 @@
     }
     .stat-card:hover { transform: translateY(-2px); border-color: var(--border-md); box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
     .stat-card:active { transform: scale(0.97); }
+    .stat-card.sc-active { box-shadow: 0 0 0 2px var(--gold), 0 4px 20px rgba(0,0,0,0.35); border-color: var(--gold); }
+    .s-hot.sc-active  { box-shadow: 0 0 0 2px var(--hot), 0 4px 20px rgba(0,0,0,0.35); border-color: var(--hot); }
+    .s-warm.sc-active { box-shadow: 0 0 0 2px var(--gold), 0 4px 20px rgba(0,0,0,0.35); border-color: var(--gold); }
+    .s-cool.sc-active { box-shadow: 0 0 0 2px var(--cool), 0 4px 20px rgba(0,0,0,0.35); border-color: var(--cool); }
     .stat-num { font-size: clamp(1.4rem, 5vw, 1.7rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1; margin-bottom: 0.3rem; }
     .stat-label { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; color: var(--t3); }
     .stat-sub { font-size: 0.63rem; color: var(--t3); margin-top: 0.2rem; }
@@ -868,32 +872,32 @@
 
   <!-- STATS GRID -->
   <div class="stats-grid">
-    <div class="stat-card s-hot" onclick="setFilter('hot')" title="View hot leads">
+    <div class="stat-card s-hot" id="sc-hot" onclick="setFilter('hot')" title="Show hot leads" style="cursor:pointer">
       <div class="stat-num" id="s-hot">0</div>
       <div class="stat-label">🔥 Hot Leads</div>
       <div class="stat-sub" id="s-hot-sub">Urgent follow-up</div>
     </div>
-    <div class="stat-card s-warm" onclick="setFilter('warm')" title="View warm leads">
+    <div class="stat-card s-warm" id="sc-warm" onclick="setFilter('warm')" title="Show warm leads" style="cursor:pointer">
       <div class="stat-num" id="s-warm">0</div>
       <div class="stat-label">🌡 Warm Leads</div>
       <div class="stat-sub" id="s-warm-sub">Nurture this week</div>
     </div>
-    <div class="stat-card s-cool" onclick="setFilter('all')" title="View all recent leads">
+    <div class="stat-card s-cool" id="sc-cool" onclick="setFilter('cool')" title="Show new/cool leads" style="cursor:pointer">
       <div class="stat-num" id="s-new">0</div>
       <div class="stat-label">🆕 New Today</div>
       <div class="stat-sub">Last 24 hours</div>
     </div>
-    <div class="stat-card s-white" onclick="setFilter('all')" title="View full pipeline">
+    <div class="stat-card s-white" id="sc-all" onclick="setFilter('all')" title="Show all leads" style="cursor:pointer">
       <div class="stat-num" id="s-total">0</div>
       <div class="stat-label">📋 Total Pipeline</div>
       <div class="stat-sub">Active (excl. closed)</div>
     </div>
-    <div class="stat-card s-purple" onclick="setFilter('all')" title="View pipeline value">
+    <div class="stat-card s-purple" id="sc-value" onclick="setFilter('all')" title="Show all leads" style="cursor:pointer">
       <div class="stat-num" id="s-value">$0</div>
       <div class="stat-label">💰 Est. Value</div>
       <div class="stat-sub">Low-end offer range</div>
     </div>
-    <div class="stat-card s-info" onclick="setFilter('all')" title="View contacted leads">
+    <div class="stat-card s-info" id="sc-contacted" onclick="setFilter('contacted')" title="Show contacted leads" style="cursor:pointer">
       <div class="stat-num" id="s-contacted">0</div>
       <div class="stat-label">📞 Contacted</div>
       <div class="stat-sub">Waiting on response</div>
@@ -979,6 +983,8 @@
       <button class="filter-btn active" id="f-all"       onclick="setFilter('all')">All</button>
       <button class="filter-btn"        id="f-hot"       onclick="setFilter('hot')">🔥 Hot</button>
       <button class="filter-btn"        id="f-warm"      onclick="setFilter('warm')">🌡 Warm</button>
+      <button class="filter-btn"        id="f-cool"      onclick="setFilter('cool')">🆕 New</button>
+      <button class="filter-btn"        id="f-contacted" onclick="setFilter('contacted')">📞 Contacted</button>
       <button class="filter-btn"        id="f-evaluator" onclick="setFilter('evaluator')">🏠 Evaluator</button>
       <button class="filter-btn"        id="f-riley"     onclick="setFilter('riley')">💬 Riley</button>
     </div>
@@ -1611,20 +1617,47 @@ function renderActivityFeed() {
 
 /* ── RENDER LEADS ────────────────────────────── */
 let activeFilter='all';
+
+/* Heat weight for sorting: hot=3, warm=2, cool=1 */
+function heatWeight(l) { return {hot:3, warm:2, cool:1}[temp(l)] || 1; }
+
+/* Stat card <-> filter mapping */
+const CARD_MAP = { hot:'sc-hot', warm:'sc-warm', cool:'sc-cool', all:'sc-all', contacted:'sc-contacted', evaluator:null, riley:null };
+
 function setFilter(f) {
-  activeFilter=f;
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  const el=document.getElementById('f-'+f);
-  if(el) el.classList.add('active');
+  activeFilter = f;
+  // Filter buttons
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  const fb = document.getElementById('f-'+f);
+  if (fb) fb.classList.add('active');
+  // Stat card highlight
+  document.querySelectorAll('.stat-card').forEach(c => c.classList.remove('sc-active'));
+  const sc = CARD_MAP[f] ? document.getElementById(CARD_MAP[f]) : null;
+  if (sc) sc.classList.add('sc-active');
+  // Render + scroll to pipeline
   renderLeads();
+  const pipeline = document.getElementById('lead-feed');
+  if (pipeline) pipeline.closest('.controls-bar')?.scrollIntoView({ behavior:'smooth', block:'start' });
 }
+
 function renderLeads() {
-  const feed=document.getElementById('lead-feed');
-  let leads=getLeads();
-  if(activeFilter==='hot')       leads=leads.filter(l=>temp(l)==='hot');
-  if(activeFilter==='warm')      leads=leads.filter(l=>temp(l)==='warm');
-  if(activeFilter==='evaluator') leads=leads.filter(l=>l.source==='evaluator');
-  if(activeFilter==='riley')     leads=leads.filter(l=>l.source==='riley');
+  const feed = document.getElementById('lead-feed');
+  let leads = getLeads();
+
+  // Apply filter
+  if (activeFilter === 'hot')       leads = leads.filter(l => temp(l) === 'hot');
+  else if (activeFilter === 'warm') leads = leads.filter(l => temp(l) === 'warm');
+  else if (activeFilter === 'cool') leads = leads.filter(l => temp(l) === 'cool');
+  else if (activeFilter === 'contacted') leads = leads.filter(l => l.status === 'contacted');
+  else if (activeFilter === 'evaluator') leads = leads.filter(l => l.source === 'evaluator');
+  else if (activeFilter === 'riley')     leads = leads.filter(l => l.source === 'riley');
+
+  // Always sort: hot → warm → cool, then by recency within each tier
+  leads.sort((a, b) => {
+    const wDiff = heatWeight(b) - heatWeight(a);
+    if (wDiff !== 0) return wDiff;
+    return new Date(b.timestamp) - new Date(a.timestamp);
+  });
 
   if(!leads.length){
     feed.innerHTML=`<div class="empty-state"><div class="ei">📭</div><h3>No leads here</h3><p>Leads from the evaluator and Riley chatbot appear here automatically.</p></div>`;
