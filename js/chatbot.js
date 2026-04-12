@@ -20,13 +20,13 @@
 
     // ── PROPERTIES / LISTINGS ───────────────────────────────────
     { id:'listings', intent:'listings',
-      keys: ['properties','listings','what properties','what do you have','available properties','available spaces','show me properties','what spaces','for sale','for lease','for rent','inventory','what is available',"what's available",'whats available','available now','available?','what have you got','show available'],
+      keys: ['properties','listings','what properties','what do you have','available properties','available spaces','show me properties','what spaces','for sale','for lease','for rent','inventory','what is available',"what's available",'whats available','available now','available?','what have you got','show available','need space','need office space','need retail space','need warehouse','looking to lease','want to lease','space available','any space'],
       reply: "Here's everything we currently have available:\n\n🏢 **Commercial Lease**\n• <a href='for-sale-lease.html' style='color:var(--gold);font-weight:700;'>City Centre</a> — 100 5th St, Bristol TN (120–6,000 sqft, all-inclusive)\n• <a href='for-sale-lease.html' style='color:var(--gold);font-weight:700;'>628 State St</a> — 8,500 sqft restaurant/bar with full bar build-out\n• <a href='for-sale-lease.html' style='color:var(--gold);font-weight:700;'>Jamestown @ Shelby</a> — 1,200–4,500 sqft, zero CAM fees\n• <a href='for-sale-lease.html' style='color:var(--gold);font-weight:700;'>1916 W. State St</a> — 8K office + 45,500 sqft warehouse\n• <a href='for-sale-lease.html' style='color:var(--gold);font-weight:700;'>Center Point</a> — Commonwealth Ave, directly across from Hard Rock\n\n🎉 **Event Venue**\n• The Foundation — 620 State St, 15–100 guests\n\n🏠 **Residential / Investment**\n• Bradley St Portfolio — 3 homes, casino-adjacent\n• Randolph St — 2 fully remodeled homes\n\nWhich type interests you most?"
     },
 
     // ── CITY CENTRE / 100 5TH ───────────────────────────────────
     { id:'citycentre', intent:'lease',
-      keys: ['city centre','city center','5th st','5th street','office suite','all inclusive','all-inclusive','100 5th','downtown office','suite','100 fifth'],
+      keys: ['city centre','city center','5th st','5th street','office suite','all inclusive','all-inclusive','100 5th','downtown office','suite','100 fifth','office space','need office','looking for office','need space','office in bristol','rent office','lease office','small office','office for lease','find office'],
       reply: "**City Centre at 100 5th Street** is our flagship Bristol TN address — and our own headquarters:\n\n• 📐 Suites from **120 to 6,000 sqft** — scale as you grow\n• ⚡ **All-inclusive rent** — electric, water, WiFi, cleaning, security cameras & fitness access included\n• 🚗 Off-street parking included (rare downtown)\n• 🎵 Heart of The Birthplace of Country Music district\n• 🏛️ Historic renovated building with premium finishes\n• 🔑 Flexible terms — startups to established firms\n\nTenants include law firms, consultants, tech companies, and media businesses. Want to **schedule a tour**?"
     },
 
