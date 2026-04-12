@@ -170,8 +170,8 @@
     .pb-subtitle  { font-size: 0.68rem; color: var(--t2); margin-top: 0.1rem; }
     .pb-chevron { font-size: 0.75rem; color: var(--hot); transition: transform 0.25s ease; flex-shrink: 0; }
     .pb-chevron.open { transform: rotate(180deg); }
-    .pb-leads { display: none; flex-direction: column; border-top: 1px solid rgba(255,77,77,0.15); }
-    .pb-leads.open { display: flex; }
+    .pb-leads { display: none; border-top: 1px solid rgba(255,77,77,0.15); }
+    .pb-leads.open { display: flex; flex-direction: column; }
     .pb-lead-row {
       display: grid; grid-template-columns: 1fr auto;
       gap: 0.6rem; padding: 0.85rem 1.1rem;
@@ -1138,7 +1138,7 @@ const CFG = {
 /* ── DEMO DATA ────────────────────────────────── */
 const DEMO = [
   // Hot — evaluator, distressed residential, 22 min ago
-  { id:'d1', source:'evaluator', status:'new', timestamp: new Date(Date.now()-22*60000).toISOString(),
+  { id:'d1', source:'evaluator', status:'new', timestamp: new Date(Date.now()-3.5*3600000).toISOString(),
     contact:{firstName:'Michael',lastName:'Garrett',phone:'(423) 321-0182',email:'mgarrett@gmail.com'},
     property:{type:'residential',street:'2210 Randolph St',city:'Bristol',state:'VA',condition:'poor',situation:'distressed',beds:'3',baths:'1',sqft:'1,190',year:'1968'},
     offerRange:'$62,000 – $88,000',
@@ -1149,10 +1149,10 @@ const DEMO = [
     property:{type:'commercial',street:'417 State St',city:'Bristol',state:'TN',condition:'good',situation:'relocating'},
     offerRange:'',
     notes:'Chatted with Riley — asking about retail on State St, 2,000–3,500 sqft. Relocating consulting firm from Kingsport by June 1. Strong credit tenant. Follow up tomorrow AM.'},
-  // Estate sale — evaluator, 4.5 hrs ago
+  // Estate sale — evaluator, 4.5 hrs ago — DISTRESSED condition makes it HOT
   { id:'d3', source:'evaluator', status:'new', timestamp: new Date(Date.now()-4.5*3600000).toISOString(),
     contact:{firstName:'James',lastName:'Coffey',phone:'(276) 321-0093',email:'jcoffey@outlook.com'},
-    property:{type:'residential',street:'2416 Bradley St',city:'Bristol',state:'VA',condition:'fair',situation:'estate',beds:'4',baths:'2',sqft:'1,680',year:'1962'},
+    property:{type:'residential',street:'2416 Bradley St',city:'Bristol',state:'VA',condition:'poor',situation:'distressed',beds:'4',baths:'2',sqft:'1,680',year:'1962'},
     offerRange:'$92,000 – $128,000',
     notes:'Inherited from mother — estate sale, executor is James. Tenants on month-to-month. Wants offer before probate closes. Brother in disagreement on price — keep offer in writing.'},
   // ⭐ WHALE — commercial 1031 exchange, $1.2M+ range, referred in
@@ -1483,7 +1483,7 @@ function updateStats() {
     // Build per-lead rows
     const hoursWaiting = l => {
       const h = (Date.now()-new Date(l.timestamp).getTime())/3600000;
-      return h >= 24 ? Math.round(h/24)+'d' : Math.round(h*10)/10+'h';
+      return h >= 24 ? Math.round(h/24)+'d' : (Math.round(h*10)/10)+'h';
     };
     document.getElementById('pb-leads').innerHTML = urgentHot.map(l => {
       const name = `${l.contact?.firstName||'?'} ${l.contact?.lastName||''}`.trim();
@@ -1511,7 +1511,12 @@ function updateStats() {
         </div>
       </div>`;
     }).join('');
-  } else { banner.classList.add('hidden'); }
+
+    // Auto-expand on first render so Allen sees it immediately
+    if (!pbExpanded) { togglePriorityExpand(); }
+
+  } else { banner.classList.add('hidden'); pbExpanded = false; }
+
 
 
   // Daily brief
@@ -1721,16 +1726,18 @@ function togglePriorityExpand() {
   const chevron = document.getElementById('pb-chevron');
   const footer  = document.getElementById('pb-footer');
   const header  = document.getElementById('pb-header');
+  if (!leads) return;
   if (pbExpanded) {
-    leads.classList.add('open');
-    chevron.classList.add('open');
-    if (footer) footer.style.display = 'flex';
-    header.setAttribute('aria-expanded','true');
+    leads.style.display  = 'flex';
+    leads.style.flexDirection = 'column';
+    if (chevron) chevron.style.transform = 'rotate(180deg)';
+    if (footer)  footer.style.display  = 'flex';
+    if (header)  header.setAttribute('aria-expanded','true');
   } else {
-    leads.classList.remove('open');
-    chevron.classList.remove('open');
-    if (footer) footer.style.display = 'none';
-    header.setAttribute('aria-expanded','false');
+    leads.style.display  = 'none';
+    if (chevron) chevron.style.transform = '';
+    if (footer)  footer.style.display  = 'none';
+    if (header)  header.setAttribute('aria-expanded','false');
   }
 }
 
