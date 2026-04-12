@@ -333,11 +333,9 @@
 
   /* ── Context-aware chips ────────────────────────────────────── */
   const CHIPS_DEFAULT = [
-    "What spaces are available?",
-    "Hard Rock Casino area?",
-    "Sell my property fast",
-    "About Bristol TN/VA",
-    "Get the market report",
+    "What's available?",
+    "Sell my property",
+    "Market report",
   ];
 
   const CHIPS_BY_INTENT = {
