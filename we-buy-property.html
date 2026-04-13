@@ -184,16 +184,19 @@
       overflow: hidden;
       position: relative;
       transition: height 0.42s cubic-bezier(0.16,1,0.3,1);
+      width: 100%;
     }
     .eval-steps-track {
       display: flex;
+      width: 100%;          /* constrains each step to card width */
       transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
       align-items: flex-start;
     }
     .eval-step {
-      min-width: 100%;
+      flex: 0 0 100%;       /* exactly card-width, never wider */
+      min-width: 0;         /* allows content to shrink inside */
+      overflow: hidden;     /* catch any stray overflow */
       padding: 1.5rem 1.5rem 2rem;
-      flex-shrink: 0;
       box-sizing: border-box;
     }
 
