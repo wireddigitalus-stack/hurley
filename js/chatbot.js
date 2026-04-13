@@ -569,7 +569,10 @@
 
     function dismissPop() { popCard.classList.remove('visible'); }
 
-    setTimeout(() => { if (!chatOpened) popCard.classList.add('visible'); }, 6000);
+    // Show riley pop-up only on desktop after 6s
+if (window.innerWidth > 768) {
+  setTimeout(() => { if (!chatOpened) popCard.classList.add('visible'); }, 6000);
+}
 
     popOpen.addEventListener('click',    () => { popCard.classList.remove('visible'); openChat(); });
     popDismiss.addEventListener('click', dismissPop);

@@ -336,3 +336,23 @@
   }
   #chat-pop-card { right: 0.75rem; width: calc(100vw - 1.5rem); }
 }
+
+/* ── Raise chat toggle above sticky lease bar on mobile ───── */
+@media (max-width: 768px) {
+  /* Default: sit higher so it clears any sticky bottom bar */
+  #chat-toggle {
+    bottom: 6rem;
+  }
+  #chat-window,
+  #chat-pop-card {
+    bottom: calc(6rem + 66px);
+  }
+}
+
+/* ── Hide chat FAB when mobile nav is open ────────────────── */
+body.menu-open #chat-toggle,
+body.menu-open #chat-pop-card {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
