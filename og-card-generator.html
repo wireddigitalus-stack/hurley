@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px;
+    height: 630px;
+    background: #080808;
+    font-family: -apple-system, 'DM Sans', sans-serif;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Gold orb top-right */
+  .orb-tr {
+    position: absolute;
+    top: -120px; right: -80px;
+    width: 520px; height: 520px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.22) 0%, rgba(201,168,76,0.06) 45%, transparent 70%);
+  }
+  /* Amber orb bottom-left */
+  .orb-bl {
+    position: absolute;
+    bottom: -140px; left: -100px;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(160,100,20,0.18) 0%, transparent 65%);
+  }
+  /* Hairline gold top border */
+  .top-line {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(201,168,76,0.6) 30%, rgba(201,168,76,0.9) 50%, rgba(201,168,76,0.6) 70%, transparent 100%);
+  }
+
+  .card-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 60px 80px;
+    text-align: center;
+  }
+
+  .logo-wrap {
+    margin-bottom: 36px;
+  }
+  .logo-wrap img {
+    height: 90px;
+    width: auto;
+    filter: drop-shadow(0 4px 24px rgba(201,168,76,0.3));
+  }
+
+  .divider {
+    width: 80px;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.8), transparent);
+    margin: 0 auto 28px;
+  }
+
+  .tagline {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.3;
+    margin-bottom: 14px;
+  }
+  .tagline span { color: #C9A84C; }
+
+  .sub {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.38);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Bottom strip */
+  .bottom-strip {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 16px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    z-index: 10;
+  }
+  .bottom-strip .domain {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.28);
+    letter-spacing: 0.05em;
+  }
+  .bottom-strip .phone {
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(201,168,76,0.7);
+    letter-spacing: 0.06em;
+  }
+
+  /* Side accent lines */
+  .left-accent {
+    position: absolute;
+    left: 48px; top: 50%; transform: translateY(-50%);
+    width: 2px; height: 140px;
+    background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.4), transparent);
+  }
+  .right-accent {
+    position: absolute;
+    right: 48px; top: 50%; transform: translateY(-50%);
+    width: 2px; height: 140px;
+    background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.4), transparent);
+  }
+</style>
+</head>
+<body>
+  <div class="orb-tr"></div>
+  <div class="orb-bl"></div>
+  <div class="top-line"></div>
+  <div class="left-accent"></div>
+  <div class="right-accent"></div>
+
+  <div class="card-content">
+    <div class="logo-wrap">
+      <img src="img/hurley-logo.png" alt="Hurley Enterprise LLC">
+    </div>
+    <div class="divider"></div>
+    <div class="tagline">Bristol <span>TN/VA</span> Premier<br>Commercial Real Estate</div>
+    <div class="sub">Development · Leasing · Property Acquisition</div>
+  </div>
+
+  <div class="bottom-strip">
+    <span class="domain">hurleyenterprisellc.com</span>
+    <span class="phone">423-742-7219</span>
+  </div>
+</body>
+</html>
