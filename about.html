@@ -112,6 +112,11 @@
       font-size: 0.7rem; font-weight: 700; color: var(--text-secondary, #aaa);
     }
     .award-pill span { color: var(--gold, #C9A84C); font-size: 0.8rem; }
+    @media(max-width:480px) {
+      .awards-list { gap: 0.45rem; }
+      .award-pill { font-size: 0.65rem; padding: 0.35em 0.75em; }
+      .stats-bar-inner { grid-template-columns: repeat(2, 1fr) !important; gap: 1.25rem !important; }
+    }
 
     /* Team section */
     .team-section { padding: 5rem 1.5rem; }
