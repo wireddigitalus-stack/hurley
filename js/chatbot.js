@@ -569,10 +569,34 @@
 
     function dismissPop() { popCard.classList.remove('visible'); }
 
-    // Show riley pop-up only on desktop after 6s
-if (window.innerWidth > 768) {
-  setTimeout(() => { if (!chatOpened) popCard.classList.add('visible'); }, 6000);
-}
+    // ── Riley pop-up trigger — page-aware ──────────────────────────────
+    // index.html: desktop only, 6s after load (as before)
+    // All other pages: desktop only, fires after 20s of NO scroll/mouse activity
+    if (window.innerWidth > 768) {
+      const isHomePage = window.location.pathname === '/' ||
+                         window.location.pathname.endsWith('/index.html') ||
+                         window.location.pathname === '';
+
+      if (isHomePage) {
+        // Original behaviour — simple 6s delay
+        setTimeout(() => { if (!chatOpened) popCard.classList.add('visible'); }, 6000);
+      } else {
+        // Idle-timer behaviour — only pop after 20s of no activity
+        let idleTimer = null;
+        function resetIdle() {
+          clearTimeout(idleTimer);
+          idleTimer = setTimeout(() => {
+            if (!chatOpened) popCard.classList.add('visible');
+          }, 20000);
+        }
+        // Start the timer and reset on any user activity
+        resetIdle();
+        window.addEventListener('scroll',    resetIdle, { passive: true });
+        window.addEventListener('mousemove', resetIdle, { passive: true });
+        window.addEventListener('touchstart',resetIdle, { passive: true });
+        window.addEventListener('keydown',   resetIdle, { passive: true });
+      }
+    }
 
     popOpen.addEventListener('click',    () => { popCard.classList.remove('visible'); openChat(); });
     popDismiss.addEventListener('click', dismissPop);

@@ -351,6 +351,7 @@
       font-weight: 600;
       color: var(--off-white);
       width: 100%;
+      box-sizing: border-box;
       outline: none;
       transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
       -webkit-appearance: none;
@@ -366,7 +367,10 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0.65rem;
+      width: 100%;
+      min-width: 0;
     }
+    .eval-input-row > * { min-width: 0; }
 
     /* Situation tiles (smaller, stacked) */
     .situation-list {
