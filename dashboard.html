@@ -841,7 +841,7 @@
   <div class="lead-feed" id="lead-feed"></div>
 
   <!-- 🏗️ COLLAPSIBLE CONSTRUCTION & JOB TICKETS PANEL -->
-  <div class="ios-card" id="card-tickets">
+  <div class="ios-card open" id="card-tickets">
     <div class="ios-card-header" onclick="toggleIosCard('card-tickets')">
       <div class="ios-card-left">
         <div class="ios-card-icon">🏗️</div>
@@ -851,7 +851,7 @@
         </div>
       </div>
       <div class="ios-card-right">
-        <span class="ios-card-badge" id="ticket-badge-count">3 Active Jobs</span>
+        <span class="ios-card-badge" id="ticket-badge-count">Hide</span>
         <div class="ios-card-chevron">▼</div>
       </div>
     </div>
@@ -1922,10 +1922,20 @@ function dismissAllPriority() {
 function toggleIosCard(id) {
   const el = document.getElementById(id);
   if (!el) return;
-  const isOpen = el.classList.contains('open');
-  el.classList.toggle('open');
+  const nowOpen = el.classList.toggle('open');
   const badge = el.querySelector('.ios-card-badge');
-  if (badge) badge.textContent = isOpen ? 'Tap to view' : 'Hide';
+  if (badge) {
+    if (id === 'card-tickets') {
+      const activeCount = getTickets().filter(t => t.status !== 'completed').length;
+      badge.textContent = nowOpen ? 'Hide' : `${activeCount} Active Jobs`;
+    } else {
+      badge.textContent = nowOpen ? 'Hide' : 'Tap to view';
+    }
+  }
+  if (nowOpen) {
+    if (id === 'card-tickets') renderTickets();
+    if (id === 'card-database') renderTable();
+  }
 }
 
 /* ── LEAD TABLE ─────────────────────────────── */
@@ -2101,8 +2111,12 @@ function renderTickets() {
 
   // Update Badge Count in header
   const activeCount = getTickets().filter(t => t.status !== 'completed').length;
+  const cardEl = document.getElementById('card-tickets');
+  const isCardOpen = cardEl ? cardEl.classList.contains('open') : false;
   const badgeEl = document.getElementById('ticket-badge-count');
-  if (badgeEl) badgeEl.textContent = `${activeCount} Active Job${activeCount !== 1 ? 's' : ''}`;
+  if (badgeEl) {
+    badgeEl.textContent = isCardOpen ? 'Hide' : `${activeCount} Active Job${activeCount !== 1 ? 's' : ''}`;
+  }
 
   if (!tickets.length) {
     feed.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--t3);font-size:0.8rem;">No construction job tickets match your filter.</div>`;
