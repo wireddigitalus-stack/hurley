@@ -648,7 +648,62 @@
       border-top: 1px solid var(--border);
       display: none;
     }
-    .ios-card.open .ios-card-body { display: block; }
+    /* ── JOB TICKETS ────────────────────────────── */
+    .ticket-feed { display: grid; grid-template-columns: 1fr; gap: 0.85rem; }
+    .ticket-card {
+      background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.1rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .ticket-card:hover { border-color: var(--border-md); }
+    .ticket-card.high   { border-left: 4px solid var(--hot); }
+    .ticket-card.medium { border-left: 4px solid var(--gold); }
+    .ticket-card.normal { border-left: 4px solid var(--cool); }
+
+    .tc-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.5rem; }
+    .tc-title-wrap { flex: 1; min-width: 0; }
+    .tc-prop { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.2rem; }
+    .tc-title { font-size: 0.95rem; font-weight: 800; color: var(--off-white); line-height: 1.25; }
+    .tc-badges { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.45rem; }
+
+    .t-badge {
+      font-size: 0.58rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.2em 0.6em; border-radius: 999px; white-space: nowrap;
+    }
+    .tb-open      { background: rgba(91,155,213,0.15); color: var(--info); border: 1px solid rgba(91,155,213,0.25); }
+    .tb-progress  { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.25); }
+    .tb-review    { background: rgba(155,127,232,0.15); color: var(--purple); border: 1px solid rgba(155,127,232,0.25); }
+    .tb-completed { background: rgba(62,207,142,0.15); color: var(--cool); border: 1px solid rgba(62,207,142,0.25); }
+
+    .tb-pri-high   { background: var(--hot-dim); color: var(--hot); border: 1px solid rgba(255,77,77,0.25); }
+    .tb-pri-medium { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(201,168,76,0.25); }
+    .tb-pri-normal { background: var(--cool-dim); color: var(--cool); border: 1px solid rgba(62,207,142,0.25); }
+
+    .tc-details {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.5rem; margin: 0.75rem 0; padding: 0.65rem 0.75rem;
+      background: rgba(255,255,255,0.025); border-radius: 10px; border: 1px solid rgba(255,255,255,0.04);
+    }
+    .tc-det-item { display: flex; flex-direction: column; gap: 0.15rem; }
+    .tc-det-lbl { font-size: 0.58rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t3); }
+    .tc-det-val { font-size: 0.78rem; font-weight: 700; color: var(--off-white); }
+
+    .tc-notes-row { display: flex; gap: 0.4rem; align-items: flex-start; margin-top: 0.5rem; }
+    .tc-notes {
+      flex: 1; background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 9px; padding: 0.55rem 0.75rem; font-size: 0.76rem; color: var(--off-white);
+      line-height: 1.5; resize: none; outline: none; min-height: 52px;
+      transition: border-color 0.2s;
+    }
+    .tc-notes:focus { border-color: var(--gold); }
+
+    .tc-actions { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap; }
+    .tc-status-sel {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.45rem 0.65rem; font-size: 0.72rem; font-weight: 700;
+      color: var(--off-white); outline: none; cursor: pointer;
+    }
+    .tc-status-sel option { background: #1c1c1c; }
   </style>
 </head>
 <body>
@@ -784,6 +839,54 @@
   </div>
 
   <div class="lead-feed" id="lead-feed"></div>
+
+  <!-- 🏗️ COLLAPSIBLE CONSTRUCTION & JOB TICKETS PANEL -->
+  <div class="ios-card" id="card-tickets">
+    <div class="ios-card-header" onclick="toggleIosCard('card-tickets')">
+      <div class="ios-card-left">
+        <div class="ios-card-icon">🏗️</div>
+        <div>
+          <div class="ios-card-title">Construction &amp; Job Tickets</div>
+          <div class="ios-card-sub">Track buildouts, work orders &amp; site maintenance across properties</div>
+        </div>
+      </div>
+      <div class="ios-card-right">
+        <span class="ios-card-badge" id="ticket-badge-count">3 Active Jobs</span>
+        <div class="ios-card-chevron">▼</div>
+      </div>
+    </div>
+    <div class="ios-card-body">
+      <!-- Header controls & filters -->
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
+        <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+          <select class="ms" id="ticket-filter-prop" onchange="renderTickets()" style="min-height:36px;padding:0.4rem 2rem 0.4rem 0.75rem;font-size:0.72rem;width:auto;">
+            <option value="all">🏢 All Properties &amp; Sites</option>
+            <option value="City Centre">City Centre (601 State St)</option>
+            <option value="628 State St">628 State St</option>
+            <option value="Jamestown">Jamestown @ Shelby</option>
+            <option value="Center Point">Center Point Corridor</option>
+            <option value="Coca-Cola">Former Coca-Cola Facility</option>
+            <option value="Bradley St">Bradley St Residential</option>
+            <option value="Randolph St">Randolph St Residential</option>
+          </select>
+          <select class="ms" id="ticket-filter-status" onchange="renderTickets()" style="min-height:36px;padding:0.4rem 2rem 0.4rem 0.75rem;font-size:0.72rem;width:auto;">
+            <option value="all">⚡ All Statuses</option>
+            <option value="open">📋 Open / Pending</option>
+            <option value="progress">🚧 In Progress</option>
+            <option value="review">🔍 Inspection / Review</option>
+            <option value="completed">✅ Completed</option>
+          </select>
+        </div>
+        <button class="add-btn" onclick="openTicketModal()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Job Ticket
+        </button>
+      </div>
+
+      <!-- Ticket Cards Grid -->
+      <div id="tickets-feed" class="ticket-feed"></div>
+    </div>
+  </div>
 
   <!-- 📊 COLLAPSIBLE ANALYTICS PANEL -->
   <div class="ios-card" id="card-analytics">
@@ -933,6 +1036,58 @@
     <div class="mf"><label class="ml">Notes</label><input type="text" class="mi" id="ml-no" placeholder="Initial contact details, condition, timeline…"></div>
     <button class="modal-submit" onclick="submitManualLead()">Add to Pipeline →</button>
     <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- NEW JOB TICKET MODAL -->
+<div class="overlay" id="ticket-overlay" onclick="handleTicketOvClick(event)">
+  <div class="modal-sheet" id="ticket-modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">🏗️ Create Construction / Work Order Ticket</div>
+    <div class="mf"><label class="ml">Property / Site</label>
+      <select class="ms" id="mt-prop">
+        <option value="City Centre (601 State St)">City Centre (601 State St)</option>
+        <option value="628 State St">628 State St</option>
+        <option value="Jamestown @ Shelby">Jamestown @ Shelby</option>
+        <option value="Center Point Corridor">Center Point Corridor</option>
+        <option value="Former Coca-Cola Facility">Former Coca-Cola Facility</option>
+        <option value="Bradley St Residential">Bradley St Residential</option>
+        <option value="Randolph St Residential">Randolph St Residential</option>
+        <option value="Other Site / Custom Address">Other Site / Custom Address</option>
+      </select>
+    </div>
+    <div class="mrow">
+      <div class="mf"><label class="ml">Unit / Suite (optional)</label><input type="text" class="mi" id="mt-unit" placeholder="Suite 3B / Bldg A"></div>
+      <div class="mf"><label class="ml">Category / Trade</label>
+        <select class="ms" id="mt-cat">
+          <option value="construction">🏗️ Buildout / Construction</option>
+          <option value="electrical">⚡ Electrical</option>
+          <option value="plumbing">🚰 Plumbing</option>
+          <option value="hvac">❄️ HVAC</option>
+          <option value="maintenance">🔑 Maintenance / Repair</option>
+          <option value="siteprep">📐 Site Prep / Demo / Paving</option>
+        </select>
+      </div>
+    </div>
+    <div class="mf"><label class="ml">Job Title / Work Order Scope</label><input type="text" class="mi" id="mt-title" placeholder="e.g. Suite 3B Office Buildout & Drywall"></div>
+    <div class="mrow">
+      <div class="mf"><label class="ml">Priority</label>
+        <select class="ms" id="mt-pri">
+          <option value="high">🔴 High / Urgent</option>
+          <option value="medium" selected>🟡 Medium</option>
+          <option value="normal">🟢 Normal</option>
+        </select>
+      </div>
+      <div class="mf"><label class="ml">Est. Budget / Cost</label><input type="text" class="mi" id="mt-budget" placeholder="$18,500"></div>
+    </div>
+    <div class="mrow">
+      <div class="mf"><label class="ml">Contractor / Superintendent</label><input type="text" class="mi" id="mt-contractor" placeholder="e.g. Tri-Cities Commercial Build"></div>
+      <div class="mf"><label class="ml">Contractor Phone</label><input type="tel" class="mi" id="mt-phone" placeholder="(423) 555-0188" inputmode="tel"></div>
+    </div>
+    <div class="mf"><label class="ml">Target Completion Date</label><input type="date" class="mi" id="mt-date" style="color-scheme:dark;"></div>
+    <div class="mf"><label class="ml">Scope &amp; Technical Notes</label><input type="text" class="mi" id="mt-notes" placeholder="Framing specs, inspection timeline, permit details…"></div>
+    <button class="modal-submit" onclick="submitTicket()">Create Ticket →</button>
+    <button class="modal-cancel" onclick="closeTicketModal()">Cancel</button>
   </div>
 </div>
 
@@ -1830,19 +1985,274 @@ function submitManualLead() {
   ['ml-fn','ml-ln','ml-ph','ml-em','ml-ad','ml-no'].forEach(id=>document.getElementById(id).value='');
 }
 
-/* ── TOAST ───────────────────────────────────── */
-function toast(msg,type='') {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.className=`toast ${type} show`;
-  setTimeout(()=>t.classList.remove('show'),2800);
+/* ── CONSTRUCTION & JOB TICKETS ───────────────── */
+const TICKETS_KEY = 'hurley_tickets';
+const DEMO_TICKETS = [
+  {
+    id: 't1',
+    property: 'City Centre (601 State St)',
+    unit: 'Suite 3B',
+    title: 'Suite 3B Executive Office Buildout & Lighting',
+    category: 'construction',
+    priority: 'high',
+    status: 'progress',
+    contractor: 'Tri-Cities Commercial Build',
+    phone: '(423) 555-0188',
+    budget: '$18,500',
+    dueDate: '2026-08-15',
+    notes: 'Framing completed. Electrical rough-in scheduled for Tuesday. Flooring samples approved by tenant.',
+    timestamp: new Date(Date.now() - 2*86400000).toISOString()
+  },
+  {
+    id: 't2',
+    property: 'Center Point Corridor',
+    unit: 'Retail Strip B',
+    title: 'Parking Lot Resurfacing & LED Striping',
+    category: 'siteprep',
+    priority: 'medium',
+    status: 'open',
+    contractor: 'Appalachian Paving & Seal',
+    phone: '(423) 555-0244',
+    budget: '$24,000',
+    dueDate: '2026-08-28',
+    notes: 'Hard Rock Casino corridor traffic increased. Resurfacing section B & adding LED perimeter lighting poles.',
+    timestamp: new Date(Date.now() - 4*86400000).toISOString()
+  },
+  {
+    id: 't3',
+    property: '628 State St',
+    unit: 'Main Floor Retail',
+    title: 'Rooftop HVAC Compressor Replacement',
+    category: 'hvac',
+    priority: 'high',
+    status: 'open',
+    contractor: 'AirTech Commercial HVAC',
+    phone: '(423) 555-0399',
+    budget: '$8,200',
+    dueDate: '2026-07-28',
+    notes: 'Unit 2 compressor failing. Replacement unit delivered to site. Crane lift scheduled for Thursday 6:00 AM.',
+    timestamp: new Date(Date.now() - 1*86400000).toISOString()
+  },
+  {
+    id: 't4',
+    property: 'Former Coca-Cola Facility',
+    unit: 'Warehouse B',
+    title: 'Roof Structural Assessment & Skylight Repair',
+    category: 'maintenance',
+    priority: 'medium',
+    status: 'review',
+    contractor: 'Hurley Engineering & Dev',
+    phone: '(423) 742-7219',
+    budget: '$14,000',
+    dueDate: '2026-08-05',
+    notes: 'Engineer report received. Sealing perimeter flashing and replacing damaged acrylic skylight panels.',
+    timestamp: new Date(Date.now() - 6*86400000).toISOString()
+  },
+  {
+    id: 't5',
+    property: 'Jamestown @ Shelby',
+    unit: 'Bldg A',
+    title: 'Exterior Pressure Wash & Facade Touchup',
+    category: 'maintenance',
+    priority: 'normal',
+    status: 'completed',
+    contractor: 'ProWash Tri-Cities',
+    phone: '(423) 555-0711',
+    budget: '$3,800',
+    dueDate: '2026-07-20',
+    notes: 'Job completed. Final inspection signed off. Invoice paid.',
+    timestamp: new Date(Date.now() - 10*86400000).toISOString()
+  }
+];
+
+function getTickets() {
+  try {
+    const raw = localStorage.getItem(TICKETS_KEY);
+    const d = raw ? JSON.parse(raw) : [];
+    if (!d.length) { saveTickets(DEMO_TICKETS); return DEMO_TICKETS; }
+    return d;
+  } catch(e) { return DEMO_TICKETS; }
+}
+
+function saveTickets(t) { localStorage.setItem(TICKETS_KEY, JSON.stringify(t)); }
+
+function renderTickets() {
+  const feed = document.getElementById('tickets-feed');
+  if (!feed) return;
+  const propFilter   = document.getElementById('ticket-filter-prop')?.value || 'all';
+  const statusFilter = document.getElementById('ticket-filter-status')?.value || 'all';
+  
+  let tickets = getTickets();
+  
+  if (propFilter !== 'all') {
+    tickets = tickets.filter(t => (t.property||'').toLowerCase().includes(propFilter.toLowerCase()));
+  }
+  if (statusFilter !== 'all') {
+    tickets = tickets.filter(t => t.status === statusFilter);
+  }
+
+  // Update Badge Count in header
+  const activeCount = getTickets().filter(t => t.status !== 'completed').length;
+  const badgeEl = document.getElementById('ticket-badge-count');
+  if (badgeEl) badgeEl.textContent = `${activeCount} Active Job${activeCount !== 1 ? 's' : ''}`;
+
+  if (!tickets.length) {
+    feed.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--t3);font-size:0.8rem;">No construction job tickets match your filter.</div>`;
+    return;
+  }
+
+  const catLabels = {
+    construction: '🏗️ Buildout',
+    electrical: '⚡ Electrical',
+    plumbing: '🚰 Plumbing',
+    hvac: '❄️ HVAC',
+    maintenance: '🔑 Maintenance',
+    siteprep: '📐 Site Prep'
+  };
+
+  const priClasses = { high: 'tb-pri-high', medium: 'tb-pri-medium', normal: 'tb-pri-normal' };
+  const priLabels  = { high: '🔴 High Priority', medium: '🟡 Medium', normal: '🟢 Normal' };
+
+  feed.innerHTML = tickets.map(t => {
+    const pDigits = t.phone ? t.phone.replace(/\D/g,'') : '';
+    const callBtn = pDigits ? `<a href="tel:+1${pDigits}" class="act-btn call" style="font-size:0.68rem;padding:0.35em 0.75em;">📞 Call Contractor</a>` : '';
+    const unitText = t.unit ? ` · ${t.unit}` : '';
+    const dueDateFormatted = t.dueDate ? new Date(t.dueDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Flexible';
+    
+    return `
+      <div class="ticket-card ${t.priority || 'medium'}" id="ticket-${t.id}">
+        <div class="tc-header">
+          <div class="tc-title-wrap">
+            <div class="tc-prop">${t.property}${unitText}</div>
+            <div class="tc-title">${t.title}</div>
+            <div class="tc-badges">
+              <span class="t-badge ${priClasses[t.priority||'medium']}">${priLabels[t.priority||'medium']}</span>
+              <span class="t-badge" style="background:rgba(255,255,255,0.04);color:var(--t2);border:1px solid var(--border);">${catLabels[t.category]||t.category}</span>
+            </div>
+          </div>
+          <select class="tc-status-sel" onchange="updateTicketStatus('${t.id}', this.value)">
+            <option value="open" ${t.status==='open'?'selected':''}>📋 Open / Pending</option>
+            <option value="progress" ${t.status==='progress'?'selected':''}>🚧 In Progress</option>
+            <option value="review" ${t.status==='review'?'selected':''}>🔍 Inspection</option>
+            <option value="completed" ${t.status==='completed'?'selected':''}>✅ Completed</option>
+          </select>
+        </div>
+
+        <div class="tc-details">
+          <div class="tc-det-item">
+            <span class="tc-det-lbl">Contractor / Lead</span>
+            <span class="tc-det-val">${t.contractor || 'In-House Team'}</span>
+          </div>
+          <div class="tc-det-item">
+            <span class="tc-det-lbl">Est. Budget</span>
+            <span class="tc-det-val" style="color:var(--gold);">${t.budget || 'TBD'}</span>
+          </div>
+          <div class="tc-det-item">
+            <span class="tc-det-lbl">Target Date</span>
+            <span class="tc-det-val">${dueDateFormatted}</span>
+          </div>
+          <div class="tc-det-item">
+            <span class="tc-det-lbl">Phone</span>
+            <span class="tc-det-val">${t.phone || 'N/A'}</span>
+          </div>
+        </div>
+
+        <div class="tc-notes-row">
+          <textarea class="tc-notes" id="tnote-${t.id}" placeholder="Scope details, contractor notes…">${t.notes || ''}</textarea>
+          <button class="act-btn" onclick="saveTicketNotes('${t.id}')" style="font-size:0.68rem;padding:0.45em 0.75em;align-self:stretch;">Save</button>
+        </div>
+
+        <div class="tc-actions">
+          <div style="display:flex;gap:0.4rem;align-items:center;">
+            ${callBtn}
+          </div>
+          <button class="act-btn del" onclick="deleteTicket('${t.id}')" style="font-size:0.68rem;padding:0.35em 0.7em;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
+            Delete
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function updateTicketStatus(id, newStatus) {
+  const tickets = getTickets();
+  const idx = tickets.findIndex(t => t.id === id);
+  if (idx !== -1) {
+    tickets[idx].status = newStatus;
+    saveTickets(tickets);
+    renderTickets();
+    toast('Ticket status updated ✓', 'ok');
+  }
+}
+
+function saveTicketNotes(id) {
+  const el = document.getElementById('tnote-' + id);
+  if (!el) return;
+  const tickets = getTickets();
+  const idx = tickets.findIndex(t => t.id === id);
+  if (idx !== -1) {
+    tickets[idx].notes = el.value.trim();
+    saveTickets(tickets);
+    toast('Job notes saved ✓', 'ok');
+  }
+}
+
+function deleteTicket(id) {
+  if (!confirm('Delete this construction job ticket?')) return;
+  const tickets = getTickets().filter(t => t.id !== id);
+  saveTickets(tickets);
+  renderTickets();
+  toast('Ticket deleted', 'info');
+}
+
+function openTicketModal() {
+  document.getElementById('ticket-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('mt-title').focus(), 320);
+}
+function closeTicketModal() { document.getElementById('ticket-overlay').classList.remove('open'); }
+function handleTicketOvClick(e) { if(e.target === document.getElementById('ticket-overlay')) closeTicketModal(); }
+
+function submitTicket() {
+  const title = document.getElementById('mt-title').value.trim();
+  if (!title) { toast('Job title is required', 'info'); return; }
+  
+  const newTicket = {
+    id: 't_' + Date.now(),
+    property: document.getElementById('mt-prop').value,
+    unit: document.getElementById('mt-unit').value.trim(),
+    title: title,
+    category: document.getElementById('mt-cat').value,
+    priority: document.getElementById('mt-pri').value,
+    status: 'open',
+    contractor: document.getElementById('mt-contractor').value.trim() || 'In-House Team',
+    phone: document.getElementById('mt-phone').value.trim(),
+    budget: document.getElementById('mt-budget').value.trim() || 'TBD',
+    dueDate: document.getElementById('mt-date').value,
+    notes: document.getElementById('mt-notes').value.trim(),
+    timestamp: new Date().toISOString()
+  };
+
+  const tickets = getTickets();
+  tickets.unshift(newTicket);
+  saveTickets(tickets);
+  closeTicketModal();
+  renderTickets();
+  toast('Job ticket created ✓', 'ok');
+
+  ['mt-title','mt-unit','mt-contractor','mt-phone','mt-budget','mt-date','mt-notes'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
 }
 
 /* ── INIT ────────────────────────────────────── */
 function initDash() {
   setGreeting(); updateClock();
   setInterval(updateClock, 15000);
-  setInterval(()=>{ renderLeads(); renderActivityFeed(); renderTable(); }, 60000);
-  updateStats(); renderLeads(); renderActivityFeed(); renderTable();
+  setInterval(()=>{ renderLeads(); renderActivityFeed(); renderTable(); renderTickets(); }, 60000);
+  updateStats(); renderLeads(); renderActivityFeed(); renderTable(); renderTickets();
 }
 </script>
 </body>
