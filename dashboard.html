@@ -101,10 +101,12 @@
     .tb-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
     .tb-btn svg { width: 15px; height: 15px; }
 
-    /* ── MAIN LAYOUT ────────────────────────────── */
+    /* ── MAIN LAYOUT (Fluid Full-Width Responsive) ─ */
     #dash {
-      max-width: 960px; margin: 0 auto;
-      padding: 1.25rem 1rem 4rem;
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 1.25rem clamp(1rem, 3vw, 2.5rem) 5rem;
     }
 
     /* ── GREETING CARD ──────────────────────────── */
@@ -674,6 +676,23 @@
       display: none;
     }
     .ios-card.open .ios-card-body { display: block !important; }
+
+    /* ── SEO WARNING BADGES ─────────────────────── */
+    .seo-warn-badge {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-size: 0.62rem; font-weight: 800; letter-spacing: 0.04em;
+      padding: 0.25em 0.65em; border-radius: 6px; margin-bottom: 0.35rem;
+      background: rgba(255,180,0,0.12); color: #ffca28;
+      border: 1px solid rgba(255,180,0,0.3);
+    }
+    .seo-warn-badge.danger {
+      background: rgba(255,77,77,0.12); color: #ff6b6b;
+      border: 1px solid rgba(255,77,77,0.3);
+    }
+    .seo-warn-badge.tip {
+      background: rgba(62,207,142,0.12); color: #3ecf8e;
+      border: 1px solid rgba(62,207,142,0.3);
+    }
     /* ── JOB TICKETS ────────────────────────────── */
     .ticket-feed { display: grid; grid-template-columns: 1fr; gap: 0.85rem; }
     .ticket-card {
@@ -973,6 +992,117 @@
     </div>
   </div>
 
+  <!-- ✏️ COLLAPSIBLE SITE CONTENT & PROPERTY CMS PANEL -->
+  <div class="ios-card" id="card-site-cms">
+    <div class="ios-card-header" onclick="toggleIosCard('card-site-cms')">
+      <div class="ios-card-left">
+        <div class="ios-card-icon">✏️</div>
+        <div>
+          <div class="ios-card-title">Live Site Content &amp; Property Manager</div>
+          <div class="ios-card-sub">Edit site text, phone numbers, contact info &amp; property listings line-by-line</div>
+        </div>
+      </div>
+      <div class="ios-card-right">
+        <span class="ios-card-badge">Tap to view</span>
+        <div class="ios-card-chevron">▼</div>
+      </div>
+    </div>
+    <div class="ios-card-body">
+      <!-- Tabs for CMS mode -->
+      <div style="display:flex;gap:0.5rem;margin-bottom:1.25rem;border-bottom:1px solid var(--border);padding-bottom:0.75rem;flex-wrap:wrap;">
+        <button class="filter-btn active" id="tab-cms-properties" onclick="switchCmsTab('properties')">🏢 Manage Properties (For Sale / Lease)</button>
+        <button class="filter-btn" id="tab-cms-site" onclick="switchCmsTab('site')">📝 Site Text &amp; Contact Info</button>
+      </div>
+
+      <!-- PROPERTY LISTINGS CMS SECTION -->
+      <div id="cms-section-properties">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <div style="font-size:0.8rem;color:var(--t2);">Active property listings displayed on live site:</div>
+          <button class="add-btn" onclick="openPropertyModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add New Property Listing
+          </button>
+        </div>
+        <div id="cms-property-list" class="ticket-feed"></div>
+      </div>
+
+      <!-- SITE TEXT & CONTACT CMS SECTION -->
+      <div id="cms-section-site" style="display:none;">
+        <div style="font-size:0.78rem;color:var(--t2);margin-bottom:1rem;line-height:1.5;">
+          Fool-proof line-by-line text editor. Update core website content without touching code or breaking formatting.
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr;gap:0.85rem;">
+          <!-- Business Contact Information -->
+          <div class="ticket-card" style="border-left:4px solid var(--gold);">
+            <div class="tc-prop">Business &amp; Direct Contact Details</div>
+            <div class="mrow" style="margin-top:0.6rem;">
+              <div class="mf">
+                <span class="seo-warn-badge danger">⚠️ SEO Impact: Modifies Schema NAP &amp; click-to-call links</span>
+                <label class="ml">Direct Phone Number</label>
+                <input type="text" class="mi" id="cms-phone" value="(423) 742-7219">
+              </div>
+              <div class="mf">
+                <span class="seo-warn-badge tip">💡 Direct Routing: Updates inquiry forms</span>
+                <label class="ml">Contact Email Address</label>
+                <input type="email" class="mi" id="cms-email" value="allen@hurleyllc.com">
+              </div>
+            </div>
+            <div class="mf" style="margin-top:0.4rem;">
+              <span class="seo-warn-badge danger">⚠️ SEO Impact: Affects Local Business NAP &amp; Google Maps rank</span>
+              <label class="ml">Physical Office Address</label>
+              <input type="text" class="mi" id="cms-address" value="100 5th Street, Suite 2W, Bristol, TN 37620">
+            </div>
+            <div class="mf" style="margin-top:0.4rem;">
+              <span class="seo-warn-badge tip">💡 Schema Sync: Updates Schema.org opening hours</span>
+              <label class="ml">Business Hours</label>
+              <input type="text" class="mi" id="cms-hours" value="Monday – Friday 8:30 AM – 5:00 PM EST">
+            </div>
+          </div>
+
+          <!-- Homepage Banner Text -->
+          <div class="ticket-card" style="border-left:4px solid var(--cool);">
+            <div class="tc-prop">Homepage Hero &amp; Headlines</div>
+            <div class="mf" style="margin-top:0.6rem;">
+              <span class="seo-warn-badge tip">💡 Local Marker: Keep "Bristol TN / Tri-Cities"</span>
+              <label class="ml">Top Tagline / Eyebrow</label>
+              <input type="text" class="mi" id="cms-hero-tagline" value="BRISTOL TENNESSEE'S PREMIER COMMERCIAL REAL ESTATE FIRM">
+            </div>
+            <div class="mf" style="margin-top:0.4rem;">
+              <span class="seo-warn-badge danger">⚠️ SEO Impact: H1 headline rank factor for "Bristol TN Commercial Real Estate"</span>
+              <label class="ml">Main Hero Headline</label>
+              <input type="text" class="mi" id="cms-hero-title" value="We Buy, Build &amp; Lease Commercial &amp; Residential Real Estate">
+            </div>
+            <div class="mf" style="margin-top:0.4rem;">
+              <span class="seo-warn-badge tip">💡 Conversion Text: Key value proposition summary</span>
+              <label class="ml">Hero Subtitle</label>
+              <input type="text" class="mi" id="cms-hero-sub" value="From City Centre office suites to turn-key cash property acquisitions — premier real estate solutions across Bristol TN &amp; VA.">
+            </div>
+          </div>
+
+          <!-- About & CEO Bio -->
+          <div class="ticket-card" style="border-left:4px solid var(--info);">
+            <div class="tc-prop">About &amp; CEO Biography</div>
+            <div class="mf" style="margin-top:0.6rem;">
+              <label class="ml">CEO Name &amp; Title</label>
+              <input type="text" class="mi" id="cms-ceo-name" value="Allen Hurley · CEO &amp; Founder">
+            </div>
+            <div class="mf" style="margin-top:0.4rem;">
+              <span class="seo-warn-badge tip">💡 Local Authority Signal: Highlights Bristol TN commercial experience</span>
+              <label class="ml">Short Company Bio</label>
+              <textarea class="tc-notes" id="cms-bio" style="min-height:70px;">Hurley Enterprise LLC is the most active commercial real estate firm in Bristol, Tennessee. We own, lease, and develop premier office suites, retail corridors, and industrial sites across the Tri-Cities.</textarea>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;margin-top:1.25rem;flex-wrap:wrap;">
+          <button class="modal-submit" onclick="saveSiteContent()" style="width:auto;padding:0.7em 1.5em;">💾 Save Site Changes</button>
+          <button class="crm-tools-btn" onclick="resetSiteContent()" style="border-color:rgba(201,168,76,0.3);color:var(--gold);background:rgba(201,168,76,0.08);">🔄 Reset to Default Site Text</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- 📋 COLLAPSIBLE SEARCH & DATABASE PANEL -->
   <div class="ios-card" id="card-database" style="margin-bottom:2rem;">
     <div class="ios-card-header" onclick="toggleIosCard('card-database')">
@@ -1122,6 +1252,50 @@
     <div class="mf"><label class="ml">Scope &amp; Technical Notes</label><input type="text" class="mi" id="mt-notes" placeholder="Framing specs, inspection timeline, permit details…"></div>
     <button class="modal-submit" onclick="submitTicket()">Create Ticket →</button>
     <button class="modal-cancel" onclick="closeTicketModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- ADD/EDIT PROPERTY MODAL -->
+<div class="overlay" id="property-overlay" onclick="handlePropertyOvClick(event)">
+  <div class="modal-sheet" id="property-modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="mp-modal-title">🏢 Add Property Listing</div>
+    <input type="hidden" id="mp-id" value="">
+    <div class="mf"><label class="ml">Property Name / Title</label><input type="text" class="mi" id="mp-title" placeholder="e.g. City Centre Professional Office Suites"></div>
+    <div class="mf"><label class="ml">Address &amp; Location</label><input type="text" class="mi" id="mp-address" placeholder="e.g. 100 5th St, Suite 2W, Bristol, TN 37620"></div>
+    <div class="mrow">
+      <div class="mf"><label class="ml">Category / Type</label>
+        <select class="ms" id="mp-cat">
+          <option value="office">🏢 Office Suites</option>
+          <option value="retail">🛍️ Retail / Restaurant</option>
+          <option value="industrial">🏭 Industrial / Warehouse</option>
+          <option value="event">🎉 Event Venue</option>
+          <option value="residential">🏠 Residential</option>
+        </select>
+      </div>
+      <div class="mf"><label class="ml">Status Badge</label>
+        <select class="ms" id="mp-status">
+          <option value="For Lease">For Lease</option>
+          <option value="For Sale">For Sale</option>
+          <option value="⭐ Featured Listing">⭐ Featured Listing</option>
+          <option value="Under Contract">Under Contract</option>
+        </select>
+      </div>
+    </div>
+    <div class="mf"><label class="ml">Price / Rent Label</label><input type="text" class="mi" id="mp-price" placeholder="e.g. All-Inclusive Rent · 120–6,000 sqft"></div>
+    <div class="mf">
+      <label class="ml">Image Photo URL or Preset Asset</label>
+      <input type="text" class="mi" id="mp-img" placeholder="img/office.png or custom image URL">
+      <div style="display:flex;gap:0.4rem;margin-top:0.4rem;flex-wrap:wrap;">
+        <button type="button" class="crm-tools-btn" onclick="setPresetImg('img/office.png')" style="font-size:0.65rem;padding:0.25em 0.6em;">📷 Office (img/office.png)</button>
+        <button type="button" class="crm-tools-btn" onclick="setPresetImg('img/home.png')" style="font-size:0.65rem;padding:0.25em 0.6em;">📷 Home (img/home.png)</button>
+        <button type="button" class="crm-tools-btn" onclick="setPresetImg('img/hardrock.jpg')" style="font-size:0.65rem;padding:0.25em 0.6em;">📷 Hard Rock (img/hardrock.jpg)</button>
+      </div>
+    </div>
+    <div class="mf"><label class="ml">Highlights / Key Features (comma separated)</label><input type="text" class="mi" id="mp-specs" placeholder="All-Inclusive, No CAM Fees, 24/7 Security, Fitness Center"></div>
+    <div class="mf"><label class="ml">Property Description</label><textarea class="tc-notes" id="mp-desc" style="min-height:75px;" placeholder="Full property overview, square footage, amenities, lease terms…"></textarea></div>
+    <button class="modal-submit" onclick="submitCmsProperty()">Save Property Listing →</button>
+    <button class="modal-cancel" onclick="closePropertyModal()">Cancel</button>
   </div>
 </div>
 
@@ -2295,6 +2469,238 @@ function submitTicket() {
   });
 }
 
+/* ── LIVE SITE CONTENT & PROPERTY CMS ENGINE ─── */
+const SITE_CONTENT_KEY = 'hurley_site_content';
+const SITE_PROP_KEY    = 'hurley_site_properties';
+
+const DEFAULT_SITE_CONTENT = {
+  phone:       '(423) 742-7219',
+  email:       'allen@hurleyllc.com',
+  address:     '100 5th Street, Suite 2W, Bristol, TN 37620',
+  hours:       'Monday – Friday 8:30 AM – 5:00 PM EST',
+  heroTagline: "BRISTOL TENNESSEE'S PREMIER COMMERCIAL REAL ESTATE FIRM",
+  heroTitle:   'We Buy, Build & Lease Commercial & Residential Real Estate',
+  heroSub:     'From City Centre office suites to turn-key cash property acquisitions — premier real estate solutions across Bristol TN & VA.',
+  ceoName:     'Allen Hurley · CEO & Founder',
+  ceoBio:      'Hurley Enterprise LLC is the most active commercial real estate firm in Bristol, Tennessee. We own, lease, and develop premier office suites, retail corridors, and industrial sites across the Tri-Cities.'
+};
+
+const DEFAULT_PROPERTIES = [
+  {
+    id: 'p1',
+    title: 'City Centre Professional Office Suites',
+    address: '100 5th St, Suite 2W, Bristol, TN 37620',
+    category: 'office',
+    price: 'All-Inclusive Rent · 120–6,000 sqft',
+    img: 'img/office.png',
+    status: '⭐ Featured Listing',
+    specs: 'All-Inclusive, No CAM Fees, 24/7 Security, Fitness Center',
+    desc: 'Secure the premier address for your business in downtown Bristol TN. Class A office suites with truly all-inclusive rent covering utilities, WiFi, cleaning, security, and fitness access.'
+  },
+  {
+    id: 'p2',
+    title: '628 State Street Restaurant & Bar',
+    address: '628 State St, Bristol, TN 37620',
+    category: 'retail',
+    price: '8,500 sqft · Full Restaurant Build-Out',
+    img: 'img/hardrock.jpg',
+    status: 'For Lease',
+    specs: 'Full Bar Buildout, Commercial Kitchen, High Foot Traffic, Hard Rock Corridor',
+    desc: 'Prime 8,500 sqft restaurant and entertainment facility on State Street. Fully built-out bar, dining space, and kitchen equipment in downtown Bristol.'
+  },
+  {
+    id: 'p3',
+    title: 'Bradley Street Residential Portfolio',
+    address: 'Bradley St, Bristol, VA 24201',
+    category: 'residential',
+    price: '3 Remodeled Homes · Casino Adjacent',
+    img: 'img/home.png',
+    status: 'For Sale',
+    specs: 'Remodeled, High Cash Flow, Near Hard Rock Casino, Turnkey',
+    desc: 'High-performing residential investment property located minutes from the Hard Rock Hotel & Casino Bristol. Turnkey condition with proven rental history.'
+  }
+];
+
+function getSiteContent() {
+  try {
+    const raw = localStorage.getItem(SITE_CONTENT_KEY);
+    return raw ? {...DEFAULT_SITE_CONTENT, ...JSON.parse(raw)} : DEFAULT_SITE_CONTENT;
+  } catch(e) { return DEFAULT_SITE_CONTENT; }
+}
+
+function saveSiteContent() {
+  const content = {
+    phone:       document.getElementById('cms-phone')?.value.trim() || DEFAULT_SITE_CONTENT.phone,
+    email:       document.getElementById('cms-email')?.value.trim() || DEFAULT_SITE_CONTENT.email,
+    address:     document.getElementById('cms-address')?.value.trim() || DEFAULT_SITE_CONTENT.address,
+    hours:       document.getElementById('cms-hours')?.value.trim() || DEFAULT_SITE_CONTENT.hours,
+    heroTagline: document.getElementById('cms-hero-tagline')?.value.trim() || DEFAULT_SITE_CONTENT.heroTagline,
+    heroTitle:   document.getElementById('cms-hero-title')?.value.trim() || DEFAULT_SITE_CONTENT.heroTitle,
+    heroSub:     document.getElementById('cms-hero-sub')?.value.trim() || DEFAULT_SITE_CONTENT.heroSub,
+    ceoName:     document.getElementById('cms-ceo-name')?.value.trim() || DEFAULT_SITE_CONTENT.ceoName,
+    ceoBio:      document.getElementById('cms-bio')?.value.trim() || DEFAULT_SITE_CONTENT.ceoBio
+  };
+  localStorage.setItem(SITE_CONTENT_KEY, JSON.stringify(content));
+  toast('Live site content saved ✓', 'ok');
+}
+
+function resetSiteContent() {
+  if (!confirm('Reset site content to default values?')) return;
+  localStorage.removeItem(SITE_CONTENT_KEY);
+  loadCmsFormFields();
+  toast('Site content reset to default copy', 'info');
+}
+
+function loadCmsFormFields() {
+  const c = getSiteContent();
+  if (document.getElementById('cms-phone'))        document.getElementById('cms-phone').value = c.phone;
+  if (document.getElementById('cms-email'))        document.getElementById('cms-email').value = c.email;
+  if (document.getElementById('cms-address'))      document.getElementById('cms-address').value = c.address;
+  if (document.getElementById('cms-hours'))        document.getElementById('cms-hours').value = c.hours;
+  if (document.getElementById('cms-hero-tagline')) document.getElementById('cms-hero-tagline').value = c.heroTagline;
+  if (document.getElementById('cms-hero-title'))   document.getElementById('cms-hero-title').value = c.heroTitle;
+  if (document.getElementById('cms-hero-sub'))     document.getElementById('cms-hero-sub').value = c.heroSub;
+  if (document.getElementById('cms-ceo-name'))     document.getElementById('cms-ceo-name').value = c.ceoName;
+  if (document.getElementById('cms-bio'))          document.getElementById('cms-bio').value = c.ceoBio;
+}
+
+function getCmsProperties() {
+  try {
+    const raw = localStorage.getItem(SITE_PROP_KEY);
+    const d = raw ? JSON.parse(raw) : [];
+    if (!d.length) { saveCmsProperties(DEFAULT_PROPERTIES); return DEFAULT_PROPERTIES; }
+    return d;
+  } catch(e) { return DEFAULT_PROPERTIES; }
+}
+
+function saveCmsProperties(p) { localStorage.setItem(SITE_PROP_KEY, JSON.stringify(p)); }
+
+function renderCmsProperties() {
+  const container = document.getElementById('cms-property-list');
+  if (!container) return;
+  const properties = getCmsProperties();
+
+  if (!properties.length) {
+    container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--t3);font-size:0.8rem;">No property listings in CMS. Click "Add New Property Listing" above.</div>`;
+    return;
+  }
+
+  container.innerHTML = properties.map(p => `
+    <div class="ticket-card" id="cmsprop-${p.id}">
+      <div class="tc-header">
+        <div class="tc-title-wrap">
+          <div class="tc-prop">${p.address}</div>
+          <div class="tc-title">${p.title}</div>
+          <div class="tc-badges">
+            <span class="t-badge tb-progress">${p.status}</span>
+            <span class="t-badge" style="background:rgba(255,255,255,0.04);color:var(--t2);border:1px solid var(--border);">${p.category}</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:0.35rem;">
+          <button class="act-btn" onclick="editCmsProperty('${p.id}')" style="font-size:0.68rem;padding:0.35em 0.7em;">✏️ Edit</button>
+          <button class="act-btn del" onclick="deleteCmsProperty('${p.id}')" style="font-size:0.68rem;padding:0.35em 0.7em;">Delete</button>
+        </div>
+      </div>
+      <div class="tc-details">
+        <div class="tc-det-item"><span class="tc-det-lbl">Price / Rent</span><span class="tc-det-val" style="color:var(--gold);">${p.price}</span></div>
+        <div class="tc-det-item"><span class="tc-det-lbl">Image Asset</span><span class="tc-det-val">${p.img}</span></div>
+        <div class="tc-det-item"><span class="tc-det-lbl">Highlights</span><span class="tc-det-val">${p.specs}</span></div>
+      </div>
+      <div style="font-size:0.75rem;color:var(--t2);line-height:1.5;margin-top:0.4rem;">${p.desc}</div>
+    </div>
+  `).join('');
+}
+
+function switchCmsTab(tab) {
+  const btnProps = document.getElementById('tab-cms-properties');
+  const btnSite  = document.getElementById('tab-cms-site');
+  const secProps = document.getElementById('cms-section-properties');
+  const secSite  = document.getElementById('cms-section-site');
+
+  if (tab === 'properties') {
+    btnProps.classList.add('active'); btnSite.classList.remove('active');
+    secProps.style.display = 'block';  secSite.style.display = 'none';
+  } else {
+    btnSite.classList.add('active'); btnProps.classList.remove('active');
+    secSite.style.display = 'block';  secProps.style.display = 'none';
+  }
+}
+
+function openPropertyModal() {
+  document.getElementById('mp-id').value = '';
+  document.getElementById('mp-modal-title').textContent = '🏢 Add Property Listing';
+  ['mp-title','mp-address','mp-price','mp-img','mp-specs','mp-desc'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('mp-img').value = 'img/office.png';
+  document.getElementById('property-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('mp-title').focus(), 320);
+}
+
+function editCmsProperty(id) {
+  const p = getCmsProperties().find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('mp-id').value = p.id;
+  document.getElementById('mp-modal-title').textContent = '✏️ Edit Property Listing';
+  document.getElementById('mp-title').value   = p.title || '';
+  document.getElementById('mp-address').value = p.address || '';
+  document.getElementById('mp-cat').value     = p.category || 'office';
+  document.getElementById('mp-status').value  = p.status || 'For Lease';
+  document.getElementById('mp-price').value   = p.price || '';
+  document.getElementById('mp-img').value     = p.img || '';
+  document.getElementById('mp-specs').value   = p.specs || '';
+  document.getElementById('mp-desc').value    = p.desc || '';
+  document.getElementById('property-overlay').classList.add('open');
+}
+
+function setPresetImg(val) {
+  const el = document.getElementById('mp-img');
+  if (el) el.value = val;
+}
+
+function closePropertyModal() { document.getElementById('property-overlay').classList.remove('open'); }
+function handlePropertyOvClick(e) { if(e.target === document.getElementById('property-overlay')) closePropertyModal(); }
+
+function submitCmsProperty() {
+  const title = document.getElementById('mp-title').value.trim();
+  if (!title) { toast('Property title is required', 'info'); return; }
+
+  const pid = document.getElementById('mp-id').value || ('p_' + Date.now());
+  const newProp = {
+    id: pid,
+    title: title,
+    address: document.getElementById('mp-address').value.trim(),
+    category: document.getElementById('mp-cat').value,
+    status: document.getElementById('mp-status').value,
+    price: document.getElementById('mp-price').value.trim() || 'Contact for pricing',
+    img: document.getElementById('mp-img').value.trim() || 'img/office.png',
+    specs: document.getElementById('mp-specs').value.trim(),
+    desc: document.getElementById('mp-desc').value.trim()
+  };
+
+  const properties = getCmsProperties();
+  const idx = properties.findIndex(x => x.id === pid);
+  if (idx !== -1) {
+    properties[idx] = newProp;
+  } else {
+    properties.unshift(newProp);
+  }
+
+  saveCmsProperties(properties);
+  closePropertyModal();
+  renderCmsProperties();
+  toast('Property listing saved ✓', 'ok');
+}
+
+function deleteCmsProperty(id) {
+  if (!confirm('Delete this property listing?')) return;
+  const properties = getCmsProperties().filter(x => x.id !== id);
+  saveCmsProperties(properties);
+  renderCmsProperties();
+  toast('Property listing removed', 'info');
+}
+
 /* ── DEMO DATA MANAGEMENT ────────────────────── */
 function clearDemoData() {
   if (!confirm('Clear all sample demo data (leads & construction tickets)? This lets you start 100% fresh with real live data.')) return;
@@ -2312,7 +2718,11 @@ function clearDemoData() {
 function restoreDemoData() {
   saveLeads(DEMO);
   saveTickets(DEMO_TICKETS);
+  saveCmsProperties(DEFAULT_PROPERTIES);
   localStorage.removeItem('pb_dismissed');
+  localStorage.removeItem(SITE_CONTENT_KEY);
+  loadCmsFormFields();
+  renderCmsProperties();
   updateStats();
   renderLeads();
   renderActivityFeed();
@@ -2327,6 +2737,7 @@ function initDash() {
   setInterval(updateClock, 15000);
   setInterval(()=>{ renderLeads(); renderActivityFeed(); renderTable(); renderTickets(); }, 60000);
   updateStats(); renderLeads(); renderActivityFeed(); renderTable(); renderTickets();
+  loadCmsFormFields(); renderCmsProperties();
 }
 </script>
 </body>
