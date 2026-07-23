@@ -603,6 +603,52 @@
     }
 
 
+    /* ── iOS COLLAPSIBLE CARDS ────────────────────── */
+    .ios-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      margin-top: 1.25rem;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .ios-card:hover { border-color: var(--border-md); }
+    .ios-card-header {
+      padding: 1.1rem 1.25rem;
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      background: rgba(255,255,255,0.015);
+      transition: background 0.18s;
+    }
+    .ios-card-header:hover { background: rgba(255,255,255,0.035); }
+    .ios-card-left { display: flex; align-items: center; gap: 0.75rem; min-width: 0; }
+    .ios-card-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .ios-card-title { font-size: 0.9rem; font-weight: 800; color: var(--off-white); }
+    .ios-card-sub { font-size: 0.68rem; color: var(--t2); margin-top: 0.1rem; }
+    .ios-card-right { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
+    .ios-card-badge {
+      font-size: 0.6rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.22em 0.65em; border-radius: 999px; background: rgba(255,255,255,0.04);
+      color: var(--t2); border: 1px solid var(--border);
+    }
+    .ios-card-chevron {
+      width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,0.04);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; color: var(--t2); transition: transform 0.28s var(--ease);
+    }
+    .ios-card.open .ios-card-chevron { transform: rotate(180deg); color: var(--gold); background: var(--gold-dim); }
+    .ios-card-body {
+      padding: 1.25rem;
+      border-top: 1px solid var(--border);
+      display: none;
+    }
+    .ios-card.open .ios-card-body { display: block; }
   </style>
 </head>
 <body>
@@ -717,66 +763,8 @@
     </div>
   </div>
 
-  <!-- INSIGHTS ROW: Source breakdown + Activity Feed -->
-  <div class="insights-row">
-
-    <!-- Lead breakdown -->
-    <div class="insight-card">
-      <div class="insight-title">Lead Source & Type Breakdown</div>
-      <div class="bar-row" id="source-bars"></div>
-      <div style="margin-top:0.5rem;border-top:1px solid var(--border);padding-top:0.75rem;">
-        <div class="insight-title" style="margin-bottom:0.5rem;">Property Type Mix</div>
-        <div class="bar-row" id="type-bars"></div>
-      </div>
-    </div>
-
-    <!-- Latest Activity card -->
-    <div class="insight-card activity-card">
-      <div class="activity-header">
-        <div class="insight-title">Latest Activity</div>
-        <span class="activity-live-dot">Live</span>
-      </div>
-      <!-- Sparkline chart -->
-      <div class="act-chart-wrap">
-        <div class="act-chart-label">
-          <span class="act-chart-title">7-Day Lead Volume</span>
-          <span class="act-chart-total" id="act-chart-total"></span>
-        </div>
-        <svg class="act-chart-svg" id="act-chart-svg" viewBox="0 0 280 68" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stop-color="#C9A84C" stop-opacity="0.35"/>
-              <stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/>
-            </linearGradient>
-            <linearGradient id="sparkLine" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%"   stop-color="#C9A84C" stop-opacity="0.4"/>
-              <stop offset="100%" stop-color="#C9A84C" stop-opacity="1"/>
-            </linearGradient>
-          </defs>
-        </svg>
-        <div class="act-chart-days" id="act-chart-days"></div>
-      </div>
-      <div class="activity-feed" id="activity-feed"></div>
-    </div>
-
-  </div>
-
-  <!-- ══ HURLEY CRM DATABASE TOOLS ══ -->
-  <div class="crm-tools-section" id="crm-tools">
-    <div>
-      <div class="crm-tools-title">🔐 Hurley Enterprise CRM Database</div>
-      <div class="crm-tools-sub">Standalone private lead management system · Active & secured</div>
-    </div>
-    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-      <button class="crm-tools-btn" onclick="exportCSV()">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Export CSV
-      </button>
-    </div>
-  </div>
-
-  <!-- LEAD PIPELINE -->
-  <div class="controls-bar">
+  <!-- LEAD PIPELINE (Primary Daily Workspace) -->
+  <div class="controls-bar" style="margin-top:1.25rem;">
     <div class="controls-top">
       <div class="section-title">Lead Pipeline</div>
       <button class="add-btn" onclick="openModal()">
@@ -797,26 +785,103 @@
 
   <div class="lead-feed" id="lead-feed"></div>
 
-  <!-- ── SEARCHABLE LEAD TABLE ── -->
-  <div class="lead-table-wrap" style="margin-bottom:2rem;">
-    <div class="lt-header">
-      <div class="lt-title">📋 All Leads — Quick Search</div>
-      <input class="lt-search" id="lt-search" type="search" placeholder="Search name, phone, address…" oninput="renderTable()">
+  <!-- 📊 COLLAPSIBLE ANALYTICS PANEL -->
+  <div class="ios-card" id="card-analytics">
+    <div class="ios-card-header" onclick="toggleIosCard('card-analytics')">
+      <div class="ios-card-left">
+        <div class="ios-card-icon">📊</div>
+        <div>
+          <div class="ios-card-title">Performance Analytics &amp; Live Activity</div>
+          <div class="ios-card-sub">7-day lead volume graph, source breakdown &amp; live timeline</div>
+        </div>
+      </div>
+      <div class="ios-card-right">
+        <span class="ios-card-badge">Tap to view</span>
+        <div class="ios-card-chevron">▼</div>
+      </div>
     </div>
-    <div style="overflow-x:auto;">
-      <table class="lt-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Property</th>
-            <th>Source</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="lt-body"></tbody>
-      </table>
+    <div class="ios-card-body">
+      <!-- INSIGHTS ROW: Source breakdown + Activity Feed -->
+      <div class="insights-row" style="margin-bottom:0;">
+        <!-- Lead breakdown -->
+        <div class="insight-card">
+          <div class="insight-title">Lead Source &amp; Type Breakdown</div>
+          <div class="bar-row" id="source-bars"></div>
+          <div style="margin-top:0.5rem;border-top:1px solid var(--border);padding-top:0.75rem;">
+            <div class="insight-title" style="margin-bottom:0.5rem;">Property Type Mix</div>
+            <div class="bar-row" id="type-bars"></div>
+          </div>
+        </div>
+        <!-- Latest Activity card -->
+        <div class="insight-card activity-card">
+          <div class="activity-header">
+            <div class="insight-title">Latest Activity</div>
+            <span class="activity-live-dot">Live</span>
+          </div>
+          <!-- Sparkline chart -->
+          <div class="act-chart-wrap">
+            <div class="act-chart-label">
+              <span class="act-chart-title">7-Day Lead Volume</span>
+              <span class="act-chart-total" id="act-chart-total"></span>
+            </div>
+            <svg class="act-chart-svg" id="act-chart-svg" viewBox="0 0 280 68" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%"   stop-color="#C9A84C" stop-opacity="0.35"/>
+                  <stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="sparkLine" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%"   stop-color="#C9A84C" stop-opacity="0.4"/>
+                  <stop offset="100%" stop-color="#C9A84C" stop-opacity="1"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="act-chart-days" id="act-chart-days"></div>
+          </div>
+          <div class="activity-feed" id="activity-feed"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📋 COLLAPSIBLE SEARCH & DATABASE PANEL -->
+  <div class="ios-card" id="card-database" style="margin-bottom:2rem;">
+    <div class="ios-card-header" onclick="toggleIosCard('card-database')">
+      <div class="ios-card-left">
+        <div class="ios-card-icon">🔐</div>
+        <div>
+          <div class="ios-card-title">Full Lead Database &amp; CSV Export</div>
+          <div class="ios-card-sub">Quick search, status overview &amp; CSV database export</div>
+        </div>
+      </div>
+      <div class="ios-card-right">
+        <span class="ios-card-badge">Tap to view</span>
+        <div class="ios-card-chevron">▼</div>
+      </div>
+    </div>
+    <div class="ios-card-body">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
+        <input class="lt-search" id="lt-search" type="search" placeholder="Search name, phone, address…" oninput="renderTable()" style="max-width:320px;flex:1;">
+        <button class="crm-tools-btn" onclick="exportCSV()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export CSV Database
+        </button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="lt-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Property</th>
+              <th>Source</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="lt-body"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -1687,9 +1752,17 @@ function dismissAllPriority() {
   const d = JSON.parse(localStorage.getItem('pb_dismissed')||'[]');
   urgent.forEach(l => { if (!d.includes(l.id)) d.push(l.id); });
   localStorage.setItem('pb_dismissed', JSON.stringify(d));
-  pbExpanded = false;
   updateStats();
   toast('Priority alerts dismissed', 'ok');
+}
+
+function toggleIosCard(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const isOpen = el.classList.contains('open');
+  el.classList.toggle('open');
+  const badge = el.querySelector('.ios-card-badge');
+  if (badge) badge.textContent = isOpen ? 'Tap to view' : 'Hide';
 }
 
 /* ── LEAD TABLE ─────────────────────────────── */
