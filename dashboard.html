@@ -964,11 +964,19 @@
     </div>
     <div class="ios-card-body">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
-        <input class="lt-search" id="lt-search" type="search" placeholder="Search name, phone, address…" oninput="renderTable()" style="max-width:320px;flex:1;">
-        <button class="crm-tools-btn" onclick="exportCSV()">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Export CSV Database
-        </button>
+        <input class="lt-search" id="lt-search" type="search" placeholder="Search name, phone, address…" oninput="renderTable()" style="max-width:300px;flex:1;">
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+          <button class="crm-tools-btn" onclick="exportCSV()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export CSV
+          </button>
+          <button class="crm-tools-btn" onclick="clearDemoData()" style="border-color:rgba(255,77,77,0.3);color:var(--hot);background:rgba(255,77,77,0.08);" title="Wipe sample data when ready for live data">
+            🗑️ Clear Sample Data
+          </button>
+          <button class="crm-tools-btn" onclick="restoreDemoData()" style="border-color:rgba(201,168,76,0.3);color:var(--gold);background:rgba(201,168,76,0.08);" title="Reload sample dataset for previewing dashboard layout">
+            🔄 Load Sample Data
+          </button>
+        </div>
       </div>
       <div style="overflow-x:auto;">
         <table class="lt-table">
@@ -2245,6 +2253,32 @@ function submitTicket() {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
+}
+
+/* ── DEMO DATA MANAGEMENT ────────────────────── */
+function clearDemoData() {
+  if (!confirm('Clear all sample demo data (leads & construction tickets)? This lets you start 100% fresh with real live data.')) return;
+  localStorage.setItem(CFG.leadsKey, JSON.stringify([]));
+  localStorage.setItem(TICKETS_KEY, JSON.stringify([]));
+  localStorage.setItem('pb_dismissed', JSON.stringify([]));
+  updateStats();
+  renderLeads();
+  renderActivityFeed();
+  renderTable();
+  renderTickets();
+  toast('Sample data cleared — fresh pipeline ready ✓', 'info');
+}
+
+function restoreDemoData() {
+  saveLeads(DEMO);
+  saveTickets(DEMO_TICKETS);
+  localStorage.removeItem('pb_dismissed');
+  updateStats();
+  renderLeads();
+  renderActivityFeed();
+  renderTable();
+  renderTickets();
+  toast('Sample demo dataset loaded ✓', 'ok');
 }
 
 /* ── INIT ────────────────────────────────────── */
