@@ -81,25 +81,25 @@
 
     /* ── TOPBAR ─────────────────────────────────── */
     #topbar {
-      background: #fff; border-bottom: 1px solid rgba(0,0,0,0.08);
+      background: rgba(15,15,15,0.92); border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0.7rem 1rem; position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 1px 12px rgba(0,0,0,0.07);
+      padding: 0.75rem 1.25rem; position: sticky; top: 0; z-index: 100;
     }
-    .tb-brand { display: flex; align-items: center; gap: 0.5rem; min-width: 0; }
-    .tb-brand img { height: 22px; width: auto; flex-shrink: 0; }
-    .tb-label { font-size: 0.58rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #bbb; white-space: nowrap; }
+    .tb-brand { display: flex; align-items: center; gap: 0.6rem; min-width: 0; }
+    .tb-brand img { height: 24px; width: auto; flex-shrink: 0; filter: brightness(0) invert(1); }
+    .tb-label { font-size: 0.62rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
     @media(max-width:400px){ .tb-label { display: none; } }
-    .tb-right { display: flex; align-items: center; gap: 0.45rem; flex-shrink: 0; }
-    .tb-clock { font-size: 0.7rem; font-weight: 700; color: #888; font-variant-numeric: tabular-nums; }
+    .tb-right { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+    .tb-clock { font-size: 0.72rem; font-weight: 700; color: var(--t2); font-variant-numeric: tabular-nums; }
     @media(max-width:400px){ .tb-clock { display: none; } }
     .tb-btn {
-      width: 34px; height: 34px; background: #f4f4f4; border: 1px solid rgba(0,0,0,0.1);
+      width: 36px; height: 36px; background: rgba(255,255,255,0.04); border: 1px solid var(--border);
       border-radius: 9px; display: flex; align-items: center; justify-content: center;
-      color: #999; cursor: pointer; transition: all 0.18s; -webkit-tap-highlight-color: transparent;
+      color: var(--t2); cursor: pointer; transition: all 0.18s; -webkit-tap-highlight-color: transparent;
     }
     .tb-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
-    .tb-btn svg { width: 14px; height: 14px; }
+    .tb-btn svg { width: 15px; height: 15px; }
 
     /* ── MAIN LAYOUT ────────────────────────────── */
     #dash {
@@ -283,10 +283,7 @@
     .activity-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.5rem; }
     .activity-live-dot { display:inline-flex; align-items:center; gap:0.35rem; font-size:0.62rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--cool); }
     .activity-live-dot::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--cool); animation:blink 1.6s ease-in-out infinite; }
-    .activity-feed { display:flex; flex-direction:column; gap:0; max-height:260px; overflow-y:auto; }
-    .activity-feed::-webkit-scrollbar { width:3px; }
-    .activity-feed::-webkit-scrollbar-track { background:transparent; }
-    .activity-feed::-webkit-scrollbar-thumb { background:var(--border-md); border-radius:2px; }
+    .activity-feed { display:flex; flex-direction:column; gap:0; }
     /* Sparkline chart */
     .act-chart-wrap {
       margin-bottom: 0.75rem;
@@ -453,11 +450,8 @@
     }
     .section-title { font-size: 0.88rem; font-weight: 800; }
     .filter-scroll {
-      display: flex; gap: 0.45rem;
-      overflow-x: auto; -webkit-overflow-scrolling: touch;
-      scrollbar-width: none; padding-bottom: 2px;
+      display: flex; gap: 0.45rem; flex-wrap: wrap; align-items: center;
     }
-    .filter-scroll::-webkit-scrollbar { display: none; }
     .filter-btn {
       padding: 0.45em 1em; border-radius: 999px;
       font-size: 0.68rem; font-weight: 800; letter-spacing: 0.04em;
@@ -705,6 +699,12 @@
     @media(max-width:600px){
       .lt-table th:nth-child(3),.lt-table td:nth-child(3),
       .lt-table th:nth-child(4),.lt-table td:nth-child(4) { display: none; }
+      .lt-search { max-width: 100%; width: 100%; }
+      .sync-header { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+      .sync-actions { justify-content: space-between; width: 100%; }
+      .sync-row { grid-template-columns: 24px 1fr auto; gap: 0.5rem; }
+      .mon-cols { display: none; }
+      .mon-row { grid-template-columns: 1fr 1fr; gap: 0.5rem; padding: 0.75rem; }
     }
 
     /* ── MONDAY MODAL ───────────────────────────── */
