@@ -750,6 +750,37 @@
     }
     .tc-status-sel option { background: #1c1c1c; }
 
+    /* ── DASHBOARD TOP NAV ──────────────────────── */
+    .dash-nav {
+      display:flex; gap:0.4rem; padding:0.75rem 0; margin-bottom:0.5rem;
+      border-bottom:1px solid var(--border);
+      overflow-x:auto; -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;
+    }
+    .dash-nav::-webkit-scrollbar { display:none; }
+    .dash-nav-btn {
+      display:inline-flex; align-items:center; gap:0.4rem;
+      background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px;
+      padding:0.6em 1.1em; font-size:0.78rem; font-weight:800; color:var(--t2);
+      cursor:pointer; transition:all 0.18s; white-space:nowrap;
+      -webkit-tap-highlight-color:transparent; min-height:42px;
+    }
+    .dash-nav-btn:hover { border-color:var(--border-md); color:var(--off-white); background:rgba(255,255,255,0.05); }
+    .dash-nav-btn.active {
+      background:var(--gold-dim); border-color:rgba(201,168,76,0.5); color:var(--gold);
+      box-shadow:0 0 12px rgba(201,168,76,0.15);
+    }
+    .dash-nav-btn .nav-count {
+      font-size:0.6rem; font-weight:900; background:rgba(255,255,255,0.08);
+      border-radius:99px; padding:0.15em 0.5em; color:var(--t3); margin-left:0.15rem;
+    }
+    .dash-nav-btn.active .nav-count { background:rgba(201,168,76,0.2); color:var(--gold); }
+    .dash-panel { display:none; }
+    .dash-panel.active { display:block; }
+    @media(max-width:600px) {
+      .dash-nav-btn { font-size:0.72rem; padding:0.5em 0.85em; min-height:38px; }
+    }
+
     /* ── CONSTRUCTION SUB-TABS ──────────────────── */
     .cc-tabs { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:1.25rem; border-bottom:1px solid var(--border); padding-bottom:0.75rem; }
     .cc-tab {
@@ -979,6 +1010,17 @@
     <div class="pb-leads" id="pb-leads"></div>
   </div>
 
+  <!-- TOP NAVIGATION BAR -->
+  <div class="dash-nav" id="dash-nav">
+    <button class="dash-nav-btn active" onclick="switchDashPanel('pipeline')">📊 Pipeline</button>
+    <button class="dash-nav-btn" onclick="switchDashPanel('construction')">🏗️ Construction</button>
+    <button class="dash-nav-btn" onclick="switchDashPanel('analytics')">📈 Analytics</button>
+    <button class="dash-nav-btn" onclick="switchDashPanel('editor')">✏️ Site Editor</button>
+  </div>
+
+  <!-- ═══ PANEL 1: LEAD PIPELINE ═══ -->
+  <div class="dash-panel active" id="panel-pipeline">
+
   <!-- STATS GRID -->
   <div class="stats-grid">
     <div class="stat-card s-hot" id="sc-hot" onclick="setFilter('hot')" title="Show hot leads" style="cursor:pointer">
@@ -1013,7 +1055,7 @@
     </div>
   </div>
 
-  <!-- LEAD PIPELINE (Primary Daily Workspace) -->
+  <!-- LEAD PIPELINE -->
   <div class="controls-bar" style="margin-top:1.25rem;">
     <div class="controls-top">
       <div class="section-title">Lead Pipeline</div>
@@ -1035,22 +1077,59 @@
 
   <div class="lead-feed" id="lead-feed"></div>
 
-  <!-- 🏗️ CONSTRUCTION COMMAND CENTER -->
-  <div class="ios-card open" id="card-tickets">
-    <div class="ios-card-header" onclick="toggleIosCard('card-tickets')">
+  <!-- LEAD DATABASE & CRM TOOLS -->
+  <div class="ios-card" id="card-database" style="margin-top:1.25rem;">
+    <div class="ios-card-header" onclick="toggleIosCard('card-database')">
       <div class="ios-card-left">
-        <div class="ios-card-icon">🏗️</div>
+        <div class="ios-card-icon">🔐</div>
         <div>
-          <div class="ios-card-title">Construction Command Center</div>
-          <div class="ios-card-sub">Job tickets, scheduling, materials, budgets &amp; crew management</div>
+          <div class="ios-card-title">Full Lead Database &amp; CSV Export</div>
+          <div class="ios-card-sub">Quick search, status overview &amp; CSV database export</div>
         </div>
       </div>
       <div class="ios-card-right">
-        <span class="ios-card-badge" id="ticket-badge-count">Hide</span>
+        <span class="ios-card-badge">Tap to view</span>
         <div class="ios-card-chevron">▼</div>
       </div>
     </div>
     <div class="ios-card-body">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
+        <input class="lt-search" id="lt-search" type="search" placeholder="Search name, phone, address…" oninput="renderTable()" style="max-width:300px;flex:1;">
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+          <button class="crm-tools-btn" onclick="exportCSV()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export CSV
+          </button>
+          <button class="crm-tools-btn" onclick="clearDemoData()" style="border-color:rgba(255,77,77,0.3);color:var(--hot);background:rgba(255,77,77,0.08);" title="Wipe sample data when ready for live data">
+            🗑️ Clear Sample Data
+          </button>
+          <button class="crm-tools-btn" onclick="restoreDemoData()" style="border-color:rgba(201,168,76,0.3);color:var(--gold);background:rgba(201,168,76,0.08);" title="Reload sample dataset for previewing dashboard layout">
+            🔄 Load Sample Data
+          </button>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="lt-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Property</th>
+              <th>Source</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="lt-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /panel-pipeline -->
+
+  <!-- ═══ PANEL 2: CONSTRUCTION COMMAND CENTER ═══ -->
+  <div class="dash-panel" id="panel-construction">
 
       <!-- 5-TAB NAVIGATION -->
       <div class="cc-tabs">
@@ -1190,89 +1269,78 @@
         <div id="crew-outside-section"></div>
       </div>
 
-    </div>
-  </div>
+  </div><!-- /panel-construction -->
 
-  <!-- 📊 COLLAPSIBLE ANALYTICS PANEL -->
-  <div class="ios-card" id="card-analytics">
-    <div class="ios-card-header" onclick="toggleIosCard('card-analytics')">
-      <div class="ios-card-left">
-        <div class="ios-card-icon">📊</div>
-        <div>
-          <div class="ios-card-title">Performance Analytics &amp; Live Activity</div>
-          <div class="ios-card-sub">7-day lead volume graph, source breakdown &amp; live timeline</div>
-        </div>
-      </div>
-      <div class="ios-card-right">
-        <span class="ios-card-badge">Tap to view</span>
-        <div class="ios-card-chevron">▼</div>
-      </div>
-    </div>
-    <div class="ios-card-body">
-      <!-- INSIGHTS ROW: Source breakdown + Activity Feed -->
-      <div class="insights-row" style="margin-bottom:0;">
-        <!-- Lead breakdown -->
-        <div class="insight-card">
-          <div class="insight-title">Lead Source &amp; Type Breakdown</div>
-          <div class="bar-row" id="source-bars"></div>
-          <div style="margin-top:0.5rem;border-top:1px solid var(--border);padding-top:0.75rem;">
-            <div class="insight-title" style="margin-bottom:0.5rem;">Property Type Mix</div>
-            <div class="bar-row" id="type-bars"></div>
-          </div>
-        </div>
-        <!-- Latest Activity card -->
-        <div class="insight-card activity-card">
-          <div class="activity-header">
-            <div class="insight-title">Latest Activity</div>
-            <span class="activity-live-dot">Live</span>
-          </div>
-          <!-- Sparkline chart -->
-          <div class="act-chart-wrap">
-            <div class="act-chart-label">
-              <span class="act-chart-title">7-Day Lead Volume</span>
-              <span class="act-chart-total" id="act-chart-total"></span>
-            </div>
-            <svg class="act-chart-svg" id="act-chart-svg" viewBox="0 0 280 68" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%"   stop-color="#C9A84C" stop-opacity="0.35"/>
-                  <stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/>
-                </linearGradient>
-                <linearGradient id="sparkLine" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%"   stop-color="#C9A84C" stop-opacity="0.4"/>
-                  <stop offset="100%" stop-color="#C9A84C" stop-opacity="1"/>
-                </linearGradient>
-              </defs>
-            </svg>
-            <div class="act-chart-days" id="act-chart-days"></div>
-          </div>
-          <div class="activity-feed" id="activity-feed"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- ═══ PANEL 3: ANALYTICS ═══ -->
+  <div class="dash-panel" id="panel-analytics">
 
-  <!-- ✏️ COLLAPSIBLE SITE CONTENT & PROPERTY CMS PANEL -->
-  <div class="ios-card" id="card-site-cms">
-    <div class="ios-card-header" onclick="toggleIosCard('card-site-cms')">
-      <div class="ios-card-left">
-        <div class="ios-card-icon">✏️</div>
-        <div>
-          <div class="ios-card-title">Live Site Content &amp; Property Manager</div>
-          <div class="ios-card-sub">Edit site text, phone numbers, contact info &amp; property listings line-by-line</div>
+    <!-- INSIGHTS ROW: Source breakdown + Activity Feed -->
+    <div class="insights-row" style="margin-bottom:0;">
+      <!-- Lead breakdown -->
+      <div class="insight-card">
+        <div class="insight-title">Lead Source &amp; Type Breakdown</div>
+        <div class="bar-row" id="source-bars"></div>
+        <div style="margin-top:0.5rem;border-top:1px solid var(--border);padding-top:0.75rem;">
+          <div class="insight-title" style="margin-bottom:0.5rem;">Property Type Mix</div>
+          <div class="bar-row" id="type-bars"></div>
         </div>
       </div>
-      <div class="ios-card-right">
-        <span class="ios-card-badge">Tap to view</span>
-        <div class="ios-card-chevron">▼</div>
+      <!-- Latest Activity card -->
+      <div class="insight-card activity-card">
+        <div class="activity-header">
+          <div class="insight-title">Latest Activity</div>
+          <span class="activity-live-dot">Live</span>
+        </div>
+        <!-- Sparkline chart -->
+        <div class="act-chart-wrap">
+          <div class="act-chart-label">
+            <span class="act-chart-title">7-Day Lead Volume</span>
+            <span class="act-chart-total" id="act-chart-total"></span>
+          </div>
+          <svg class="act-chart-svg" id="act-chart-svg" viewBox="0 0 280 68" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#C9A84C" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="sparkLine" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%"   stop-color="#C9A84C" stop-opacity="0.4"/>
+                <stop offset="100%" stop-color="#C9A84C" stop-opacity="1"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="act-chart-days" id="act-chart-days"></div>
+        </div>
+        <div class="activity-feed" id="activity-feed"></div>
       </div>
     </div>
-    <div class="ios-card-body">
-      <!-- Tabs for CMS mode -->
-      <div style="display:flex;gap:0.5rem;margin-bottom:1.25rem;border-bottom:1px solid var(--border);padding-bottom:0.75rem;flex-wrap:wrap;">
-        <button class="filter-btn active" id="tab-cms-properties" onclick="switchCmsTab('properties')">🏢 Manage Properties (For Sale / Lease)</button>
-        <button class="filter-btn" id="tab-cms-site" onclick="switchCmsTab('site')">📝 Site Text &amp; Contact Info</button>
+
+  </div><!-- /panel-analytics -->
+
+  <!-- ═══ PANEL 4: SITE EDITOR ═══ -->
+  <div class="dash-panel" id="panel-editor">
+
+    <!-- Site Content CMS -->
+    <div class="ios-card open" id="card-site-cms">
+      <div class="ios-card-header" onclick="toggleIosCard('card-site-cms')">
+        <div class="ios-card-left">
+          <div class="ios-card-icon">📝</div>
+          <div>
+            <div class="ios-card-title">Live Site Content &amp; Property Manager</div>
+            <div class="ios-card-sub">Edit site text, phone numbers, contact info &amp; property listings line-by-line</div>
+          </div>
+        </div>
+        <div class="ios-card-right">
+          <span class="ios-card-badge">Hide</span>
+          <div class="ios-card-chevron">▼</div>
+        </div>
       </div>
+      <div class="ios-card-body">
+        <!-- Tabs for CMS mode -->
+        <div style="display:flex;gap:0.5rem;margin-bottom:1.25rem;border-bottom:1px solid var(--border);padding-bottom:0.75rem;flex-wrap:wrap;">
+          <button class="filter-btn active" id="tab-cms-properties" onclick="switchCmsTab('properties')">🏢 Manage Properties (For Sale / Lease)</button>
+          <button class="filter-btn" id="tab-cms-site" onclick="switchCmsTab('site')">📝 Site Text &amp; Contact Info</button>
+        </div>
 
       <!-- PROPERTY LISTINGS CMS SECTION -->
       <div id="cms-section-properties">
@@ -1361,56 +1429,10 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
 
-  <!-- 📋 COLLAPSIBLE SEARCH & DATABASE PANEL -->
-  <div class="ios-card" id="card-database" style="margin-bottom:2rem;">
-    <div class="ios-card-header" onclick="toggleIosCard('card-database')">
-      <div class="ios-card-left">
-        <div class="ios-card-icon">🔐</div>
-        <div>
-          <div class="ios-card-title">Full Lead Database &amp; CSV Export</div>
-          <div class="ios-card-sub">Quick search, status overview &amp; CSV database export</div>
-        </div>
-      </div>
-      <div class="ios-card-right">
-        <span class="ios-card-badge">Tap to view</span>
-        <div class="ios-card-chevron">▼</div>
-      </div>
-    </div>
-    <div class="ios-card-body">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
-        <input class="lt-search" id="lt-search" type="search" placeholder="Search name, phone, address…" oninput="renderTable()" style="max-width:300px;flex:1;">
-        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-          <button class="crm-tools-btn" onclick="exportCSV()">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Export CSV
-          </button>
-          <button class="crm-tools-btn" onclick="clearDemoData()" style="border-color:rgba(255,77,77,0.3);color:var(--hot);background:rgba(255,77,77,0.08);" title="Wipe sample data when ready for live data">
-            🗑️ Clear Sample Data
-          </button>
-          <button class="crm-tools-btn" onclick="restoreDemoData()" style="border-color:rgba(201,168,76,0.3);color:var(--gold);background:rgba(201,168,76,0.08);" title="Reload sample dataset for previewing dashboard layout">
-            🔄 Load Sample Data
-          </button>
-        </div>
-      </div>
-      <div style="overflow-x:auto;">
-        <table class="lt-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Property</th>
-              <th>Source</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="lt-body"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+  </div><!-- /panel-editor -->
 
 </div><!-- /dash -->
 
@@ -2488,6 +2510,28 @@ function toggleIosCard(id) {
     if (id === 'card-tickets') renderTickets();
     if (id === 'card-database') renderTable();
   }
+}
+
+/* ── DASHBOARD PANEL SWITCHING ────────────────── */
+function switchDashPanel(panelId) {
+  // Hide all panels
+  document.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
+  // Deactivate all nav buttons
+  document.querySelectorAll('.dash-nav-btn').forEach(b => b.classList.remove('active'));
+  // Show target panel
+  const panel = document.getElementById('panel-' + panelId);
+  if (panel) panel.classList.add('active');
+  // Activate matching nav button
+  const navBtns = document.querySelectorAll('.dash-nav-btn');
+  const map = { pipeline:0, construction:1, analytics:2, editor:3 };
+  if (navBtns[map[panelId]]) navBtns[map[panelId]].classList.add('active');
+  // Render content on tab switch
+  if (panelId === 'pipeline') { renderLeads(); updateStats(); renderTable(); }
+  if (panelId === 'construction') { renderTickets(); }
+  if (panelId === 'analytics') { renderActivityFeed(); }
+  if (panelId === 'editor') { loadCmsFormFields(); renderCmsProperties(); }
+  // Scroll to top smoothly
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 /* ── LEAD TABLE ─────────────────────────────── */
