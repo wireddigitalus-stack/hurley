@@ -63,28 +63,23 @@
 
 /* Footer */
 #site-footer { background: #fff; border-top: 1px solid rgba(0,0,0,0.08); padding: 4rem var(--container-px) 2.5rem; }
-.footer-inner { max-width: var(--container-max); margin: 0 auto; display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 3rem; align-items: start; }
-@media (max-width: 900px) { .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; } }
-@media (max-width: 540px) { .footer-inner { grid-template-columns: 1fr; gap: 1.75rem; } }
+.footer-inner { max-width: var(--container-max); margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1.3fr 1fr 1.2fr; gap: 2.5rem; align-items: start; }
+.footer-links-pair { display: contents; }
+@media (max-width: 960px) { .footer-inner { grid-template-columns: 1fr 1fr; gap: 2.5rem 2rem; } }
+@media (max-width: 540px) { .footer-inner { grid-template-columns: 1fr; gap: 2rem; } }
+
 .footer-brand { display: flex; flex-direction: column; gap: 0; }
 .footer-brand img { display: block; }
-.footer-brand p { font-size: 0.83rem; color: #666; line-height: 1.75; margin-top: 0.85rem; max-width: 300px; }
+.footer-brand p { font-size: 0.83rem; color: #666; line-height: 1.75; margin-top: 0.85rem; max-width: 290px; }
 
-/* ── Two-column link sub-grid inside a single footer col ── */
-.footer-links-pair {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0 2rem;
-  align-items: start;
-}
-@media (max-width: 540px) { .footer-links-pair { grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; } }
-
-.footer-col h4 { font-size: 0.65rem; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; color: #111; margin-bottom: 0.85rem; margin-top: 0; }
-.footer-col ul { display: flex; flex-direction: column; gap: 0.55rem; padding: 0; margin: 0; list-style: none; }
-.footer-col ul li a { font-size: 0.82rem; color: #555; transition: color var(--dur-fast); line-height: 1.4; display: block; text-decoration: none; }
+.footer-col h4 { font-size: 0.68rem; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; color: #111; margin-bottom: 1rem; margin-top: 0; }
+.footer-col ul { display: flex; flex-direction: column; gap: 0.65rem; padding: 0; margin: 0; list-style: none; }
+.footer-col ul li a { font-size: 0.84rem; color: #555; transition: color var(--dur-fast); line-height: 1.4; display: inline-block; text-decoration: none; white-space: nowrap; }
 .footer-col ul li a:hover { color: var(--gold); }
-.footer-contact-item { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.8rem; }
+@media (max-width: 540px) { .footer-col ul li a { white-space: normal; } }
+.footer-contact-item { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.85rem; }
 .footer-contact-item svg { width: 15px; height: 15px; color: var(--gold); flex-shrink: 0; margin-top: 3px; }
-.footer-contact-item span { font-size: 0.82rem; color: #555; line-height: 1.5; }
-.footer-bottom { max-width: var(--container-max); margin: 2rem auto 0; padding-top: 1.25rem; border-top: 1px solid rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
-.footer-bottom p { font-size: 0.7rem; color: #888; margin: 0; }
+.footer-contact-item span { font-size: 0.84rem; color: #555; line-height: 1.5; white-space: nowrap; }
+@media (max-width: 540px) { .footer-contact-item span { white-space: normal; } }
+.footer-bottom { max-width: var(--container-max); margin: 2.5rem auto 0; padding-top: 1.25rem; border-top: 1px solid rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+.footer-bottom p { font-size: 0.72rem; color: #888; margin: 0; }

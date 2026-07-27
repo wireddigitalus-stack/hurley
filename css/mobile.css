@@ -171,8 +171,6 @@
 
 /* ── Footer ─────────────────────────────────────────────────── */
 @media (max-width: 600px) {
-  .footer-inner { flex-direction: column; gap: 2rem; }
-  .footer-links-pair { flex-direction: column; gap: 1.25rem; }
   .footer-col h4 { font-size: 0.72rem; }
   .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
 }
