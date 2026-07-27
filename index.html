@@ -459,17 +459,116 @@
   });
   </script>
 
-  <!-- CTA Banner -->
-  <section class="section--sm" style="background:linear-gradient(135deg,rgba(201,168,76,0.06) 0%,transparent 60%);border-top:1px solid var(--bg-border);border-bottom:1px solid var(--bg-border);">
-    <div class="container" style="text-align:center;">
-      <h2 style="font-size:clamp(1.6rem,3vw,2.4rem);margin-bottom:1rem;" class="reveal">Ready to Make Your Move in Bristol?</h2>
-      <p style="color:var(--text-secondary);max-width:500px;margin:0 auto 2rem;" class="reveal">Whether you're leasing, selling, or developing — Hurley Enterprise LLC has the expertise and portfolio to get it done.</p>
-      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;" class="reveal">
-        <a href="contact.html" class="btn btn--primary">Contact Us Today</a>
-        <a href="for-sale-lease.html" class="btn btn--ghost">View All Properties</a>
+  <!-- Contact Form & CTA Section -->
+  <section id="contact-section" style="padding:5rem 0;background:var(--bg-deep);border-top:1px solid var(--bg-border);">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;max-width:1000px;margin:0 auto;">
+        <!-- Left: Message -->
+        <div class="reveal">
+          <span style="display:inline-block;font-size:0.62rem;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);border-radius:999px;padding:0.3em 0.85em;margin-bottom:1rem;">📧 Get In Touch</span>
+          <h2 style="font-size:clamp(1.6rem,3vw,2.4rem);margin-bottom:1rem;">Ready to Make Your Move in Bristol?</h2>
+          <p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.7;margin-bottom:1.5rem;">Whether you're looking to lease premier office space, sell a property fast for cash, or develop your next project — we'd love to hear from you.</p>
+          <div style="display:flex;flex-direction:column;gap:0.75rem;">
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="width:18px;height:18px;flex-shrink:0;"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.13 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.46-.46a2 2 0 012.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0122 16.92z"/></svg>
+              <a href="tel:+14237427219" style="color:var(--text-primary);text-decoration:none;font-weight:700;font-size:0.95rem;">(423) 742-7219</a>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="width:18px;height:18px;flex-shrink:0;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <a href="mailto:info@hurleyenterprisellc.com" style="color:var(--text-primary);text-decoration:none;font-weight:700;font-size:0.95rem;">info@hurleyenterprisellc.com</a>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.75rem;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="width:18px;height:18px;flex-shrink:0;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span style="color:var(--text-primary);font-weight:700;font-size:0.95rem;">100 5th St, Suite 2W, Bristol TN 37620</span>
+            </div>
+          </div>
+        </div>
+        <!-- Right: Contact Form -->
+        <div class="reveal" id="contact-form-wrap">
+          <div style="background:var(--bg-surface);border:1px solid var(--bg-border);border-radius:20px;padding:2rem;">
+            <h3 style="font-size:1.1rem;font-weight:900;margin-bottom:0.5rem;">Send Us a Message</h3>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:1.5rem;">We'll get back to you within one business day.</p>
+            <form id="contact-form" novalidate style="display:flex;flex-direction:column;gap:0.85rem;">
+              <input type="text" id="cf-name" placeholder="Full Name *" required autocomplete="name"
+                style="background:var(--bg-deep);border:1px solid var(--bg-border);color:var(--text-primary);padding:0.85rem 1rem;border-radius:10px;font-family:inherit;font-size:0.88rem;width:100%;box-sizing:border-box;transition:border-color 0.2s;">
+              <input type="tel" id="cf-phone" placeholder="Phone Number *" required autocomplete="tel" inputmode="tel"
+                style="background:var(--bg-deep);border:1px solid var(--bg-border);color:var(--text-primary);padding:0.85rem 1rem;border-radius:10px;font-family:inherit;font-size:0.88rem;width:100%;box-sizing:border-box;transition:border-color 0.2s;">
+              <input type="email" id="cf-email" placeholder="Email Address (optional)" autocomplete="email" inputmode="email"
+                style="background:var(--bg-deep);border:1px solid var(--bg-border);color:var(--text-primary);padding:0.85rem 1rem;border-radius:10px;font-family:inherit;font-size:0.88rem;width:100%;box-sizing:border-box;transition:border-color 0.2s;">
+              <select id="cf-interest"
+                style="background:var(--bg-deep);border:1px solid var(--bg-border);color:var(--text-primary);padding:0.85rem 1rem;border-radius:10px;font-family:inherit;font-size:0.88rem;width:100%;box-sizing:border-box;-webkit-appearance:none;appearance:none;cursor:pointer;">
+                <option value="">What are you interested in?</option>
+                <option value="lease">🏢 Office / Retail Leasing</option>
+                <option value="sell">🏠 Selling My Property</option>
+                <option value="development">🏗️ Development Partnership</option>
+                <option value="buy">💰 Buying / Investing</option>
+                <option value="other">💬 General Inquiry</option>
+              </select>
+              <textarea id="cf-message" placeholder="Tell us a bit about what you're looking for…" rows="3"
+                style="background:var(--bg-deep);border:1px solid var(--bg-border);color:var(--text-primary);padding:0.85rem 1rem;border-radius:10px;font-family:inherit;font-size:0.88rem;width:100%;box-sizing:border-box;resize:vertical;min-height:80px;transition:border-color 0.2s;"></textarea>
+              <button type="submit" id="cf-submit"
+                style="background:var(--gold);color:#000;border:none;padding:1rem;border-radius:10px;font-family:inherit;font-size:0.95rem;font-weight:800;cursor:pointer;width:100%;min-height:52px;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:background 0.2s,transform 0.15s;-webkit-tap-highlight-color:transparent;">
+                📧 Send Message
+              </button>
+              <p style="font-size:0.68rem;color:var(--text-muted);text-align:center;margin:0;">🔒 Your info stays private. No spam, ever.</p>
+            </form>
+          </div>
+        </div>
+        <!-- Success State -->
+        <div id="cf-success-wrap" style="display:none;background:var(--bg-surface);border:1px solid rgba(201,168,76,0.3);border-radius:20px;padding:2.5rem;text-align:center;">
+          <div style="font-size:2.5rem;margin-bottom:0.75rem;">✅</div>
+          <h3 style="font-size:1.2rem;font-weight:900;margin-bottom:0.5rem;">Message Sent!</h3>
+          <p style="color:var(--text-muted);font-size:0.85rem;line-height:1.6;">We received your inquiry and will be in touch within one business day. In the meantime, feel free to browse our properties.</p>
+          <a href="for-sale-lease.html" class="btn btn--primary" style="margin-top:1.5rem;">View Available Properties</a>
+        </div>
       </div>
     </div>
   </section>
+
+  <style>
+    #contact-form input:focus, #contact-form select:focus, #contact-form textarea:focus { outline:none; border-color:rgba(201,168,76,0.5); }
+    #contact-form input::placeholder, #contact-form textarea::placeholder { color: rgba(255,255,255,0.3); }
+    #cf-submit:hover { background:#d4b356; transform:scale(1.02); }
+    #cf-submit:active { transform:scale(0.98); }
+    @media(max-width:700px) {
+      #contact-section .container > div { grid-template-columns:1fr !important; gap:2rem !important; }
+    }
+  </style>
+  <script>
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name  = document.getElementById('cf-name').value.trim();
+    const phone = document.getElementById('cf-phone').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    const interest = document.getElementById('cf-interest').value;
+    const message = document.getElementById('cf-message').value.trim();
+    if (!name || !phone) { alert('Please enter your name and phone number.'); return; }
+
+    const interestLabels = {lease:'Office/Retail Leasing',sell:'Selling property',development:'Development partnership',buy:'Buying/Investing',other:'General inquiry'};
+
+    const lead = {
+      id:          'cf_' + Date.now(),
+      source:      'contact_form',
+      temperature: 'warm',
+      status:      'new',
+      timestamp:   new Date().toISOString(),
+      contact:     { firstName: name.split(' ')[0], lastName: name.split(' ').slice(1).join(' '), phone, email },
+      property:    { type: interest === 'sell' ? 'residential' : (interest === 'lease' ? 'commercial' : ''), address: '', situation: '' },
+      offerRange:  '',
+      notes:       (interestLabels[interest] || 'Contact form') + (message ? ' — ' + message : '') + ' (submitted from homepage contact form)'
+    };
+
+    const existing = JSON.parse(localStorage.getItem('hurley_leads') || '[]');
+    existing.unshift(lead);
+    localStorage.setItem('hurley_leads', JSON.stringify(existing));
+
+    // Show success
+    document.getElementById('contact-form-wrap').style.display = 'none';
+    document.getElementById('cf-success-wrap').style.display   = 'block';
+    console.log('Contact form lead captured:', lead);
+  });
+  </script>
+
 </main>
 <footer id="site-footer">
   <div class="footer-inner">
