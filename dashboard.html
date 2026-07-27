@@ -997,6 +997,9 @@
     <button class="dash-nav-btn" onclick="switchDashPanel('editor')">✏️ Site Editor</button>
   </div>
 
+  <!-- ═══ PANEL 1: LEAD PIPELINE ═══ -->
+  <div class="dash-panel active" id="panel-pipeline">
+
   <!-- GREETING CARD -->
   <div class="greeting-card" style="margin-top:1.25rem;">
     <div class="g-top">
@@ -1012,7 +1015,7 @@
     </div>
   </div>
 
-  <!-- PRIORITY ALERT — always open, no toggle needed -->
+  <!-- PRIORITY ALERT -->
   <div class="priority-banner hidden" id="priority-banner">
     <div class="pb-header">
       <div class="priority-icon">🚨</div>
@@ -1025,45 +1028,42 @@
     <div class="pb-leads" id="pb-leads"></div>
   </div>
 
-  <!-- STATS GRID (always visible) -->
+  <!-- STATS GRID -->
   <div class="stats-grid">
-    <div class="stat-card s-hot" id="sc-hot" onclick="switchDashPanel('pipeline');setFilter('hot')" title="Show hot leads" style="cursor:pointer">
+    <div class="stat-card s-hot" id="sc-hot" onclick="setFilter('hot')" title="Show hot leads" style="cursor:pointer">
       <div class="stat-num" id="s-hot">0</div>
       <div class="stat-label">🔥 Hot Leads</div>
       <div class="stat-sub" id="s-hot-sub">Urgent follow-up</div>
     </div>
-    <div class="stat-card s-warm" id="sc-warm" onclick="switchDashPanel('pipeline');setFilter('warm')" title="Show warm leads" style="cursor:pointer">
+    <div class="stat-card s-warm" id="sc-warm" onclick="setFilter('warm')" title="Show warm leads" style="cursor:pointer">
       <div class="stat-num" id="s-warm">0</div>
       <div class="stat-label">🌡 Warm Leads</div>
       <div class="stat-sub" id="s-warm-sub">Nurture this week</div>
     </div>
-    <div class="stat-card s-cool" id="sc-cool" onclick="switchDashPanel('pipeline');setFilter('cool')" title="Show new/cool leads" style="cursor:pointer">
+    <div class="stat-card s-cool" id="sc-cool" onclick="setFilter('cool')" title="Show new/cool leads" style="cursor:pointer">
       <div class="stat-num" id="s-new">0</div>
       <div class="stat-label">🆕 New Today</div>
       <div class="stat-sub">Last 24 hours</div>
     </div>
-    <div class="stat-card s-white" id="sc-all" onclick="switchDashPanel('pipeline');setFilter('all')" title="Show all leads" style="cursor:pointer">
+    <div class="stat-card s-white" id="sc-all" onclick="setFilter('all')" title="Show all leads" style="cursor:pointer">
       <div class="stat-num" id="s-total">0</div>
       <div class="stat-label">📋 Total Pipeline</div>
       <div class="stat-sub">Active (excl. closed)</div>
     </div>
-    <div class="stat-card s-purple" id="sc-value" onclick="switchDashPanel('pipeline');setFilter('all')" title="Show all leads" style="cursor:pointer">
+    <div class="stat-card s-purple" id="sc-value" onclick="setFilter('all')" title="Show all leads" style="cursor:pointer">
       <div class="stat-num" id="s-value">$0</div>
       <div class="stat-label">💰 Est. Value</div>
       <div class="stat-sub">Low-end offer range</div>
     </div>
-    <div class="stat-card s-info" id="sc-contacted" onclick="switchDashPanel('pipeline');setFilter('contacted')" title="Show contacted leads" style="cursor:pointer">
+    <div class="stat-card s-info" id="sc-contacted" onclick="setFilter('contacted')" title="Show contacted leads" style="cursor:pointer">
       <div class="stat-num" id="s-contacted">0</div>
       <div class="stat-label">📞 Contacted</div>
       <div class="stat-sub">Waiting on response</div>
     </div>
   </div>
 
-  <!-- LEAD SOURCE BREAKDOWN (always visible under stats) -->
+  <!-- LEAD SOURCE BREAKDOWN -->
   <div id="lead-source-strip" style="display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:1.25rem;"></div>
-
-  <!-- ═══ PANEL 1: LEAD PIPELINE ═══ -->
-  <div class="dash-panel active" id="panel-pipeline">
 
   <!-- LEAD PIPELINE -->
   <div class="controls-bar" style="margin-top:1.25rem;">
