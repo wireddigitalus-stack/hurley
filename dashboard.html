@@ -2644,6 +2644,13 @@ function parseCost(s) {
   return parseFloat(String(s).replace(/[^0-9.\-]/g, '')) || 0;
 }
 const TICKETS_KEY = 'hurley_tickets';
+
+/* Helper: ISO date string offset from today */
+function daysFromNow(n) {
+  const d = new Date(); d.setDate(d.getDate() + n);
+  return d.toISOString().slice(0,10);
+}
+
 const DEMO_TICKETS = [
   {
     id: 't1', property: 'City Centre (601 State St)', unit: 'Suite 3B',
@@ -2651,80 +2658,100 @@ const DEMO_TICKETS = [
     category: 'construction', priority: 'high', status: 'progress',
     contractor: 'Noah Hurley (In-House)', phone: '(423) 742-7219',
     budget: '$18,500', actualCost: '$11,200', percentComplete: 65,
-    startDate: '2026-07-10', dueDate: '2026-08-15',
-    notes: 'Framing completed. Electrical rough-in scheduled for Tuesday. Flooring samples approved by tenant.',
+    startDate: daysFromNow(-17), dueDate: daysFromNow(19),
+    notes: 'Framing completed. Electrical rough-in by Marcus Bell (Tri-Cities Electrical) scheduled for Tuesday. Flooring samples approved by tenant. Ryan Mitchell handling finish carpentry.',
     timestamp: new Date(Date.now() - 2*86400000).toISOString()
   },
   {
     id: 't2', property: 'Center Point Corridor', unit: 'Retail Strip B',
     title: 'Parking Lot Resurfacing & LED Striping',
     category: 'siteprep', priority: 'medium', status: 'open',
-    contractor: 'Appalachian Paving & Seal', phone: '(423) 555-0244',
+    contractor: 'Appalachian Paving & Seal (Sam Patterson)', phone: '(423) 555-0244',
     budget: '$24,000', actualCost: '$0', percentComplete: 0,
-    startDate: '', dueDate: '2026-08-28',
-    notes: 'Hard Rock Casino corridor traffic increased. Resurfacing section B & adding LED perimeter lighting poles.',
+    startDate: daysFromNow(4), dueDate: daysFromNow(32),
+    notes: 'Hard Rock Casino corridor traffic increased 40%. Resurfacing section B & adding LED perimeter lighting poles. Night work required — road stays open during day. Sam Patterson crew of 6.',
     timestamp: new Date(Date.now() - 4*86400000).toISOString()
   },
   {
-    id: 't3', property: '628 State St', unit: 'Rooftop',
+    id: 't3', property: '628 State St (Kress Building)', unit: 'Rooftop',
     title: 'Rooftop HVAC Compressor Replacement',
     category: 'hvac', priority: 'high', status: 'progress',
-    contractor: 'AirTech Commercial HVAC', phone: '(423) 555-0399',
+    contractor: 'AirTech Commercial HVAC (Jake Thompson)', phone: '(423) 555-0399',
     budget: '$8,200', actualCost: '$4,800', percentComplete: 40,
-    startDate: '2026-07-22', dueDate: '2026-07-29',
-    notes: 'Unit 2 compressor failing. Replacement unit delivered to site. Crane lift scheduled for Thursday 6:00 AM.',
+    startDate: daysFromNow(-5), dueDate: daysFromNow(2),
+    notes: 'Unit 2 compressor failing — tenant complaints about cooling. 5-ton Carrier replacement delivered (PO-2026-0047). Crane lift scheduled Thursday 6:00 AM. RTU ductwork transition kit arriving ' + daysFromNow(3) + '.',
     timestamp: new Date(Date.now() - 1*86400000).toISOString()
   },
   {
     id: 't4', property: 'Former Coca-Cola Facility', unit: 'Warehouse B',
     title: 'Roof Structural Assessment & Skylight Repair',
     category: 'maintenance', priority: 'medium', status: 'review',
-    contractor: 'Noah Hurley (In-House)', phone: '(423) 742-7219',
+    contractor: 'Summit Roofing Co (Mike Lawson)', phone: '(423) 555-0833',
     budget: '$14,000', actualCost: '$12,500', percentComplete: 85,
-    startDate: '2026-07-05', dueDate: '2026-08-05',
-    notes: 'Engineer report received. Sealing perimeter flashing and replacing damaged acrylic skylight panels.',
+    startDate: daysFromNow(-22), dueDate: daysFromNow(9),
+    notes: 'Structural engineer report received — no issues found. Mike Lawson\'s crew sealing perimeter flashing. Lisa Greene (Bristol Glass) replacing 3 damaged acrylic skylight panels. Final walkthrough next week.',
     timestamp: new Date(Date.now() - 6*86400000).toISOString()
   },
   {
-    id: 't5', property: 'Jamestown @ Shelby', unit: 'Bldg A',
+    id: 't5', property: 'Jamestown @ Shelby', unit: 'Bldg A Exterior',
     title: 'Exterior Pressure Wash & Facade Touchup',
     category: 'maintenance', priority: 'normal', status: 'completed',
-    contractor: 'ProWash Tri-Cities', phone: '(423) 555-0711',
+    contractor: 'ProWash Tri-Cities (Dave Wilson)', phone: '(423) 555-0711',
     budget: '$3,800', actualCost: '$3,650', percentComplete: 100,
-    startDate: '2026-07-14', dueDate: '2026-07-20',
-    notes: 'Job completed. Final inspection signed off. Invoice paid.',
+    startDate: daysFromNow(-13), dueDate: daysFromNow(-7),
+    notes: 'Job completed. Full exterior pressure wash + touch-up paint by Chris Painter (Elite Finishes). Final inspection signed off by Noah. Invoice paid $3,650.',
     timestamp: new Date(Date.now() - 10*86400000).toISOString()
   },
   {
-    id: 't6', property: 'City Centre (601 State St)', unit: 'Lobby',
+    id: 't6', property: 'City Centre (601 State St)', unit: 'Lobby & Hallways',
     title: 'ADA Signage Package & Suite Directory Install',
     category: 'construction', priority: 'normal', status: 'blocked',
     contractor: 'Noah Hurley (In-House)', phone: '(423) 742-7219',
     budget: '$2,800', actualCost: '$0', percentComplete: 10,
-    blockedReason: 'Waiting on sign fabrication from Bristol Sign Co — ETA Aug 10',
-    startDate: '2026-07-20', dueDate: '2026-08-12',
-    notes: 'ADA compliant wayfinding + new tenant suite directory. Signs ordered but delayed.',
+    blockedReason: 'Waiting on sign fabrication from Bristol Sign Co (Lisa Greene) — ETA ' + daysFromNow(14),
+    startDate: daysFromNow(-7), dueDate: daysFromNow(16),
+    notes: 'ADA compliant wayfinding + new tenant suite directory (PO-2026-0063). Signs ordered but delayed at fabricator. Carlos Rivera prepping wall surfaces for install.',
     timestamp: new Date(Date.now() - 3*86400000).toISOString()
   },
   {
     id: 't7', property: 'Bradley St Residential', unit: 'Unit 2',
     title: 'Bathroom Plumbing Overhaul & Fixture Upgrade',
     category: 'plumbing', priority: 'medium', status: 'progress',
-    contractor: 'Johnson Plumbing Co', phone: '(423) 555-0622',
+    contractor: 'Johnson Plumbing Co (Bobby Johnson)', phone: '(423) 555-0622',
     budget: '$6,500', actualCost: '$3,100', percentComplete: 50,
-    startDate: '2026-07-18', dueDate: '2026-08-02',
-    notes: 'Replacing all supply lines, vanity, toilet, and tub/shower combo. Fixtures selected by property mgr.',
+    startDate: daysFromNow(-9), dueDate: daysFromNow(6),
+    notes: 'Replacing all supply lines, vanity, toilet, and tub/shower combo. Fixtures selected by Allen. Bobby\'s crew finishing rough-in today — tile work starts ' + daysFromNow(2) + '. Tyler Brooks hauling old fixtures to dumpster.',
     timestamp: new Date(Date.now() - 5*86400000).toISOString()
   },
   {
-    id: 't8', property: 'Jamestown @ Shelby', unit: 'Bldg B Common',
+    id: 't8', property: 'Jamestown @ Shelby', unit: 'Bldg B Common Area',
     title: 'Vinyl Plank Flooring — Common Area Refresh',
     category: 'construction', priority: 'normal', status: 'open',
     contractor: 'Noah Hurley (In-House)', phone: '(423) 742-7219',
     budget: '$5,200', actualCost: '$0', percentComplete: 0,
-    startDate: '', dueDate: '2026-08-20',
-    notes: 'Weathered Oak luxury vinyl. Materials on order — ETA Aug 5. Noah leading install crew.',
+    startDate: daysFromNow(9), dueDate: daysFromNow(24),
+    notes: 'Weathered Oak luxury vinyl (PO-2026-0061, Shaw Commercial). Materials arriving ' + daysFromNow(9) + '. Noah leading install crew — Ryan Mitchell + Carlos Rivera. Move furniture ' + daysFromNow(8) + ' evening.',
     timestamp: new Date(Date.now() - 1*86400000).toISOString()
+  },
+  {
+    id: 't9', property: '628 State St (Kress Building)', unit: 'Suite 201',
+    title: 'Electrical Panel Upgrade — 200A to 400A',
+    category: 'electrical', priority: 'high', status: 'progress',
+    contractor: 'Tri-Cities Electrical (Marcus Bell)', phone: '(423) 555-0188',
+    budget: '$9,800', actualCost: '$5,400', percentComplete: 55,
+    startDate: daysFromNow(-4), dueDate: daysFromNow(5),
+    notes: 'New tenant (IT firm) requires 400A service for server room. Marcus Bell\'s crew pulling new feed from transformer. City inspector scheduled ' + daysFromNow(4) + '. LED panel fixtures installed (PO-2026-0051).',
+    timestamp: new Date(Date.now() - 3*86400000).toISOString()
+  },
+  {
+    id: 't10', property: 'Center Point Corridor', unit: 'Unit 4 Interior',
+    title: 'Interior Paint & Epoxy Floor — Tenant Turnover',
+    category: 'maintenance', priority: 'normal', status: 'progress',
+    contractor: 'Elite Finishes LLC (Chris Painter)', phone: '(423) 555-0955',
+    budget: '$4,200', actualCost: '$1,800', percentComplete: 35,
+    startDate: daysFromNow(-3), dueDate: daysFromNow(7),
+    notes: 'Previous tenant moved out. Full repaint (walls + ceiling) in Bristol Warm Gray. Epoxy floor coating in warehouse section. Chris needs 2 more days for walls, then 1 day cure time before epoxy.',
+    timestamp: new Date(Date.now() - 2*86400000).toISOString()
   }
 ];
 
