@@ -749,6 +749,156 @@
       color: var(--off-white); outline: none; cursor: pointer;
     }
     .tc-status-sel option { background: #1c1c1c; }
+
+    /* ── CONSTRUCTION SUB-TABS ──────────────────── */
+    .cc-tabs { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:1.25rem; border-bottom:1px solid var(--border); padding-bottom:0.75rem; }
+    .cc-tab {
+      background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:10px;
+      padding:0.5em 0.9em; font-size:0.72rem; font-weight:800; color:var(--t2);
+      cursor:pointer; transition:all 0.18s; white-space:nowrap;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .cc-tab:hover { border-color:var(--border-md); color:var(--off-white); }
+    .cc-tab.active { background:var(--gold-dim); border-color:rgba(201,168,76,0.4); color:var(--gold); }
+    .cc-section { display:none; }
+    .cc-section.active { display:block; }
+
+    /* ── TICKET PROGRESS BAR ───────────────────── */
+    .tc-progress { height:4px; background:rgba(255,255,255,0.06); border-radius:99px; margin:0.5rem 0 0; overflow:hidden; }
+    .tc-progress-fill { height:100%; border-radius:99px; transition:width 0.4s ease; }
+    .tc-progress-fill.low  { background:var(--info); }
+    .tc-progress-fill.mid  { background:var(--gold); }
+    .tc-progress-fill.high { background:var(--cool); }
+    .tc-progress-fill.done { background:var(--cool); }
+
+    /* ── OVERDUE BADGE ─────────────────────────── */
+    .overdue-badge {
+      display:inline-flex; align-items:center; gap:0.25rem;
+      font-size:0.55rem; font-weight:900; letter-spacing:0.06em; text-transform:uppercase;
+      padding:0.2em 0.55em; border-radius:6px;
+      background:rgba(255,77,77,0.18); color:#ff6b6b; border:1px solid rgba(255,77,77,0.3);
+      animation:pulse-overdue 2s ease-in-out infinite;
+    }
+    @keyframes pulse-overdue { 0%,100%{opacity:1} 50%{opacity:0.65} }
+    .tb-blocked { background:rgba(255,180,0,0.15); color:#ffca28; border:1px solid rgba(255,180,0,0.3); }
+
+    /* ── CALENDAR ──────────────────────────────── */
+    .cal-nav { display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; }
+    .cal-month { font-size:1.05rem; font-weight:900; color:var(--off-white); }
+    .cal-arrow {
+      width:36px; height:36px; border-radius:10px; background:rgba(255,255,255,0.04);
+      border:1px solid var(--border); display:flex; align-items:center; justify-content:center;
+      color:var(--t2); cursor:pointer; font-size:0.85rem; transition:all 0.18s;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .cal-arrow:hover { border-color:var(--gold); color:var(--gold); background:var(--gold-dim); }
+    .cal-view-toggle { display:flex; gap:0.35rem; }
+
+    .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+    .cal-hdr { font-size:0.6rem; font-weight:800; color:var(--t3); text-align:center; padding:0.5rem 0; text-transform:uppercase; letter-spacing:0.1em; }
+    .cal-day {
+      min-height:56px; padding:0.4rem; border-radius:8px; background:rgba(255,255,255,0.015);
+      border:1px solid transparent; cursor:pointer; transition:all 0.15s; position:relative;
+    }
+    .cal-day:hover { border-color:var(--border-md); background:rgba(255,255,255,0.035); }
+    .cal-day.today { border-color:rgba(201,168,76,0.5); background:rgba(201,168,76,0.06); }
+    .cal-day.selected { border-color:var(--gold); background:var(--gold-dim); }
+    .cal-day.other-month { opacity:0.3; }
+    .cal-day-num { font-size:0.72rem; font-weight:700; color:var(--off-white); margin-bottom:0.25rem; }
+    .cal-dots { display:flex; gap:3px; flex-wrap:wrap; }
+    .cal-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+    .cal-dot.high { background:var(--hot); }
+    .cal-dot.medium { background:var(--gold); }
+    .cal-dot.normal { background:var(--cool); }
+    .cal-dot.done { background:var(--cool); opacity:0.4; }
+
+    .cal-day-detail {
+      margin-top:0.75rem; padding:0.85rem; background:rgba(255,255,255,0.02);
+      border:1px solid var(--border); border-radius:12px;
+    }
+    .cal-day-detail-title { font-size:0.78rem; font-weight:800; color:var(--gold); margin-bottom:0.6rem; }
+    .cal-mini-ticket {
+      display:flex; align-items:center; justify-content:space-between; gap:0.5rem;
+      padding:0.5rem 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:0.76rem;
+    }
+    .cal-mini-ticket:last-child { border-bottom:none; }
+
+    /* Week view */
+    .cal-week-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:0.5rem; }
+    .cal-week-col { display:flex; flex-direction:column; gap:0.4rem; }
+    .cal-week-hdr { font-size:0.62rem; font-weight:800; color:var(--t3); text-align:center; text-transform:uppercase; letter-spacing:0.08em; padding:0.35rem 0; }
+    .cal-week-card {
+      padding:0.5rem; border-radius:8px; background:rgba(255,255,255,0.025);
+      border:1px solid var(--border); font-size:0.68rem; color:var(--off-white); line-height:1.3;
+    }
+    @media(max-width:600px){
+      .cal-grid,.cal-week-grid { grid-template-columns:1fr; }
+      .cal-hdr { display:none; }
+      .cal-day { min-height:auto; display:flex; align-items:center; gap:0.5rem; padding:0.6rem 0.75rem; }
+      .cal-day-num { margin-bottom:0; min-width:28px; }
+      .cal-week-col { flex-direction:row; flex-wrap:wrap; }
+    }
+
+    /* ── MATERIALS PIPELINE ─────────────────────── */
+    .mat-pipeline { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:0.6rem; margin-bottom:1.25rem; }
+    .mat-pipe-card {
+      text-align:center; padding:0.75rem 0.5rem; border-radius:12px;
+      background:rgba(255,255,255,0.02); border:1px solid var(--border);
+    }
+    .mat-pipe-count { font-size:1.4rem; font-weight:900; color:var(--off-white); }
+    .mat-pipe-label { font-size:0.6rem; font-weight:800; color:var(--t3); text-transform:uppercase; letter-spacing:0.08em; margin-top:0.15rem; }
+    .mat-pipe-card.ordered .mat-pipe-count { color:var(--info); }
+    .mat-pipe-card.shipped .mat-pipe-count { color:var(--gold); }
+    .mat-pipe-card.delivered .mat-pipe-count { color:var(--cool); }
+    .mat-pipe-card.installed .mat-pipe-count { color:rgba(255,255,255,0.4); }
+
+    .mat-card { border-left:4px solid var(--info); }
+    .mat-card.shipped { border-left-color:var(--gold); }
+    .mat-card.delivered { border-left-color:var(--cool); }
+    .mat-card.installed { border-left-color:rgba(255,255,255,0.15); }
+
+    .tb-ordered   { background:rgba(91,155,213,0.15); color:var(--info); border:1px solid rgba(91,155,213,0.25); }
+    .tb-shipped   { background:rgba(201,168,76,0.15); color:var(--gold); border:1px solid rgba(201,168,76,0.25); }
+    .tb-delivered  { background:rgba(62,207,142,0.15); color:var(--cool); border:1px solid rgba(62,207,142,0.25); }
+    .tb-installed  { background:rgba(255,255,255,0.06); color:var(--t2); border:1px solid var(--border); }
+
+    /* ── BUDGET CHARTS ─────────────────────────── */
+    .budget-bar-row { display:flex; flex-direction:column; gap:0.65rem; }
+    .budget-bar-item { display:flex; flex-direction:column; gap:0.3rem; }
+    .budget-bar-label { display:flex; justify-content:space-between; align-items:baseline; }
+    .budget-bar-name { font-size:0.76rem; font-weight:700; color:var(--off-white); }
+    .budget-bar-val { font-size:0.68rem; font-weight:800; color:var(--t2); }
+    .budget-bar-track { height:8px; background:rgba(255,255,255,0.06); border-radius:99px; overflow:hidden; position:relative; }
+    .budget-bar-fill { height:100%; border-radius:99px; transition:width 0.5s ease; }
+    .budget-bar-fill.under { background:var(--cool); }
+    .budget-bar-fill.on-track { background:var(--gold); }
+    .budget-bar-fill.over { background:var(--hot); }
+
+    /* ── CONTRACTOR CARDS ──────────────────────── */
+    .crew-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:0.75rem; }
+    .crew-card {
+      background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:14px;
+      padding:1rem; transition:border-color 0.2s;
+    }
+    .crew-card:hover { border-color:var(--border-md); }
+    .crew-card.inhouse { border-left:4px solid var(--gold); }
+    .crew-card.outside { border-left:4px solid var(--info); }
+    .crew-name { font-size:0.9rem; font-weight:800; color:var(--off-white); }
+    .crew-role { font-size:0.68rem; font-weight:700; color:var(--t2); margin-top:0.1rem; }
+    .crew-stars { color:var(--gold); font-size:0.72rem; letter-spacing:1px; margin-top:0.3rem; }
+    .crew-contact { display:flex; gap:0.5rem; margin-top:0.6rem; flex-wrap:wrap; }
+
+    .tb-inhouse { background:var(--gold-dim); color:var(--gold); border:1px solid rgba(201,168,76,0.3); }
+    .tb-outside { background:rgba(91,155,213,0.12); color:var(--info); border:1px solid rgba(91,155,213,0.25); }
+    .tb-preferred { background:rgba(62,207,142,0.12); color:var(--cool); border:1px solid rgba(62,207,142,0.25); }
+
+    .crew-section-hdr {
+      display:flex; align-items:center; gap:0.5rem; padding:0.5rem 0; margin-bottom:0.75rem;
+      border-bottom:1px solid var(--border); cursor:pointer; -webkit-tap-highlight-color:transparent;
+    }
+    .crew-section-title { font-size:0.72rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--t2); }
+    .crew-section-chevron { font-size:0.65rem; color:var(--t3); transition:transform 0.25s ease; }
+    .crew-section-chevron.open { transform:rotate(180deg); color:var(--gold); }
   </style>
 </head>
 <body>
@@ -885,14 +1035,14 @@
 
   <div class="lead-feed" id="lead-feed"></div>
 
-  <!-- 🏗️ COLLAPSIBLE CONSTRUCTION & JOB TICKETS PANEL -->
+  <!-- 🏗️ CONSTRUCTION COMMAND CENTER -->
   <div class="ios-card open" id="card-tickets">
     <div class="ios-card-header" onclick="toggleIosCard('card-tickets')">
       <div class="ios-card-left">
         <div class="ios-card-icon">🏗️</div>
         <div>
-          <div class="ios-card-title">Construction &amp; Job Tickets</div>
-          <div class="ios-card-sub">Track buildouts, work orders &amp; site maintenance across properties</div>
+          <div class="ios-card-title">Construction Command Center</div>
+          <div class="ios-card-sub">Job tickets, scheduling, materials, budgets &amp; crew management</div>
         </div>
       </div>
       <div class="ios-card-right">
@@ -901,35 +1051,145 @@
       </div>
     </div>
     <div class="ios-card-body">
-      <!-- Header controls & filters -->
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
-        <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
-          <select class="ms" id="ticket-filter-prop" onchange="renderTickets()" style="min-height:36px;padding:0.4rem 2rem 0.4rem 0.75rem;font-size:0.72rem;width:auto;">
-            <option value="all">🏢 All Properties &amp; Sites</option>
-            <option value="City Centre">City Centre (601 State St)</option>
-            <option value="628 State St">628 State St</option>
-            <option value="Jamestown">Jamestown @ Shelby</option>
-            <option value="Center Point">Center Point Corridor</option>
-            <option value="Coca-Cola">Former Coca-Cola Facility</option>
-            <option value="Bradley St">Bradley St Residential</option>
-            <option value="Randolph St">Randolph St Residential</option>
-          </select>
-          <select class="ms" id="ticket-filter-status" onchange="renderTickets()" style="min-height:36px;padding:0.4rem 2rem 0.4rem 0.75rem;font-size:0.72rem;width:auto;">
-            <option value="all">⚡ All Statuses</option>
-            <option value="open">📋 Open / Pending</option>
-            <option value="progress">🚧 In Progress</option>
-            <option value="review">🔍 Inspection / Review</option>
-            <option value="completed">✅ Completed</option>
-          </select>
-        </div>
-        <button class="add-btn" onclick="openTicketModal()">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          New Job Ticket
-        </button>
+
+      <!-- 5-TAB NAVIGATION -->
+      <div class="cc-tabs">
+        <button class="cc-tab active" onclick="switchCcTab('tickets')">📋 Job Tickets</button>
+        <button class="cc-tab" onclick="switchCcTab('calendar')">📅 Calendar</button>
+        <button class="cc-tab" onclick="switchCcTab('materials')">📦 Materials</button>
+        <button class="cc-tab" onclick="switchCcTab('budget')">💰 Budget</button>
+        <button class="cc-tab" onclick="switchCcTab('crew')">👷 Crew &amp; Contractors</button>
       </div>
 
-      <!-- Ticket Cards Grid -->
-      <div id="tickets-feed" class="ticket-feed"></div>
+      <!-- ═══ TAB 1: JOB TICKETS (Enhanced) ═══ -->
+      <div class="cc-section active" id="cc-tickets">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+            <select class="ms" id="ticket-filter-prop" onchange="renderTickets()" style="min-height:36px;padding:0.4rem 2rem 0.4rem 0.75rem;font-size:0.72rem;width:auto;">
+              <option value="all">🏢 All Properties</option>
+              <option value="City Centre">City Centre</option>
+              <option value="628 State St">628 State St</option>
+              <option value="Jamestown">Jamestown @ Shelby</option>
+              <option value="Center Point">Center Point</option>
+              <option value="Coca-Cola">Coca-Cola Facility</option>
+              <option value="Bradley St">Bradley St</option>
+              <option value="Randolph St">Randolph St</option>
+            </select>
+            <select class="ms" id="ticket-filter-status" onchange="renderTickets()" style="min-height:36px;padding:0.4rem 2rem 0.4rem 0.75rem;font-size:0.72rem;width:auto;">
+              <option value="all">⚡ All Statuses</option>
+              <option value="open">📋 Open</option>
+              <option value="progress">🚧 In Progress</option>
+              <option value="blocked">⏸️ On Hold</option>
+              <option value="review">🔍 Inspection</option>
+              <option value="completed">✅ Completed</option>
+            </select>
+          </div>
+          <button class="add-btn" onclick="openTicketModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Job Ticket
+          </button>
+        </div>
+        <div id="tickets-feed" class="ticket-feed"></div>
+      </div>
+
+      <!-- ═══ TAB 2: JOB CALENDAR ═══ -->
+      <div class="cc-section" id="cc-calendar">
+        <div class="cal-nav">
+          <button class="cal-arrow" onclick="calNav(-1)">◀</button>
+          <div style="display:flex;align-items:center;gap:1rem;">
+            <div class="cal-month" id="cal-month-label">July 2026</div>
+            <div class="cal-view-toggle">
+              <button class="cc-tab active" id="cal-view-month" onclick="setCalView('month')">Month</button>
+              <button class="cc-tab" id="cal-view-week" onclick="setCalView('week')">Week</button>
+            </div>
+          </div>
+          <button class="cal-arrow" onclick="calNav(1)">▶</button>
+        </div>
+        <div id="cal-grid-container"></div>
+        <div id="cal-day-detail-container"></div>
+      </div>
+
+      <!-- ═══ TAB 3: MATERIALS & ORDERS ═══ -->
+      <div class="cc-section" id="cc-materials">
+        <div class="mat-pipeline" id="mat-pipeline-kpis"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <select class="ms" id="mat-filter-status" onchange="renderMaterials()" style="min-height:36px;padding:0.4rem 2rem 0.4rem 0.75rem;font-size:0.72rem;width:auto;">
+            <option value="all">📦 All Statuses</option>
+            <option value="ordered">📝 Ordered</option>
+            <option value="shipped">🚚 Shipped</option>
+            <option value="delivered">📦 Delivered</option>
+            <option value="installed">✅ Installed</option>
+          </select>
+          <button class="add-btn" onclick="openMaterialModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Material Order
+          </button>
+        </div>
+        <div id="materials-feed" class="ticket-feed"></div>
+      </div>
+
+      <!-- ═══ TAB 4: BUDGET & COST SUMMARY ═══ -->
+      <div class="cc-section" id="cc-budget">
+        <div class="stats-grid" id="budget-kpi-cards" style="margin-bottom:1.25rem;"></div>
+        <!-- Per-Property Breakdown -->
+        <div class="ios-card" id="card-budget-props" style="margin-top:0;">
+          <div class="ios-card-header" onclick="toggleIosCard('card-budget-props')">
+            <div class="ios-card-left">
+              <div class="ios-card-icon" style="font-size:0.9rem;">🏢</div>
+              <div><div class="ios-card-title" style="font-size:0.82rem;">Per-Property Budget Breakdown</div></div>
+            </div>
+            <div class="ios-card-right">
+              <span class="ios-card-badge">Tap to view</span>
+              <div class="ios-card-chevron">▼</div>
+            </div>
+          </div>
+          <div class="ios-card-body"><div id="budget-property-bars" class="budget-bar-row"></div></div>
+        </div>
+        <!-- Cost by Trade -->
+        <div class="ios-card" id="card-budget-trade" style="margin-top:0.75rem;">
+          <div class="ios-card-header" onclick="toggleIosCard('card-budget-trade')">
+            <div class="ios-card-left">
+              <div class="ios-card-icon" style="font-size:0.9rem;">🔧</div>
+              <div><div class="ios-card-title" style="font-size:0.82rem;">Cost by Trade Category</div></div>
+            </div>
+            <div class="ios-card-right">
+              <span class="ios-card-badge">Tap to view</span>
+              <div class="ios-card-chevron">▼</div>
+            </div>
+          </div>
+          <div class="ios-card-body"><div id="budget-trade-bars" class="budget-bar-row"></div></div>
+        </div>
+      </div>
+
+      <!-- ═══ TAB 5: CREW & CONTRACTOR DIRECTORY ═══ -->
+      <div class="cc-section" id="cc-crew">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+            <select class="ms" id="crew-filter-type" onchange="renderCrew()" style="min-height:36px;padding:0.4rem 2rem 0.4rem 0.75rem;font-size:0.72rem;width:auto;">
+              <option value="all">👷 All Team</option>
+              <option value="inhouse">🏠 In-House Crew</option>
+              <option value="outside">🤝 Outside Firms</option>
+            </select>
+            <select class="ms" id="crew-filter-trade" onchange="renderCrew()" style="min-height:36px;padding:0.4rem 2rem 0.4rem 0.75rem;font-size:0.72rem;width:auto;">
+              <option value="all">🔧 All Trades</option>
+              <option value="general">🏗️ General</option>
+              <option value="electrical">⚡ Electrical</option>
+              <option value="hvac">❄️ HVAC</option>
+              <option value="plumbing">🚰 Plumbing</option>
+              <option value="roofing">🏠 Roofing</option>
+              <option value="painting">🎨 Painting</option>
+              <option value="cleaning">🧹 Cleaning</option>
+            </select>
+          </div>
+          <button class="add-btn" onclick="openCrewModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Crew / Contractor
+          </button>
+        </div>
+        <div id="crew-inhouse-section"></div>
+        <div id="crew-outside-section"></div>
+      </div>
+
     </div>
   </div>
 
@@ -1296,6 +1556,98 @@
     <div class="mf"><label class="ml">Property Description</label><textarea class="tc-notes" id="mp-desc" style="min-height:75px;" placeholder="Full property overview, square footage, amenities, lease terms…"></textarea></div>
     <button class="modal-submit" onclick="submitCmsProperty()">Save Property Listing →</button>
     <button class="modal-cancel" onclick="closePropertyModal()">Cancel</button>
+  </div>
+<!-- ADD MATERIAL ORDER MODAL -->
+<div class="overlay" id="material-overlay" onclick="if(event.target===this)closeMaterialModal()">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="mm-modal-title">📦 Add Material Order</div>
+    <input type="hidden" id="mm-id" value="">
+    <div class="mf"><label class="ml">Item Description</label><input type="text" class="mi" id="mm-item" placeholder="e.g. HVAC Compressor Unit — 5-Ton Carrier"></div>
+    <div class="mrow">
+      <div class="mf"><label class="ml">Supplier / Vendor</label><input type="text" class="mi" id="mm-supplier" placeholder="Tri-Cities HVAC Supply"></div>
+      <div class="mf"><label class="ml">PO Number</label><input type="text" class="mi" id="mm-po" placeholder="PO-2026-0047"></div>
+    </div>
+    <div class="mrow">
+      <div class="mf"><label class="ml">Quantity</label><input type="number" class="mi" id="mm-qty" placeholder="2" min="1"></div>
+      <div class="mf"><label class="ml">Unit Cost</label><input type="text" class="mi" id="mm-unit-cost" placeholder="$2,400"></div>
+      <div class="mf"><label class="ml">Total Cost</label><input type="text" class="mi" id="mm-total" placeholder="$4,800"></div>
+    </div>
+    <div class="mrow">
+      <div class="mf"><label class="ml">Status</label>
+        <select class="ms" id="mm-status">
+          <option value="ordered">📝 Ordered</option>
+          <option value="shipped">🚚 Shipped</option>
+          <option value="delivered">📦 Delivered</option>
+          <option value="installed">✅ Installed</option>
+        </select>
+      </div>
+      <div class="mf"><label class="ml">Expected Delivery</label><input type="date" class="mi" id="mm-delivery" style="color-scheme:dark;"></div>
+    </div>
+    <div class="mf"><label class="ml">Property / Job Site</label><input type="text" class="mi" id="mm-property" placeholder="City Centre (601 State St)"></div>
+    <div class="mf"><label class="ml">Notes</label><input type="text" class="mi" id="mm-notes" placeholder="Delivery instructions, specs, linked ticket…"></div>
+    <button class="modal-submit" onclick="submitMaterial()">Save Material Order →</button>
+    <button class="modal-cancel" onclick="closeMaterialModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- ADD CREW / CONTRACTOR MODAL -->
+<div class="overlay" id="crew-overlay" onclick="if(event.target===this)closeCrewModal()">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="mc-modal-title">👷 Add Crew Member / Contractor</div>
+    <input type="hidden" id="mc-id" value="">
+    <div class="mrow">
+      <div class="mf"><label class="ml">Full Name</label><input type="text" class="mi" id="mc-name" placeholder="Noah Hurley"></div>
+      <div class="mf"><label class="ml">Company</label><input type="text" class="mi" id="mc-company" placeholder="Hurley Enterprise LLC"></div>
+    </div>
+    <div class="mrow">
+      <div class="mf"><label class="ml">Team Type</label>
+        <select class="ms" id="mc-type">
+          <option value="inhouse">🏠 In-House Crew</option>
+          <option value="outside">🤝 Outside Firm</option>
+        </select>
+      </div>
+      <div class="mf"><label class="ml">Role / Title</label>
+        <select class="ms" id="mc-role">
+          <option value="Foreman">Foreman</option>
+          <option value="Superintendent">Superintendent</option>
+          <option value="Lead Tech">Lead Tech</option>
+          <option value="Crew">Crew Member</option>
+          <option value="Owner">Owner / Project Lead</option>
+          <option value="Estimator">Estimator</option>
+        </select>
+      </div>
+    </div>
+    <div class="mrow">
+      <div class="mf"><label class="ml">Trade / Specialty</label>
+        <select class="ms" id="mc-trade">
+          <option value="general">🏗️ General / All Trades</option>
+          <option value="electrical">⚡ Electrical</option>
+          <option value="hvac">❄️ HVAC</option>
+          <option value="plumbing">🚰 Plumbing</option>
+          <option value="roofing">🏠 Roofing</option>
+          <option value="painting">🎨 Painting</option>
+          <option value="cleaning">🧹 Cleaning / Exterior</option>
+        </select>
+      </div>
+      <div class="mf"><label class="ml">Rating (1-5)</label>
+        <select class="ms" id="mc-rating">
+          <option value="5">⭐⭐⭐⭐⭐</option>
+          <option value="4">⭐⭐⭐⭐</option>
+          <option value="3">⭐⭐⭐</option>
+          <option value="2">⭐⭐</option>
+          <option value="1">⭐</option>
+        </select>
+      </div>
+    </div>
+    <div class="mrow">
+      <div class="mf"><label class="ml">Phone</label><input type="tel" class="mi" id="mc-phone" placeholder="(423) 742-7219" inputmode="tel"></div>
+      <div class="mf"><label class="ml">Email</label><input type="email" class="mi" id="mc-email" placeholder="noah@hurleyllc.com"></div>
+    </div>
+    <div class="mf"><label class="ml">Notes</label><input type="text" class="mi" id="mc-notes" placeholder="Specialties, certifications, availability…"></div>
+    <button class="modal-submit" onclick="submitCrew()">Save Team Member →</button>
+    <button class="modal-cancel" onclick="closeCrewModal()">Cancel</button>
   </div>
 </div>
 
@@ -2203,83 +2555,93 @@ function submitManualLead() {
   ['ml-fn','ml-ln','ml-ph','ml-em','ml-ad','ml-no'].forEach(id=>document.getElementById(id).value='');
 }
 
-/* ── CONSTRUCTION & JOB TICKETS ───────────────── */
+/* ── CONSTRUCTION & JOB TICKETS (Enhanced) ──── */
+function parseCost(s) {
+  if (!s) return 0;
+  return parseFloat(String(s).replace(/[^0-9.\-]/g, '')) || 0;
+}
 const TICKETS_KEY = 'hurley_tickets';
 const DEMO_TICKETS = [
   {
-    id: 't1',
-    property: 'City Centre (601 State St)',
-    unit: 'Suite 3B',
+    id: 't1', property: 'City Centre (601 State St)', unit: 'Suite 3B',
     title: 'Suite 3B Executive Office Buildout & Lighting',
-    category: 'construction',
-    priority: 'high',
-    status: 'progress',
-    contractor: 'Tri-Cities Commercial Build',
-    phone: '(423) 555-0188',
-    budget: '$18,500',
-    dueDate: '2026-08-15',
+    category: 'construction', priority: 'high', status: 'progress',
+    contractor: 'Noah Hurley (In-House)', phone: '(423) 742-7219',
+    budget: '$18,500', actualCost: '$11,200', percentComplete: 65,
+    startDate: '2026-07-10', dueDate: '2026-08-15',
     notes: 'Framing completed. Electrical rough-in scheduled for Tuesday. Flooring samples approved by tenant.',
     timestamp: new Date(Date.now() - 2*86400000).toISOString()
   },
   {
-    id: 't2',
-    property: 'Center Point Corridor',
-    unit: 'Retail Strip B',
+    id: 't2', property: 'Center Point Corridor', unit: 'Retail Strip B',
     title: 'Parking Lot Resurfacing & LED Striping',
-    category: 'siteprep',
-    priority: 'medium',
-    status: 'open',
-    contractor: 'Appalachian Paving & Seal',
-    phone: '(423) 555-0244',
-    budget: '$24,000',
-    dueDate: '2026-08-28',
+    category: 'siteprep', priority: 'medium', status: 'open',
+    contractor: 'Appalachian Paving & Seal', phone: '(423) 555-0244',
+    budget: '$24,000', actualCost: '$0', percentComplete: 0,
+    startDate: '', dueDate: '2026-08-28',
     notes: 'Hard Rock Casino corridor traffic increased. Resurfacing section B & adding LED perimeter lighting poles.',
     timestamp: new Date(Date.now() - 4*86400000).toISOString()
   },
   {
-    id: 't3',
-    property: '628 State St',
-    unit: 'Main Floor Retail',
+    id: 't3', property: '628 State St', unit: 'Rooftop',
     title: 'Rooftop HVAC Compressor Replacement',
-    category: 'hvac',
-    priority: 'high',
-    status: 'open',
-    contractor: 'AirTech Commercial HVAC',
-    phone: '(423) 555-0399',
-    budget: '$8,200',
-    dueDate: '2026-07-28',
+    category: 'hvac', priority: 'high', status: 'progress',
+    contractor: 'AirTech Commercial HVAC', phone: '(423) 555-0399',
+    budget: '$8,200', actualCost: '$4,800', percentComplete: 40,
+    startDate: '2026-07-22', dueDate: '2026-07-29',
     notes: 'Unit 2 compressor failing. Replacement unit delivered to site. Crane lift scheduled for Thursday 6:00 AM.',
     timestamp: new Date(Date.now() - 1*86400000).toISOString()
   },
   {
-    id: 't4',
-    property: 'Former Coca-Cola Facility',
-    unit: 'Warehouse B',
+    id: 't4', property: 'Former Coca-Cola Facility', unit: 'Warehouse B',
     title: 'Roof Structural Assessment & Skylight Repair',
-    category: 'maintenance',
-    priority: 'medium',
-    status: 'review',
-    contractor: 'Hurley Engineering & Dev',
-    phone: '(423) 742-7219',
-    budget: '$14,000',
-    dueDate: '2026-08-05',
+    category: 'maintenance', priority: 'medium', status: 'review',
+    contractor: 'Noah Hurley (In-House)', phone: '(423) 742-7219',
+    budget: '$14,000', actualCost: '$12,500', percentComplete: 85,
+    startDate: '2026-07-05', dueDate: '2026-08-05',
     notes: 'Engineer report received. Sealing perimeter flashing and replacing damaged acrylic skylight panels.',
     timestamp: new Date(Date.now() - 6*86400000).toISOString()
   },
   {
-    id: 't5',
-    property: 'Jamestown @ Shelby',
-    unit: 'Bldg A',
+    id: 't5', property: 'Jamestown @ Shelby', unit: 'Bldg A',
     title: 'Exterior Pressure Wash & Facade Touchup',
-    category: 'maintenance',
-    priority: 'normal',
-    status: 'completed',
-    contractor: 'ProWash Tri-Cities',
-    phone: '(423) 555-0711',
-    budget: '$3,800',
-    dueDate: '2026-07-20',
+    category: 'maintenance', priority: 'normal', status: 'completed',
+    contractor: 'ProWash Tri-Cities', phone: '(423) 555-0711',
+    budget: '$3,800', actualCost: '$3,650', percentComplete: 100,
+    startDate: '2026-07-14', dueDate: '2026-07-20',
     notes: 'Job completed. Final inspection signed off. Invoice paid.',
     timestamp: new Date(Date.now() - 10*86400000).toISOString()
+  },
+  {
+    id: 't6', property: 'City Centre (601 State St)', unit: 'Lobby',
+    title: 'ADA Signage Package & Suite Directory Install',
+    category: 'construction', priority: 'normal', status: 'blocked',
+    contractor: 'Noah Hurley (In-House)', phone: '(423) 742-7219',
+    budget: '$2,800', actualCost: '$0', percentComplete: 10,
+    blockedReason: 'Waiting on sign fabrication from Bristol Sign Co — ETA Aug 10',
+    startDate: '2026-07-20', dueDate: '2026-08-12',
+    notes: 'ADA compliant wayfinding + new tenant suite directory. Signs ordered but delayed.',
+    timestamp: new Date(Date.now() - 3*86400000).toISOString()
+  },
+  {
+    id: 't7', property: 'Bradley St Residential', unit: 'Unit 2',
+    title: 'Bathroom Plumbing Overhaul & Fixture Upgrade',
+    category: 'plumbing', priority: 'medium', status: 'progress',
+    contractor: 'Johnson Plumbing Co', phone: '(423) 555-0622',
+    budget: '$6,500', actualCost: '$3,100', percentComplete: 50,
+    startDate: '2026-07-18', dueDate: '2026-08-02',
+    notes: 'Replacing all supply lines, vanity, toilet, and tub/shower combo. Fixtures selected by property mgr.',
+    timestamp: new Date(Date.now() - 5*86400000).toISOString()
+  },
+  {
+    id: 't8', property: 'Jamestown @ Shelby', unit: 'Bldg B Common',
+    title: 'Vinyl Plank Flooring — Common Area Refresh',
+    category: 'construction', priority: 'normal', status: 'open',
+    contractor: 'Noah Hurley (In-House)', phone: '(423) 742-7219',
+    budget: '$5,200', actualCost: '$0', percentComplete: 0,
+    startDate: '', dueDate: '2026-08-20',
+    notes: 'Weathered Oak luxury vinyl. Materials on order — ETA Aug 5. Noah leading install crew.',
+    timestamp: new Date(Date.now() - 1*86400000).toISOString()
   }
 ];
 
@@ -2310,12 +2672,20 @@ function renderTickets() {
   }
 
   // Update Badge Count in header
-  const activeCount = getTickets().filter(t => t.status !== 'completed').length;
+  const allTickets = getTickets();
+  const activeCount = allTickets.filter(t => t.status !== 'completed').length;
+  const overdueCount = allTickets.filter(t => t.status !== 'completed' && t.dueDate && new Date(t.dueDate) < new Date()).length;
   const cardEl = document.getElementById('card-tickets');
   const isCardOpen = cardEl ? cardEl.classList.contains('open') : false;
   const badgeEl = document.getElementById('ticket-badge-count');
   if (badgeEl) {
-    badgeEl.textContent = isCardOpen ? 'Hide' : `${activeCount} Active Job${activeCount !== 1 ? 's' : ''}`;
+    if (isCardOpen) {
+      badgeEl.textContent = 'Hide';
+    } else {
+      badgeEl.textContent = overdueCount ? `${activeCount} Active · ${overdueCount} Overdue` : `${activeCount} Active Job${activeCount !== 1 ? 's' : ''}`;
+      if (overdueCount) badgeEl.style.color = 'var(--hot)';
+      else badgeEl.style.color = '';
+    }
   }
 
   if (!tickets.length) {
@@ -2324,22 +2694,37 @@ function renderTickets() {
   }
 
   const catLabels = {
-    construction: '🏗️ Buildout',
-    electrical: '⚡ Electrical',
-    plumbing: '🚰 Plumbing',
-    hvac: '❄️ HVAC',
-    maintenance: '🔑 Maintenance',
-    siteprep: '📐 Site Prep'
+    construction: '🏗️ Buildout', electrical: '⚡ Electrical',
+    plumbing: '🚰 Plumbing', hvac: '❄️ HVAC',
+    maintenance: '🔧 Maintenance', siteprep: '🚜 Site Prep'
   };
 
   const priClasses = { high: 'tb-pri-high', medium: 'tb-pri-medium', normal: 'tb-pri-normal' };
-  const priLabels  = { high: '🔴 High Priority', medium: '🟡 Medium', normal: '🟢 Normal' };
+  const priLabels  = { high: '🔴 High', medium: '🟡 Medium', normal: '🟢 Normal' };
 
   feed.innerHTML = tickets.map(t => {
     const pDigits = t.phone ? t.phone.replace(/\D/g,'') : '';
-    const callBtn = pDigits ? `<a href="tel:+1${pDigits}" class="act-btn call" style="font-size:0.68rem;padding:0.35em 0.75em;">📞 Call Contractor</a>` : '';
+    const callBtn = pDigits ? `<a href="tel:+1${pDigits}" class="act-btn call" style="font-size:0.68rem;padding:0.35em 0.75em;">📞 Call</a>` : '';
     const unitText = t.unit ? ` · ${t.unit}` : '';
     const dueDateFormatted = t.dueDate ? new Date(t.dueDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'Flexible';
+    
+    // Overdue check
+    const isOverdue = t.status !== 'completed' && t.dueDate && new Date(t.dueDate) < new Date();
+    const overdueBadge = isOverdue ? '<span class="overdue-badge">⏰ Overdue</span>' : '';
+    
+    // Blocked badge
+    const blockedBadge = t.status === 'blocked' ? `<span class="t-badge tb-blocked">⏸️ On Hold</span>` : '';
+    const blockedReason = t.status === 'blocked' && t.blockedReason ? `<div style="font-size:0.72rem;color:#ffca28;background:rgba(255,180,0,0.08);border:1px solid rgba(255,180,0,0.15);border-radius:8px;padding:0.45rem 0.65rem;margin-top:0.4rem;">⏸️ <strong>On Hold:</strong> ${t.blockedReason}</div>` : '';
+    
+    // Progress bar
+    const pct = t.percentComplete || 0;
+    const pctClass = pct >= 100 ? 'done' : pct >= 60 ? 'high' : pct >= 30 ? 'mid' : 'low';
+    const progressBar = `<div class="tc-progress"><div class="tc-progress-fill ${pctClass}" style="width:${pct}%;"></div></div>`;
+    
+    // Budget variance
+    const estNum = parseCost ? parseCost(t.budget) : 0;
+    const actNum = parseCost ? parseCost(t.actualCost) : 0;
+    const budgetColor = actNum === 0 ? 'var(--t2)' : actNum > estNum ? 'var(--hot)' : actNum > estNum * 0.75 ? 'var(--gold)' : 'var(--cool)';
     
     return `
       <div class="ticket-card ${t.priority || 'medium'}" id="ticket-${t.id}">
@@ -2348,13 +2733,16 @@ function renderTickets() {
             <div class="tc-prop">${t.property}${unitText}</div>
             <div class="tc-title">${t.title}</div>
             <div class="tc-badges">
+              ${overdueBadge}
+              ${blockedBadge}
               <span class="t-badge ${priClasses[t.priority||'medium']}">${priLabels[t.priority||'medium']}</span>
               <span class="t-badge" style="background:rgba(255,255,255,0.04);color:var(--t2);border:1px solid var(--border);">${catLabels[t.category]||t.category}</span>
             </div>
           </div>
           <select class="tc-status-sel" onchange="updateTicketStatus('${t.id}', this.value)">
-            <option value="open" ${t.status==='open'?'selected':''}>📋 Open / Pending</option>
+            <option value="open" ${t.status==='open'?'selected':''}>📋 Open</option>
             <option value="progress" ${t.status==='progress'?'selected':''}>🚧 In Progress</option>
+            <option value="blocked" ${t.status==='blocked'?'selected':''}>⏸️ On Hold</option>
             <option value="review" ${t.status==='review'?'selected':''}>🔍 Inspection</option>
             <option value="completed" ${t.status==='completed'?'selected':''}>✅ Completed</option>
           </select>
@@ -2370,14 +2758,24 @@ function renderTickets() {
             <span class="tc-det-val" style="color:var(--gold);">${t.budget || 'TBD'}</span>
           </div>
           <div class="tc-det-item">
+            <span class="tc-det-lbl">Actual Spent</span>
+            <span class="tc-det-val" style="color:${budgetColor};">${t.actualCost || '$0'}</span>
+          </div>
+          <div class="tc-det-item">
             <span class="tc-det-lbl">Target Date</span>
             <span class="tc-det-val">${dueDateFormatted}</span>
+          </div>
+          <div class="tc-det-item">
+            <span class="tc-det-lbl">Progress</span>
+            <span class="tc-det-val">${pct}%</span>
           </div>
           <div class="tc-det-item">
             <span class="tc-det-lbl">Phone</span>
             <span class="tc-det-val">${t.phone || 'N/A'}</span>
           </div>
         </div>
+        ${progressBar}
+        ${blockedReason}
 
         <div class="tc-notes-row">
           <textarea class="tc-notes" id="tnote-${t.id}" placeholder="Scope details, contractor notes…">${t.notes || ''}</textarea>
@@ -2451,6 +2849,9 @@ function submitTicket() {
     contractor: document.getElementById('mt-contractor').value.trim() || 'In-House Team',
     phone: document.getElementById('mt-phone').value.trim(),
     budget: document.getElementById('mt-budget').value.trim() || 'TBD',
+    actualCost: '$0',
+    percentComplete: 0,
+    startDate: '',
     dueDate: document.getElementById('mt-date').value,
     notes: document.getElementById('mt-notes').value.trim(),
     timestamp: new Date().toISOString()
@@ -2703,21 +3104,28 @@ function deleteCmsProperty(id) {
 
 /* ── DEMO DATA MANAGEMENT ────────────────────── */
 function clearDemoData() {
-  if (!confirm('Clear all sample demo data (leads & construction tickets)? This lets you start 100% fresh with real live data.')) return;
+  if (!confirm('Clear all sample demo data (leads, tickets, materials, crew)? This lets you start 100% fresh with real live data.')) return;
   localStorage.setItem(CFG.leadsKey, JSON.stringify([]));
   localStorage.setItem(TICKETS_KEY, JSON.stringify([]));
+  localStorage.setItem(MATERIALS_KEY, JSON.stringify([]));
+  localStorage.setItem(CREW_KEY, JSON.stringify([]));
   localStorage.setItem('pb_dismissed', JSON.stringify([]));
   updateStats();
   renderLeads();
   renderActivityFeed();
   renderTable();
   renderTickets();
+  renderMaterials();
+  renderBudget();
+  renderCrew();
   toast('Sample data cleared — fresh pipeline ready ✓', 'info');
 }
 
 function restoreDemoData() {
   saveLeads(DEMO);
   saveTickets(DEMO_TICKETS);
+  saveMaterials(DEMO_MATERIALS);
+  saveCrew(DEMO_CREW);
   saveCmsProperties(DEFAULT_PROPERTIES);
   localStorage.removeItem('pb_dismissed');
   localStorage.removeItem(SITE_CONTENT_KEY);
@@ -2728,6 +3136,9 @@ function restoreDemoData() {
   renderActivityFeed();
   renderTable();
   renderTickets();
+  renderMaterials();
+  renderBudget();
+  renderCrew();
   toast('Sample demo dataset loaded ✓', 'ok');
 }
 
@@ -2738,7 +3149,12 @@ function initDash() {
   setInterval(()=>{ renderLeads(); renderActivityFeed(); renderTable(); renderTickets(); }, 60000);
   updateStats(); renderLeads(); renderActivityFeed(); renderTable(); renderTickets();
   loadCmsFormFields(); renderCmsProperties();
+  // Initialize construction command center tabs
+  renderMaterials();
+  renderBudget();
+  renderCrew();
 }
 </script>
+<script src="js/construction.js"></script>
 </body>
 </html>
