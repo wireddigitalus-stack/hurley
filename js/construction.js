@@ -418,11 +418,21 @@ function renderBudget() {
    CREW & CONTRACTOR DIRECTORY
    ═══════════════════════════════════════════════ */
 const DEMO_CREW = [
+  // In-House Crew
   { id:'c1', name:'Noah Hurley', company:'Hurley Enterprise LLC', type:'inhouse', role:'Foreman', trade:'general', phone:'(423) 742-7219', email:'noah@hurleyllc.com', rating:5, notes:'Leads all in-house buildout crews. On-site daily across all properties.', status:'active' },
-  { id:'c2', name:'Allen Hurley', company:'Hurley Enterprise LLC', type:'inhouse', role:'Owner', trade:'general', phone:'(423) 742-7219', email:'allen@hurleyllc.com', rating:5, notes:'CEO & Project Lead. Final approval on all budgets, change orders, and vendor selections.', status:'active' },
+  { id:'c2', name:'Allen Hurley', company:'Hurley Enterprise LLC', type:'inhouse', role:'Owner / CEO', trade:'general', phone:'(423) 742-7219', email:'allen@hurleyllc.com', rating:5, notes:'CEO & Project Lead. Final approval on all budgets, change orders, and vendor selections.', status:'active' },
+  { id:'c9', name:'Ryan Mitchell', company:'Hurley Enterprise LLC', type:'inhouse', role:'Lead Carpenter', trade:'general', phone:'(423) 742-7220', email:'ryan@hurleyllc.com', rating:4, notes:'10+ years framing & finish carpentry. Handles most suite buildouts alongside Noah.', status:'active' },
+  { id:'c10', name:'Carlos Rivera', company:'Hurley Enterprise LLC', type:'inhouse', role:'Maintenance Tech', trade:'general', phone:'(423) 742-7221', email:'carlos@hurleyllc.com', rating:4, notes:'Property maintenance, punch lists, turnover prep. Covers City Centre & 628 State St daily.', status:'active' },
+  { id:'c11', name:'Tyler Brooks', company:'Hurley Enterprise LLC', type:'inhouse', role:'Laborer / Driver', trade:'general', phone:'(423) 742-7222', email:'tyler@hurleyllc.com', rating:4, notes:'Material runs, demo, site cleanup. CDL for equipment transport.', status:'active' },
+  // Outside Trusted Firms
   { id:'c3', name:'Jake Thompson', company:'AirTech Commercial HVAC', type:'outside', role:'Lead Tech', trade:'hvac', phone:'(423) 555-0399', email:'jake@airtechhvac.com', rating:4, notes:'Handles all commercial rooftop units and ductwork. Fast turnaround, fair pricing.', status:'preferred' },
   { id:'c4', name:'Marcus Bell', company:'Tri-Cities Electrical', type:'outside', role:'Superintendent', trade:'electrical', phone:'(423) 555-0188', email:'marcus@tcelectrical.com', rating:5, notes:'Licensed commercial electrician. Panel upgrades, fire alarm, LED retrofits.', status:'preferred' },
-  { id:'c5', name:'Dave Wilson', company:'ProWash Tri-Cities', type:'outside', role:'Owner', trade:'cleaning', phone:'(423) 555-0711', email:'dave@prowash.com', rating:4, notes:'Exterior pressure washing, facade cleaning, parking lot maintenance.', status:'active' }
+  { id:'c5', name:'Dave Wilson', company:'ProWash Tri-Cities', type:'outside', role:'Owner', trade:'cleaning', phone:'(423) 555-0711', email:'dave@prowash.com', rating:4, notes:'Exterior pressure washing, facade cleaning, parking lot maintenance.', status:'active' },
+  { id:'c6', name:'Bobby Johnson', company:'Johnson Plumbing Co', type:'outside', role:'Master Plumber', trade:'plumbing', phone:'(423) 555-0622', email:'bobby@johnsonplumbing.com', rating:5, notes:'Commercial & residential plumbing. Water heaters, reroutes, fixture installs. Licensed & insured.', status:'preferred' },
+  { id:'c7', name:'Sam Patterson', company:'Appalachian Paving & Seal', type:'outside', role:'Foreman', trade:'general', phone:'(423) 555-0244', email:'sam@appaving.com', rating:4, notes:'Asphalt, concrete, striping, curb repair. Handles all parking lot work across the portfolio.', status:'active' },
+  { id:'c8', name:'Mike Lawson', company:'Summit Roofing Co', type:'outside', role:'Project Manager', trade:'roofing', phone:'(423) 555-0833', email:'mike@summitroofing.com', rating:5, notes:'Commercial flat roof, TPO, metal roofing. Quick leak response. Standing contract for emergency calls.', status:'preferred' },
+  { id:'c12', name:'Chris Painter', company:'Elite Finishes LLC', type:'outside', role:'Owner', trade:'painting', phone:'(423) 555-0955', email:'chris@elitefinishes.com', rating:4, notes:'Interior/exterior commercial painting. Tenant suite turnovers, epoxy floors, accent walls.', status:'active' },
+  { id:'c13', name:'Lisa Greene', company:'Bristol Glass & Mirror', type:'outside', role:'Sales Manager', trade:'general', phone:'(423) 555-0477', email:'lisa@bristolglass.com', rating:4, notes:'Storefront glass, mirrors, skylight panels. Handles all glazing replacements for the portfolio.', status:'active' }
 ];
 
 function getCrew() {

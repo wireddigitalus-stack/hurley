@@ -761,6 +761,8 @@
       border-bottom:1px solid var(--border);
       overflow-x:auto; -webkit-overflow-scrolling:touch;
       scrollbar-width:none;
+      position:sticky; top:0; z-index:90; background:var(--bg);
+      padding-top:0.5rem;
     }
     .dash-nav::-webkit-scrollbar { display:none; }
     .dash-nav-btn {
@@ -833,7 +835,7 @@
     .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
     .cal-hdr { font-size:0.6rem; font-weight:800; color:var(--t3); text-align:center; padding:0.5rem 0; text-transform:uppercase; letter-spacing:0.1em; }
     .cal-day {
-      min-height:56px; padding:0.4rem; border-radius:8px; background:rgba(255,255,255,0.015);
+      min-height:48px; padding:0.35rem; border-radius:8px; background:rgba(255,255,255,0.015);
       border:1px solid transparent; cursor:pointer; transition:all 0.15s; position:relative;
     }
     .cal-day:hover { border-color:var(--border-md); background:rgba(255,255,255,0.035); }
@@ -987,6 +989,14 @@
 <!-- MAIN DASHBOARD -->
 <div id="dash">
 
+  <!-- TOP NAVIGATION BAR (very top of page) -->
+  <div class="dash-nav" id="dash-nav" style="margin-bottom:0.5rem;">
+    <button class="dash-nav-btn active" onclick="switchDashPanel('pipeline')">📊 Pipeline</button>
+    <button class="dash-nav-btn" onclick="switchDashPanel('construction')">🏗️ Construction</button>
+    <button class="dash-nav-btn" onclick="switchDashPanel('analytics')">📈 Analytics</button>
+    <button class="dash-nav-btn" onclick="switchDashPanel('editor')">✏️ Site Editor</button>
+  </div>
+
   <!-- GREETING CARD -->
   <div class="greeting-card" style="margin-top:1.25rem;">
     <div class="g-top">
@@ -1013,14 +1023,6 @@
       <button class="pb-dismiss-all-btn" onclick="dismissAllPriority()" style="margin-left:auto;font-size:0.62rem;font-weight:800;color:rgba(255,255,255,0.3);background:none;border:none;cursor:pointer;white-space:nowrap;padding:0 0.25rem;">Dismiss all</button>
     </div>
     <div class="pb-leads" id="pb-leads"></div>
-  </div>
-
-  <!-- TOP NAVIGATION BAR -->
-  <div class="dash-nav" id="dash-nav">
-    <button class="dash-nav-btn active" onclick="switchDashPanel('pipeline')">📊 Pipeline</button>
-    <button class="dash-nav-btn" onclick="switchDashPanel('construction')">🏗️ Construction</button>
-    <button class="dash-nav-btn" onclick="switchDashPanel('analytics')">📈 Analytics</button>
-    <button class="dash-nav-btn" onclick="switchDashPanel('editor')">✏️ Site Editor</button>
   </div>
 
   <!-- STATS GRID (always visible) -->
@@ -2563,11 +2565,12 @@ function switchDashPanel(panelId) {
   if (navBtns[map[panelId]]) navBtns[map[panelId]].classList.add('active');
   // Render content on tab switch
   if (panelId === 'pipeline') { renderLeads(); updateStats(); renderTable(); }
-  if (panelId === 'construction') { renderTickets(); }
-  if (panelId === 'analytics') { renderActivityFeed(); }
+  if (panelId === 'construction') { renderTickets(); renderCalendar(); renderMaterials(); renderBudget(); renderCrew(); }
+  if (panelId === 'analytics') { renderActivityFeed(); renderBreakdown(getLeads().filter(l=>l.status!=='closed'&&l.status!=='dead')); }
   if (panelId === 'editor') { loadCmsFormFields(); renderCmsProperties(); }
-  // Scroll to top smoothly
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Scroll nav into view
+  const nav = document.getElementById('dash-nav');
+  if (nav) nav.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 /* ── LEAD TABLE ─────────────────────────────── */
