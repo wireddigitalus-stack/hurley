@@ -1384,7 +1384,7 @@
             </button>
           </div>
         </div>
-        <div id="cms-staff-list" class="ticket-feed" style="margin-bottom:1.5rem;"></div>
+        <div id="cms-staff-list" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(340px, 1fr));gap:1.25rem;margin-bottom:1.5rem;"></div>
 
         <!-- About Page Copy & Story Editor -->
         <div class="ticket-card" style="border-left:4px solid var(--purple);">
@@ -3367,16 +3367,19 @@ function renderCmsStaffList() {
     return;
   }
   container.innerHTML = staff.map(s => `
-    <div class="ticket-card" id="cmsstaff-${s.id}" style="border-left:4px solid ${s.cat==='leader'?'var(--gold)':'var(--info)'};margin-bottom:1.25rem;">
-      <div class="tc-header" style="align-items:center;margin-bottom:0.75rem;">
+    <div class="ticket-card" id="cmsstaff-${s.id}" style="border-left:4px solid ${s.cat==='leader'?'var(--gold)':'var(--info)'};margin-bottom:0;">
+      <div class="tc-header" style="align-items:center;margin-bottom:0.85rem;">
         <div style="display:flex;align-items:center;gap:0.85rem;flex:1;">
-          <img id="staff-img-prev-${s.id}" src="${s.photo || 'img/office.png'}" style="width:54px;height:54px;border-radius:12px;object-fit:cover;border:1.5px solid var(--border);flex-shrink:0;" alt="${s.name}">
+          <img id="staff-img-prev-${s.id}" src="${s.photo || 'img/office.png'}" style="width:68px;height:68px;border-radius:14px;object-fit:cover;border:2px solid var(--gold);flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,0.3);" alt="${s.name}">
           <div>
-            <div style="font-size:0.92rem;font-weight:800;color:var(--off-white);">${s.name || 'Team Member'}</div>
-            <div style="font-size:0.72rem;color:var(--gold);font-weight:700;">${s.role || 'Title'} ${s.cat === 'leader' ? '⭐ Leadership' : '🛠 Operations'}</div>
+            <div style="font-size:0.98rem;font-weight:800;color:var(--off-white);">${s.name || 'Team Member'}</div>
+            <div style="font-size:0.75rem;color:var(--gold);font-weight:700;margin-top:0.15rem;">${s.role || 'Title'} ${s.cat === 'leader' ? '⭐ Leadership' : '🛠 Operations'}</div>
           </div>
         </div>
-        <button class="act-btn del" onclick="deleteCmsStaff('${s.id}')" style="font-size:0.68rem;padding:0.35em 0.75em;">🗑️ Remove Member</button>
+        <div style="display:flex;gap:0.35rem;">
+          <button class="act-btn" onclick="editCmsStaff('${s.id}')" style="font-size:0.68rem;padding:0.35em 0.75em;">✏️ Modal Edit</button>
+          <button class="act-btn del" onclick="deleteCmsStaff('${s.id}')" style="font-size:0.68rem;padding:0.35em 0.75em;">🗑️ Remove</button>
+        </div>
       </div>
 
       <input type="hidden" class="staff-field-id" value="${s.id}">
@@ -3419,11 +3422,26 @@ function renderCmsStaffList() {
       </div>
 
       <div class="mf" style="margin-top:0.4rem;width:100%;">
-        <label class="ml">Biography / Bio Text</label>
-        <textarea class="tc-notes staff-field-bio" rows="3" style="width:100%;min-height:90px;box-sizing:border-box;resize:vertical;display:block;">${s.bio || ''}</textarea>
+        <label class="ml">Biography / Bio Text (Editable &amp; Live Synced)</label>
+        <textarea class="tc-notes staff-field-bio" rows="4" style="width:100%;min-height:100px;box-sizing:border-box;resize:vertical;display:block;line-height:1.6;">${s.bio || ''}</textarea>
       </div>
     </div>
   `).join('');
+}
+
+function editCmsStaff(id) {
+  const s = getCmsStaff().find(x => x.id === id);
+  if (!s) return;
+  document.getElementById('ms-id').value = s.id;
+  document.getElementById('ms-modal-title').textContent = '✏️ Edit Team Member';
+  if (document.getElementById('ms-name'))  document.getElementById('ms-name').value  = s.name || '';
+  if (document.getElementById('ms-role'))  document.getElementById('ms-role').value  = s.role || '';
+  if (document.getElementById('ms-cat'))   document.getElementById('ms-cat').value   = s.cat || 'leader';
+  if (document.getElementById('ms-badge')) document.getElementById('ms-badge').value = s.badge || '';
+  if (document.getElementById('ms-photo')) document.getElementById('ms-photo').value = s.photo || '';
+  if (document.getElementById('ms-bio'))   document.getElementById('ms-bio').value   = s.bio || '';
+  const overlay = document.getElementById('staff-overlay');
+  if (overlay) overlay.classList.add('open');
 }
 
 function openStaffModal() {
