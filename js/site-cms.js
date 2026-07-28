@@ -59,6 +59,20 @@
         }
       }
 
+      // Hero Bullets (Homepage)
+      if (c.heroBullet1) {
+        const b1 = document.querySelector('.cms-hero-bullet-1');
+        if (b1) b1.textContent = c.heroBullet1;
+      }
+      if (c.heroBullet2) {
+        const b2 = document.querySelector('.cms-hero-bullet-2');
+        if (b2) b2.textContent = c.heroBullet2;
+      }
+      if (c.heroBullet3) {
+        const b3 = document.querySelector('.cms-hero-bullet-3');
+        if (b3) b3.textContent = c.heroBullet3;
+      }
+
       // About Page Hero, Story & Mission Text
       if (c.aboutTitle) {
         const aboutH1 = document.querySelector('.about-hero h1');
@@ -79,6 +93,72 @@
       if (c.aboutQuote) {
         const quoteP = document.querySelector('blockquote p:first-child');
         if (quoteP) quoteP.textContent = `"${c.aboutQuote.replace(/^["']|["']$/g, '')}"`;
+      }
+
+      // Stats Bar Strip (Homepage & About Page)
+      const statNums = document.querySelectorAll('.stat-item-num');
+      const statLbls = document.querySelectorAll('.stat-item-label');
+      if (statNums.length >= 4) {
+        if (c.stat1Num) statNums[0].textContent = c.stat1Num;
+        if (c.stat2Num) statNums[1].textContent = c.stat2Num;
+        if (c.stat3Num) statNums[2].textContent = c.stat3Num;
+        if (c.stat4Num) statNums[3].textContent = c.stat4Num;
+      }
+      if (statLbls.length >= 4) {
+        if (c.stat1Lbl) statLbls[0].textContent = c.stat1Lbl;
+        if (c.stat2Lbl) statLbls[1].textContent = c.stat2Lbl;
+        if (c.stat3Lbl) statLbls[2].textContent = c.stat3Lbl;
+        if (c.stat4Lbl) statLbls[3].textContent = c.stat4Lbl;
+      }
+
+      // Core Services Teaser Cards (Homepage)
+      if (c.srv1Title) {
+        const s1t = document.querySelector('.cms-srv-1-title');
+        if (s1t) s1t.textContent = c.srv1Title;
+      }
+      if (c.srv1Desc) {
+        const s1d = document.querySelector('.cms-srv-1-desc');
+        if (s1d) s1d.textContent = c.srv1Desc;
+      }
+      if (c.srv2Title) {
+        const s2t = document.querySelector('.cms-srv-2-title');
+        if (s2t) s2t.textContent = c.srv2Title;
+      }
+      if (c.srv2Desc) {
+        const s2d = document.querySelector('.cms-srv-2-desc');
+        if (s2d) s2d.textContent = c.srv2Desc;
+      }
+      if (c.srv3Title) {
+        const s3t = document.querySelector('.cms-srv-3-title');
+        if (s3t) s3t.textContent = c.srv3Title;
+      }
+      if (c.srv3Desc) {
+        const s3d = document.querySelector('.cms-srv-3-desc');
+        if (s3d) s3d.textContent = c.srv3Desc;
+      }
+
+      // Services Page Copy (services.html)
+      if (c.servicesTitle) {
+        const st = document.querySelector('.services-hero h1');
+        if (st) st.textContent = c.servicesTitle;
+      }
+      if (c.servicesSub) {
+        const ss = document.querySelector('.services-hero p');
+        if (ss) ss.textContent = c.servicesSub;
+      }
+
+      // Properties Page Copy (for-sale-lease.html)
+      if (c.propsTitle) {
+        const pt = document.querySelector('.props-hero h1');
+        if (pt) pt.textContent = c.propsTitle;
+      }
+      if (c.propsCtaHeading) {
+        const pct = document.querySelector('.props-cta h2');
+        if (pct) pct.textContent = c.propsCtaHeading;
+      }
+      if (c.propsCtaSub) {
+        const pcs = document.querySelector('.props-cta p');
+        if (pcs) pcs.textContent = c.propsCtaSub;
       }
 
       // Physical Address
