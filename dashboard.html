@@ -1376,17 +1376,20 @@
           </button>
         </div>
 
-        <!-- Segmented Control Nav Bar -->
-        <div style="display:flex;gap:0.5rem;margin-bottom:1.25rem;background:rgba(255,255,255,0.03);padding:0.35rem;border-radius:14px;border:1px solid var(--border);flex-wrap:wrap;">
-          <button class="filter-btn active" id="tab-cms-properties" onclick="switchCmsTab('properties')" style="flex:1;min-width:160px;text-align:center;justify-content:center;padding:0.65em 1em;border-radius:10px;">🏢 Properties (<span id="cms-prop-count">3</span>)</button>
+        <!-- Quick Jump Section Sub-Nav Bar -->
+        <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;background:rgba(255,255,255,0.03);padding:0.35rem;border-radius:14px;border:1px solid var(--border);flex-wrap:wrap;position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);">
+          <button class="filter-btn active" id="tab-cms-properties" onclick="switchCmsTab('properties')" style="flex:1;min-width:160px;text-align:center;justify-content:center;padding:0.65em 1em;border-radius:10px;">🏢 Property Listings (<span id="cms-prop-count">3</span>)</button>
           <button class="filter-btn" id="tab-cms-staff" onclick="switchCmsTab('staff')" style="flex:1;min-width:160px;text-align:center;justify-content:center;padding:0.65em 1em;border-radius:10px;">👥 Company Owners &amp; Staff (<span id="cms-staff-count">8</span>)</button>
-          <button class="filter-btn" id="tab-cms-site" onclick="switchCmsTab('site')" style="flex:1;min-width:160px;text-align:center;justify-content:center;padding:0.65em 1em;border-radius:10px;">📝 Main Site Copy &amp; Video</button>
+          <button class="filter-btn" id="tab-cms-site" onclick="switchCmsTab('site')" style="flex:1;min-width:160px;text-align:center;justify-content:center;padding:0.65em 1em;border-radius:10px;">📝 Main Copy &amp; Hero Video</button>
         </div>
 
       <!-- PROPERTY LISTINGS CMS SECTION -->
-      <div id="cms-section-properties">
+      <div id="cms-section-properties" style="margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
-          <div style="font-size:0.8rem;color:var(--t2);">Active property listings displayed on live site (Add new or edit existing):</div>
+          <div>
+            <div style="font-size:1.05rem;font-weight:900;color:var(--gold);">🏢 Active Property Listings (Displayed on Live Site)</div>
+            <div style="font-size:0.78rem;color:var(--t2);margin-top:0.15rem;">Add new real estate listings or edit existing properties line-by-line</div>
+          </div>
           <button class="add-btn" onclick="openPropertyModal()">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Add New Property Listing
@@ -1396,12 +1399,12 @@
       </div>
 
       <!-- ABOUT PAGE & STAFF ROSTER CMS SECTION -->
-      <div id="cms-section-staff" style="display:none;">
+      <div id="cms-section-staff" style="display:block;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);">
         <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.25);border-radius:14px;padding:0.85rem 1.1rem;margin-bottom:1.25rem;">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;">
             <div>
-              <div style="font-size:0.95rem;font-weight:800;color:var(--gold);">🏢 Company Owners, Executive Leadership &amp; Staff Roster</div>
-              <div style="font-size:0.78rem;color:var(--t2);margin-top:0.15rem;">Line-by-line editable cards for all 8 team members. Edits sync live to <a href="about.html" target="_blank" style="color:var(--gold);text-decoration:underline;">about.html</a>.</div>
+              <div style="font-size:1.05rem;font-weight:900;color:var(--gold);">👥 Company Owners, Executive Leadership &amp; Staff Roster</div>
+              <div style="font-size:0.78rem;color:var(--t2);margin-top:0.15rem;">Click any card to edit headshots, job titles, and bio text. Edits sync live to <a href="about.html" target="_blank" style="color:var(--gold);text-decoration:underline;">about.html</a>.</div>
             </div>
             <button class="crm-tools-btn" onclick="saveCmsStaff(DEFAULT_STAFF);renderCmsStaffList();toast('Reset to all 8 team cards ✓','info');" style="font-size:0.72rem;padding:0.4em 0.85em;border-color:rgba(201,168,76,0.4);color:var(--gold);background:rgba(201,168,76,0.1);">
               🔄 Reset All 8 Staff Cards
@@ -3698,18 +3701,18 @@ function switchCmsTab(tab) {
   const secStaff = document.getElementById('cms-section-staff');
 
   [btnProps, btnSite, btnStaff].forEach(b => b && b.classList.remove('active'));
-  [secProps, secSite, secStaff].forEach(s => s && (s.style.display = 'none'));
 
   if (tab === 'properties') {
     if (btnProps) btnProps.classList.add('active');
-    if (secProps) secProps.style.display = 'block';
+    if (secProps) secProps.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    renderCmsProperties();
   } else if (tab === 'staff') {
     if (btnStaff) btnStaff.classList.add('active');
-    if (secStaff) secStaff.style.display = 'block';
+    if (secStaff) secStaff.scrollIntoView({ behavior: 'smooth', block: 'start' });
     renderCmsStaffList();
   } else {
     if (btnSite) btnSite.classList.add('active');
-    if (secSite) secSite.style.display = 'block';
+    if (secSite) secSite.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
 
