@@ -1376,20 +1376,31 @@
         </div>
         <div id="cms-staff-list" class="ticket-feed" style="margin-bottom:1.5rem;"></div>
 
-        <!-- About Page Copy Editor -->
+        <!-- About Page Copy & Story Editor -->
         <div class="ticket-card" style="border-left:4px solid var(--purple);">
-          <div class="tc-prop">About Page Hero &amp; Mission Copy</div>
-          <div class="mf" style="margin-top:0.6rem;">
+          <div class="tc-prop">About Page Hero, Story &amp; Mission Copy</div>
+          <div class="mf" style="margin-top:0.6rem;width:100%;">
+            <span class="seo-warn-badge tip">💡 Main Hero Headline on About Page</span>
             <label class="ml">About Page Main Headline</label>
-            <input type="text" class="mi" id="cms-about-title" value="Building the Tri-Cities of Tomorrow Since 2004">
+            <input type="text" class="mi" id="cms-about-title" value="Building the Tri-Cities of Tomorrow" style="width:100%;box-sizing:border-box;">
           </div>
-          <div class="mf" style="margin-top:0.4rem;">
+          <div class="mf" style="margin-top:0.6rem;width:100%;">
+            <span class="seo-warn-badge tip">💡 Full-Width Intro Paragraph on About Page</span>
             <label class="ml">About Page Subtitle Paragraph</label>
-            <textarea class="tc-notes" id="cms-about-sub" style="min-height:60px;">Hurley Enterprise LLC is Bristol TN/VA's premier commercial developer — transforming properties, corridors, and communities across the Tri-Cities.</textarea>
+            <textarea class="tc-notes" id="cms-about-sub" rows="4" style="width:100%;min-height:110px;box-sizing:border-box;resize:vertical;font-size:0.85rem;line-height:1.6;display:block;">Hurley Enterprise LLC is an entrepreneurial-based enterprise changing the game in regional development, construction, and real estate across Bristol TN/VA since 2004.</textarea>
           </div>
-          <div class="mf" style="margin-top:0.4rem;">
+          <div class="mf" style="margin-top:0.6rem;width:100%;">
+            <span class="seo-warn-badge tip">💡 Company History &amp; Track Record Text</span>
+            <label class="ml">Company Story &amp; Track Record Paragraph</label>
+            <textarea class="tc-notes" id="cms-about-story" rows="4" style="width:100%;min-height:110px;box-sizing:border-box;resize:vertical;font-size:0.85rem;line-height:1.6;display:block;">Hurley Enterprise is different — our team takes a hands-on approach, taking time to understand each client's needs and budget, then building a comprehensive plan to execute. Holding over 1 million square feet of commercial and residential property, we leverage decades of expertise to simplify the process for our clients with lightning fast speed.</textarea>
+          </div>
+          <div class="mf" style="margin-top:0.6rem;width:100%;">
             <label class="ml">Mission Statement Headline</label>
-            <input type="text" class="mi" id="cms-about-mission" value="Provide real value through experience, simplicity, and speed.">
+            <input type="text" class="mi" id="cms-about-mission" value="Provide real value through experience, simplicity, and speed." style="width:100%;box-sizing:border-box;">
+          </div>
+          <div class="mf" style="margin-top:0.6rem;width:100%;">
+            <label class="ml">Allen Hurley Quote Box Text</label>
+            <input type="text" class="mi" id="cms-about-quote" value="People do business with People — and Said Done means exactly what it says." style="width:100%;box-sizing:border-box;">
           </div>
         </div>
 
@@ -3067,8 +3078,10 @@ const DEFAULT_SITE_CONTENT = {
   ceoName:      'Allen Hurley · CEO & Founder',
   ceoBio:       'Hurley Enterprise LLC is the most active commercial real estate firm in Bristol, Tennessee. We own, lease, and develop premier office suites, retail corridors, and industrial sites across the Tri-Cities.',
   aboutTitle:   'Building the Tri-Cities of Tomorrow Since 2004',
-  aboutSub:     'Hurley Enterprise LLC is Bristol TN/VA\'s premier commercial developer — transforming properties, corridors, and communities across the Tri-Cities.',
-  aboutMission: 'Provide real value through experience, simplicity, and speed.'
+  aboutSub:     'Hurley Enterprise LLC is an entrepreneurial-based enterprise changing the game in regional development, construction, and real estate across Bristol TN/VA since 2004.',
+  aboutStory:   'Hurley Enterprise is different — our team takes a hands-on approach, taking time to understand each client\'s needs and budget, then building a comprehensive plan to execute. Holding over 1 million square feet of commercial and residential property, we leverage decades of expertise to simplify the process for our clients with lightning fast speed.',
+  aboutMission: 'Provide real value through experience, simplicity, and speed.',
+  aboutQuote:   'People do business with People — and Said Done means exactly what it says.'
 };
 
 const DEFAULT_PROPERTIES = [
@@ -3139,7 +3152,9 @@ function saveSiteContent() {
     ceoBio:       document.getElementById('cms-bio')?.value.trim() || DEFAULT_SITE_CONTENT.ceoBio,
     aboutTitle:   document.getElementById('cms-about-title')?.value.trim() || DEFAULT_SITE_CONTENT.aboutTitle,
     aboutSub:     document.getElementById('cms-about-sub')?.value.trim() || DEFAULT_SITE_CONTENT.aboutSub,
-    aboutMission: document.getElementById('cms-about-mission')?.value.trim() || DEFAULT_SITE_CONTENT.aboutMission
+    aboutStory:   document.getElementById('cms-about-story')?.value.trim() || DEFAULT_SITE_CONTENT.aboutStory,
+    aboutMission: document.getElementById('cms-about-mission')?.value.trim() || DEFAULT_SITE_CONTENT.aboutMission,
+    aboutQuote:   document.getElementById('cms-about-quote')?.value.trim() || DEFAULT_SITE_CONTENT.aboutQuote
   };
   localStorage.setItem(SITE_CONTENT_KEY, JSON.stringify(content));
   toast('Live site content saved ✓', 'ok');
@@ -3166,7 +3181,9 @@ function loadCmsFormFields() {
   if (document.getElementById('cms-bio'))          document.getElementById('cms-bio').value = c.ceoBio;
   if (document.getElementById('cms-about-title'))  document.getElementById('cms-about-title').value = c.aboutTitle || DEFAULT_SITE_CONTENT.aboutTitle;
   if (document.getElementById('cms-about-sub'))    document.getElementById('cms-about-sub').value = c.aboutSub || DEFAULT_SITE_CONTENT.aboutSub;
+  if (document.getElementById('cms-about-story'))  document.getElementById('cms-about-story').value = c.aboutStory || DEFAULT_SITE_CONTENT.aboutStory;
   if (document.getElementById('cms-about-mission'))document.getElementById('cms-about-mission').value = c.aboutMission || DEFAULT_SITE_CONTENT.aboutMission;
+  if (document.getElementById('cms-about-quote'))  document.getElementById('cms-about-quote').value = c.aboutQuote || DEFAULT_SITE_CONTENT.aboutQuote;
 
   renderCmsStaffList();
 }

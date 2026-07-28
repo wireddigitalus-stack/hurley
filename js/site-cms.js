@@ -59,7 +59,7 @@
         }
       }
 
-      // About Page Hero & Mission Text
+      // About Page Hero, Story & Mission Text
       if (c.aboutTitle) {
         const aboutH1 = document.querySelector('.about-hero h1');
         if (aboutH1) aboutH1.textContent = c.aboutTitle;
@@ -68,9 +68,17 @@
         const aboutSub = document.querySelector('.about-hero p');
         if (aboutSub) aboutSub.textContent = c.aboutSub;
       }
+      if (c.aboutStory) {
+        const storyP = document.querySelector('.mission-body p:nth-of-type(2)');
+        if (storyP) storyP.textContent = c.aboutStory;
+      }
       if (c.aboutMission) {
         const missionH2 = document.querySelector('.mission-grid h2.section-heading');
         if (missionH2) missionH2.textContent = c.aboutMission;
+      }
+      if (c.aboutQuote) {
+        const quoteP = document.querySelector('blockquote p:first-child');
+        if (quoteP) quoteP.textContent = `"${c.aboutQuote.replace(/^["']|["']$/g, '')}"`;
       }
 
       // Physical Address
