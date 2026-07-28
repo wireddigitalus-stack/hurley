@@ -1351,11 +1351,24 @@
         </div>
       </div>
       <div class="ios-card-body">
-        <!-- Tabs for CMS mode -->
-        <div style="display:flex;gap:0.5rem;margin-bottom:1.25rem;border-bottom:1px solid var(--border);padding-bottom:0.75rem;flex-wrap:wrap;">
-          <button class="filter-btn active" id="tab-cms-properties" onclick="switchCmsTab('properties')">🏢 Manage Properties (For Sale / Lease)</button>
-          <button class="filter-btn" id="tab-cms-staff" onclick="switchCmsTab('staff')">👥 About Page &amp; Staff Roster</button>
-          <button class="filter-btn" id="tab-cms-site" onclick="switchCmsTab('site')">📝 Video Banner &amp; Main Site Text</button>
+        <!-- Live Preview & Sticky Global Save Bar -->
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;padding:0.75rem 1rem;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.25);border-radius:14px;margin-bottom:1.25rem;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;">
+            <span style="font-size:0.75rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:0.08em;">👁️ Live Site Previews:</span>
+            <a href="index.html" target="_blank" class="crm-tools-btn" style="font-size:0.72rem;padding:0.35em 0.75em;border-color:rgba(255,255,255,0.15);">Homepage ↗</a>
+            <a href="about.html" target="_blank" class="crm-tools-btn" style="font-size:0.72rem;padding:0.35em 0.75em;border-color:rgba(255,255,255,0.15);">About Page ↗</a>
+            <a href="for-sale-lease.html" target="_blank" class="crm-tools-btn" style="font-size:0.72rem;padding:0.35em 0.75em;border-color:rgba(255,255,255,0.15);">Properties Page ↗</a>
+          </div>
+          <button class="add-btn" onclick="saveSiteContent()" style="padding:0.5em 1.25em;font-size:0.82rem;background:var(--gold);color:#000;">
+            💾 Save All Site Changes (Cmd+S)
+          </button>
+        </div>
+
+        <!-- Segmented Control Nav Bar -->
+        <div style="display:flex;gap:0.5rem;margin-bottom:1.25rem;background:rgba(255,255,255,0.03);padding:0.35rem;border-radius:14px;border:1px solid var(--border);flex-wrap:wrap;">
+          <button class="filter-btn active" id="tab-cms-properties" onclick="switchCmsTab('properties')" style="flex:1;min-width:160px;text-align:center;justify-content:center;padding:0.65em 1em;border-radius:10px;">🏢 Properties (<span id="cms-prop-count">3</span>)</button>
+          <button class="filter-btn" id="tab-cms-staff" onclick="switchCmsTab('staff')" style="flex:1;min-width:160px;text-align:center;justify-content:center;padding:0.65em 1em;border-radius:10px;">👥 Staff Roster (<span id="cms-staff-count">8</span>)</button>
+          <button class="filter-btn" id="tab-cms-site" onclick="switchCmsTab('site')" style="flex:1;min-width:160px;text-align:center;justify-content:center;padding:0.65em 1em;border-radius:10px;">📝 Main Site Copy &amp; Video</button>
         </div>
 
       <!-- PROPERTY LISTINGS CMS SECTION -->
@@ -1373,7 +1386,10 @@
       <!-- ABOUT PAGE & STAFF ROSTER CMS SECTION -->
       <div id="cms-section-staff" style="display:none;">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
-          <div style="font-size:0.8rem;color:var(--t2);">Edit staff member bios, titles, photos, or add team members to About Page:</div>
+          <div style="position:relative;flex:1;min-width:240px;">
+            <input type="text" class="mi" id="staff-search-input" oninput="filterStaffList(this.value)" placeholder="🔍 Search staff by name or role..." style="padding-left:2.2rem;font-size:0.82rem;min-height:42px;">
+            <span style="position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);font-size:0.85rem;color:var(--t3);">🔍</span>
+          </div>
           <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
             <button class="add-btn" onclick="openStaffModal()">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -3362,12 +3378,15 @@ function renderCmsStaffList() {
   const container = document.getElementById('cms-staff-list');
   if (!container) return;
   const staff = getCmsStaff();
+  const counter = document.getElementById('cms-staff-count');
+  if (counter) counter.textContent = staff.length;
+
   if (!staff || !staff.length) {
     container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--t3);font-size:0.8rem;">No team members listed. Click "Add Team Member" above.</div>`;
     return;
   }
   container.innerHTML = staff.map(s => `
-    <div class="ticket-card" id="cmsstaff-${s.id}" style="border-left:4px solid ${s.cat==='leader'?'var(--gold)':'var(--info)'};margin-bottom:0;">
+    <div class="ticket-card staff-card-item" id="cmsstaff-${s.id}" data-name="${(s.name||'').toLowerCase()}" data-role="${(s.role||'').toLowerCase()}" style="border-left:4px solid ${s.cat==='leader'?'var(--gold)':'var(--info)'};margin-bottom:0;">
       <div class="tc-header" style="align-items:center;margin-bottom:0.85rem;">
         <div style="display:flex;align-items:center;gap:0.85rem;flex:1;">
           <img id="staff-img-prev-${s.id}" src="${s.photo || 'img/office.png'}" style="width:68px;height:68px;border-radius:14px;object-fit:cover;border:2px solid var(--gold);flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,0.3);" alt="${s.name}">
@@ -3410,15 +3429,18 @@ function renderCmsStaffList() {
       </div>
 
       <div class="mf" style="margin-top:0.4rem;width:100%;">
-        <label class="ml">Staff Photo Image (Upload or Image Link)</label>
-        <div style="display:flex;gap:0.5rem;align-items:center;">
-          <input type="text" class="mi staff-field-photo" id="staff-photo-input-${s.id}" value="${s.photo || ''}" oninput="const img=document.getElementById('staff-img-prev-${s.id}');if(img)img.src=this.value;" placeholder="https://... or click Upload" style="flex:1;box-sizing:border-box;">
-          <button type="button" class="crm-tools-btn" onclick="document.getElementById('staff-file-input-${s.id}').click()" style="border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.12);font-size:0.75rem;padding:0.65em 0.95em;white-space:nowrap;">
-            📁 Upload &amp; Optimize
-          </button>
-          <input type="file" id="staff-file-input-${s.id}" accept="image/*" style="display:none;" onchange="handleStaffCardFileUpload(event, '${s.id}')">
+        <label class="ml">Staff Photo Image (Drag &amp; Drop or Upload)</label>
+        <div id="dropzone-${s.id}" ondragover="handleDragOver(event, '${s.id}')" ondragleave="handleDragLeave(event, '${s.id}')" ondrop="handleDrop(event, '${s.id}')" style="border:1.5px dashed rgba(201,168,76,0.35);border-radius:12px;padding:0.65rem 0.85rem;background:rgba(201,168,76,0.03);transition:all 0.2s;">
+          <div style="font-size:0.7rem;color:var(--t2);margin-bottom:0.35rem;">📥 Drag &amp; drop photo file here, or click Browse:</div>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <input type="text" class="mi staff-field-photo" id="staff-photo-input-${s.id}" value="${s.photo || ''}" oninput="const img=document.getElementById('staff-img-prev-${s.id}');if(img)img.src=this.value;" placeholder="https://... or drag file" style="flex:1;box-sizing:border-box;">
+            <button type="button" class="crm-tools-btn" onclick="document.getElementById('staff-file-input-${s.id}').click()" style="border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.12);font-size:0.75rem;padding:0.65em 0.95em;white-space:nowrap;">
+              📁 Browse Photo
+            </button>
+            <input type="file" id="staff-file-input-${s.id}" accept="image/*" style="display:none;" onchange="handleStaffCardFileUpload(event, '${s.id}')">
+          </div>
+          <div id="staff-opt-status-${s.id}" style="font-size:0.72rem;color:var(--gold);margin-top:0.25rem;font-weight:600;"></div>
         </div>
-        <div id="staff-opt-status-${s.id}" style="font-size:0.72rem;color:var(--gold);margin-top:0.25rem;font-weight:600;"></div>
       </div>
 
       <div class="mf" style="margin-top:0.4rem;width:100%;">
@@ -3427,6 +3449,47 @@ function renderCmsStaffList() {
       </div>
     </div>
   `).join('');
+}
+
+function filterStaffList(query) {
+  const q = (query || '').toLowerCase().trim();
+  const items = document.querySelectorAll('.staff-card-item');
+  items.forEach(card => {
+    const name = card.getAttribute('data-name') || '';
+    const role = card.getAttribute('data-role') || '';
+    if (!q || name.includes(q) || role.includes(q)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function handleDragOver(e, id) {
+  e.preventDefault();
+  const dz = document.getElementById('dropzone-' + id);
+  if (dz) {
+    dz.style.borderColor = 'var(--gold)';
+    dz.style.background = 'rgba(201,168,76,0.12)';
+  }
+}
+
+function handleDragLeave(e, id) {
+  e.preventDefault();
+  const dz = document.getElementById('dropzone-' + id);
+  if (dz) {
+    dz.style.borderColor = 'rgba(201,168,76,0.35)';
+    dz.style.background = 'rgba(201,168,76,0.03)';
+  }
+}
+
+function handleDrop(e, id) {
+  e.preventDefault();
+  handleDragLeave(e, id);
+  const files = e.dataTransfer?.files;
+  if (files && files.length > 0) {
+    handleStaffCardFileUpload({ target: { files: files } }, id);
+  }
 }
 
 function editCmsStaff(id) {
@@ -3548,6 +3611,8 @@ function renderCmsProperties() {
   const container = document.getElementById('cms-property-list');
   if (!container) return;
   const properties = getCmsProperties();
+  const counter = document.getElementById('cms-prop-count');
+  if (counter) counter.textContent = properties.length;
 
   if (!properties.length) {
     container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--t3);font-size:0.8rem;">No property listings in CMS. Click "Add New Property Listing" above.</div>`;
@@ -3721,7 +3786,35 @@ function restoreDemoData() {
   toast('Sample demo dataset loaded ✓', 'ok');
 }
 
-/* ── INIT ────────────────────────────────────── */
+/* ── UNSAVED CHANGES TRACKER & HOTKEY HANDLER ─── */
+let isCmsDirty = false;
+function markCmsDirty() {
+  if (isCmsDirty) return;
+  isCmsDirty = true;
+  const bar = document.getElementById('cms-unsaved-bar');
+  if (bar) bar.style.display = 'flex';
+}
+
+function clearCmsDirty() {
+  isCmsDirty = false;
+  const bar = document.getElementById('cms-unsaved-bar');
+  if (bar) bar.style.display = 'none';
+}
+
+window.addEventListener('keydown', function(e) {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') {
+    e.preventDefault();
+    saveSiteContent();
+    clearCmsDirty();
+  }
+});
+
+document.addEventListener('input', function(e) {
+  if (e.target && (e.target.classList.contains('mi') || e.target.classList.contains('tc-notes') || e.target.classList.contains('ms'))) {
+    markCmsDirty();
+  }
+});
+
 function initDash() {
   setGreeting(); updateClock();
   setInterval(updateClock, 15000);
@@ -3734,6 +3827,15 @@ function initDash() {
   renderCrew();
 }
 </script>
+
+<!-- UNSAVED CHANGES STICKY NOTIFICATION BAR -->
+<div id="cms-unsaved-bar" style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;display:none;align-items:center;gap:0.85rem;background:#18181b;border:1.5px solid var(--gold);padding:0.75rem 1.25rem;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,0.6);">
+  <span style="font-size:0.82rem;color:var(--gold);font-weight:700;">⚠️ You have unsaved site edits</span>
+  <button class="add-btn" onclick="saveSiteContent();clearCmsDirty();" style="font-size:0.78rem;padding:0.5em 1.1em;background:var(--gold);color:#000;">
+    💾 Save Changes (Cmd+S)
+  </button>
+</div>
+
 <div class="toast" id="toast"></div>
 </body>
 </html>
