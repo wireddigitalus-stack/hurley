@@ -1367,7 +1367,7 @@
         <!-- Segmented Control Nav Bar -->
         <div style="display:flex;gap:0.5rem;margin-bottom:1.25rem;background:rgba(255,255,255,0.03);padding:0.35rem;border-radius:14px;border:1px solid var(--border);flex-wrap:wrap;">
           <button class="filter-btn active" id="tab-cms-properties" onclick="switchCmsTab('properties')" style="flex:1;min-width:160px;text-align:center;justify-content:center;padding:0.65em 1em;border-radius:10px;">🏢 Properties (<span id="cms-prop-count">3</span>)</button>
-          <button class="filter-btn" id="tab-cms-staff" onclick="switchCmsTab('staff')" style="flex:1;min-width:160px;text-align:center;justify-content:center;padding:0.65em 1em;border-radius:10px;">👥 Staff Roster (<span id="cms-staff-count">8</span>)</button>
+          <button class="filter-btn" id="tab-cms-staff" onclick="switchCmsTab('staff')" style="flex:1;min-width:160px;text-align:center;justify-content:center;padding:0.65em 1em;border-radius:10px;">👥 Company Owners &amp; Staff (<span id="cms-staff-count">8</span>)</button>
           <button class="filter-btn" id="tab-cms-site" onclick="switchCmsTab('site')" style="flex:1;min-width:160px;text-align:center;justify-content:center;padding:0.65em 1em;border-radius:10px;">📝 Main Site Copy &amp; Video</button>
         </div>
 
@@ -1385,12 +1385,22 @@
 
       <!-- ABOUT PAGE & STAFF ROSTER CMS SECTION -->
       <div id="cms-section-staff" style="display:none;">
+        <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.25);border-radius:14px;padding:0.85rem 1.1rem;margin-bottom:1.25rem;">
+          <div style="font-size:0.92rem;font-weight:800;color:var(--gold);margin-bottom:0.2rem;">🏢 Company Owners, Executive Leadership &amp; Staff Roster</div>
+          <div style="font-size:0.78rem;color:var(--t2);">Edit bios, job titles, headshot photos, or badges for all 8 team members below. Changes save live to <a href="about.html" target="_blank" style="color:var(--gold);text-decoration:underline;">about.html</a>.</div>
+        </div>
+
         <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
           <div style="position:relative;flex:1;min-width:240px;">
-            <input type="text" class="mi" id="staff-search-input" oninput="filterStaffList(this.value)" placeholder="🔍 Search staff by name or role..." style="padding-left:2.2rem;font-size:0.82rem;min-height:42px;">
+            <input type="text" class="mi" id="staff-search-input" oninput="filterStaffList(this.value)" placeholder="Search staff or owners by name, title or role..." style="padding-left:2.4rem;font-size:0.82rem;min-height:42px;">
             <span style="position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);font-size:0.85rem;color:var(--t3);">🔍</span>
           </div>
           <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <select class="ms" id="staff-cat-filter" onchange="filterStaffListByCat(this.value)" style="min-height:42px;font-size:0.78rem;padding:0.4em 0.8em;">
+              <option value="all">⭐ All Team Members &amp; Owners (8)</option>
+              <option value="leader">⭐ Executive Leadership &amp; Owners</option>
+              <option value="support">🛠 Operations &amp; Field Team</option>
+            </select>
             <button class="add-btn" onclick="openStaffModal()">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               ➕ Add Team Member
@@ -3386,7 +3396,10 @@ function renderCmsStaffList() {
     return;
   }
   container.innerHTML = staff.map(s => `
-    <div class="ticket-card staff-card-item" id="cmsstaff-${s.id}" data-name="${(s.name||'').toLowerCase()}" data-role="${(s.role||'').toLowerCase()}" style="border-left:4px solid ${s.cat==='leader'?'var(--gold)':'var(--info)'};margin-bottom:0;">
+    <div class="ticket-card staff-card-item" id="cmsstaff-${s.id}" data-cat="${s.cat || 'leader'}" data-name="${(s.name||'').toLowerCase()}" data-role="${(s.role||'').toLowerCase()}" style="border-left:4px solid ${s.cat==='leader'?'var(--gold)':'var(--info)'};margin-bottom:0;">
+      <div style="font-size:0.68rem;font-weight:900;color:var(--gold);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.6rem;padding-bottom:0.3rem;border-bottom:1px solid var(--border);">
+        ✏️ ${s.cat === 'leader' ? '⭐ Executive & Owner Card' : '🛠 Operations Team Card'} — ${s.name || 'Member'}
+      </div>
       <div class="tc-header" style="align-items:center;margin-bottom:0.85rem;">
         <div style="display:flex;align-items:center;gap:0.85rem;flex:1;">
           <img id="staff-img-prev-${s.id}" src="${s.photo || 'img/office.png'}" style="width:68px;height:68px;border-radius:14px;object-fit:cover;border:2px solid var(--gold);flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,0.3);" alt="${s.name}">
@@ -3458,6 +3471,18 @@ function filterStaffList(query) {
     const name = card.getAttribute('data-name') || '';
     const role = card.getAttribute('data-role') || '';
     if (!q || name.includes(q) || role.includes(q)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function filterStaffListByCat(cat) {
+  const items = document.querySelectorAll('.staff-card-item');
+  items.forEach(card => {
+    const cardCat = card.getAttribute('data-cat') || '';
+    if (cat === 'all' || cardCat === cat) {
       card.style.display = 'block';
     } else {
       card.style.display = 'none';
