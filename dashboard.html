@@ -1318,7 +1318,7 @@
   <div class="dash-panel" id="panel-analytics">
 
     <!-- INSIGHTS ROW: Source breakdown + Activity Feed -->
-    <div class="insights-  <!-- ═══ PANEL 4: EDIT SITE PAGES ═══ -->
+    <div class="insights  <!-- ═══ PANEL 4: EDIT SITE PAGES ═══ -->
   <div class="dash-panel" id="panel-editor">
 
     <!-- Site Content CMS -->
@@ -1355,7 +1355,7 @@
         <!-- PAGE SELECTOR TABS -->
         <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;background:rgba(255,255,255,0.03);padding:0.35rem;border-radius:14px;border:1px solid var(--border);flex-wrap:wrap;">
           <button class="filter-btn active" id="tab-page-about" onclick="switchCmsPage('about')" style="flex:1;min-width:170px;text-align:center;justify-content:center;padding:0.7em 0.9em;border-radius:10px;">ℹ️ About &amp; Staff (<span id="cms-staff-count">8</span>)</button>
-          <button class="filter-btn" id="tab-page-properties" onclick="switchCmsPage('properties')" style="flex:1;min-width:170px;text-align:center;justify-content:center;padding:0.7em 0.9em;border-radius:10px;">🏢 Properties (<span id="cms-prop-count">3</span>)</button>
+          <button class="filter-btn" id="tab-page-properties" onclick="switchCmsPage('properties')" style="flex:1;min-width:170px;text-align:center;justify-content:center;padding:0.7em 0.9em;border-radius:10px;">🏢 Properties &amp; Listings (<span id="cms-prop-count">3</span>)</button>
           <button class="filter-btn" id="tab-page-home" onclick="switchCmsPage('home')" style="flex:1;min-width:140px;text-align:center;justify-content:center;padding:0.7em 0.9em;border-radius:10px;">🏠 Homepage</button>
           <button class="filter-btn" id="tab-page-services" onclick="switchCmsPage('services')" style="flex:1;min-width:140px;text-align:center;justify-content:center;padding:0.7em 0.9em;border-radius:10px;">🛠️ Services Page</button>
           <button class="filter-btn" id="tab-page-contact" onclick="switchCmsPage('contact')" style="flex:1;min-width:140px;text-align:center;justify-content:center;padding:0.7em 0.9em;border-radius:10px;">📞 Contact &amp; NAP</button>
@@ -1367,7 +1367,7 @@
             <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;">
               <div>
                 <div style="font-size:1.05rem;font-weight:900;color:var(--gold);">👥 Company Owners, Executive Leadership &amp; Staff Roster</div>
-                <div style="font-size:0.78rem;color:var(--t2);margin-top:0.15rem;">Click any card to edit headshots, job titles, and bio text. Edits sync live to <a href="about.html" target="_blank" style="color:var(--gold);text-decoration:underline;">about.html</a>.</div>
+                <div style="font-size:0.78rem;color:var(--t2);margin-top:0.15rem;">Click any card below to edit headshots, job titles, and bio text. Edits sync live to <a href="about.html" target="_blank" style="color:var(--gold);text-decoration:underline;">about.html</a>.</div>
               </div>
               <button class="crm-tools-btn" onclick="saveCmsStaff(DEFAULT_STAFF);renderCmsStaffList();toast('Reset to all 8 team cards ✓','info');" style="font-size:0.72rem;padding:0.4em 0.85em;border-color:rgba(201,168,76,0.4);color:var(--gold);background:rgba(201,168,76,0.1);">
                 🔄 Reset All 8 Staff Cards
@@ -1531,36 +1531,6 @@
 
       </div>
     </div>
-  </div><!-- /panel-editor -->Conversion Text: Key value proposition summary</span>
-              <label class="ml">Hero Subtitle</label>
-              <textarea class="tc-notes" id="cms-hero-sub" rows="3" style="width:100%;min-height:90px;box-sizing:border-box;resize:vertical;display:block;">From City Centre office suites to turn-key cash property acquisitions — premier real estate solutions across Bristol TN &amp; VA.</textarea>
-            </div>
-          </div>
-
-          <!-- About & CEO Bio -->
-          <div class="ticket-card" style="border-left:4px solid var(--info);">
-            <div class="tc-prop">About &amp; CEO Biography</div>
-            <div class="mf" style="margin-top:0.6rem;">
-              <label class="ml">CEO Name &amp; Title</label>
-              <input type="text" class="mi" id="cms-ceo-name" value="Allen Hurley · CEO &amp; Founder">
-            </div>
-            <div class="mf" style="margin-top:0.4rem;">
-              <span class="seo-warn-badge tip">💡 Local Authority Signal: Highlights Bristol TN commercial experience</span>
-              <label class="ml">Short Company Bio</label>
-              <textarea class="tc-notes" id="cms-bio" style="min-height:70px;">Hurley Enterprise LLC is the most active commercial real estate firm in Bristol, Tennessee. We own, lease, and develop premier office suites, retail corridors, and industrial sites across the Tri-Cities.</textarea>
-            </div>
-          </div>
-        </div>
-
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;margin-top:1.25rem;flex-wrap:wrap;">
-          <button class="modal-submit" onclick="saveSiteContent()" style="width:auto;padding:0.7em 1.5em;">💾 Save Site Changes</button>
-          <button class="crm-tools-btn" onclick="resetSiteContent()" style="border-color:rgba(201,168,76,0.3);color:var(--gold);background:rgba(201,168,76,0.08);">🔄 Reset to Default Site Text</button>
-        </div>
-      </div>
-    </div>
-    </div>
-  </div>
-
   </div><!-- /panel-editor -->
 
 </div><!-- /dash -->
@@ -3294,7 +3264,9 @@ const DEFAULT_SITE_CONTENT = {
   aboutSub:     'Hurley Enterprise LLC is an entrepreneurial-based enterprise changing the game in regional development, construction, and real estate across Bristol TN/VA since 2004.',
   aboutStory:   'Hurley Enterprise is different — our team takes a hands-on approach, taking time to understand each client\'s needs and budget, then building a comprehensive plan to execute. Holding over 1 million square feet of commercial and residential property, we leverage decades of expertise to simplify the process for our clients with lightning fast speed.',
   aboutMission: 'Provide real value through experience, simplicity, and speed.',
-  aboutQuote:   'People do business with People — and Said Done means exactly what it says.'
+  aboutQuote:   'People do business with People — and Said Done means exactly what it says.',
+  servicesTitle: 'Full-Service Real Estate & Construction Solutions',
+  servicesSub: 'From commercial leasing to ground-up development and property management across Bristol TN/VA.'
 };
 
 const DEFAULT_PROPERTIES = [
@@ -3367,7 +3339,9 @@ function saveSiteContent() {
     aboutSub:     document.getElementById('cms-about-sub')?.value.trim() || DEFAULT_SITE_CONTENT.aboutSub,
     aboutStory:   document.getElementById('cms-about-story')?.value.trim() || DEFAULT_SITE_CONTENT.aboutStory,
     aboutMission: document.getElementById('cms-about-mission')?.value.trim() || DEFAULT_SITE_CONTENT.aboutMission,
-    aboutQuote:   document.getElementById('cms-about-quote')?.value.trim() || DEFAULT_SITE_CONTENT.aboutQuote
+    aboutQuote:   document.getElementById('cms-about-quote')?.value.trim() || DEFAULT_SITE_CONTENT.aboutQuote,
+    servicesTitle: document.getElementById('cms-services-title')?.value.trim() || DEFAULT_SITE_CONTENT.servicesTitle,
+    servicesSub:   document.getElementById('cms-services-sub')?.value.trim() || DEFAULT_SITE_CONTENT.servicesSub
   };
   localStorage.setItem(SITE_CONTENT_KEY, JSON.stringify(content));
   toast('Live site content saved ✓', 'ok');
@@ -3397,6 +3371,8 @@ function loadCmsFormFields() {
   if (document.getElementById('cms-about-story'))  document.getElementById('cms-about-story').value = c.aboutStory || DEFAULT_SITE_CONTENT.aboutStory;
   if (document.getElementById('cms-about-mission'))document.getElementById('cms-about-mission').value = c.aboutMission || DEFAULT_SITE_CONTENT.aboutMission;
   if (document.getElementById('cms-about-quote'))  document.getElementById('cms-about-quote').value = c.aboutQuote || DEFAULT_SITE_CONTENT.aboutQuote;
+  if (document.getElementById('cms-services-title')) document.getElementById('cms-services-title').value = c.servicesTitle || DEFAULT_SITE_CONTENT.servicesTitle;
+  if (document.getElementById('cms-services-sub'))   document.getElementById('cms-services-sub').value = c.servicesSub || DEFAULT_SITE_CONTENT.servicesSub;
 
   renderCmsStaffList();
 }
