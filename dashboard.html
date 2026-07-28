@@ -534,6 +534,18 @@
       background-repeat: no-repeat; background-position: right 0.9rem center;
       background-size: 15px; padding-right: 2.25rem;
     }
+    #cms-staff-list {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 1.25rem !important;
+      margin-bottom: 1.5rem !important;
+    }
+    @media (max-width: 1100px) {
+      #cms-staff-list { grid-template-columns: repeat(2, 1fr) !important; }
+    }
+    @media (max-width: 650px) {
+      #cms-staff-list { grid-template-columns: 1fr !important; }
+    }
     .ms option { background: #1c1c1c; }
     .mrow { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
     .modal-submit {
@@ -3393,6 +3405,16 @@ function getCmsStaff() {
         updated = true;
       }
     });
+    // Ensure J. Allen Hurley II (Owner) is ALWAYS first!
+    d.sort((a, b) => {
+      const aName = (a.name || '').toLowerCase();
+      const bName = (b.name || '').toLowerCase();
+      if (aName.includes('allen')) return -1;
+      if (bName.includes('allen')) return 1;
+      if (a.cat === 'leader' && b.cat !== 'leader') return -1;
+      if (a.cat !== 'leader' && b.cat === 'leader') return 1;
+      return 0;
+    });
     if (updated) saveCmsStaff(d);
     return d;
   } catch(e) {
@@ -3438,28 +3460,27 @@ function renderCmsStaffList() {
   }
 
   container.innerHTML = staff.map(s => `
-    <div class="ticket-card staff-card-item" id="cmsstaff-${s.id}" data-cat="${s.cat || 'leader'}" data-name="${(s.name||'').toLowerCase()}" data-role="${(s.role||'').toLowerCase()}" onclick="if(!event.target.closest('button'))editCmsStaff('${s.id}')" style="border-left:4px solid ${s.cat==='leader'?'var(--gold)':'var(--info)'};cursor:pointer;margin-bottom:0;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='${s.cat==='leader'?'var(--gold)':'var(--info)'}';this.style.transform='none'">
-      <div style="display:flex;align-items:center;gap:0.9rem;margin-bottom:0.75rem;">
-        <img id="staff-img-prev-${s.id}" src="${s.photo || 'img/office.png'}" style="width:76px;height:76px;border-radius:14px;object-fit:cover;border:2px solid var(--gold);flex-shrink:0;box-shadow:0 4px 14px rgba(0,0,0,0.4);" alt="${s.name}">
-        <div style="flex:1;">
-          <div style="font-size:0.65rem;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;color:${s.cat==='leader'?'var(--gold)':'var(--info)'};margin-bottom:0.2rem;">
-            ${s.cat === 'leader' ? '⭐ Executive Leadership & Owner' : '🛠 Operations Team'}
-          </div>
-          <div style="font-size:1.02rem;font-weight:800;color:var(--off-white);">${s.name || 'Team Member'}</div>
-          <div style="font-size:0.78rem;color:var(--gold);font-weight:700;margin-top:0.15rem;">${s.role || 'Position'}</div>
-          ${s.badge ? `<div style="font-size:0.68rem;color:var(--t2);margin-top:0.25rem;">🏷️ ${s.badge}</div>` : ''}
-        </div>
+    <div class="ticket-card staff-card-item" id="cmsstaff-${s.id}" data-cat="${s.cat || 'leader'}" data-name="${(s.name||'').toLowerCase()}" data-role="${(s.role||'').toLowerCase()}" onclick="if(!event.target.closest('button'))editCmsStaff('${s.id}')" style="border-top:4px solid ${s.cat==='leader'?'var(--gold)':'var(--info)'};cursor:pointer;margin-bottom:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:1.25rem 1rem;transition:all 0.22s;background:var(--bg-surface);border-radius:16px;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(201,168,76,0.18)'" onmouseout="this.style.borderColor='${s.cat==='leader'?'var(--gold)':'var(--info)'}';this.style.transform='none';this.style.boxShadow='none'">
+      
+      <div style="font-size:0.6rem;font-weight:900;letter-spacing:0.1em;text-transform:uppercase;color:${s.cat==='leader'?'var(--gold)':'var(--info)'};background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);padding:0.25em 0.7em;border-radius:999px;margin-bottom:0.85rem;">
+        ${s.name.includes('Allen') ? '⭐ Founder & Owner' : (s.cat === 'leader' ? '⭐ Executive Leadership' : '🛠 Operations Team')}
       </div>
 
-      <div style="font-size:0.78rem;color:var(--t2);line-height:1.5;margin-bottom:0.85rem;background:rgba(0,0,0,0.25);padding:0.6rem 0.75rem;border-radius:10px;border:1px solid rgba(255,255,255,0.05);max-height:80px;overflow:hidden;text-overflow:ellipsis;">
-        ${s.bio ? (s.bio.length > 120 ? s.bio.substring(0, 120) + '…' : s.bio) : '<em>No bio text entered yet. Click edit below to add bio.</em>'}
+      <img id="staff-img-prev-${s.id}" src="${s.photo || 'img/office.png'}" style="width:88px;height:88px;border-radius:20px;object-fit:cover;border:2.5px solid var(--gold);margin-bottom:0.75rem;box-shadow:0 6px 16px rgba(0,0,0,0.4);" alt="${s.name}">
+
+      <div style="font-size:1.05rem;font-weight:900;color:var(--off-white);">${s.name || 'Team Member'}</div>
+      <div style="font-size:0.78rem;color:var(--gold);font-weight:700;margin-top:0.15rem;">${s.role || 'Position'}</div>
+      ${s.badge ? `<div style="font-size:0.68rem;color:var(--t2);margin-top:0.25rem;font-weight:600;">🏷️ ${s.badge}</div>` : ''}
+
+      <div style="font-size:0.76rem;color:var(--t2);line-height:1.55;margin:0.75rem 0 1rem;background:rgba(0,0,0,0.3);padding:0.6rem 0.75rem;border-radius:10px;border:1px solid rgba(255,255,255,0.05);max-height:70px;overflow:hidden;text-overflow:ellipsis;width:100%;box-sizing:border-box;">
+        ${s.bio ? (s.bio.length > 110 ? s.bio.substring(0, 110) + '…' : s.bio) : '<em>Click edit below to add full bio.</em>'}
       </div>
 
-      <div style="display:flex;gap:0.5rem;align-items:center;">
-        <button class="add-btn" onclick="editCmsStaff('${s.id}')" style="flex:1;justify-content:center;font-size:0.78rem;padding:0.55em;background:var(--gold);color:#000;font-weight:800;">
-          ✏️ Edit ${s.name.split(' ')[0]}'s Profile &amp; Bio
+      <div style="display:flex;gap:0.4rem;width:100%;margin-top:auto;">
+        <button class="add-btn" onclick="editCmsStaff('${s.id}')" style="flex:1;justify-content:center;font-size:0.78rem;padding:0.6em;background:var(--gold);color:#000;font-weight:800;border-radius:10px;">
+          ✏️ Edit Profile &amp; Bio
         </button>
-        <button class="act-btn del" onclick="deleteCmsStaff('${s.id}')" style="font-size:0.72rem;padding:0.55em 0.85em;" title="Remove staff member">
+        <button class="act-btn del" onclick="deleteCmsStaff('${s.id}')" style="font-size:0.72rem;padding:0.6em 0.85em;border-radius:10px;" title="Remove staff member">
           🗑️
         </button>
       </div>
