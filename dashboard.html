@@ -2730,7 +2730,7 @@ function switchDashPanel(panelId) {
   if (panelId === 'pipeline') { renderLeads(); updateStats(); renderTable(); }
   if (panelId === 'construction') { renderTickets(); renderCalendar(); renderMaterials(); renderBudget(); renderCrew(); }
   if (panelId === 'analytics') { renderActivityFeed(); renderBreakdown(getLeads().filter(l=>l.status!=='closed'&&l.status!=='dead')); }
-  if (panelId === 'editor') { loadCmsFormFields(); renderCmsProperties(); }
+  if (panelId === 'editor') { loadCmsFormFields(); renderCmsProperties(); renderCmsStaffList(); }
   // Scroll nav into view
   const nav = document.getElementById('dash-nav');
   if (nav) nav.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -3340,7 +3340,6 @@ function getSiteContent() {
 }
 
 function saveSiteContent() {
-  saveStaffRosterFromInputs();
   const content = {
     phone:        document.getElementById('cms-phone')?.value.trim() || DEFAULT_SITE_CONTENT.phone,
     email:        document.getElementById('cms-email')?.value.trim() || DEFAULT_SITE_CONTENT.email,
@@ -3359,7 +3358,7 @@ function saveSiteContent() {
     aboutQuote:   document.getElementById('cms-about-quote')?.value.trim() || DEFAULT_SITE_CONTENT.aboutQuote
   };
   localStorage.setItem(SITE_CONTENT_KEY, JSON.stringify(content));
-  toast('Live site content & staff roster saved ✓', 'ok');
+  toast('Live site content saved ✓', 'ok');
 }
 
 function resetSiteContent() {
@@ -3598,7 +3597,6 @@ function submitCmsStaff() {
   const name = document.getElementById('ms-name')?.value.trim();
   if (!name) { toast('Staff member name is required', 'info'); return; }
 
-  saveStaffRosterFromInputs();
   const sid = document.getElementById('ms-id')?.value || ('s_' + Date.now());
   const newStaff = {
     id: sid,
@@ -3621,14 +3619,13 @@ function submitCmsStaff() {
   saveCmsStaff(staff);
   renderCmsStaffList();
   closeStaffModal();
-  toast('Team member added to roster ✓', 'ok');
+  toast('Team member saved ✓', 'ok');
 }
 
 function addNewStaffMemberInlineCard() {
-  saveStaffRosterFromInputs();
   const staff = getCmsStaff();
   const newId = 's_' + Date.now();
-  staff.unshift({
+  const newMember = {
     id: newId,
     name: 'New Team Member',
     role: 'Role / Position',
@@ -3636,17 +3633,16 @@ function addNewStaffMemberInlineCard() {
     badge: '',
     photo: 'img/office.png',
     bio: 'Biography for new team member.'
-  });
+  };
+  staff.unshift(newMember);
   saveCmsStaff(staff);
   renderCmsStaffList();
-  const el = document.getElementById('cmsstaff-' + newId);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  toast('New staff card added to roster ✓', 'ok');
+  editCmsStaff(newId);
+  toast('New staff card created ✓', 'ok');
 }
 
 function deleteCmsStaff(id) {
   if (!confirm('Remove this team member?')) return;
-  saveStaffRosterFromInputs();
   saveCmsStaff(getCmsStaff().filter(x => x.id !== id));
   renderCmsStaffList();
   toast('Team member removed', 'info');
@@ -3888,7 +3884,7 @@ function initDash() {
   setInterval(updateClock, 15000);
   setInterval(()=>{ renderLeads(); renderActivityFeed(); renderTable(); renderTickets(); }, 60000);
   updateStats(); renderLeads(); renderActivityFeed(); renderTable(); renderTickets();
-  loadCmsFormFields(); renderCmsProperties();
+  loadCmsFormFields(); renderCmsProperties(); renderCmsStaffList();
   // Initialize construction command center tabs
   renderMaterials();
   renderBudget();
