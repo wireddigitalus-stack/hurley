@@ -1318,7 +1318,49 @@
   <div class="dash-panel" id="panel-analytics">
 
     <!-- INSIGHTS ROW: Source breakdown + Activity Feed -->
-    <div class="insights  <!-- ═══ PANEL 4: EDIT SITE PAGES ═══ -->
+    <div class="insights-row" style="margin-bottom:0;">
+      <!-- Lead breakdown -->
+      <div class="insight-card">
+        <div class="insight-title">Lead Source &amp; Type Breakdown</div>
+        <div class="bar-row" id="source-bars"></div>
+        <div style="margin-top:0.5rem;border-top:1px solid var(--border);padding-top:0.75rem;">
+          <div class="insight-title" style="margin-bottom:0.5rem;">Property Type Mix</div>
+          <div class="bar-row" id="type-bars"></div>
+        </div>
+      </div>
+      <!-- Latest Activity card -->
+      <div class="insight-card activity-card">
+        <div class="activity-header">
+          <div class="insight-title">Latest Activity</div>
+          <span class="activity-live-dot">Live</span>
+        </div>
+        <!-- Sparkline chart -->
+        <div class="act-chart-wrap">
+          <div class="act-chart-label">
+            <span class="act-chart-title">7-Day Lead Volume</span>
+            <span class="act-chart-total" id="act-chart-total"></span>
+          </div>
+          <svg class="act-chart-svg" id="act-chart-svg" viewBox="0 0 280 68" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"   stop-color="#C9A84C" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="sparkLine" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%"   stop-color="#C9A84C" stop-opacity="0.4"/>
+                <stop offset="100%" stop-color="#C9A84C" stop-opacity="1"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="act-chart-days" id="act-chart-days"></div>
+        </div>
+        <div class="activity-feed" id="activity-feed"></div>
+      </div>
+    </div>
+
+  </div><!-- /panel-analytics -->
+
+  <!-- ═══ PANEL 4: EDIT SITE PAGES ═══ -->
   <div class="dash-panel" id="panel-editor">
 
     <!-- Site Content CMS -->
