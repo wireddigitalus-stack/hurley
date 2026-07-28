@@ -1374,10 +1374,15 @@
       <div id="cms-section-staff" style="display:none;">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
           <div style="font-size:0.8rem;color:var(--t2);">Edit staff member bios, titles, photos, or add team members to About Page:</div>
-          <button class="add-btn" onclick="openStaffModal()">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Add Team Member
-          </button>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <button class="add-btn" onclick="openStaffModal()">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              ➕ Add Team Member
+            </button>
+            <button class="crm-tools-btn" onclick="addNewStaffMemberInlineCard()" style="border-color:rgba(201,168,76,0.4);color:var(--gold);background:rgba(201,168,76,0.1);font-size:0.78rem;padding:0.5em 0.9em;">
+              ⚡ Quick Add Blank Card
+            </button>
+          </div>
         </div>
         <div id="cms-staff-list" class="ticket-feed" style="margin-bottom:1.5rem;"></div>
 
@@ -3288,13 +3293,68 @@ function renderCmsStaffList() {
   `).join('');
 }
 
-function addNewStaffMemberInline() {
+function openStaffModal() {
+  document.getElementById('ms-id').value = '';
+  document.getElementById('ms-modal-title').textContent = '👥 Add Team Member';
+  ['ms-name','ms-role','ms-badge','ms-photo','ms-bio'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  if (document.getElementById('ms-cat')) document.getElementById('ms-cat').value = 'leader';
+  if (document.getElementById('ms-photo')) document.getElementById('ms-photo').value = 'img/office.png';
+  const overlay = document.getElementById('staff-overlay');
+  if (overlay) overlay.classList.add('open');
+  setTimeout(() => document.getElementById('ms-name')?.focus(), 320);
+}
+
+function closeStaffModal() {
+  const overlay = document.getElementById('staff-overlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+function setPresetStaffPhoto(val) {
+  const el = document.getElementById('ms-photo');
+  if (el) el.value = val;
+}
+
+function submitCmsStaff() {
+  const name = document.getElementById('ms-name')?.value.trim();
+  if (!name) { toast('Staff member name is required', 'info'); return; }
+
+  saveStaffRosterFromInputs();
+  const sid = document.getElementById('ms-id')?.value || ('s_' + Date.now());
+  const newStaff = {
+    id: sid,
+    name: name,
+    role: document.getElementById('ms-role')?.value.trim() || 'Team Member',
+    cat: document.getElementById('ms-cat')?.value || 'leader',
+    badge: document.getElementById('ms-badge')?.value.trim() || '',
+    photo: document.getElementById('ms-photo')?.value.trim() || 'img/office.png',
+    bio: document.getElementById('ms-bio')?.value.trim() || ''
+  };
+
+  const staff = getCmsStaff();
+  const idx = staff.findIndex(x => x.id === sid);
+  if (idx !== -1) {
+    staff[idx] = newStaff;
+  } else {
+    staff.unshift(newStaff);
+  }
+
+  saveCmsStaff(staff);
+  renderCmsStaffList();
+  closeStaffModal();
+  toast('Team member added to roster ✓', 'ok');
+}
+
+function addNewStaffMemberInlineCard() {
   saveStaffRosterFromInputs();
   const staff = getCmsStaff();
-  staff.push({
-    id: 's_' + Date.now(),
+  const newId = 's_' + Date.now();
+  staff.unshift({
+    id: newId,
     name: 'New Team Member',
-    role: 'Role / Title',
+    role: 'Role / Position',
     cat: 'support',
     badge: '',
     photo: 'img/office.png',
@@ -3302,11 +3362,9 @@ function addNewStaffMemberInline() {
   });
   saveCmsStaff(staff);
   renderCmsStaffList();
+  const el = document.getElementById('cmsstaff-' + newId);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   toast('New staff card added to roster ✓', 'ok');
-}
-
-function openStaffModal() {
-  addNewStaffMemberInline();
 }
 
 function deleteCmsStaff(id) {
