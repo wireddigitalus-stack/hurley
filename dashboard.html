@@ -514,12 +514,17 @@
     .overlay.open .modal-sheet { transform: translateY(0); }
     .modal-handle { width: 36px; height: 4px; background: var(--border-md); border-radius: 2px; margin: 0 auto 1.25rem; }
     .modal-title { font-size: 1rem; font-weight: 800; margin-bottom: 1.25rem; }
-    .mf { margin-bottom: 0.85rem; }
+    .mf { margin-bottom: 0.85rem; width: 100%; box-sizing: border-box; }
     .ml { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; color: var(--t3); margin-bottom: 0.35rem; display: block; }
-    .mi, .ms {
-      width: 100%; background: rgba(255,255,255,0.04); border: 1.5px solid var(--border);
+    .mi, .ms, .tc-notes, textarea.mi, textarea.tc-notes {
+      width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; display: block !important;
+      background: rgba(255,255,255,0.04); border: 1.5px solid var(--border);
       border-radius: 11px; padding: 0.8rem 0.9rem; font-size: 0.88rem; font-weight: 600;
       color: var(--off-white); outline: none; transition: border-color 0.2s; -webkit-appearance: none; min-height: 48px;
+      font-family: var(--font);
+    }
+    textarea.tc-notes, textarea.mi {
+      min-height: 100px; resize: vertical; line-height: 1.6; font-weight: 400;
     }
     .mi::placeholder { color: var(--t3); font-weight: 400; }
     .mi:focus, .ms:focus { border-color: var(--gold); }
@@ -1462,10 +1467,10 @@
               <label class="ml">Main Hero Headline</label>
               <input type="text" class="mi" id="cms-hero-title" value="We Buy, Build &amp; Lease Commercial &amp; Residential Real Estate">
             </div>
-            <div class="mf" style="margin-top:0.4rem;">
+            <div class="mf" style="margin-top:0.4rem;width:100%;">
               <span class="seo-warn-badge tip">💡 Conversion Text: Key value proposition summary</span>
               <label class="ml">Hero Subtitle</label>
-              <input type="text" class="mi" id="cms-hero-sub" value="From City Centre office suites to turn-key cash property acquisitions — premier real estate solutions across Bristol TN &amp; VA.">
+              <textarea class="tc-notes" id="cms-hero-sub" rows="3" style="width:100%;min-height:90px;box-sizing:border-box;resize:vertical;display:block;">From City Centre office suites to turn-key cash property acquisitions — premier real estate solutions across Bristol TN &amp; VA.</textarea>
             </div>
           </div>
 
