@@ -1939,12 +1939,24 @@ function lockDash() {
   ps.style.display=''; ps.classList.remove('unlocked');
 }
 (function() {
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+
   const a = localStorage.getItem(CFG.authKey);
   if (a && Date.now()-parseInt(a) < 8*3600000) {
     document.getElementById('pin-screen').style.display='none';
     initDash();
   }
 })();
+
+window.addEventListener('pageshow', function() {
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+});
 
 /* ── DATA ────────────────────────────────────── */
 function getLeads() {
@@ -3841,6 +3853,11 @@ document.addEventListener('input', function(e) {
 });
 
 function initDash() {
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+  setTimeout(() => window.scrollTo(0, 0), 20);
   setGreeting(); updateClock();
   setInterval(updateClock, 15000);
   setInterval(()=>{ renderLeads(); renderActivityFeed(); renderTable(); renderTickets(); }, 60000);
