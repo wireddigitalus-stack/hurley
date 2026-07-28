@@ -1689,40 +1689,47 @@
 
 <!-- ADD/EDIT STAFF MEMBER MODAL -->
 <div class="overlay" id="staff-overlay" onclick="if(event.target===this)closeStaffModal()">
-  <div class="modal-sheet">
+  <div class="modal-sheet" style="max-width:540px;">
     <div class="modal-handle"></div>
-    <div class="modal-title" id="ms-modal-title">👥 Add Team Member</div>
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border);">
+      <img id="ms-headshot-preview" src="img/office.png" style="width:84px;height:84px;border-radius:16px;object-fit:cover;border:2.5px solid var(--gold);box-shadow:0 6px 16px rgba(0,0,0,0.4);flex-shrink:0;" alt="Staff Headshot">
+      <div style="flex:1;">
+        <div class="modal-title" id="ms-modal-title" style="margin-bottom:0.2rem;">✏️ Edit Team Member</div>
+        <div style="font-size:0.75rem;color:var(--gold);font-weight:700;" id="ms-modal-sub">Update name, job title, headshot photo &amp; bio</div>
+      </div>
+    </div>
     <input type="hidden" id="ms-id" value="">
-    <div class="mf"><label class="ml">Full Name</label><input type="text" class="mi" id="ms-name" placeholder="e.g. J. Allen Hurley II"></div>
+    <div class="mf" style="width:100%;"><label class="ml">Full Name</label><input type="text" class="mi" id="ms-name" placeholder="e.g. J. Allen Hurley II" style="width:100%;box-sizing:border-box;"></div>
     <div class="mrow">
-      <div class="mf"><label class="ml">Title / Role</label><input type="text" class="mi" id="ms-role" placeholder="e.g. CEO &amp; President"></div>
-      <div class="mf"><label class="ml">Category / Team Group</label>
-        <select class="ms" id="ms-cat">
-          <option value="leader">⭐ Leadership</option>
+      <div class="mf" style="width:100%;"><label class="ml">Title / Position</label><input type="text" class="mi" id="ms-role" placeholder="e.g. CEO &amp; President" style="width:100%;box-sizing:border-box;"></div>
+      <div class="mf" style="width:100%;"><label class="ml">Category / Team Group</label>
+        <select class="ms" id="ms-cat" style="width:100%;box-sizing:border-box;">
+          <option value="leader">⭐ Executive Leadership &amp; Owner</option>
           <option value="support">🛠 Operations &amp; Field Team</option>
         </select>
       </div>
     </div>
-    <div class="mf"><label class="ml">Badge Tag (optional)</label><input type="text" class="mi" id="ms-badge" placeholder="e.g. ⭐ Founder &amp; CEO"></div>
-    <div class="mf">
-      <label class="ml">Staff Photo Image (Upload or URL)</label>
-      <div style="display:flex;gap:0.5rem;align-items:center;">
-        <input type="text" class="mi" id="ms-photo" placeholder="https://... or click Upload" style="flex:1;">
-        <button type="button" class="crm-tools-btn" onclick="document.getElementById('ms-file-input').click()" style="border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.12);font-size:0.75rem;padding:0.65em 0.95em;white-space:nowrap;">
-          📁 Upload &amp; Optimize
-        </button>
-        <input type="file" id="ms-file-input" accept="image/*" style="display:none;" onchange="handleModalStaffFileUpload(event)">
-      </div>
-      <div id="ms-upload-status" style="font-size:0.72rem;color:var(--gold);margin-top:0.25rem;font-weight:600;"></div>
-      <div style="display:flex;gap:0.4rem;margin-top:0.4rem;flex-wrap:wrap;">
-        <button type="button" class="crm-tools-btn" onclick="setPresetStaffPhoto('img/office.png')" style="font-size:0.65rem;padding:0.25em 0.6em;">📷 Default (img/office.png)</button>
-        <button type="button" class="crm-tools-btn" onclick="setPresetStaffPhoto('https://static.wixstatic.com/media/44d8da_dc70f3e33d4843ef80c6c734ea69c169~mv2.png/v1/fill/w_425,h_418,fp_0.41_0.45,lg_1,q_85,enc_avif,quality_auto/aaaaaa.png')" style="font-size:0.65rem;padding:0.25em 0.6em;">📷 Allen Photo</button>
-        <button type="button" class="crm-tools-btn" onclick="setPresetStaffPhoto('https://static.wixstatic.com/media/44d8da_78071fa2797943d3bd8fc3a617ae72ab~mv2.png/v1/fill/w_425,h_418,al_c,lg_1,q_85,enc_avif,quality_auto/nh.png')" style="font-size:0.65rem;padding:0.25em 0.6em;">📷 Noah Photo</button>
+    <div class="mf" style="width:100%;"><label class="ml">Badge Tag (optional)</label><input type="text" class="mi" id="ms-badge" placeholder="e.g. ⭐ Founder &amp; CEO" style="width:100%;box-sizing:border-box;"></div>
+    <div class="mf" style="width:100%;">
+      <label class="ml">Staff Photo Image (Drag &amp; Drop or Upload)</label>
+      <div id="ms-dropzone" ondragover="handleModalDragOver(event)" ondragleave="handleModalDragLeave(event)" ondrop="handleModalDrop(event)" style="border:1.5px dashed rgba(201,168,76,0.4);border-radius:12px;padding:0.75rem;background:rgba(201,168,76,0.03);text-align:center;transition:all 0.2s;">
+        <div style="font-size:0.7rem;color:var(--t2);margin-bottom:0.4rem;">📥 Drag &amp; drop photo file here, or click Upload:</div>
+        <div style="display:flex;gap:0.5rem;align-items:center;">
+          <input type="text" class="mi" id="ms-photo" oninput="const img=document.getElementById('ms-headshot-preview');if(img)img.src=this.value;" placeholder="https://... or click Upload" style="flex:1;box-sizing:border-box;">
+          <button type="button" class="crm-tools-btn" onclick="document.getElementById('ms-file-input').click()" style="border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.12);font-size:0.75rem;padding:0.65em 0.95em;white-space:nowrap;">
+            📁 Upload Photo
+          </button>
+          <input type="file" id="ms-file-input" accept="image/*" style="display:none;" onchange="handleModalStaffFileUpload(event)">
+        </div>
+        <div id="ms-upload-status" style="font-size:0.72rem;color:var(--gold);margin-top:0.25rem;font-weight:600;"></div>
       </div>
     </div>
-    <div class="mf"><label class="ml">Biography / Bio</label><textarea class="tc-notes" id="ms-bio" style="min-height:85px;" placeholder="Full staff biography, background, experience…"></textarea></div>
-    <button class="modal-submit" onclick="submitCmsStaff()">Save Team Member →</button>
-    <button class="modal-cancel" onclick="closeStaffModal()">Cancel</button>
+    <div class="mf" style="width:100%;"><label class="ml">Biography / Bio Text (Editable &amp; Live Synced)</label><textarea class="tc-notes" id="ms-bio" style="min-height:110px;width:100%;box-sizing:border-box;line-height:1.6;" placeholder="Full staff biography, background, experience…"></textarea></div>
+    <div style="display:flex;gap:0.5rem;margin-top:1rem;">
+      <button class="modal-submit" onclick="submitCmsStaff()" style="flex:1;background:var(--gold);color:#000;font-weight:800;">💾 Save Team Member Changes</button>
+      <button class="act-btn del" id="ms-delete-btn" onclick="deleteModalStaff()" style="padding:0.7em 1em;font-size:0.8rem;">🗑️ Delete Member</button>
+    </div>
+    <button class="modal-cancel" onclick="closeStaffModal()" style="margin-top:0.5rem;">Close Without Saving</button>
   </div>
 </div>
 <div class="overlay" id="material-overlay" onclick="if(event.target===this)closeMaterialModal()">
@@ -3429,70 +3436,32 @@ function renderCmsStaffList() {
     container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--t3);font-size:0.8rem;">No team members listed. Click "Add Team Member" above.</div>`;
     return;
   }
+
   container.innerHTML = staff.map(s => `
-    <div class="ticket-card staff-card-item" id="cmsstaff-${s.id}" data-cat="${s.cat || 'leader'}" data-name="${(s.name||'').toLowerCase()}" data-role="${(s.role||'').toLowerCase()}" style="border-left:4px solid ${s.cat==='leader'?'var(--gold)':'var(--info)'};margin-bottom:0;">
-      <div style="font-size:0.68rem;font-weight:900;color:var(--gold);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.6rem;padding-bottom:0.3rem;border-bottom:1px solid var(--border);">
-        ✏️ ${s.cat === 'leader' ? '⭐ Executive & Owner Card' : '🛠 Operations Team Card'} — ${s.name || 'Member'}
-      </div>
-      <div class="tc-header" style="align-items:center;margin-bottom:0.85rem;">
-        <div style="display:flex;align-items:center;gap:0.85rem;flex:1;">
-          <img id="staff-img-prev-${s.id}" src="${s.photo || 'img/office.png'}" style="width:68px;height:68px;border-radius:14px;object-fit:cover;border:2px solid var(--gold);flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,0.3);" alt="${s.name}">
-          <div>
-            <div style="font-size:0.98rem;font-weight:800;color:var(--off-white);">${s.name || 'Team Member'}</div>
-            <div style="font-size:0.75rem;color:var(--gold);font-weight:700;margin-top:0.15rem;">${s.role || 'Title'} ${s.cat === 'leader' ? '⭐ Leadership' : '🛠 Operations'}</div>
+    <div class="ticket-card staff-card-item" id="cmsstaff-${s.id}" data-cat="${s.cat || 'leader'}" data-name="${(s.name||'').toLowerCase()}" data-role="${(s.role||'').toLowerCase()}" onclick="if(!event.target.closest('button'))editCmsStaff('${s.id}')" style="border-left:4px solid ${s.cat==='leader'?'var(--gold)':'var(--info)'};cursor:pointer;margin-bottom:0;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='${s.cat==='leader'?'var(--gold)':'var(--info)'}';this.style.transform='none'">
+      <div style="display:flex;align-items:center;gap:0.9rem;margin-bottom:0.75rem;">
+        <img id="staff-img-prev-${s.id}" src="${s.photo || 'img/office.png'}" style="width:76px;height:76px;border-radius:14px;object-fit:cover;border:2px solid var(--gold);flex-shrink:0;box-shadow:0 4px 14px rgba(0,0,0,0.4);" alt="${s.name}">
+        <div style="flex:1;">
+          <div style="font-size:0.65rem;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;color:${s.cat==='leader'?'var(--gold)':'var(--info)'};margin-bottom:0.2rem;">
+            ${s.cat === 'leader' ? '⭐ Executive Leadership & Owner' : '🛠 Operations Team'}
           </div>
-        </div>
-        <div style="display:flex;gap:0.35rem;">
-          <button class="act-btn" onclick="editCmsStaff('${s.id}')" style="font-size:0.68rem;padding:0.35em 0.75em;">✏️ Modal Edit</button>
-          <button class="act-btn del" onclick="deleteCmsStaff('${s.id}')" style="font-size:0.68rem;padding:0.35em 0.75em;">🗑️ Remove</button>
-        </div>
-      </div>
-
-      <input type="hidden" class="staff-field-id" value="${s.id}">
-
-      <div class="mrow" style="margin-top:0.6rem;">
-        <div class="mf" style="width:100%;">
-          <label class="ml">Full Name</label>
-          <input type="text" class="mi staff-field-name" value="${s.name || ''}" placeholder="Staff Full Name" style="width:100%;box-sizing:border-box;">
-        </div>
-        <div class="mf" style="width:100%;">
-          <label class="ml">Title / Position</label>
-          <input type="text" class="mi staff-field-role" value="${s.role || ''}" placeholder="e.g. CEO & President" style="width:100%;box-sizing:border-box;">
+          <div style="font-size:1.02rem;font-weight:800;color:var(--off-white);">${s.name || 'Team Member'}</div>
+          <div style="font-size:0.78rem;color:var(--gold);font-weight:700;margin-top:0.15rem;">${s.role || 'Position'}</div>
+          ${s.badge ? `<div style="font-size:0.68rem;color:var(--t2);margin-top:0.25rem;">🏷️ ${s.badge}</div>` : ''}
         </div>
       </div>
 
-      <div class="mrow" style="margin-top:0.4rem;">
-        <div class="mf" style="width:100%;">
-          <label class="ml">Team Group / Category</label>
-          <select class="ms staff-field-cat" style="width:100%;box-sizing:border-box;">
-            <option value="leader" ${s.cat==='leader'?'selected':''}>⭐ Leadership Team</option>
-            <option value="support" ${s.cat==='support'?'selected':''}>🛠 Operations & Field Team</option>
-          </select>
-        </div>
-        <div class="mf" style="width:100%;">
-          <label class="ml">Badge Tag (optional)</label>
-          <input type="text" class="mi staff-field-badge" value="${s.badge || ''}" placeholder="e.g. ⭐ Founder & CEO" style="width:100%;box-sizing:border-box;">
-        </div>
+      <div style="font-size:0.78rem;color:var(--t2);line-height:1.5;margin-bottom:0.85rem;background:rgba(0,0,0,0.25);padding:0.6rem 0.75rem;border-radius:10px;border:1px solid rgba(255,255,255,0.05);max-height:80px;overflow:hidden;text-overflow:ellipsis;">
+        ${s.bio ? (s.bio.length > 120 ? s.bio.substring(0, 120) + '…' : s.bio) : '<em>No bio text entered yet. Click edit below to add bio.</em>'}
       </div>
 
-      <div class="mf" style="margin-top:0.4rem;width:100%;">
-        <label class="ml">Staff Photo Image (Drag &amp; Drop or Upload)</label>
-        <div id="dropzone-${s.id}" ondragover="handleDragOver(event, '${s.id}')" ondragleave="handleDragLeave(event, '${s.id}')" ondrop="handleDrop(event, '${s.id}')" style="border:1.5px dashed rgba(201,168,76,0.35);border-radius:12px;padding:0.65rem 0.85rem;background:rgba(201,168,76,0.03);transition:all 0.2s;">
-          <div style="font-size:0.7rem;color:var(--t2);margin-bottom:0.35rem;">📥 Drag &amp; drop photo file here, or click Browse:</div>
-          <div style="display:flex;gap:0.5rem;align-items:center;">
-            <input type="text" class="mi staff-field-photo" id="staff-photo-input-${s.id}" value="${s.photo || ''}" oninput="const img=document.getElementById('staff-img-prev-${s.id}');if(img)img.src=this.value;" placeholder="https://... or drag file" style="flex:1;box-sizing:border-box;">
-            <button type="button" class="crm-tools-btn" onclick="document.getElementById('staff-file-input-${s.id}').click()" style="border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.12);font-size:0.75rem;padding:0.65em 0.95em;white-space:nowrap;">
-              📁 Browse Photo
-            </button>
-            <input type="file" id="staff-file-input-${s.id}" accept="image/*" style="display:none;" onchange="handleStaffCardFileUpload(event, '${s.id}')">
-          </div>
-          <div id="staff-opt-status-${s.id}" style="font-size:0.72rem;color:var(--gold);margin-top:0.25rem;font-weight:600;"></div>
-        </div>
-      </div>
-
-      <div class="mf" style="margin-top:0.4rem;width:100%;">
-        <label class="ml">Biography / Bio Text (Editable &amp; Live Synced)</label>
-        <textarea class="tc-notes staff-field-bio" rows="4" style="width:100%;min-height:100px;box-sizing:border-box;resize:vertical;display:block;line-height:1.6;">${s.bio || ''}</textarea>
+      <div style="display:flex;gap:0.5rem;align-items:center;">
+        <button class="add-btn" onclick="editCmsStaff('${s.id}')" style="flex:1;justify-content:center;font-size:0.78rem;padding:0.55em;background:var(--gold);color:#000;font-weight:800;">
+          ✏️ Edit ${s.name.split(' ')[0]}'s Profile &amp; Bio
+        </button>
+        <button class="act-btn del" onclick="deleteCmsStaff('${s.id}')" style="font-size:0.72rem;padding:0.55em 0.85em;" title="Remove staff member">
+          🗑️
+        </button>
       </div>
     </div>
   `).join('');
@@ -3521,30 +3490,30 @@ function applyStaffFilters() {
 function filterStaffList(q) { applyStaffFilters(); }
 function filterStaffListByCat(c) { applyStaffFilters(); }
 
-function handleDragOver(e, id) {
+function handleModalDragOver(e) {
   e.preventDefault();
-  const dz = document.getElementById('dropzone-' + id);
+  const dz = document.getElementById('ms-dropzone');
   if (dz) {
     dz.style.borderColor = 'var(--gold)';
     dz.style.background = 'rgba(201,168,76,0.12)';
   }
 }
 
-function handleDragLeave(e, id) {
+function handleModalDragLeave(e) {
   e.preventDefault();
-  const dz = document.getElementById('dropzone-' + id);
+  const dz = document.getElementById('ms-dropzone');
   if (dz) {
-    dz.style.borderColor = 'rgba(201,168,76,0.35)';
+    dz.style.borderColor = 'rgba(201,168,76,0.4)';
     dz.style.background = 'rgba(201,168,76,0.03)';
   }
 }
 
-function handleDrop(e, id) {
+function handleModalDrop(e) {
   e.preventDefault();
-  handleDragLeave(e, id);
+  handleModalDragLeave(e);
   const files = e.dataTransfer?.files;
   if (files && files.length > 0) {
-    handleStaffCardFileUpload({ target: { files: files } }, id);
+    handleModalStaffFileUpload({ target: { files: files } });
   }
 }
 
@@ -3552,26 +3521,43 @@ function editCmsStaff(id) {
   const s = getCmsStaff().find(x => x.id === id);
   if (!s) return;
   document.getElementById('ms-id').value = s.id;
-  document.getElementById('ms-modal-title').textContent = '✏️ Edit Team Member';
+  document.getElementById('ms-modal-title').textContent = '✏️ Edit ' + s.name;
+  if (document.getElementById('ms-modal-sub')) document.getElementById('ms-modal-sub').textContent = (s.role || 'Team Member') + ' · Click Save below when done';
+  if (document.getElementById('ms-headshot-preview')) document.getElementById('ms-headshot-preview').src = s.photo || 'img/office.png';
   if (document.getElementById('ms-name'))  document.getElementById('ms-name').value  = s.name || '';
   if (document.getElementById('ms-role'))  document.getElementById('ms-role').value  = s.role || '';
   if (document.getElementById('ms-cat'))   document.getElementById('ms-cat').value   = s.cat || 'leader';
   if (document.getElementById('ms-badge')) document.getElementById('ms-badge').value = s.badge || '';
   if (document.getElementById('ms-photo')) document.getElementById('ms-photo').value = s.photo || '';
   if (document.getElementById('ms-bio'))   document.getElementById('ms-bio').value   = s.bio || '';
+  const delBtn = document.getElementById('ms-delete-btn');
+  if (delBtn) delBtn.style.display = 'block';
+
   const overlay = document.getElementById('staff-overlay');
   if (overlay) overlay.classList.add('open');
 }
 
+function deleteModalStaff() {
+  const sid = document.getElementById('ms-id')?.value;
+  if (!sid) return;
+  deleteCmsStaff(sid);
+  closeStaffModal();
+}
+
 function openStaffModal() {
   document.getElementById('ms-id').value = '';
-  document.getElementById('ms-modal-title').textContent = '👥 Add Team Member';
+  document.getElementById('ms-modal-title').textContent = '👥 Add New Team Member';
+  if (document.getElementById('ms-modal-sub')) document.getElementById('ms-modal-sub').textContent = 'Enter details to add a new member to about.html';
+  if (document.getElementById('ms-headshot-preview')) document.getElementById('ms-headshot-preview').src = 'img/office.png';
   ['ms-name','ms-role','ms-badge','ms-photo','ms-bio'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
   if (document.getElementById('ms-cat')) document.getElementById('ms-cat').value = 'leader';
   if (document.getElementById('ms-photo')) document.getElementById('ms-photo').value = 'img/office.png';
+  const delBtn = document.getElementById('ms-delete-btn');
+  if (delBtn) delBtn.style.display = 'none';
+
   const overlay = document.getElementById('staff-overlay');
   if (overlay) overlay.classList.add('open');
   setTimeout(() => document.getElementById('ms-name')?.focus(), 320);
