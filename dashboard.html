@@ -3425,7 +3425,7 @@ function getCmsStaff() {
     let d = raw ? JSON.parse(raw) : null;
 
     const validStaff = DEFAULT_STAFF.map(ds => {
-      const saved = Array.isArray(d) ? d.find(x => x && (x.id === ds.id || (x.name && x.name.toLowerCase().includes(ds.name.toLowerCase().split(' ')[0])))) : null;
+      const saved = Array.isArray(d) ? d.find(x => x && (x.id === ds.id || (x.name && x.name.toLowerCase().trim() === ds.name.toLowerCase().trim()))) : null;
       return {
         id: ds.id,
         name: (saved && saved.name && saved.name.trim()) ? saved.name : ds.name,
@@ -3440,7 +3440,17 @@ function getCmsStaff() {
     if (Array.isArray(d)) {
       d.forEach(item => {
         if (item && item.id && !validStaff.some(m => m.id === item.id)) {
-          if (item.name) validStaff.push(item);
+          if (item.name && item.name.trim()) {
+            validStaff.push({
+              id: item.id,
+              name: item.name,
+              role: item.role || 'Team Member',
+              cat: item.cat || 'support',
+              badge: item.badge || '',
+              photo: item.photo || 'img/office.png',
+              bio: item.bio || ''
+            });
+          }
         }
       });
     }
@@ -3477,33 +3487,39 @@ function renderCmsStaffList() {
     return;
   }
 
-  container.innerHTML = staff.map(s => `
-    <div class="ticket-card staff-card-item" id="cmsstaff-${s.id}" data-cat="${s.cat || 'leader'}" data-name="${(s.name||'').toLowerCase()}" data-role="${(s.role||'').toLowerCase()}" data-badge="${(s.badge||'').toLowerCase()}" data-bio="${(s.bio||'').toLowerCase()}" onclick="if(!event.target.closest('button'))editCmsStaff('${s.id}')" style="border-top:4px solid ${s.cat==='leader'?'var(--gold)':'var(--info)'};cursor:pointer;margin-bottom:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:1.25rem 1rem;transition:all 0.22s;background:var(--bg-surface);border-radius:16px;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(201,168,76,0.18)'" onmouseout="this.style.borderColor='${s.cat==='leader'?'var(--gold)':'var(--info)'}';this.style.transform='none';this.style.boxShadow='none'">
-      
-      <div style="font-size:0.6rem;font-weight:900;letter-spacing:0.1em;text-transform:uppercase;color:${s.cat==='leader'?'var(--gold)':'var(--info)'};background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);padding:0.25em 0.7em;border-radius:999px;margin-bottom:0.85rem;">
-        ${(s.name||'').includes('Allen') ? '⭐ Founder & Owner' : (s.cat === 'leader' ? '⭐ Executive Leadership' : '🛠 Operations Team')}
+  container.innerHTML = staff.map(s => {
+    const sName = (s.name || '').replace(/"/g, '');
+    const sRole = (s.role || '').replace(/"/g, '');
+    const sBadge = (s.badge || '').replace(/"/g, '');
+    const sBio = (s.bio || '').replace(/"/g, '');
+    return `
+      <div class="ticket-card staff-card-item" id="cmsstaff-${s.id}" data-cat="${s.cat || 'leader'}" data-name="${sName.toLowerCase()}" data-role="${sRole.toLowerCase()}" data-badge="${sBadge.toLowerCase()}" data-bio="${sBio.toLowerCase()}" onclick="if(!event.target.closest('button'))editCmsStaff('${s.id}')" style="border-top:4px solid ${s.cat==='leader'?'var(--gold)':'var(--info)'};cursor:pointer;margin-bottom:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:1.25rem 1rem;transition:all 0.22s;background:var(--bg-surface);border-radius:16px;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(201,168,76,0.18)'" onmouseout="this.style.borderColor='${s.cat==='leader'?'var(--gold)':'var(--info)'}';this.style.transform='none';this.style.boxShadow='none'">
+        
+        <div style="font-size:0.6rem;font-weight:900;letter-spacing:0.1em;text-transform:uppercase;color:${s.cat==='leader'?'var(--gold)':'var(--info)'};background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);padding:0.25em 0.7em;border-radius:999px;margin-bottom:0.85rem;">
+          ${sName.includes('Allen') ? '⭐ Founder & Owner' : (s.cat === 'leader' ? '⭐ Executive Leadership' : '🛠 Operations Team')}
+        </div>
+
+        <img id="staff-img-prev-${s.id}" src="${s.photo || 'img/office.png'}" style="width:88px;height:88px;border-radius:20px;object-fit:cover;border:2.5px solid var(--gold);margin-bottom:0.75rem;box-shadow:0 6px 16px rgba(0,0,0,0.4);" alt="${sName}">
+
+        <div style="font-size:1.05rem;font-weight:900;color:var(--off-white);">${sName}</div>
+        <div style="font-size:0.78rem;color:var(--gold);font-weight:700;margin-top:0.15rem;">${sRole}</div>
+        ${sBadge ? `<div style="font-size:0.68rem;color:var(--t2);margin-top:0.25rem;font-weight:600;">🏷️ ${sBadge}</div>` : ''}
+
+        <div style="font-size:0.76rem;color:var(--t2);line-height:1.55;margin:0.75rem 0 1rem;background:rgba(0,0,0,0.3);padding:0.6rem 0.75rem;border-radius:10px;border:1px solid rgba(255,255,255,0.05);max-height:70px;overflow:hidden;text-overflow:ellipsis;width:100%;box-sizing:border-box;">
+          ${sBio ? (sBio.length > 110 ? sBio.substring(0, 110) + '…' : sBio) : '<em>Click edit below to add full bio.</em>'}
+        </div>
+
+        <div style="display:flex;gap:0.4rem;width:100%;margin-top:auto;">
+          <button class="add-btn" onclick="editCmsStaff('${s.id}')" style="flex:1;justify-content:center;font-size:0.78rem;padding:0.6em;background:var(--gold);color:#000;font-weight:800;border-radius:10px;">
+            ✏️ Edit Profile
+          </button>
+          <button class="act-btn del" onclick="deleteCmsStaff('${s.id}')" style="font-size:0.72rem;padding:0.6em 0.85em;border-radius:10px;" title="Remove staff member">
+            🗑️
+          </button>
+        </div>
       </div>
-
-      <img id="staff-img-prev-${s.id}" src="${s.photo || 'img/office.png'}" style="width:88px;height:88px;border-radius:20px;object-fit:cover;border:2.5px solid var(--gold);margin-bottom:0.75rem;box-shadow:0 6px 16px rgba(0,0,0,0.4);" alt="${s.name||'Staff Photo'}">
-
-      <div style="font-size:1.05rem;font-weight:900;color:var(--off-white);">${s.name || 'Team Member'}</div>
-      <div style="font-size:0.78rem;color:var(--gold);font-weight:700;margin-top:0.15rem;">${s.role || 'Position'}</div>
-      ${s.badge ? `<div style="font-size:0.68rem;color:var(--t2);margin-top:0.25rem;font-weight:600;">🏷️ ${s.badge}</div>` : ''}
-
-      <div style="font-size:0.76rem;color:var(--t2);line-height:1.55;margin:0.75rem 0 1rem;background:rgba(0,0,0,0.3);padding:0.6rem 0.75rem;border-radius:10px;border:1px solid rgba(255,255,255,0.05);max-height:70px;overflow:hidden;text-overflow:ellipsis;width:100%;box-sizing:border-box;">
-        ${s.bio ? (s.bio.length > 110 ? s.bio.substring(0, 110) + '…' : s.bio) : '<em>Click edit below to add full bio.</em>'}
-      </div>
-
-      <div style="display:flex;gap:0.4rem;width:100%;margin-top:auto;">
-        <button class="add-btn" onclick="editCmsStaff('${s.id}')" style="flex:1;justify-content:center;font-size:0.78rem;padding:0.6em;background:var(--gold);color:#000;font-weight:800;border-radius:10px;">
-          ✏️ Edit Profile &amp; Bio
-        </button>
-        <button class="act-btn del" onclick="deleteCmsStaff('${s.id}')" style="font-size:0.72rem;padding:0.6em 0.85em;border-radius:10px;" title="Remove staff member">
-          🗑️
-        </button>
-      </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 
   applyStaffFilters();
 }
