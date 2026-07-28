@@ -1,12 +1,13 @@
 /* ============================================================
    HURLEY ENTERPRISE LLC — Dynamic Site CMS Synchronizer
    js/site-cms.js
-   Syncs live site content & property listings edited in dashboard
+   Syncs live site content, hero video, staff roster & property listings edited in dashboard
    ============================================================ */
 
 (function() {
   const SITE_CONTENT_KEY = 'hurley_site_content';
   const SITE_PROP_KEY    = 'hurley_site_properties';
+  const SITE_STAFF_KEY   = 'hurley_site_staff';
 
   function applyCmsContent() {
     try {
@@ -34,22 +35,42 @@
         });
       }
 
-      // Hero Title
+      // Hero Title (Homepage)
       if (c.heroTitle) {
-        const heroH1 = document.querySelector('h1.hero-title, .hero h1, header h1');
-        if (heroH1) heroH1.textContent = c.heroTitle;
+        const heroH1 = document.querySelector('.home-hero h1.hero-headline');
+        if (heroH1) heroH1.innerHTML = c.heroTitle;
       }
 
-      // Hero Subtitle
+      // Hero Subtitle (Homepage)
       if (c.heroSub) {
-        const heroSub = document.querySelector('.hero-subtitle, p.hero-desc, .hero p');
+        const heroSub = document.querySelector('.home-hero p.hero-sub');
         if (heroSub) heroSub.textContent = c.heroSub;
       }
 
-      // Hero Tagline / Eyebrow
-      if (c.heroTagline) {
-        const tagline = document.querySelector('.hero-eyebrow, .hero-tagline, .overline');
-        if (tagline) tagline.textContent = c.heroTagline;
+      // Hero Video Banner (Homepage)
+      if (c.heroVideo) {
+        const video = document.querySelector('.hero-bg-video');
+        if (video) {
+          const source = video.querySelector('source');
+          if (source && source.src !== c.heroVideo) {
+            source.src = c.heroVideo;
+            video.load();
+          }
+        }
+      }
+
+      // About Page Hero & Mission Text
+      if (c.aboutTitle) {
+        const aboutH1 = document.querySelector('.about-hero h1');
+        if (aboutH1) aboutH1.textContent = c.aboutTitle;
+      }
+      if (c.aboutSub) {
+        const aboutSub = document.querySelector('.about-hero p');
+        if (aboutSub) aboutSub.textContent = c.aboutSub;
+      }
+      if (c.aboutMission) {
+        const missionH2 = document.querySelector('.mission-grid h2.section-heading');
+        if (missionH2) missionH2.textContent = c.aboutMission;
       }
 
       // Physical Address
@@ -80,6 +101,52 @@
         });
       }
     } catch(e) { console.warn('CMS content sync notice:', e); }
+  }
+
+  function applyCmsStaff() {
+    try {
+      const raw = localStorage.getItem(SITE_STAFF_KEY);
+      if (!raw) return;
+      const staff = JSON.parse(raw);
+      if (!staff || !staff.length) return;
+
+      const leaderGrid = document.getElementById('team-leadership-grid');
+      const supportGrid = document.getElementById('team-support-grid');
+
+      const leaders = staff.filter(s => s.cat === 'leader' || !s.cat);
+      const support = staff.filter(s => s.cat === 'support');
+
+      if (leaderGrid && leaders.length) {
+        leaderGrid.innerHTML = leaders.map(s => `
+          <div class="team-card leader" id="staff-card-${s.id}">
+            <div class="team-photo-wrap">
+              <img src="${s.photo || 'img/office.png'}" alt="${s.name} — ${s.role}" loading="lazy">
+              ${s.badge ? `<div style="position:absolute;top:0.75rem;left:0.75rem;background:rgba(201,168,76,0.92);color:#000;font-size:0.52rem;font-weight:900;letter-spacing:0.1em;text-transform:uppercase;padding:0.3em 0.75em;border-radius:999px;white-space:nowrap;">${s.badge}</div>` : ''}
+            </div>
+            <div class="team-info">
+              <p class="team-title">${s.role || 'Leadership'}</p>
+              <h3 class="team-name">${s.name}</h3>
+              <p class="team-bio">${s.bio || ''}</p>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      if (supportGrid && support.length) {
+        supportGrid.innerHTML = support.map(s => `
+          <div class="team-card support" id="staff-card-${s.id}">
+            <div class="team-photo-wrap">
+              <img src="${s.photo || 'img/office.png'}" alt="${s.name} — ${s.role}" loading="lazy">
+            </div>
+            <div class="team-info">
+              <p class="team-title">${s.role || 'Team Member'}</p>
+              <h3 class="team-name">${s.name}</h3>
+              <p class="team-bio">${s.bio || ''}</p>
+            </div>
+          </div>
+        `).join('');
+      }
+    } catch(e) { console.warn('CMS staff sync notice:', e); }
   }
 
   function applyCmsProperties() {
@@ -125,10 +192,12 @@
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
       applyCmsContent();
+      applyCmsStaff();
       applyCmsProperties();
     });
   } else {
     applyCmsContent();
+    applyCmsStaff();
     applyCmsProperties();
   }
 })();

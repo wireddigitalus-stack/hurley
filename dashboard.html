@@ -1349,19 +1349,54 @@
         <!-- Tabs for CMS mode -->
         <div style="display:flex;gap:0.5rem;margin-bottom:1.25rem;border-bottom:1px solid var(--border);padding-bottom:0.75rem;flex-wrap:wrap;">
           <button class="filter-btn active" id="tab-cms-properties" onclick="switchCmsTab('properties')">🏢 Manage Properties (For Sale / Lease)</button>
-          <button class="filter-btn" id="tab-cms-site" onclick="switchCmsTab('site')">📝 Site Text &amp; Contact Info</button>
+          <button class="filter-btn" id="tab-cms-staff" onclick="switchCmsTab('staff')">👥 About Page &amp; Staff Roster</button>
+          <button class="filter-btn" id="tab-cms-site" onclick="switchCmsTab('site')">📝 Video Banner &amp; Main Site Text</button>
         </div>
 
       <!-- PROPERTY LISTINGS CMS SECTION -->
       <div id="cms-section-properties">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
-          <div style="font-size:0.8rem;color:var(--t2);">Active property listings displayed on live site:</div>
+          <div style="font-size:0.8rem;color:var(--t2);">Active property listings displayed on live site (Add new or edit existing):</div>
           <button class="add-btn" onclick="openPropertyModal()">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Add New Property Listing
           </button>
         </div>
         <div id="cms-property-list" class="ticket-feed"></div>
+      </div>
+
+      <!-- ABOUT PAGE & STAFF ROSTER CMS SECTION -->
+      <div id="cms-section-staff" style="display:none;">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <div style="font-size:0.8rem;color:var(--t2);">Edit staff member bios, titles, photos, or add team members to About Page:</div>
+          <button class="add-btn" onclick="openStaffModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add Team Member
+          </button>
+        </div>
+        <div id="cms-staff-list" class="ticket-feed" style="margin-bottom:1.5rem;"></div>
+
+        <!-- About Page Copy Editor -->
+        <div class="ticket-card" style="border-left:4px solid var(--purple);">
+          <div class="tc-prop">About Page Hero &amp; Mission Copy</div>
+          <div class="mf" style="margin-top:0.6rem;">
+            <label class="ml">About Page Main Headline</label>
+            <input type="text" class="mi" id="cms-about-title" value="Building the Tri-Cities of Tomorrow Since 2004">
+          </div>
+          <div class="mf" style="margin-top:0.4rem;">
+            <label class="ml">About Page Subtitle Paragraph</label>
+            <textarea class="tc-notes" id="cms-about-sub" style="min-height:60px;">Hurley Enterprise LLC is Bristol TN/VA's premier commercial developer — transforming properties, corridors, and communities across the Tri-Cities.</textarea>
+          </div>
+          <div class="mf" style="margin-top:0.4rem;">
+            <label class="ml">Mission Statement Headline</label>
+            <input type="text" class="mi" id="cms-about-mission" value="Provide real value through experience, simplicity, and speed.">
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;margin-top:1.25rem;flex-wrap:wrap;">
+          <button class="modal-submit" onclick="saveSiteContent()" style="width:auto;padding:0.7em 1.5em;">💾 Save About Page Text</button>
+          <button class="crm-tools-btn" onclick="resetStaffRoster()" style="border-color:rgba(201,168,76,0.3);color:var(--gold);background:rgba(201,168,76,0.08);">🔄 Reset Staff Roster to Defaults</button>
+        </div>
       </div>
 
       <!-- SITE TEXT & CONTACT CMS SECTION -->
@@ -1398,10 +1433,15 @@
             </div>
           </div>
 
-          <!-- Homepage Banner Text -->
+          <!-- Homepage Banner Text & Video -->
           <div class="ticket-card" style="border-left:4px solid var(--cool);">
-            <div class="tc-prop">Homepage Hero &amp; Headlines</div>
+            <div class="tc-prop">Homepage Hero, Video Banner &amp; Headlines</div>
             <div class="mf" style="margin-top:0.6rem;">
+              <span class="seo-warn-badge tip">🎬 Video Banner: Path or URL to MP4/M4V video banner</span>
+              <label class="ml">Main Page Video Banner URL / Path</label>
+              <input type="text" class="mi" id="cms-hero-video" value="img/hurley-hero-video.mp4">
+            </div>
+            <div class="mf" style="margin-top:0.4rem;">
               <span class="seo-warn-badge tip">💡 Local Marker: Keep "Bristol TN / Tri-Cities"</span>
               <label class="ml">Top Tagline / Eyebrow</label>
               <input type="text" class="mi" id="cms-hero-tagline" value="BRISTOL TENNESSEE'S PREMIER COMMERCIAL REAL ESTATE FIRM">
@@ -1589,9 +1629,40 @@
     <div class="mf"><label class="ml">Highlights / Key Features (comma separated)</label><input type="text" class="mi" id="mp-specs" placeholder="All-Inclusive, No CAM Fees, 24/7 Security, Fitness Center"></div>
     <div class="mf"><label class="ml">Property Description</label><textarea class="tc-notes" id="mp-desc" style="min-height:75px;" placeholder="Full property overview, square footage, amenities, lease terms…"></textarea></div>
     <button class="modal-submit" onclick="submitCmsProperty()">Save Property Listing →</button>
-    <button class="modal-cancel" onclick="closePropertyModal()">Cancel</button>
   </div>
-<!-- ADD MATERIAL ORDER MODAL -->
+</div>
+
+<!-- ADD/EDIT STAFF MEMBER MODAL -->
+<div class="overlay" id="staff-overlay" onclick="if(event.target===this)closeStaffModal()">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="ms-modal-title">👥 Add Team Member</div>
+    <input type="hidden" id="ms-id" value="">
+    <div class="mf"><label class="ml">Full Name</label><input type="text" class="mi" id="ms-name" placeholder="e.g. J. Allen Hurley II"></div>
+    <div class="mrow">
+      <div class="mf"><label class="ml">Title / Role</label><input type="text" class="mi" id="ms-role" placeholder="e.g. CEO &amp; President"></div>
+      <div class="mf"><label class="ml">Category / Team Group</label>
+        <select class="ms" id="ms-cat">
+          <option value="leader">⭐ Leadership</option>
+          <option value="support">🛠 Operations &amp; Field Team</option>
+        </select>
+      </div>
+    </div>
+    <div class="mf"><label class="ml">Badge Tag (optional)</label><input type="text" class="mi" id="ms-badge" placeholder="e.g. ⭐ Founder &amp; CEO"></div>
+    <div class="mf">
+      <label class="ml">Staff Photo URL</label>
+      <input type="text" class="mi" id="ms-photo" placeholder="https://... or img/office.png">
+      <div style="display:flex;gap:0.4rem;margin-top:0.4rem;flex-wrap:wrap;">
+        <button type="button" class="crm-tools-btn" onclick="setPresetStaffPhoto('img/office.png')" style="font-size:0.65rem;padding:0.25em 0.6em;">📷 Default (img/office.png)</button>
+        <button type="button" class="crm-tools-btn" onclick="setPresetStaffPhoto('https://static.wixstatic.com/media/44d8da_dc70f3e33d4843ef80c6c734ea69c169~mv2.png/v1/fill/w_425,h_418,fp_0.41_0.45,lg_1,q_85,enc_avif,quality_auto/aaaaaa.png')" style="font-size:0.65rem;padding:0.25em 0.6em;">📷 Allen Photo</button>
+        <button type="button" class="crm-tools-btn" onclick="setPresetStaffPhoto('https://static.wixstatic.com/media/44d8da_78071fa2797943d3bd8fc3a617ae72ab~mv2.png/v1/fill/w_425,h_418,al_c,lg_1,q_85,enc_avif,quality_auto/nh.png')" style="font-size:0.65rem;padding:0.25em 0.6em;">📷 Noah Photo</button>
+      </div>
+    </div>
+    <div class="mf"><label class="ml">Biography / Bio</label><textarea class="tc-notes" id="ms-bio" style="min-height:85px;" placeholder="Full staff biography, background, experience…"></textarea></div>
+    <button class="modal-submit" onclick="submitCmsStaff()">Save Team Member →</button>
+    <button class="modal-cancel" onclick="closeStaffModal()">Cancel</button>
+  </div>
+</div>
 <div class="overlay" id="material-overlay" onclick="if(event.target===this)closeMaterialModal()">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
@@ -2982,17 +3053,22 @@ function submitTicket() {
 /* ── LIVE SITE CONTENT & PROPERTY CMS ENGINE ─── */
 const SITE_CONTENT_KEY = 'hurley_site_content';
 const SITE_PROP_KEY    = 'hurley_site_properties';
+const SITE_STAFF_KEY   = 'hurley_site_staff';
 
 const DEFAULT_SITE_CONTENT = {
-  phone:       '(423) 742-7219',
-  email:       'allen@hurleyllc.com',
-  address:     '100 5th Street, Suite 2W, Bristol, TN 37620',
-  hours:       'Monday – Friday 8:30 AM – 5:00 PM EST',
-  heroTagline: "BRISTOL TENNESSEE'S PREMIER COMMERCIAL REAL ESTATE FIRM",
-  heroTitle:   'We Buy, Build & Lease Commercial & Residential Real Estate',
-  heroSub:     'From City Centre office suites to turn-key cash property acquisitions — premier real estate solutions across Bristol TN & VA.',
-  ceoName:     'Allen Hurley · CEO & Founder',
-  ceoBio:      'Hurley Enterprise LLC is the most active commercial real estate firm in Bristol, Tennessee. We own, lease, and develop premier office suites, retail corridors, and industrial sites across the Tri-Cities.'
+  phone:        '(423) 742-7219',
+  email:        'allen@hurleyllc.com',
+  address:      '100 5th Street, Suite 2W, Bristol, TN 37620',
+  hours:        'Monday – Friday 8:30 AM – 5:00 PM EST',
+  heroVideo:    'img/hurley-hero-video.mp4',
+  heroTagline:  "BRISTOL TENNESSEE'S PREMIER COMMERCIAL REAL ESTATE FIRM",
+  heroTitle:    'Building the<br><em>Tri-Cities</em> of Tomorrow',
+  heroSub:      'From City Centre office suites to turn-key cash property acquisitions — premier real estate solutions across Bristol TN & VA.',
+  ceoName:      'Allen Hurley · CEO & Founder',
+  ceoBio:       'Hurley Enterprise LLC is the most active commercial real estate firm in Bristol, Tennessee. We own, lease, and develop premier office suites, retail corridors, and industrial sites across the Tri-Cities.',
+  aboutTitle:   'Building the Tri-Cities of Tomorrow Since 2004',
+  aboutSub:     'Hurley Enterprise LLC is Bristol TN/VA\'s premier commercial developer — transforming properties, corridors, and communities across the Tri-Cities.',
+  aboutMission: 'Provide real value through experience, simplicity, and speed.'
 };
 
 const DEFAULT_PROPERTIES = [
@@ -3031,6 +3107,17 @@ const DEFAULT_PROPERTIES = [
   }
 ];
 
+const DEFAULT_STAFF = [
+  { id: 's1', name: 'J. Allen Hurley II', role: 'CEO & President', cat: 'leader', photo: 'https://static.wixstatic.com/media/44d8da_dc70f3e33d4843ef80c6c734ea69c169~mv2.png/v1/fill/w_425,h_418,fp_0.41_0.45,lg_1,q_85,enc_avif,quality_auto/aaaaaa.png', badge: '⭐ Founder & CEO', bio: 'Entrepreneur for 32+ years across tech, real estate, and private equity. Built a wireless company from a garage to 2,700 employees and a quarter-billion in sales before taking it public. Leads Hurley Enterprise and Vision LLC across the Tri-Cities. Fortune 5000, ACG Growth Award, and TN Chancellor\'s Award recipient. Operates on one principle: "Said Done."' },
+  { id: 's2', name: 'Jazmin Hurley', role: 'Director', cat: 'leader', photo: 'https://static.wixstatic.com/media/44d8da_3e69b66a5dec47ed99fdf754fb874f79~mv2.avif/v1/fill/w_419,h_412,al_c,lg_1,q_80,enc_avif,quality_auto/jaz%20headshot_edited.avif', badge: '', bio: 'Oversees administration and marketing at Hurley Enterprise, holding degrees in Small Business Management and Entrepreneurial Studies. Her streamlined operations and strategic marketing drive sustainable growth portfolio-wide. Founded the Love\'N\'People 501(c)3 at age 12 — earning the Peg Brown Santa Pal Award in 2019.' },
+  { id: 's3', name: 'Noah Hurley', role: 'Project Director', cat: 'leader', photo: 'https://static.wixstatic.com/media/44d8da_78071fa2797943d3bd8fc3a617ae72ab~mv2.png/v1/fill/w_425,h_418,al_c,lg_1,q_85,enc_avif,quality_auto/nh.png', badge: '', bio: 'Directs project management from real estate acquisitions to transaction-based deals. A seasoned property manager, Noah\'s hands-on experience with residential and commercial operations — maintenance, upkeep, and day-to-day oversight — plays a pivotal role in enhancing property value and portfolio success.' },
+  { id: 's4', name: 'Denise Myers', role: 'Vice President', cat: 'leader', photo: 'https://static.wixstatic.com/media/44d8da_aee11fa05e9947f3b2f988dd052e1fdc~mv2.png/v1/fill/w_425,h_418,fp_0.65_0.37,lg_1,q_85,enc_avif,quality_auto/dm.png', badge: '', bio: 'B.S. from ETSU. Brings 16 years of healthcare leadership at Bristol Regional to her role as Executive VP of Vision LLC. Key member of the executive team in tactical planning, strategic decisions, and hands-on project development. Rotarian, Bristol Chamber Board member, and FCA board executive.' },
+  { id: 's5', name: 'Tonya Arnold', role: 'Finance Director', cat: 'support', photo: 'https://static.wixstatic.com/media/44d8da_ecef6108a4ff4df29302d66537d5761e~mv2.png/v1/fill/w_425,h_418,fp_0.59_0.50,lg_1,q_85,enc_avif,quality_auto/Tonya%20Arnold.png', badge: '', bio: 'Oversees financial operations across the Hurley Enterprise portfolio.' },
+  { id: 's6', name: 'Blake Watson', role: 'Superintendent', cat: 'support', photo: 'https://static.wixstatic.com/media/44d8da_47dc1dbb98014d1f9beef57916d1c36d~mv2.png/v1/fill/w_425,h_418,al_c,lg_1,q_85,enc_avif,quality_auto/Blake%20Watson.png', badge: '', bio: 'Leads field construction and site supervision on development projects.' },
+  { id: 's7', name: 'Fred Green', role: 'Maintenance Supervisor', cat: 'support', photo: 'https://static.wixstatic.com/media/44d8da_13fcfd2d37254167b9bc668234c7d487~mv2.png/v1/fill/w_425,h_418,fp_0.67_0.36,lg_1,q_85,enc_avif,quality_auto/Fred%20Green_.png', badge: '', bio: 'Keeps the Hurley property portfolio in top condition across all locations.' },
+  { id: 's8', name: 'Sherril Keplinger', role: 'Construction & Services', cat: 'support', photo: 'https://static.wixstatic.com/media/44d8da_8cf7a7efcf2d483fac8cb3757fe88895~mv2.png/v1/fill/w_425,h_418,fp_0.72_0.35,lg_1,q_85,enc_avif,quality_auto/Sherril%20Keplinger_.png', badge: '', bio: 'Coordinates construction logistics and services delivery across active projects.' }
+];
+
 function getSiteContent() {
   try {
     const raw = localStorage.getItem(SITE_CONTENT_KEY);
@@ -3040,15 +3127,19 @@ function getSiteContent() {
 
 function saveSiteContent() {
   const content = {
-    phone:       document.getElementById('cms-phone')?.value.trim() || DEFAULT_SITE_CONTENT.phone,
-    email:       document.getElementById('cms-email')?.value.trim() || DEFAULT_SITE_CONTENT.email,
-    address:     document.getElementById('cms-address')?.value.trim() || DEFAULT_SITE_CONTENT.address,
-    hours:       document.getElementById('cms-hours')?.value.trim() || DEFAULT_SITE_CONTENT.hours,
-    heroTagline: document.getElementById('cms-hero-tagline')?.value.trim() || DEFAULT_SITE_CONTENT.heroTagline,
-    heroTitle:   document.getElementById('cms-hero-title')?.value.trim() || DEFAULT_SITE_CONTENT.heroTitle,
-    heroSub:     document.getElementById('cms-hero-sub')?.value.trim() || DEFAULT_SITE_CONTENT.heroSub,
-    ceoName:     document.getElementById('cms-ceo-name')?.value.trim() || DEFAULT_SITE_CONTENT.ceoName,
-    ceoBio:      document.getElementById('cms-bio')?.value.trim() || DEFAULT_SITE_CONTENT.ceoBio
+    phone:        document.getElementById('cms-phone')?.value.trim() || DEFAULT_SITE_CONTENT.phone,
+    email:        document.getElementById('cms-email')?.value.trim() || DEFAULT_SITE_CONTENT.email,
+    address:      document.getElementById('cms-address')?.value.trim() || DEFAULT_SITE_CONTENT.address,
+    hours:        document.getElementById('cms-hours')?.value.trim() || DEFAULT_SITE_CONTENT.hours,
+    heroVideo:    document.getElementById('cms-hero-video')?.value.trim() || DEFAULT_SITE_CONTENT.heroVideo,
+    heroTagline:  document.getElementById('cms-hero-tagline')?.value.trim() || DEFAULT_SITE_CONTENT.heroTagline,
+    heroTitle:    document.getElementById('cms-hero-title')?.value.trim() || DEFAULT_SITE_CONTENT.heroTitle,
+    heroSub:      document.getElementById('cms-hero-sub')?.value.trim() || DEFAULT_SITE_CONTENT.heroSub,
+    ceoName:      document.getElementById('cms-ceo-name')?.value.trim() || DEFAULT_SITE_CONTENT.ceoName,
+    ceoBio:       document.getElementById('cms-bio')?.value.trim() || DEFAULT_SITE_CONTENT.ceoBio,
+    aboutTitle:   document.getElementById('cms-about-title')?.value.trim() || DEFAULT_SITE_CONTENT.aboutTitle,
+    aboutSub:     document.getElementById('cms-about-sub')?.value.trim() || DEFAULT_SITE_CONTENT.aboutSub,
+    aboutMission: document.getElementById('cms-about-mission')?.value.trim() || DEFAULT_SITE_CONTENT.aboutMission
   };
   localStorage.setItem(SITE_CONTENT_KEY, JSON.stringify(content));
   toast('Live site content saved ✓', 'ok');
@@ -3067,11 +3158,132 @@ function loadCmsFormFields() {
   if (document.getElementById('cms-email'))        document.getElementById('cms-email').value = c.email;
   if (document.getElementById('cms-address'))      document.getElementById('cms-address').value = c.address;
   if (document.getElementById('cms-hours'))        document.getElementById('cms-hours').value = c.hours;
+  if (document.getElementById('cms-hero-video'))   document.getElementById('cms-hero-video').value = c.heroVideo || 'img/hurley-hero-video.mp4';
   if (document.getElementById('cms-hero-tagline')) document.getElementById('cms-hero-tagline').value = c.heroTagline;
   if (document.getElementById('cms-hero-title'))   document.getElementById('cms-hero-title').value = c.heroTitle;
   if (document.getElementById('cms-hero-sub'))     document.getElementById('cms-hero-sub').value = c.heroSub;
   if (document.getElementById('cms-ceo-name'))     document.getElementById('cms-ceo-name').value = c.ceoName;
   if (document.getElementById('cms-bio'))          document.getElementById('cms-bio').value = c.ceoBio;
+  if (document.getElementById('cms-about-title'))  document.getElementById('cms-about-title').value = c.aboutTitle || DEFAULT_SITE_CONTENT.aboutTitle;
+  if (document.getElementById('cms-about-sub'))    document.getElementById('cms-about-sub').value = c.aboutSub || DEFAULT_SITE_CONTENT.aboutSub;
+  if (document.getElementById('cms-about-mission'))document.getElementById('cms-about-mission').value = c.aboutMission || DEFAULT_SITE_CONTENT.aboutMission;
+
+  renderCmsStaffList();
+}
+
+function getCmsStaff() {
+  try {
+    const raw = localStorage.getItem(SITE_STAFF_KEY);
+    const d = raw ? JSON.parse(raw) : [];
+    if (!d.length) { saveCmsStaff(DEFAULT_STAFF); return DEFAULT_STAFF; }
+    return d;
+  } catch(e) { return DEFAULT_STAFF; }
+}
+
+function saveCmsStaff(s) { localStorage.setItem(SITE_STAFF_KEY, JSON.stringify(s)); }
+
+function renderCmsStaffList() {
+  const container = document.getElementById('cms-staff-list');
+  if (!container) return;
+  const staff = getCmsStaff();
+  if (!staff.length) {
+    container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--t3);font-size:0.8rem;">No team members listed. Click "Add Team Member" above.</div>`;
+    return;
+  }
+  container.innerHTML = staff.map(s => `
+    <div class="ticket-card" id="cmsstaff-${s.id}">
+      <div class="tc-header">
+        <div style="display:flex;align-items:center;gap:0.85rem;">
+          <img src="${s.photo || 'img/office.png'}" style="width:44px;height:44px;border-radius:10px;object-fit:cover;border:1px solid var(--border);" alt="${s.name}">
+          <div>
+            <div class="tc-title">${s.name}</div>
+            <div class="tc-prop">${s.role} ${s.badge ? `· <span style="color:var(--gold);">${s.badge}</span>` : ''}</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:0.35rem;">
+          <button class="act-btn" onclick="editCmsStaff('${s.id}')" style="font-size:0.68rem;padding:0.35em 0.7em;">✏️ Edit</button>
+          <button class="act-btn del" onclick="deleteCmsStaff('${s.id}')" style="font-size:0.68rem;padding:0.35em 0.7em;">Delete</button>
+        </div>
+      </div>
+      <div style="font-size:0.75rem;color:var(--t2);line-height:1.5;margin-top:0.4rem;">${s.bio || 'No bio entered.'}</div>
+    </div>
+  `).join('');
+}
+
+function openStaffModal() {
+  document.getElementById('ms-id').value = '';
+  document.getElementById('ms-modal-title').textContent = '👥 Add Team Member';
+  ['ms-name','ms-role','ms-badge','ms-photo','ms-bio'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('ms-cat').value = 'leader';
+  document.getElementById('staff-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('ms-name').focus(), 320);
+}
+
+function editCmsStaff(id) {
+  const s = getCmsStaff().find(x => x.id === id);
+  if (!s) return;
+  document.getElementById('ms-id').value = s.id;
+  document.getElementById('ms-modal-title').textContent = '✏️ Edit Team Member';
+  document.getElementById('ms-name').value  = s.name || '';
+  document.getElementById('ms-role').value  = s.role || '';
+  document.getElementById('ms-cat').value   = s.cat || 'leader';
+  document.getElementById('ms-badge').value = s.badge || '';
+  document.getElementById('ms-photo').value = s.photo || '';
+  document.getElementById('ms-bio').value   = s.bio || '';
+  document.getElementById('staff-overlay').classList.add('open');
+}
+
+function setPresetStaffPhoto(val) {
+  const el = document.getElementById('ms-photo');
+  if (el) el.value = val;
+}
+
+function closeStaffModal() { document.getElementById('staff-overlay').classList.remove('open'); }
+
+function submitCmsStaff() {
+  const name = document.getElementById('ms-name').value.trim();
+  if (!name) { toast('Staff member name is required', 'info'); return; }
+
+  const sid = document.getElementById('ms-id').value || ('s_' + Date.now());
+  const newStaff = {
+    id: sid,
+    name: name,
+    role: document.getElementById('ms-role').value.trim() || 'Team Member',
+    cat: document.getElementById('ms-cat').value,
+    badge: document.getElementById('ms-badge').value.trim(),
+    photo: document.getElementById('ms-photo').value.trim() || 'img/office.png',
+    bio: document.getElementById('ms-bio').value.trim()
+  };
+
+  const staff = getCmsStaff();
+  const idx = staff.findIndex(x => x.id === sid);
+  if (idx !== -1) {
+    staff[idx] = newStaff;
+  } else {
+    staff.push(newStaff);
+  }
+
+  saveCmsStaff(staff);
+  renderCmsStaffList();
+  closeStaffModal();
+  toast('Team member saved ✓', 'ok');
+}
+
+function deleteCmsStaff(id) {
+  if (!confirm('Remove this team member?')) return;
+  saveCmsStaff(getCmsStaff().filter(x => x.id !== id));
+  renderCmsStaffList();
+  toast('Team member removed', 'info');
+}
+
+function resetStaffRoster() {
+  if (!confirm('Reset staff roster to default team members?')) return;
+  saveCmsStaff(DEFAULT_STAFF);
+  renderCmsStaffList();
+  toast('Staff roster reset to defaults ✓', 'info');
 }
 
 function getCmsProperties() {
@@ -3124,15 +3336,24 @@ function renderCmsProperties() {
 function switchCmsTab(tab) {
   const btnProps = document.getElementById('tab-cms-properties');
   const btnSite  = document.getElementById('tab-cms-site');
+  const btnStaff = document.getElementById('tab-cms-staff');
   const secProps = document.getElementById('cms-section-properties');
   const secSite  = document.getElementById('cms-section-site');
+  const secStaff = document.getElementById('cms-section-staff');
+
+  [btnProps, btnSite, btnStaff].forEach(b => b && b.classList.remove('active'));
+  [secProps, secSite, secStaff].forEach(s => s && (s.style.display = 'none'));
 
   if (tab === 'properties') {
-    btnProps.classList.add('active'); btnSite.classList.remove('active');
-    secProps.style.display = 'block';  secSite.style.display = 'none';
+    if (btnProps) btnProps.classList.add('active');
+    if (secProps) secProps.style.display = 'block';
+  } else if (tab === 'staff') {
+    if (btnStaff) btnStaff.classList.add('active');
+    if (secStaff) secStaff.style.display = 'block';
+    renderCmsStaffList();
   } else {
-    btnSite.classList.add('active'); btnProps.classList.remove('active');
-    secSite.style.display = 'block';  secProps.style.display = 'none';
+    if (btnSite) btnSite.classList.add('active');
+    if (secSite) secSite.style.display = 'block';
   }
 }
 
@@ -3236,10 +3457,12 @@ function restoreDemoData() {
   saveMaterials(DEMO_MATERIALS);
   saveCrew(DEMO_CREW);
   saveCmsProperties(DEFAULT_PROPERTIES);
+  saveCmsStaff(DEFAULT_STAFF);
   localStorage.removeItem('pb_dismissed');
   localStorage.removeItem(SITE_CONTENT_KEY);
   loadCmsFormFields();
   renderCmsProperties();
+  renderCmsStaffList();
   updateStats();
   renderLeads();
   renderActivityFeed();
