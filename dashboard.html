@@ -1386,27 +1386,35 @@
       <!-- ABOUT PAGE & STAFF ROSTER CMS SECTION -->
       <div id="cms-section-staff" style="display:none;">
         <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.25);border-radius:14px;padding:0.85rem 1.1rem;margin-bottom:1.25rem;">
-          <div style="font-size:0.92rem;font-weight:800;color:var(--gold);margin-bottom:0.2rem;">🏢 Company Owners, Executive Leadership &amp; Staff Roster</div>
-          <div style="font-size:0.78rem;color:var(--t2);">Edit bios, job titles, headshot photos, or badges for all 8 team members below. Changes save live to <a href="about.html" target="_blank" style="color:var(--gold);text-decoration:underline;">about.html</a>.</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;">
+            <div>
+              <div style="font-size:0.95rem;font-weight:800;color:var(--gold);">🏢 Company Owners, Executive Leadership &amp; Staff Roster</div>
+              <div style="font-size:0.78rem;color:var(--t2);margin-top:0.15rem;">Line-by-line editable cards for all 8 team members. Edits sync live to <a href="about.html" target="_blank" style="color:var(--gold);text-decoration:underline;">about.html</a>.</div>
+            </div>
+            <button class="crm-tools-btn" onclick="saveCmsStaff(DEFAULT_STAFF);renderCmsStaffList();toast('Reset to all 8 team cards ✓','info');" style="font-size:0.72rem;padding:0.4em 0.85em;border-color:rgba(201,168,76,0.4);color:var(--gold);background:rgba(201,168,76,0.1);">
+              🔄 Reset All 8 Staff Cards
+            </button>
+          </div>
         </div>
 
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
+        <!-- Filter & Search Command Bar -->
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:1.25rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;padding:0.6rem 0.85rem;">
           <div style="position:relative;flex:1;min-width:240px;">
-            <input type="text" class="mi" id="staff-search-input" oninput="filterStaffList(this.value)" placeholder="Search staff or owners by name, title or role..." style="padding-left:2.4rem;font-size:0.82rem;min-height:42px;">
-            <span style="position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);font-size:0.85rem;color:var(--t3);">🔍</span>
+            <input type="text" class="mi" id="staff-search-input" oninput="applyStaffFilters()" placeholder="Search staff or owners by name, title or role..." style="padding-left:2.4rem;padding-right:2rem;font-size:0.82rem;min-height:40px;background:rgba(0,0,0,0.3);">
+            <span style="position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);font-size:0.85rem;color:var(--t3);pointer-events:none;">🔍</span>
+            <button type="button" onclick="document.getElementById('staff-search-input').value='';applyStaffFilters();" style="position:absolute;right:0.6rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--t3);cursor:pointer;font-size:0.8rem;padding:0.2rem;" title="Clear search">✕</button>
           </div>
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-            <select class="ms" id="staff-cat-filter" onchange="filterStaffListByCat(this.value)" style="min-height:42px;font-size:0.78rem;padding:0.4em 0.8em;">
-              <option value="all">⭐ All Team Members &amp; Owners (8)</option>
-              <option value="leader">⭐ Executive Leadership &amp; Owners</option>
-              <option value="support">🛠 Operations &amp; Field Team</option>
-            </select>
-            <button class="add-btn" onclick="openStaffModal()">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              ➕ Add Team Member
+          <select class="ms" id="staff-cat-filter" onchange="applyStaffFilters()" style="min-height:40px;font-size:0.78rem;padding:0.4em 0.8em;background:rgba(0,0,0,0.3);border-color:var(--border);">
+            <option value="all">⭐ All Team Members &amp; Owners (8)</option>
+            <option value="leader">⭐ Executive Leadership &amp; Owners (4)</option>
+            <option value="support">🛠 Operations &amp; Field Team (4)</option>
+          </select>
+          <div style="display:flex;gap:0.4rem;">
+            <button class="add-btn" onclick="openStaffModal()" style="font-size:0.78rem;padding:0.5em 0.95em;">
+              ➕ Add Member
             </button>
             <button class="crm-tools-btn" onclick="addNewStaffMemberInlineCard()" style="border-color:rgba(201,168,76,0.4);color:var(--gold);background:rgba(201,168,76,0.1);font-size:0.78rem;padding:0.5em 0.9em;">
-              ⚡ Quick Add Blank Card
+              ⚡ Quick Add Blank
             </button>
           </div>
         </div>
@@ -3366,10 +3374,24 @@ function loadCmsFormFields() {
 function getCmsStaff() {
   try {
     const raw = localStorage.getItem(SITE_STAFF_KEY);
-    const d = raw ? JSON.parse(raw) : [];
-    if (!d || !d.length) { saveCmsStaff(DEFAULT_STAFF); return DEFAULT_STAFF; }
+    let d = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(d) || !d.length) {
+      saveCmsStaff(DEFAULT_STAFF);
+      return DEFAULT_STAFF;
+    }
+    let updated = false;
+    DEFAULT_STAFF.forEach(ds => {
+      if (!d.some(item => item.id === ds.id || (item.name && item.name.toLowerCase() === ds.name.toLowerCase()))) {
+        d.push(ds);
+        updated = true;
+      }
+    });
+    if (updated) saveCmsStaff(d);
     return d;
-  } catch(e) { return DEFAULT_STAFF; }
+  } catch(e) {
+    saveCmsStaff(DEFAULT_STAFF);
+    return DEFAULT_STAFF;
+  }
 }
 
 function saveCmsStaff(s) { localStorage.setItem(SITE_STAFF_KEY, JSON.stringify(s)); }
@@ -3476,31 +3498,28 @@ function renderCmsStaffList() {
   `).join('');
 }
 
-function filterStaffList(query) {
-  const q = (query || '').toLowerCase().trim();
+function applyStaffFilters() {
+  const query = (document.getElementById('staff-search-input')?.value || '').toLowerCase().trim();
+  const cat = document.getElementById('staff-cat-filter')?.value || 'all';
   const items = document.querySelectorAll('.staff-card-item');
+
   items.forEach(card => {
     const name = card.getAttribute('data-name') || '';
     const role = card.getAttribute('data-role') || '';
-    if (!q || name.includes(q) || role.includes(q)) {
-      card.style.display = 'block';
-    } else {
-      card.style.display = 'none';
-    }
-  });
-}
-
-function filterStaffListByCat(cat) {
-  const items = document.querySelectorAll('.staff-card-item');
-  items.forEach(card => {
     const cardCat = card.getAttribute('data-cat') || '';
-    if (cat === 'all' || cardCat === cat) {
+
+    const matchesSearch = !query || name.includes(query) || role.includes(query);
+    const matchesCat = (cat === 'all' || cardCat === cat);
+
+    if (matchesSearch && matchesCat) {
       card.style.display = 'block';
     } else {
       card.style.display = 'none';
     }
   });
 }
+function filterStaffList(q) { applyStaffFilters(); }
+function filterStaffListByCat(c) { applyStaffFilters(); }
 
 function handleDragOver(e, id) {
   e.preventDefault();
