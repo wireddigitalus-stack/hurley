@@ -534,18 +534,7 @@
       background-repeat: no-repeat; background-position: right 0.9rem center;
       background-size: 15px; padding-right: 2.25rem;
     }
-    #cms-staff-list {
-      display: grid !important;
-      grid-template-columns: repeat(3, 1fr) !important;
-      gap: 1.25rem !important;
-      margin-bottom: 1.5rem !important;
-    }
-    @media (max-width: 1100px) {
-      #cms-staff-list { grid-template-columns: repeat(2, 1fr) !important; }
-    }
-    @media (max-width: 650px) {
-      #cms-staff-list { grid-template-columns: 1fr !important; }
-    }
+    /* Staff grid now handled by .cms-staff-grid class */
     .ms option { background: #1c1c1c; }
     .mrow { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
     .modal-submit {
@@ -954,6 +943,227 @@
     .crew-section-title { font-size:0.72rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--t2); }
     .crew-section-chevron { font-size:0.65rem; color:var(--t3); transition:transform 0.25s ease; }
     .crew-section-chevron.open { transform:rotate(180deg); color:var(--gold); }
+
+    /* ═══════════════════════════════════════════════
+       CMS EDITOR — iOS-STYLE REDESIGN
+    ═══════════════════════════════════════════════ */
+
+    /* ── SEGMENTED CONTROL (Page Selector) ──────── */
+    .cms-seg-ctrl {
+      display:flex; gap:3px; padding:3px;
+      background:rgba(255,255,255,0.04); border:1px solid var(--border);
+      border-radius:14px; margin-bottom:1.5rem;
+    }
+    .cms-seg-btn {
+      flex:1; text-align:center; padding:0.65em 0.5em;
+      border-radius:11px; font-size:0.78rem; font-weight:800;
+      color:var(--t2); cursor:pointer; transition:all 0.22s;
+      border:1px solid transparent; background:transparent;
+      min-height:42px; white-space:nowrap;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .cms-seg-btn:hover { color:var(--off-white); background:rgba(255,255,255,0.04); }
+    .cms-seg-btn.active {
+      background:var(--gold-dim); border-color:rgba(201,168,76,0.4);
+      color:var(--gold); box-shadow:0 2px 8px rgba(201,168,76,0.15);
+    }
+    @media(max-width:700px) {
+      .cms-seg-ctrl { flex-wrap:wrap; }
+      .cms-seg-btn { min-width:calc(50% - 6px); }
+    }
+
+    /* ── SECTION HEADER ────────────────────────── */
+    .cms-section-hdr {
+      display:flex; align-items:center; justify-content:space-between;
+      gap:0.75rem; flex-wrap:wrap; margin-bottom:1.25rem;
+    }
+    .cms-section-title { font-size:1.1rem; font-weight:900; color:var(--gold); }
+    .cms-section-sub { font-size:0.78rem; color:var(--t2); margin-top:0.15rem; }
+
+    /* ── STAFF GRID (true 3×3) ─────────────────── */
+    .cms-staff-grid {
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:1rem;
+      margin-bottom:1.5rem;
+    }
+    @media(max-width:1100px) { .cms-staff-grid { grid-template-columns:repeat(2, 1fr); } }
+    @media(max-width:650px) { .cms-staff-grid { grid-template-columns:1fr; } }
+
+    .cms-staff-card {
+      background:var(--bg-2); border:1px solid var(--border);
+      border-radius:18px; padding:1.5rem 1rem 1.15rem;
+      display:flex; flex-direction:column; align-items:center;
+      text-align:center; cursor:pointer;
+      transition:all 0.22s var(--ease);
+      -webkit-tap-highlight-color:transparent;
+      position:relative; overflow:hidden;
+    }
+    .cms-staff-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:4px;
+      background:var(--gold); opacity:0.5; transition:opacity 0.2s;
+    }
+    .cms-staff-card.support-cat::before { background:var(--info); }
+    .cms-staff-card:hover {
+      border-color:rgba(201,168,76,0.5);
+      transform:translateY(-3px);
+      box-shadow:0 8px 28px rgba(201,168,76,0.15);
+    }
+    .cms-staff-card:hover::before { opacity:1; }
+    .cms-staff-card:active { transform:scale(0.98); }
+
+    .cms-staff-cat-badge {
+      font-size:0.55rem; font-weight:900; letter-spacing:0.1em;
+      text-transform:uppercase; color:var(--gold);
+      background:var(--gold-dim); border:1px solid rgba(201,168,76,0.2);
+      padding:0.2em 0.65em; border-radius:999px; margin-bottom:0.85rem;
+    }
+    .cms-staff-card.support-cat .cms-staff-cat-badge {
+      color:var(--info); background:var(--info-dim);
+      border-color:rgba(91,155,213,0.2);
+    }
+
+    .cms-staff-photo {
+      width:84px; height:84px; border-radius:50%;
+      object-fit:cover; border:3px solid var(--gold);
+      margin-bottom:0.75rem; box-shadow:0 4px 16px rgba(0,0,0,0.35);
+      transition:transform 0.2s;
+    }
+    .cms-staff-card:hover .cms-staff-photo { transform:scale(1.05); }
+
+    .cms-staff-name { font-size:1rem; font-weight:900; color:var(--off-white); line-height:1.2; }
+    .cms-staff-role { font-size:0.78rem; color:var(--gold); font-weight:700; margin-top:0.15rem; }
+    .cms-staff-badge-tag { font-size:0.65rem; color:var(--t2); margin-top:0.2rem; font-weight:600; }
+    .cms-staff-bio-preview {
+      font-size:0.74rem; color:var(--t2); line-height:1.5;
+      margin:0.65rem 0 0.85rem; padding:0.5rem 0.65rem;
+      background:rgba(0,0,0,0.25); border-radius:10px;
+      border:1px solid rgba(255,255,255,0.04);
+      max-height:60px; overflow:hidden;
+      width:100%; box-sizing:border-box;
+    }
+    .cms-staff-edit-hint {
+      font-size:0.68rem; font-weight:800; color:var(--gold);
+      opacity:0; transition:opacity 0.2s;
+    }
+    .cms-staff-card:hover .cms-staff-edit-hint { opacity:1; }
+
+    /* Ghost card for "Add new member" */
+    .cms-staff-card.ghost {
+      border-style:dashed; border-color:rgba(201,168,76,0.3);
+      background:rgba(201,168,76,0.03); justify-content:center;
+      min-height:200px; gap:0.5rem;
+    }
+    .cms-staff-card.ghost::before { display:none; }
+    .cms-staff-card.ghost:hover {
+      border-color:var(--gold); background:rgba(201,168,76,0.08);
+      box-shadow:none; transform:none;
+    }
+    .cms-staff-ghost-icon { font-size:2rem; opacity:0.5; }
+    .cms-staff-ghost-text { font-size:0.82rem; font-weight:800; color:var(--gold); opacity:0.7; }
+
+    /* ── PROPERTY CARDS (with thumbnails) ───────── */
+    .cms-prop-grid { display:flex; flex-direction:column; gap:0.85rem; }
+
+    .cms-prop-card {
+      background:var(--bg-2); border:1px solid var(--border);
+      border-radius:16px; padding:1rem;
+      display:flex; gap:1rem; align-items:flex-start;
+      cursor:pointer; transition:all 0.22s;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .cms-prop-card:hover {
+      border-color:rgba(201,168,76,0.4);
+      box-shadow:0 4px 16px rgba(0,0,0,0.3);
+    }
+    .cms-prop-card:active { transform:scale(0.99); }
+
+    .cms-prop-thumb {
+      width:100px; height:72px; border-radius:10px;
+      object-fit:cover; flex-shrink:0;
+      border:1px solid rgba(255,255,255,0.08);
+    }
+    @media(max-width:500px) { .cms-prop-thumb { width:72px; height:56px; } }
+
+    .cms-prop-info { flex:1; min-width:0; }
+    .cms-prop-title { font-size:0.92rem; font-weight:800; color:var(--off-white); line-height:1.2; }
+    .cms-prop-address { font-size:0.72rem; color:var(--t2); margin-top:0.15rem; }
+    .cms-prop-meta {
+      display:flex; gap:0.35rem; flex-wrap:wrap; margin-top:0.4rem;
+    }
+    .cms-prop-badge {
+      font-size:0.55rem; font-weight:800; letter-spacing:0.06em;
+      text-transform:uppercase; padding:0.2em 0.55em;
+      border-radius:999px; white-space:nowrap;
+    }
+    .cms-prop-badge.status { background:var(--gold-dim); color:var(--gold); border:1px solid rgba(201,168,76,0.25); }
+    .cms-prop-badge.type { background:rgba(255,255,255,0.04); color:var(--t2); border:1px solid var(--border); }
+    .cms-prop-price {
+      font-size:0.78rem; font-weight:800; color:var(--gold); margin-top:0.35rem;
+    }
+    .cms-prop-actions {
+      display:flex; flex-direction:column; gap:0.3rem;
+      flex-shrink:0; align-self:center;
+    }
+
+    /* ── GROUPED SETTINGS FIELDS (iOS-style) ────── */
+    .cms-field-group {
+      background:var(--bg-2); border:1px solid var(--border);
+      border-radius:16px; overflow:hidden; margin-bottom:1.25rem;
+    }
+    .cms-field-group-header {
+      padding:0.85rem 1.1rem; display:flex; align-items:center; gap:0.5rem;
+      border-bottom:1px solid var(--border);
+      background:rgba(255,255,255,0.015);
+    }
+    .cms-field-group-icon { font-size:1rem; }
+    .cms-field-group-title { font-size:0.82rem; font-weight:800; color:var(--off-white); }
+    .cms-field-group-body { padding:1rem 1.1rem; }
+    .cms-field-group-body .mf:last-child { margin-bottom:0; }
+
+    /* ── LIVE PREVIEW BAR ──────────────────────── */
+    .cms-preview-bar {
+      display:flex; align-items:center; justify-content:space-between;
+      gap:0.75rem; padding:0.65rem 1rem;
+      background:rgba(201,168,76,0.06); border:1px solid rgba(201,168,76,0.25);
+      border-radius:14px; margin-bottom:1.5rem; flex-wrap:wrap;
+    }
+    .cms-preview-links { display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; }
+    .cms-preview-label {
+      font-size:0.72rem; font-weight:800; color:var(--gold);
+      text-transform:uppercase; letter-spacing:0.08em;
+    }
+    .cms-preview-link {
+      font-size:0.72rem; padding:0.35em 0.75em;
+      border:1px solid rgba(255,255,255,0.15); border-radius:8px;
+      color:var(--t2); font-weight:700; transition:all 0.18s;
+      display:inline-flex; align-items:center; gap:0.25rem;
+    }
+    .cms-preview-link:hover { border-color:var(--gold); color:var(--gold); background:var(--gold-dim); }
+
+    /* ── SEARCH & FILTER BAR ───────────────────── */
+    .cms-toolbar {
+      display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;
+      margin-bottom:1.25rem; padding:0.5rem 0.75rem;
+      background:rgba(255,255,255,0.025); border:1px solid var(--border);
+      border-radius:14px;
+    }
+    .cms-search-wrap {
+      position:relative; flex:1; min-width:200px;
+    }
+    .cms-search-wrap input {
+      padding-left:2.2rem; background:rgba(0,0,0,0.3);
+    }
+    .cms-search-icon {
+      position:absolute; left:0.7rem; top:50%; transform:translateY(-50%);
+      font-size:0.85rem; color:var(--t3); pointer-events:none;
+    }
+    .cms-search-clear {
+      position:absolute; right:0.5rem; top:50%; transform:translateY(-50%);
+      background:none; border:none; color:var(--t3); cursor:pointer;
+      font-size:0.8rem; padding:0.2rem;
+    }
+    .cms-search-clear:hover { color:var(--off-white); }
   </style>
 </head>
 <body>
@@ -1032,20 +1242,11 @@
     </div>
   </div>
 
-  <!-- QUICK SITE EDITOR SHORTCUT BAR -->
-  <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;padding:0.75rem 1rem;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.25);border-radius:14px;margin-top:1rem;margin-bottom:1.25rem;flex-wrap:wrap;">
-    <div style="font-size:0.78rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:0.06em;">⚡ Quick Site Page Editors:</div>
-    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-      <button class="crm-tools-btn" onclick="switchDashPanel('editor');switchCmsPage('about');" style="border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.12);font-weight:800;font-size:0.78rem;padding:0.45em 0.9em;">
-        👥 Edit Staff &amp; Owners (8)
-      </button>
-      <button class="crm-tools-btn" onclick="switchDashPanel('editor');switchCmsPage('properties');" style="border-color:rgba(255,255,255,0.2);color:var(--off-white);font-size:0.78rem;padding:0.45em 0.9em;">
-        🏢 Edit Properties (3)
-      </button>
-      <button class="crm-tools-btn" onclick="switchDashPanel('editor');switchCmsPage('home');" style="border-color:rgba(255,255,255,0.2);color:var(--off-white);font-size:0.78rem;padding:0.45em 0.9em;">
-        🏠 Edit Homepage
-      </button>
-    </div>
+  <!-- QUICK SITE EDITOR SHORTCUT -->
+  <div style="display:flex;align-items:center;justify-content:flex-end;margin-top:1rem;margin-bottom:1.25rem;">
+    <button class="add-btn" onclick="switchDashPanel('editor')" style="padding:0.5em 1.25em;font-size:0.82rem;background:var(--gold);color:#000;font-weight:800;gap:0.4rem;">
+      🌐 Edit Site →
+    </button>
   </div>
 
   <!-- STATS GRID -->
@@ -1174,6 +1375,9 @@
   <!-- ═══ PANEL 2: CONSTRUCTION COMMAND CENTER ═══ -->
   <div class="dash-panel" id="panel-construction">
 
+      <!-- CONSTRUCTION OVERVIEW KPIs -->
+      <div id="cc-overview-kpis" class="stats-grid" style="margin-bottom:1.25rem;"></div>
+
       <!-- 5-TAB NAVIGATION -->
       <div class="cc-tabs">
         <button class="cc-tab active" onclick="switchCcTab('tickets')">📋 Job Tickets</button>
@@ -1185,6 +1389,8 @@
 
       <!-- ═══ TAB 1: JOB TICKETS (Enhanced) ═══ -->
       <div class="cc-section active" id="cc-tickets">
+        <!-- Ticket Status Pipeline -->
+        <div id="ticket-pipeline-kpis" class="mat-pipeline" style="margin-bottom:1rem;"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
           <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
             <select class="ms" id="ticket-filter-prop" onchange="renderTickets()" style="min-height:36px;padding:0.4rem 2rem 0.4rem 0.75rem;font-size:0.72rem;width:auto;">
@@ -1363,216 +1569,156 @@
   <!-- ═══ PANEL 4: EDIT SITE PAGES ═══ -->
   <div class="dash-panel" id="panel-editor">
 
-    <!-- Site Content CMS -->
-    <div class="ios-card open" id="card-site-cms">
-      <div class="ios-card-header" onclick="toggleIosCard('card-site-cms')">
-        <div class="ios-card-left">
-          <div class="ios-card-icon">🌐</div>
-          <div>
-            <div class="ios-card-title">Edit Live Site Pages &amp; Content</div>
-            <div class="ios-card-sub">Select any page below to edit copy, real estate listings &amp; staff cards</div>
-          </div>
-        </div>
-        <div class="ios-card-right">
-          <span class="ios-card-badge">Hide</span>
-          <div class="ios-card-chevron">▼</div>
-        </div>
+    <!-- Live Preview Bar -->
+    <div class="cms-preview-bar" style="margin-top:1.25rem;">
+      <div class="cms-preview-links">
+        <span class="cms-preview-label">👁️ Preview:</span>
+        <a href="index.html" target="_blank" class="cms-preview-link">Homepage ↗</a>
+        <a href="about.html" target="_blank" class="cms-preview-link">About ↗</a>
+        <a href="for-sale-lease.html" target="_blank" class="cms-preview-link">Properties ↗</a>
+        <a href="contact.html" target="_blank" class="cms-preview-link">Contact ↗</a>
       </div>
-      <div class="ios-card-body">
-        
-        <!-- Global Action Bar & Previews -->
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;padding:0.75rem 1rem;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.25);border-radius:14px;margin-bottom:1.25rem;flex-wrap:wrap;">
-          <div style="display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;">
-            <span style="font-size:0.75rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:0.08em;">👁️ Open Live Pages:</span>
-            <a href="index.html" target="_blank" class="crm-tools-btn" style="font-size:0.72rem;padding:0.35em 0.75em;border-color:rgba(255,255,255,0.15);">Homepage ↗</a>
-            <a href="about.html" target="_blank" class="crm-tools-btn" style="font-size:0.72rem;padding:0.35em 0.75em;border-color:rgba(255,255,255,0.15);">About Page ↗</a>
-            <a href="for-sale-lease.html" target="_blank" class="crm-tools-btn" style="font-size:0.72rem;padding:0.35em 0.75em;border-color:rgba(255,255,255,0.15);">Properties Page ↗</a>
-            <a href="services.html" target="_blank" class="crm-tools-btn" style="font-size:0.72rem;padding:0.35em 0.75em;border-color:rgba(255,255,255,0.15);">Services Page ↗</a>
-          </div>
-          <button class="add-btn" onclick="saveSiteContent()" style="padding:0.5em 1.25em;font-size:0.82rem;background:var(--gold);color:#000;font-weight:800;">
-            💾 Save All Site Changes (Cmd+S)
-          </button>
+      <button class="add-btn" onclick="saveSiteContent()" style="padding:0.5em 1.25em;font-size:0.82rem;">
+        💾 Save All (⌘S)
+      </button>
+    </div>
+
+    <!-- iOS Segmented Control -->
+    <div class="cms-seg-ctrl">
+      <button class="cms-seg-btn active" id="tab-page-staff" onclick="switchCmsPage('staff')">👥 Staff (<span id="cms-staff-count">8</span>)</button>
+      <button class="cms-seg-btn" id="tab-page-properties" onclick="switchCmsPage('properties')">🏢 Properties (<span id="cms-prop-count">3</span>)</button>
+      <button class="cms-seg-btn" id="tab-page-pages" onclick="switchCmsPage('pages')">📄 Pages</button>
+      <button class="cms-seg-btn" id="tab-page-contact" onclick="switchCmsPage('contact')">📞 Contact</button>
+    </div>
+
+    <!-- ═══ SECTION 1: STAFF ROSTER ═══ -->
+    <div id="cms-page-staff" style="display:block;">
+      <div class="cms-section-hdr">
+        <div>
+          <div class="cms-section-title">👥 Team Roster</div>
+          <div class="cms-section-sub">Tap any card to edit. Changes sync live to <a href="about.html" target="_blank" style="color:var(--gold);text-decoration:underline;">about.html</a>.</div>
         </div>
+        <button class="crm-tools-btn" onclick="resetStaffRoster()" style="font-size:0.72rem;padding:0.4em 0.85em;border-color:rgba(201,168,76,0.4);color:var(--gold);background:rgba(201,168,76,0.1);">
+          🔄 Reset Defaults
+        </button>
+      </div>
 
-        <!-- PAGE SELECTOR TABS -->
-        <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;background:rgba(255,255,255,0.03);padding:0.35rem;border-radius:14px;border:1px solid var(--border);flex-wrap:wrap;">
-          <button class="filter-btn active" id="tab-page-about" onclick="switchCmsPage('about')" style="flex:1;min-width:170px;text-align:center;justify-content:center;padding:0.7em 0.9em;border-radius:10px;">ℹ️ About &amp; Staff (<span id="cms-staff-count">8</span>)</button>
-          <button class="filter-btn" id="tab-page-properties" onclick="switchCmsPage('properties')" style="flex:1;min-width:170px;text-align:center;justify-content:center;padding:0.7em 0.9em;border-radius:10px;">🏢 Properties &amp; Listings (<span id="cms-prop-count">3</span>)</button>
-          <button class="filter-btn" id="tab-page-home" onclick="switchCmsPage('home')" style="flex:1;min-width:140px;text-align:center;justify-content:center;padding:0.7em 0.9em;border-radius:10px;">🏠 Homepage</button>
-          <button class="filter-btn" id="tab-page-services" onclick="switchCmsPage('services')" style="flex:1;min-width:140px;text-align:center;justify-content:center;padding:0.7em 0.9em;border-radius:10px;">🛠️ Services Page</button>
-          <button class="filter-btn" id="tab-page-contact" onclick="switchCmsPage('contact')" style="flex:1;min-width:140px;text-align:center;justify-content:center;padding:0.7em 0.9em;border-radius:10px;">📞 Contact &amp; NAP</button>
+      <!-- Search & Filter Toolbar -->
+      <div class="cms-toolbar">
+        <div class="cms-search-wrap">
+          <input type="text" class="mi" id="staff-search-input" oninput="applyStaffFilters()" placeholder="Search by name, title, or role..." style="min-height:40px;font-size:0.82rem;">
+          <span class="cms-search-icon">🔍</span>
+          <button class="cms-search-clear" onclick="document.getElementById('staff-search-input').value='';applyStaffFilters();" title="Clear search">✕</button>
         </div>
+        <select class="ms" id="staff-cat-filter" onchange="applyStaffFilters()" style="min-height:40px;font-size:0.78rem;padding:0.4em 0.8em;background:rgba(0,0,0,0.3);border-color:var(--border);min-width:180px;">
+          <option value="all">All Team Members</option>
+          <option value="leader">⭐ Executive Leadership</option>
+          <option value="support">🛠 Operations Team</option>
+        </select>
+        <button class="add-btn" onclick="openStaffModal()" style="font-size:0.78rem;padding:0.5em 0.95em;">
+          ➕ Add Member
+        </button>
+      </div>
 
-        <!-- ═══ PAGE 1: ABOUT PAGE & STAFF ROSTER ═══ -->
-        <div id="cms-page-about" style="display:block;">
-          <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.25);border-radius:14px;padding:0.85rem 1.1rem;margin-bottom:1.25rem;">
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;">
-              <div>
-                <div style="font-size:1.05rem;font-weight:900;color:var(--gold);">👥 Company Owners, Executive Leadership &amp; Staff Roster</div>
-                <div style="font-size:0.78rem;color:var(--t2);margin-top:0.15rem;">Click any card below to edit headshots, job titles, and bio text. Edits sync live to <a href="about.html" target="_blank" style="color:var(--gold);text-decoration:underline;">about.html</a>.</div>
-              </div>
-              <button class="crm-tools-btn" onclick="saveCmsStaff(DEFAULT_STAFF);renderCmsStaffList();toast('Reset to all 8 team cards ✓','info');" style="font-size:0.72rem;padding:0.4em 0.85em;border-color:rgba(201,168,76,0.4);color:var(--gold);background:rgba(201,168,76,0.1);">
-                🔄 Reset All 8 Staff Cards
-              </button>
-            </div>
-          </div>
+      <!-- 3×3 Staff Grid -->
+      <div id="cms-staff-list" class="cms-staff-grid"></div>
 
-          <!-- Filter & Search Command Bar -->
-          <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;margin-bottom:1.25rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;padding:0.6rem 0.85rem;">
-            <div style="position:relative;flex:1;min-width:240px;">
-              <input type="text" class="mi" id="staff-search-input" oninput="applyStaffFilters()" placeholder="Search staff or owners by name, title or role..." style="padding-left:2.4rem;padding-right:2rem;font-size:0.82rem;min-height:40px;background:rgba(0,0,0,0.3);">
-              <span style="position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);font-size:0.85rem;color:var(--t3);pointer-events:none;">🔍</span>
-              <button type="button" onclick="document.getElementById('staff-search-input').value='';applyStaffFilters();" style="position:absolute;right:0.6rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--t3);cursor:pointer;font-size:0.8rem;padding:0.2rem;" title="Clear search">✕</button>
-            </div>
-            <select class="ms" id="staff-cat-filter" onchange="applyStaffFilters()" style="min-height:40px;font-size:0.78rem;padding:0.4em 0.8em;background:rgba(0,0,0,0.3);border-color:var(--border);">
-              <option value="all">⭐ All Team Members &amp; Owners (8)</option>
-              <option value="leader">⭐ Executive Leadership &amp; Owners (4)</option>
-              <option value="support">🛠 Operations &amp; Field Team (4)</option>
-            </select>
-            <div style="display:flex;gap:0.4rem;">
-              <button class="add-btn" onclick="openStaffModal()" style="font-size:0.78rem;padding:0.5em 0.95em;">
-                ➕ Add Member
-              </button>
-            </div>
-          </div>
-
-          <!-- 3x3 STACKED STAFF CARDS GRID -->
-          <div id="cms-staff-list"></div>
-
-          <!-- About Page Text Copy Editor -->
-          <div class="ticket-card" style="border-left:4px solid var(--purple);margin-top:1.5rem;">
-            <div class="tc-prop">About Page Hero, Story &amp; Mission Text Copy</div>
-            <div class="mf" style="margin-top:0.6rem;width:100%;">
-              <label class="ml">About Page Main Headline</label>
-              <input type="text" class="mi" id="cms-about-title" value="Building the Tri-Cities of Tomorrow" style="width:100%;box-sizing:border-box;">
-            </div>
-            <div class="mf" style="margin-top:0.6rem;width:100%;">
-              <label class="ml">About Page Subtitle Paragraph</label>
-              <textarea class="tc-notes" id="cms-about-sub" rows="3" style="width:100%;min-height:90px;box-sizing:border-box;resize:vertical;font-size:0.85rem;line-height:1.6;display:block;">Hurley Enterprise LLC is an entrepreneurial-based enterprise changing the game in regional development, construction, and real estate across Bristol TN/VA since 2004.</textarea>
-            </div>
-            <div class="mf" style="margin-top:0.6rem;width:100%;">
-              <label class="ml">Company Story &amp; Track Record Paragraph</label>
-              <textarea class="tc-notes" id="cms-about-story" rows="4" style="width:100%;min-height:110px;box-sizing:border-box;resize:vertical;font-size:0.85rem;line-height:1.6;display:block;">Hurley Enterprise is different — our team takes a hands-on approach, taking time to understand each client's needs and budget, then building a comprehensive plan to execute. Holding over 1 million square feet of commercial and residential property, we leverage decades of expertise to simplify the process for our clients with lightning fast speed.</textarea>
-            </div>
-            <div class="mf" style="margin-top:0.6rem;width:100%;">
-              <label class="ml">Mission Statement Headline</label>
-              <input type="text" class="mi" id="cms-about-mission" value="Provide real value through experience, simplicity, and speed." style="width:100%;box-sizing:border-box;">
-            </div>
-            <div class="mf" style="margin-top:0.6rem;width:100%;">
-              <label class="ml">Allen Hurley Quote Box Text</label>
-              <input type="text" class="mi" id="cms-about-quote" value="People do business with People — and Said Done means exactly what it says." style="width:100%;box-sizing:border-box;">
-            </div>
-          </div>
-
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;margin-top:1.25rem;">
-            <button class="modal-submit" onclick="saveSiteContent()" style="width:auto;padding:0.7em 1.5em;background:var(--gold);color:#000;font-weight:800;">💾 Save About Page Changes</button>
-          </div>
+      <!-- About Page Copy Fields -->
+      <div class="cms-field-group" style="margin-top:0.5rem;">
+        <div class="cms-field-group-header">
+          <span class="cms-field-group-icon">📝</span>
+          <span class="cms-field-group-title">About Page Text Copy</span>
         </div>
-
-        <!-- ═══ PAGE 2: PROPERTIES & LISTINGS PAGE ═══ -->
-        <div id="cms-page-properties" style="display:none;">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
-            <div>
-              <div style="font-size:1.05rem;font-weight:900;color:var(--gold);">🏢 Active Real Estate Listings (for-sale-lease.html)</div>
-              <div style="font-size:0.78rem;color:var(--t2);margin-top:0.15rem;">Manage active office, retail, industrial &amp; residential property listings</div>
-            </div>
-            <button class="add-btn" onclick="openPropertyModal()">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Add New Property Listing
-            </button>
-          </div>
-          <div id="cms-property-list" class="ticket-feed"></div>
+        <div class="cms-field-group-body">
+          <div class="mf"><label class="ml">Page Headline</label><input type="text" class="mi" id="cms-about-title" value="Building the Tri-Cities of Tomorrow"></div>
+          <div class="mf"><label class="ml">Subtitle Paragraph</label><textarea class="tc-notes" id="cms-about-sub" rows="3" style="min-height:80px;resize:vertical;">Hurley Enterprise LLC is an entrepreneurial-based enterprise changing the game in regional development, construction, and real estate across Bristol TN/VA since 2004.</textarea></div>
+          <div class="mf"><label class="ml">Company Story &amp; Track Record</label><textarea class="tc-notes" id="cms-about-story" rows="4" style="min-height:100px;resize:vertical;">Hurley Enterprise is different — our team takes a hands-on approach, taking time to understand each client's needs and budget, then building a comprehensive plan to execute. Holding over 1 million square feet of commercial and residential property, we leverage decades of expertise to simplify the process for our clients with lightning fast speed.</textarea></div>
+          <div class="mf"><label class="ml">Mission Statement</label><input type="text" class="mi" id="cms-about-mission" value="Provide real value through experience, simplicity, and speed."></div>
+          <div class="mf"><label class="ml">Allen Hurley Quote</label><input type="text" class="mi" id="cms-about-quote" value="People do business with People — and Said Done means exactly what it says."></div>
+          <button class="add-btn" onclick="saveSiteContent()" style="margin-top:0.5rem;padding:0.5em 1.25em;font-size:0.82rem;">💾 Save About Page</button>
         </div>
-
-        <!-- ═══ PAGE 3: HOMEPAGE (index.html) ═══ -->
-        <div id="cms-page-home" style="display:none;">
-          <div class="ticket-card" style="border-left:4px solid var(--cool);">
-            <div class="tc-prop">Homepage Hero, Video Banner &amp; Main Headlines</div>
-            <div class="mf" style="margin-top:0.6rem;">
-              <label class="ml">Main Page Video Banner URL / Path</label>
-              <input type="text" class="mi" id="cms-hero-video" value="img/hurley-hero-video.mp4">
-            </div>
-            <div class="mf" style="margin-top:0.4rem;">
-              <label class="ml">Top Tagline / Eyebrow Text</label>
-              <input type="text" class="mi" id="cms-hero-tagline" value="BRISTOL TENNESSEE'S PREMIER COMMERCIAL REAL ESTATE FIRM">
-            </div>
-            <div class="mf" style="margin-top:0.4rem;">
-              <label class="ml">Main Hero Headline (H1)</label>
-              <input type="text" class="mi" id="cms-hero-title" value="We Buy, Build &amp; Lease Commercial &amp; Residential Real Estate">
-            </div>
-            <div class="mf" style="margin-top:0.4rem;width:100%;">
-              <label class="ml">Hero Subtitle Paragraph</label>
-              <textarea class="tc-notes" id="cms-hero-sub" rows="3" style="width:100%;min-height:90px;box-sizing:border-box;resize:vertical;display:block;">From City Centre office suites to turn-key cash property acquisitions — premier real estate solutions across Bristol TN &amp; VA.</textarea>
-            </div>
-          </div>
-
-          <div class="ticket-card" style="border-left:4px solid var(--info);margin-top:1.25rem;">
-            <div class="tc-prop">CEO Spotlight &amp; Company Overview</div>
-            <div class="mf" style="margin-top:0.6rem;">
-              <label class="ml">CEO Name &amp; Title</label>
-              <input type="text" class="mi" id="cms-ceo-name" value="Allen Hurley · CEO &amp; Founder">
-            </div>
-            <div class="mf" style="margin-top:0.4rem;">
-              <label class="ml">CEO Bio Summary</label>
-              <textarea class="tc-notes" id="cms-bio" style="min-height:75px;">Hurley Enterprise LLC is the most active commercial real estate firm in Bristol, Tennessee. We own, lease, and develop premier office suites, retail corridors, and industrial sites across the Tri-Cities.</textarea>
-            </div>
-          </div>
-
-          <div style="margin-top:1.25rem;">
-            <button class="modal-submit" onclick="saveSiteContent()" style="width:auto;padding:0.7em 1.5em;background:var(--gold);color:#000;font-weight:800;">💾 Save Homepage Changes</button>
-          </div>
-        </div>
-
-        <!-- ═══ PAGE 4: SERVICES PAGE (services.html) ═══ -->
-        <div id="cms-page-services" style="display:none;">
-          <div class="ticket-card" style="border-left:4px solid var(--gold);">
-            <div class="tc-prop">Services Page Copy &amp; Offerings</div>
-            <div class="mf" style="margin-top:0.6rem;">
-              <label class="ml">Services Page Headline</label>
-              <input type="text" class="mi" id="cms-services-title" value="Full-Service Real Estate &amp; Construction Solutions">
-            </div>
-            <div class="mf" style="margin-top:0.4rem;">
-              <label class="ml">Services Subtitle Paragraph</label>
-              <textarea class="tc-notes" id="cms-services-sub" rows="3" style="width:100%;min-height:85px;box-sizing:border-box;">From commercial leasing to ground-up development and property management across Bristol TN/VA.</textarea>
-            </div>
-          </div>
-          <div style="margin-top:1.25rem;">
-            <button class="modal-submit" onclick="saveSiteContent()" style="width:auto;padding:0.7em 1.5em;background:var(--gold);color:#000;font-weight:800;">💾 Save Services Page Changes</button>
-          </div>
-        </div>
-
-        <!-- ═══ PAGE 5: CONTACT & NAP DETAILS ═══ -->
-        <div id="cms-page-contact" style="display:none;">
-          <div class="ticket-card" style="border-left:4px solid var(--gold);">
-            <div class="tc-prop">Business &amp; Direct Contact Details (Synced across all footers)</div>
-            <div class="mrow" style="margin-top:0.6rem;">
-              <div class="mf">
-                <label class="ml">Direct Phone Number</label>
-                <input type="text" class="mi" id="cms-phone" value="(423) 742-7219">
-              </div>
-              <div class="mf">
-                <label class="ml">Contact Email Address</label>
-                <input type="email" class="mi" id="cms-email" value="allen@hurleyllc.com">
-              </div>
-            </div>
-            <div class="mf" style="margin-top:0.4rem;">
-              <label class="ml">Physical Office Address</label>
-              <input type="text" class="mi" id="cms-address" value="100 5th Street, Suite 2W, Bristol, TN 37620">
-            </div>
-            <div class="mf" style="margin-top:0.4rem;">
-              <label class="ml">Business Hours</label>
-              <input type="text" class="mi" id="cms-hours" value="Monday – Friday 8:30 AM – 5:00 PM EST">
-            </div>
-          </div>
-
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;margin-top:1.25rem;flex-wrap:wrap;">
-            <button class="modal-submit" onclick="saveSiteContent()" style="width:auto;padding:0.7em 1.5em;background:var(--gold);color:#000;font-weight:800;">💾 Save Contact Details</button>
-            <button class="crm-tools-btn" onclick="resetSiteContent()" style="border-color:rgba(201,168,76,0.3);color:var(--gold);background:rgba(201,168,76,0.08);">🔄 Reset Default Contact Text</button>
-          </div>
-        </div>
-
       </div>
     </div>
+
+    <!-- ═══ SECTION 2: PROPERTIES & LISTINGS ═══ -->
+    <div id="cms-page-properties" style="display:none;">
+      <div class="cms-section-hdr">
+        <div>
+          <div class="cms-section-title">🏢 Property Listings</div>
+          <div class="cms-section-sub">Manage listings on <a href="for-sale-lease.html" target="_blank" style="color:var(--gold);text-decoration:underline;">for-sale-lease.html</a></div>
+        </div>
+        <button class="add-btn" onclick="openPropertyModal()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Property
+        </button>
+      </div>
+      <div id="cms-property-list" class="cms-prop-grid"></div>
+    </div>
+
+    <!-- ═══ SECTION 3: PAGE COPY ═══ -->
+    <div id="cms-page-pages" style="display:none;">
+      <div class="cms-section-hdr">
+        <div>
+          <div class="cms-section-title">📄 Page Content</div>
+          <div class="cms-section-sub">Edit homepage hero, video, and CEO spotlight</div>
+        </div>
+      </div>
+
+      <div class="cms-field-group">
+        <div class="cms-field-group-header">
+          <span class="cms-field-group-icon">🎬</span>
+          <span class="cms-field-group-title">Homepage Hero &amp; Video</span>
+        </div>
+        <div class="cms-field-group-body">
+          <div class="mf"><label class="ml">Video Banner URL</label><input type="text" class="mi" id="cms-hero-video" value="img/hurley-hero-video.mp4"></div>
+          <div class="mf"><label class="ml">Eyebrow Tagline</label><input type="text" class="mi" id="cms-hero-tagline" value="BRISTOL TENNESSEE'S PREMIER COMMERCIAL REAL ESTATE FIRM"></div>
+          <div class="mf"><label class="ml">Main Headline (H1)</label><input type="text" class="mi" id="cms-hero-title" value="We Buy, Build &amp; Lease Commercial &amp; Residential Real Estate"></div>
+          <div class="mf"><label class="ml">Hero Subtitle</label><textarea class="tc-notes" id="cms-hero-sub" rows="3" style="min-height:80px;resize:vertical;">From City Centre office suites to turn-key cash property acquisitions — premier real estate solutions across Bristol TN &amp; VA.</textarea></div>
+        </div>
+      </div>
+
+      <div class="cms-field-group">
+        <div class="cms-field-group-header">
+          <span class="cms-field-group-icon">👔</span>
+          <span class="cms-field-group-title">CEO Spotlight</span>
+        </div>
+        <div class="cms-field-group-body">
+          <div class="mf"><label class="ml">CEO Name &amp; Title</label><input type="text" class="mi" id="cms-ceo-name" value="Allen Hurley · CEO &amp; Founder"></div>
+          <div class="mf"><label class="ml">CEO Bio Summary</label><textarea class="tc-notes" id="cms-bio" style="min-height:75px;resize:vertical;">Hurley Enterprise LLC is the most active commercial real estate firm in Bristol, Tennessee. We own, lease, and develop premier office suites, retail corridors, and industrial sites across the Tri-Cities.</textarea></div>
+        </div>
+      </div>
+
+      <button class="add-btn" onclick="saveSiteContent()" style="padding:0.5em 1.25em;font-size:0.82rem;">💾 Save Page Content</button>
+    </div>
+
+    <!-- ═══ SECTION 4: CONTACT & NAP ═══ -->
+    <div id="cms-page-contact" style="display:none;">
+      <div class="cms-section-hdr">
+        <div>
+          <div class="cms-section-title">📞 Contact &amp; NAP Details</div>
+          <div class="cms-section-sub">Synced across all page footers &amp; contact page</div>
+        </div>
+        <button class="crm-tools-btn" onclick="resetSiteContent()" style="border-color:rgba(201,168,76,0.3);color:var(--gold);background:rgba(201,168,76,0.08);font-size:0.72rem;">🔄 Reset Defaults</button>
+      </div>
+
+      <div class="cms-field-group">
+        <div class="cms-field-group-header">
+          <span class="cms-field-group-icon">🏢</span>
+          <span class="cms-field-group-title">Business Contact Information</span>
+        </div>
+        <div class="cms-field-group-body">
+          <div class="mrow">
+            <div class="mf"><label class="ml">Phone Number</label><input type="text" class="mi" id="cms-phone" value="(423) 742-7219"></div>
+            <div class="mf"><label class="ml">Email Address</label><input type="email" class="mi" id="cms-email" value="allen@hurleyllc.com"></div>
+          </div>
+          <div class="mf"><label class="ml">Office Address</label><input type="text" class="mi" id="cms-address" value="100 5th Street, Suite 2W, Bristol, TN 37620"></div>
+          <div class="mf"><label class="ml">Business Hours</label><input type="text" class="mi" id="cms-hours" value="Monday – Friday 8:30 AM – 5:00 PM EST"></div>
+        </div>
+      </div>
+
+      <button class="add-btn" onclick="saveSiteContent()" style="padding:0.5em 1.25em;font-size:0.82rem;">💾 Save Contact Details</button>
+    </div>
+
   </div><!-- /panel-editor -->
 
 </div><!-- /dash -->
@@ -2752,7 +2898,7 @@ function switchDashPanel(panelId) {
   if (navBtns[map[panelId]]) navBtns[map[panelId]].classList.add('active');
   // Render content on tab switch
   if (panelId === 'pipeline') { renderLeads(); updateStats(); renderTable(); }
-  if (panelId === 'construction') { renderTickets(); renderCalendar(); renderMaterials(); renderBudget(); renderCrew(); }
+  if (panelId === 'construction') { renderConstructionOverview(); renderTickets(); renderCalendar(); renderMaterials(); renderBudget(); renderCrew(); }
   if (panelId === 'analytics') { renderActivityFeed(); renderBreakdown(getLeads().filter(l=>l.status!=='closed'&&l.status!=='dead')); }
   if (panelId === 'editor') { loadCmsFormFields(); renderCmsProperties(); renderCmsStaffList(); }
   // Scroll nav into view
@@ -2831,12 +2977,25 @@ function parseCost(s) {
   return parseFloat(String(s).replace(/[^0-9.\-]/g, '')) || 0;
 }
 const TICKETS_KEY = 'hurley_tickets';
+const DEMO_DATA_VERSION_KEY = 'hurley_demo_version';
+const DEMO_DATA_VERSION = '2026.07.29a'; // Bump this to force-reseed demo data
 
 /* Helper: ISO date string offset from today */
 function daysFromNow(n) {
   const d = new Date(); d.setDate(d.getDate() + n);
   return d.toISOString().slice(0,10);
 }
+
+/* Force-reseed demo data if version changed */
+(function seedDemoDataIfNeeded() {
+  const storedVersion = localStorage.getItem(DEMO_DATA_VERSION_KEY);
+  if (storedVersion !== DEMO_DATA_VERSION) {
+    localStorage.removeItem('hurley_tickets');
+    localStorage.removeItem('hurley_materials');
+    localStorage.removeItem('hurley_crew');
+    localStorage.setItem(DEMO_DATA_VERSION_KEY, DEMO_DATA_VERSION);
+  }
+})();
 
 const DEMO_TICKETS = [
   {
@@ -2954,6 +3113,7 @@ function getTickets() {
 function saveTickets(t) { localStorage.setItem(TICKETS_KEY, JSON.stringify(t)); }
 
 function renderTickets() {
+  renderTicketPipeline();
   const feed = document.getElementById('tickets-feed');
   if (!feed) return;
   const propFilter   = document.getElementById('ticket-filter-prop')?.value || 'all';
@@ -3167,6 +3327,126 @@ function submitTicket() {
   });
 }
 
+/* ── CONSTRUCTION OVERVIEW KPIs ────────────────────────── */
+function renderConstructionOverview() {
+  const container = document.getElementById('cc-overview-kpis');
+  if (!container) return;
+
+  const tickets = getTickets();
+  const mats = typeof getMaterials === 'function' ? getMaterials() : [];
+
+  const active    = tickets.filter(t => t.status !== 'completed').length;
+  const overdue   = tickets.filter(t => t.status !== 'completed' && t.dueDate && new Date(t.dueDate) < new Date()).length;
+  const completed = tickets.filter(t => t.status === 'completed').length;
+  const inProgress = tickets.filter(t => t.status === 'progress').length;
+
+  let totalBudget = 0, totalSpent = 0;
+  tickets.forEach(t => { totalBudget += parseCost(t.budget); totalSpent += parseCost(t.actualCost); });
+  const variance = totalBudget - totalSpent;
+  const varianceLabel = variance >= 0 ? 'Under budget' : 'Over budget';
+  const varianceColor = variance >= 0 ? 'var(--cool)' : 'var(--hot)';
+
+  const pendingMats = mats.filter(m => m.status === 'ordered' || m.status === 'shipped').length;
+
+  const fmt = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits:0, maximumFractionDigits:0 });
+
+  // Find next upcoming deadline
+  const upcoming = tickets
+    .filter(t => t.status !== 'completed' && t.dueDate && new Date(t.dueDate) >= new Date())
+    .sort((a,b) => new Date(a.dueDate) - new Date(b.dueDate));
+  const nextDeadline = upcoming.length ? new Date(upcoming[0].dueDate).toLocaleDateString('en-US', { month:'short', day:'numeric' }) : '—';
+  const nextJob = upcoming.length ? upcoming[0].title.slice(0, 28) + (upcoming[0].title.length > 28 ? '…' : '') : 'None';
+
+  container.innerHTML = `
+    <div class="stat-card">
+      <div class="stat-label">Active Jobs</div>
+      <div class="stat-number" style="color:var(--info);">${active}</div>
+      <div class="stat-sub">${inProgress} in progress</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Overdue</div>
+      <div class="stat-number" style="color:${overdue > 0 ? 'var(--hot)' : 'var(--cool)'}">${overdue}</div>
+      <div class="stat-sub">${overdue > 0 ? 'Action required' : 'All on track ✓'}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Budget</div>
+      <div class="stat-number" style="color:var(--gold);">${fmt(totalBudget)}</div>
+      <div class="stat-sub" style="color:${varianceColor}">${varianceLabel}: ${fmt(Math.abs(variance))}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Pending Materials</div>
+      <div class="stat-number" style="color:var(--info);">${pendingMats}</div>
+      <div class="stat-sub">${mats.length} total orders</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Next Deadline</div>
+      <div class="stat-number" style="color:var(--off-white);font-size:1.2rem;">${nextDeadline}</div>
+      <div class="stat-sub" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${nextJob}</div>
+    </div>
+  `;
+}
+
+/* ── TICKET STATUS PIPELINE ───────────────────────────── */
+function renderTicketPipeline() {
+  const pipeline = document.getElementById('ticket-pipeline-kpis');
+  if (!pipeline) return;
+  const tickets = getTickets();
+  const counts = { open:0, progress:0, blocked:0, review:0, completed:0 };
+  tickets.forEach(t => { if (counts[t.status] !== undefined) counts[t.status]++; });
+
+  pipeline.innerHTML = `
+    <div class="mat-pipe-card" style="cursor:pointer;" onclick="document.getElementById('ticket-filter-status').value='open';renderTickets()">
+      <div class="mat-pipe-count" style="color:var(--info);">${counts.open}</div>
+      <div class="mat-pipe-label">📋 Open</div>
+    </div>
+    <div class="mat-pipe-card" style="cursor:pointer;" onclick="document.getElementById('ticket-filter-status').value='progress';renderTickets()">
+      <div class="mat-pipe-count" style="color:var(--gold);">${counts.progress}</div>
+      <div class="mat-pipe-label">🚧 In Progress</div>
+    </div>
+    <div class="mat-pipe-card" style="cursor:pointer;" onclick="document.getElementById('ticket-filter-status').value='blocked';renderTickets()">
+      <div class="mat-pipe-count" style="color:#ffca28;">${counts.blocked}</div>
+      <div class="mat-pipe-label">⏸️ On Hold</div>
+    </div>
+    <div class="mat-pipe-card" style="cursor:pointer;" onclick="document.getElementById('ticket-filter-status').value='review';renderTickets()">
+      <div class="mat-pipe-count" style="color:var(--purple,#a882ff);">${counts.review}</div>
+      <div class="mat-pipe-label">🔍 Inspection</div>
+    </div>
+    <div class="mat-pipe-card" style="cursor:pointer;" onclick="document.getElementById('ticket-filter-status').value='completed';renderTickets()">
+      <div class="mat-pipe-count" style="color:var(--cool);">${counts.completed}</div>
+      <div class="mat-pipe-label">✅ Completed</div>
+    </div>
+  `;
+}
+
+/* ── DEMO DATA CLEAR (triple-click header or console) ─── */
+function clearAllDemoData() {
+  if (!confirm('⚠️ Clear all demo construction data?\n\nThis removes all job tickets, material orders, and crew entries. Real data you\'ve added will also be removed.')) return;
+  localStorage.removeItem('hurley_tickets');
+  localStorage.removeItem('hurley_materials');
+  localStorage.removeItem('hurley_crew');
+  renderConstructionOverview();
+  renderTickets();
+  if (typeof renderCalendar === 'function') renderCalendar();
+  if (typeof renderMaterials === 'function') renderMaterials();
+  if (typeof renderBudget === 'function') renderBudget();
+  if (typeof renderCrew === 'function') renderCrew();
+  toast('Demo data cleared — refresh to restore defaults', 'info');
+}
+
+// Triple-click handler for construction header (hidden admin gesture)
+(function() {
+  let clickCount = 0, clickTimer = null;
+  document.addEventListener('click', function(e) {
+    const navBtn = e.target.closest('.dash-nav-btn');
+    if (navBtn && navBtn.textContent.includes('Construction')) {
+      clickCount++;
+      clearTimeout(clickTimer);
+      clickTimer = setTimeout(() => { clickCount = 0; }, 600);
+      if (clickCount >= 3) { clickCount = 0; clearAllDemoData(); }
+    }
+  });
+})();
+
 /* ── CLIENT-SIDE IMAGE OPTIMIZATION & DISCARD ENGINE ─── */
 function optimizeImageFile(file, maxWidth = 1000, maxHeight = 1000, quality = 0.82) {
   return new Promise((resolve, reject) => {
@@ -3306,9 +3586,7 @@ const DEFAULT_SITE_CONTENT = {
   aboutSub:     'Hurley Enterprise LLC is an entrepreneurial-based enterprise changing the game in regional development, construction, and real estate across Bristol TN/VA since 2004.',
   aboutStory:   'Hurley Enterprise is different — our team takes a hands-on approach, taking time to understand each client\'s needs and budget, then building a comprehensive plan to execute. Holding over 1 million square feet of commercial and residential property, we leverage decades of expertise to simplify the process for our clients with lightning fast speed.',
   aboutMission: 'Provide real value through experience, simplicity, and speed.',
-  aboutQuote:   'People do business with People — and Said Done means exactly what it says.',
-  servicesTitle: 'Full-Service Real Estate & Construction Solutions',
-  servicesSub: 'From commercial leasing to ground-up development and property management across Bristol TN/VA.'
+  aboutQuote:   'People do business with People — and Said Done means exactly what it says.'
 };
 
 const DEFAULT_PROPERTIES = [
@@ -3381,9 +3659,7 @@ function saveSiteContent() {
     aboutSub:     document.getElementById('cms-about-sub')?.value.trim() || DEFAULT_SITE_CONTENT.aboutSub,
     aboutStory:   document.getElementById('cms-about-story')?.value.trim() || DEFAULT_SITE_CONTENT.aboutStory,
     aboutMission: document.getElementById('cms-about-mission')?.value.trim() || DEFAULT_SITE_CONTENT.aboutMission,
-    aboutQuote:   document.getElementById('cms-about-quote')?.value.trim() || DEFAULT_SITE_CONTENT.aboutQuote,
-    servicesTitle: document.getElementById('cms-services-title')?.value.trim() || DEFAULT_SITE_CONTENT.servicesTitle,
-    servicesSub:   document.getElementById('cms-services-sub')?.value.trim() || DEFAULT_SITE_CONTENT.servicesSub
+    aboutQuote:   document.getElementById('cms-about-quote')?.value.trim() || DEFAULT_SITE_CONTENT.aboutQuote
   };
   localStorage.setItem(SITE_CONTENT_KEY, JSON.stringify(content));
   toast('Live site content saved ✓', 'ok');
@@ -3413,8 +3689,6 @@ function loadCmsFormFields() {
   if (document.getElementById('cms-about-story'))  document.getElementById('cms-about-story').value = c.aboutStory || DEFAULT_SITE_CONTENT.aboutStory;
   if (document.getElementById('cms-about-mission'))document.getElementById('cms-about-mission').value = c.aboutMission || DEFAULT_SITE_CONTENT.aboutMission;
   if (document.getElementById('cms-about-quote'))  document.getElementById('cms-about-quote').value = c.aboutQuote || DEFAULT_SITE_CONTENT.aboutQuote;
-  if (document.getElementById('cms-services-title')) document.getElementById('cms-services-title').value = c.servicesTitle || DEFAULT_SITE_CONTENT.servicesTitle;
-  if (document.getElementById('cms-services-sub'))   document.getElementById('cms-services-sub').value = c.servicesSub || DEFAULT_SITE_CONTENT.servicesSub;
 
   renderCmsStaffList();
 }
@@ -3483,7 +3757,7 @@ function renderCmsStaffList() {
   if (counter) counter.textContent = staff.length;
 
   if (!staff || !staff.length) {
-    container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--t3);font-size:0.8rem;">No team members listed. Click "Add Team Member" above.</div>`;
+    container.innerHTML = `<div style="text-align:center;padding:2.5rem;color:var(--t3);font-size:0.82rem;">No team members yet. Tap <b>➕ Add Member</b> above.</div>`;
     return;
   }
 
@@ -3492,36 +3766,36 @@ function renderCmsStaffList() {
     const sRole = (s.role || '').replace(/"/g, '');
     const sBadge = (s.badge || '').replace(/"/g, '');
     const sBio = (s.bio || '').replace(/"/g, '');
+    const catClass = s.cat === 'support' ? ' support-cat' : '';
+    const catLabel = sName.includes('Allen') ? '⭐ Founder & Owner' : (s.cat === 'leader' ? '⭐ Executive Leadership' : '🛠 Operations Team');
+
     return `
-      <div class="ticket-card staff-card-item" id="cmsstaff-${s.id}" data-cat="${s.cat || 'leader'}" data-name="${sName.toLowerCase()}" data-role="${sRole.toLowerCase()}" data-badge="${sBadge.toLowerCase()}" data-bio="${sBio.toLowerCase()}" onclick="if(!event.target.closest('button'))editCmsStaff('${s.id}')" style="border-top:4px solid ${s.cat==='leader'?'var(--gold)':'var(--info)'};cursor:pointer;margin-bottom:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:1.25rem 1rem;transition:all 0.22s;background:var(--bg-surface);border-radius:16px;" onmouseover="this.style.borderColor='var(--gold)';this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(201,168,76,0.18)'" onmouseout="this.style.borderColor='${s.cat==='leader'?'var(--gold)':'var(--info)'}';this.style.transform='none';this.style.boxShadow='none'">
-        
-        <div style="font-size:0.6rem;font-weight:900;letter-spacing:0.1em;text-transform:uppercase;color:${s.cat==='leader'?'var(--gold)':'var(--info)'};background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);padding:0.25em 0.7em;border-radius:999px;margin-bottom:0.85rem;">
-          ${sName.includes('Allen') ? '⭐ Founder & Owner' : (s.cat === 'leader' ? '⭐ Executive Leadership' : '🛠 Operations Team')}
+      <div class="cms-staff-card${catClass} staff-card-item" id="cmsstaff-${s.id}" data-cat="${s.cat || 'leader'}" data-name="${sName.toLowerCase()}" data-role="${sRole.toLowerCase()}" data-badge="${sBadge.toLowerCase()}" data-bio="${sBio.toLowerCase()}" onclick="if(!event.target.closest('button'))editCmsStaff('${s.id}')">
+        <div class="cms-staff-cat-badge">${catLabel}</div>
+        <img class="cms-staff-photo" id="staff-img-prev-${s.id}" src="${s.photo || 'img/office.png'}" alt="${sName}">
+        <div class="cms-staff-name">${sName}</div>
+        <div class="cms-staff-role">${sRole}</div>
+        ${sBadge ? `<div class="cms-staff-badge-tag">🏷️ ${sBadge}</div>` : ''}
+        <div class="cms-staff-bio-preview">
+          ${sBio ? (sBio.length > 110 ? sBio.substring(0, 110) + '…' : sBio) : '<em>Tap to add bio.</em>'}
         </div>
-
-        <img id="staff-img-prev-${s.id}" src="${s.photo || 'img/office.png'}" style="width:88px;height:88px;border-radius:20px;object-fit:cover;border:2.5px solid var(--gold);margin-bottom:0.75rem;box-shadow:0 6px 16px rgba(0,0,0,0.4);" alt="${sName}">
-
-        <div style="font-size:1.05rem;font-weight:900;color:var(--off-white);">${sName}</div>
-        <div style="font-size:0.78rem;color:var(--gold);font-weight:700;margin-top:0.15rem;">${sRole}</div>
-        ${sBadge ? `<div style="font-size:0.68rem;color:var(--t2);margin-top:0.25rem;font-weight:600;">🏷️ ${sBadge}</div>` : ''}
-
-        <div style="font-size:0.76rem;color:var(--t2);line-height:1.55;margin:0.75rem 0 1rem;background:rgba(0,0,0,0.3);padding:0.6rem 0.75rem;border-radius:10px;border:1px solid rgba(255,255,255,0.05);max-height:70px;overflow:hidden;text-overflow:ellipsis;width:100%;box-sizing:border-box;">
-          ${sBio ? (sBio.length > 110 ? sBio.substring(0, 110) + '…' : sBio) : '<em>Click edit below to add full bio.</em>'}
-        </div>
-
-        <div style="display:flex;gap:0.4rem;width:100%;margin-top:auto;">
-          <button class="add-btn" onclick="editCmsStaff('${s.id}')" style="flex:1;justify-content:center;font-size:0.78rem;padding:0.6em;background:var(--gold);color:#000;font-weight:800;border-radius:10px;">
-            ✏️ Edit Profile
-          </button>
-          <button class="act-btn del" onclick="deleteCmsStaff('${s.id}')" style="font-size:0.72rem;padding:0.6em 0.85em;border-radius:10px;" title="Remove staff member">
-            🗑️
-          </button>
-        </div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
       </div>
     `;
-  }).join('');
+  }).join('') + `
+    <div class="cms-staff-card ghost" onclick="openStaffModal()">
+      <div class="cms-staff-ghost-icon">➕</div>
+      <div class="cms-staff-ghost-text">Add Team Member</div>
+    </div>
+  `;
 
   applyStaffFilters();
+}
+
+function resetStaffRoster() {
+  saveCmsStaff(DEFAULT_STAFF);
+  renderCmsStaffList();
+  toast('Reset to all 8 team cards ✓', 'info');
 }
 
 function applyStaffFilters() {
@@ -3539,11 +3813,7 @@ function applyStaffFilters() {
     const matchesSearch = !query || name.includes(query) || role.includes(query) || badge.includes(query) || bio.includes(query);
     const matchesCat = (cat === 'all' || cardCat === cat);
 
-    if (matchesSearch && matchesCat) {
-      card.style.display = 'flex';
-    } else {
-      card.style.display = 'none';
-    }
+    card.style.display = (matchesSearch && matchesCat) ? '' : 'none';
   });
 }
 function filterStaffList(q) { applyStaffFilters(); }
@@ -3713,38 +3983,32 @@ function renderCmsProperties() {
   if (counter) counter.textContent = properties.length;
 
   if (!properties.length) {
-    container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--t3);font-size:0.8rem;">No property listings in CMS. Click "Add New Property Listing" above.</div>`;
+    container.innerHTML = `<div style="text-align:center;padding:2.5rem;color:var(--t3);font-size:0.82rem;">No property listings yet. Tap <b>Add Property</b> above.</div>`;
     return;
   }
 
   container.innerHTML = properties.map(p => `
-    <div class="ticket-card" id="cmsprop-${p.id}">
-      <div class="tc-header">
-        <div class="tc-title-wrap">
-          <div class="tc-prop">${p.address}</div>
-          <div class="tc-title">${p.title}</div>
-          <div class="tc-badges">
-            <span class="t-badge tb-progress">${p.status}</span>
-            <span class="t-badge" style="background:rgba(255,255,255,0.04);color:var(--t2);border:1px solid var(--border);">${p.category}</span>
-          </div>
+    <div class="cms-prop-card" id="cmsprop-${p.id}" onclick="if(!event.target.closest('button'))editCmsProperty('${p.id}')">
+      <img class="cms-prop-thumb" src="${p.img || 'img/office.png'}" alt="${p.title}" onerror="this.src='img/office.png'">
+      <div class="cms-prop-info">
+        <div class="cms-prop-title">${p.title}</div>
+        <div class="cms-prop-address">${p.address}</div>
+        <div class="cms-prop-meta">
+          <span class="cms-prop-badge status">${p.status}</span>
+          <span class="cms-prop-badge type">${p.category}</span>
         </div>
-        <div style="display:flex;gap:0.35rem;">
-          <button class="act-btn" onclick="editCmsProperty('${p.id}')" style="font-size:0.68rem;padding:0.35em 0.7em;">✏️ Edit</button>
-          <button class="act-btn del" onclick="deleteCmsProperty('${p.id}')" style="font-size:0.68rem;padding:0.35em 0.7em;">Delete</button>
-        </div>
+        <div class="cms-prop-price">${p.price}</div>
       </div>
-      <div class="tc-details">
-        <div class="tc-det-item"><span class="tc-det-lbl">Price / Rent</span><span class="tc-det-val" style="color:var(--gold);">${p.price}</span></div>
-        <div class="tc-det-item"><span class="tc-det-lbl">Image Asset</span><span class="tc-det-val">${p.img}</span></div>
-        <div class="tc-det-item"><span class="tc-det-lbl">Highlights</span><span class="tc-det-val">${p.specs}</span></div>
+      <div class="cms-prop-actions">
+        <button class="act-btn" onclick="editCmsProperty('${p.id}')" style="font-size:0.68rem;padding:0.35em 0.7em;">✏️ Edit</button>
+        <button class="act-btn del" onclick="deleteCmsProperty('${p.id}')" style="font-size:0.68rem;padding:0.35em 0.7em;">🗑️</button>
       </div>
-      <div style="font-size:0.75rem;color:var(--t2);line-height:1.5;margin-top:0.4rem;">${p.desc}</div>
     </div>
   `).join('');
 }
 
 function switchCmsPage(page) {
-  const pages = ['about', 'properties', 'home', 'services', 'contact'];
+  const pages = ['staff', 'properties', 'pages', 'contact'];
   pages.forEach(p => {
     const btn = document.getElementById('tab-page-' + p);
     const sec = document.getElementById('cms-page-' + p);
@@ -3757,7 +4021,7 @@ function switchCmsPage(page) {
   if (activeBtn) activeBtn.classList.add('active');
   if (activeSec) activeSec.style.display = 'block';
 
-  if (page === 'about') renderCmsStaffList();
+  if (page === 'staff') renderCmsStaffList();
   if (page === 'properties') renderCmsProperties();
 }
 function switchCmsTab(t) { switchCmsPage(t); }

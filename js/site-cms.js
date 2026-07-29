@@ -83,15 +83,15 @@
         if (aboutSub) aboutSub.textContent = c.aboutSub;
       }
       if (c.aboutStory) {
-        const storyP = document.querySelector('.mission-body p:nth-of-type(2)');
+        const storyP = document.querySelector('[data-cms="about-story"]') || document.querySelector('.mission-body p:nth-of-type(2)');
         if (storyP) storyP.textContent = c.aboutStory;
       }
       if (c.aboutMission) {
-        const missionH2 = document.querySelector('.mission-grid h2.section-heading');
+        const missionH2 = document.querySelector('[data-cms="about-mission"]') || document.querySelector('.mission-grid h2.section-heading');
         if (missionH2) missionH2.textContent = c.aboutMission;
       }
       if (c.aboutQuote) {
-        const quoteP = document.querySelector('blockquote p:first-child');
+        const quoteP = document.querySelector('[data-cms="about-quote"]') || document.querySelector('blockquote p:first-child');
         if (quoteP) quoteP.textContent = `"${c.aboutQuote.replace(/^["']|["']$/g, '')}"`;
       }
 
@@ -137,15 +137,7 @@
         if (s3d) s3d.textContent = c.srv3Desc;
       }
 
-      // Services Page Copy (services.html)
-      if (c.servicesTitle) {
-        const st = document.querySelector('.services-hero h1');
-        if (st) st.textContent = c.servicesTitle;
-      }
-      if (c.servicesSub) {
-        const ss = document.querySelector('.services-hero p');
-        if (ss) ss.textContent = c.servicesSub;
-      }
+      // Services Page Copy — removed (services.html does not exist)
 
       // Properties Page Copy (for-sale-lease.html)
       if (c.propsTitle) {

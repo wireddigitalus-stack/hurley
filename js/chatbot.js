@@ -13,8 +13,9 @@
     { id:'greet', intent:'greet',
       keys: ['hello','hi','hey','good morning','good afternoon','good evening','howdy','sup','what up','yo','hiya','greet','start'],
       replies: [
-        "Hey there! 👋 I'm **Riley** — Hurley Enterprise's local market expert. I know every property, street, and opportunity in Bristol TN/VA inside and out.\n\nAsk me anything — property availability, the Hard Rock Casino market, Bristol history, where to eat, or how to sell your property fast.",
-        "Hi! I'm **Riley** with Hurley Enterprise LLC — Bristol TN/VA's premier commercial developer since 2004. 🏗️\n\nI can help with leasing, buying, selling, development, or just answering questions about Bristol and the Tri-Cities. What's on your mind?"
+        "Hey there! 👋 I'm **Riley** — born and raised in Bristol's commercial real estate scene. I know every building, back road, and BBQ joint in the Tri-Cities 😄\n\nWhat brings you in — property hunting, curious about the market, or just want to chat about Bristol?",
+        "Hey! 👋 I'm **Riley** — Hurley Enterprise's local guide and unofficial Bristol hype man. We've been building, leasing, and buying property here since 2004 — back before the casino was even a rumor 🎰\n\nWhat can I help you with today?",
+        "Hi! I'm **Riley** with Hurley Enterprise 🏗️ — ask me anything about Bristol properties, the Hard Rock Casino market, local restaurants, or selling your place fast. I'm basically a walking encyclopedia of the Tri-Cities. What's on your mind?"
       ]
     },
 
@@ -294,6 +295,18 @@
       reply: "Zoning in the Bristol market is business-friendly, especially for commercial and mixed-use:\n\n• **Bristol TN** — B-2 and B-3 commercial zones cover most of downtown and State Street\n• **Bristol VA** — Similar B-2/commercial designations with active City Council support for development\n• Both cities have streamlined permitting for downtown redevelopment\n• Historic Preservation overlay districts exist in parts of downtown — but we know how to work within them\n\nWe've navigated permitting on dozens of projects and have strong relationships with both planning departments. If you're looking at a specific parcel, we can usually tell you the zoning situation quickly.\n\nWhat kind of project are you considering?"
     },
 
+    // ── FUN FACTS / TRIVIA ─────────────────────────────────────
+    { id:'funfact', intent:'bristol',
+      keys: ['fun fact','trivia','interesting','cool fact','random fact','tell me something','did you know','blow my mind','surprise me'],
+      replies: [
+        "Here's one that blows people's minds: **State Street in downtown Bristol is literally a state border** 🤯 The center line of the road separates Tennessee from Virginia. You can stand on one side in TN and wave to someone in VA — across a two-lane road.\n\nFun fact #2? Our office at City Centre is steps from that exact spot. Come visit and we'll walk you down the line! 😄",
+        "Bristol Motor Speedway can hold **150,000 fans** — that's more than every NFL stadium in America 🏁 The Night Race is genuinely one of the wildest sporting events I've ever seen. The whole city turns into a party for a week.\n\nOh, and race weekends? Airbnb properties near the Speedway go for **$400–$800/night**. We have some investment properties perfectly positioned for that. Want to see them?",
+        "The **Hard Rock Hotel & Casino Bristol** is Virginia's FIRST casino ever — opened 2024. The economic impact? **$845 million** in year one alone 🎰 Corridor vacancy dropped from 18% to 11% in 12 months. That's not normal — that's a gold rush.\n\nWe have Centre Point available directly across from the casino. The foot traffic is absolutely insane.",
+        "Bristol is literally the **Birthplace of Country Music** 🎸 In 1927, Ralph Peer set up a recording studio right here on State Street and recorded the Carter Family and Jimmie Rodgers. Without Bristol, there might not be country music as we know it.\n\nThe museum downtown is Smithsonian-affiliated and absolutely world-class. It's on State Street — same block as our 628 State Street property!",
+        "Here's a wild one: Allen Hurley built a wireless company **from his garage to 2,700 employees and a quarter billion in sales** before taking it public. Then he came back to Bristol and started buying real estate 🏗️\n\nHis motto? \"Said Done.\" Two words. That's it. If Allen says it, it happens."
+      ]
+    },
+
   ];
 
   /* ── Context memory & lead capture ─────────────────────────── */
@@ -334,24 +347,25 @@
   /* ── Context-aware chips ────────────────────────────────────── */
   const CHIPS_DEFAULT = [
     "What's available?",
+    "Is Bristol a good investment?",
+    "Tell me a fun fact 😄",
     "Sell my property fast",
-    "Market report",
   ];
 
   const CHIPS_BY_INTENT = {
-    lease:      ["City Centre details","628 State St","Jamestown @ Shelby","Warehouse space?","Schedule a tour"],
-    sell:       ["How fast can you close?","No repairs needed?","What's my property worth?","Get a cash offer","Call me back"],
-    develop:    ["Ground-up construction","Historic renovation","Tenant improvement","Development timeline","Get a quote"],
-    market:     ["Casino corridor listings","Vacancy rate data","Get market report","Investment ROI?","1031 Exchange?"],
-    residential:["Bradley St portfolio","Randolph St homes","Airbnb returns?","Casino proximity?","Schedule a showing"],
-    tour:       ["Call 423-742-7219","City Centre details","628 State St","Other properties","Maybe another time"],
-    contact:    ["Call 423-742-7219","Send a message","Office hours","Our location","Start a chat"],
-    venue:      ["Capacity details","Pricing?","Corporate packages","Book the Foundation","Other properties"],
+    lease:      ["Tell me about City Centre","What about 628 State St?","Warehouse space?","Schedule a tour 🏢","What's the best deal?"],
+    sell:       ["How fast can you close?","Buy as-is? No repairs?","What's my property worth?","Get me a cash offer","Have someone call me"],
+    develop:    ["Ground-up construction","Historic renovation","Tenant improvement","What's the timeline?","Get a quote"],
+    market:     ["Casino corridor listings","Is now a good time to buy?","Get the market report 📊","Investment ROI?","Tell me about 1031s"],
+    residential:["Bradley St portfolio","Randolph St homes","Airbnb income potential?","How close to the casino?","Set up a showing"],
+    tour:       ["Let's do it! 🙌","City Centre details","628 State St","Show me everything","Maybe another time"],
+    contact:    ["Call 423-742-7219","Send a message","When are you open?","Where's your office?","Tell me more first"],
+    venue:      ["How many guests?","What's it cost?","Corporate events?","Book the Foundation","Other properties"],
     industrial: ["45,500 sqft warehouse","Loading dock specs","Office portion?","Investment potential","Schedule a tour"],
-    bristol:    ["Hard Rock Casino impact","Bristol Motor Speedway","Birthplace of Country Music","Investment market","Things to do"],
-    about:      ["Meet the team","Available properties","Development capabilities","Contact us","Market report"],
-    pricing:    ["City Centre rates","Warehouse pricing","Get a quote","Schedule a tour","Market report"],
-    report:     ["Download free report","Investment opportunities","Market data","Casino corridor","Schedule a call"],
+    bristol:    ["Hard Rock Casino impact 🎰","Bristol Motor Speedway","Country Music history 🎸","Good place to invest?","Best restaurants?"],
+    about:      ["Who's Allen Hurley?","Available properties","What do you build?","Contact the team","Market report"],
+    pricing:    ["City Centre rates","Warehouse pricing","Get a quote","Schedule a tour","What's all-inclusive mean?"],
+    report:     ["Download free report","Best investment areas?","Market data","Casino corridor","Have someone call me"],
   };
 
   const CHIPS_CAPTURE_NAME  = ["My name is…", "📞 Call me instead", "Maybe later"];
@@ -631,7 +645,22 @@
     }
 
     function greet() {
-      addMsg("Hi! I'm **Riley** 👋 — your Hurley Enterprise local expert. How can I help you?", 'bot');
+      const path = window.location.pathname.toLowerCase();
+      let greeting;
+      if (path.includes('for-sale') || path.includes('lease')) {
+        greeting = "Hey! 👋 Looking at listings? Great taste — which type of space are you hunting for? Office, retail, warehouse, or something else?";
+      } else if (path.includes('about')) {
+        greeting = "Hey! 👋 I'm **Riley** — want the inside scoop on the Hurley team? Or I can help with properties, the market, whatever you need 😄";
+      } else if (path.includes('we-buy') || path.includes('sell')) {
+        greeting = "Hey! 👋 Thinking about selling? You're in the right place — we buy properties fast, cash, as-is. Tell me about what you've got!";
+      } else if (path.includes('contact')) {
+        greeting = "Hey! 👋 I'm **Riley** — I can answer most questions right here, right now. Or I can connect you with Allen's team directly. What works best?";
+      } else if (path.includes('development') || path.includes('construction')) {
+        greeting = "Hey! 👋 I'm **Riley** — checking out our development side? We've built everything from office suites to historic renovations. What are you working on?";
+      } else {
+        greeting = "Hey! 👋 I'm **Riley** — born and raised in Bristol's real estate scene. Browsing properties, curious about the market, or just want to chat? I'm all ears 😄";
+      }
+      addMsg(greeting, 'bot');
     }
 
     function buildChips(chips) {
@@ -694,15 +723,17 @@
 
     function typingDelay(reply) {
       const words = reply.replace(/<[^>]+>/g, '').split(' ').length;
-      return Math.min(500 + words * 16, 2000) + Math.random() * 250;
+      return Math.min(700 + words * 20, 2400) + Math.random() * 350;
     }
 
     // ── Lead capture state ──────────────────────────────────────
     const chatHistory    = [];
     let exchangeCount    = 0;
+    let totalExchanges   = 0;
     let captureShown     = false;
     let leadCaptured     = false;
     let lastProperty     = '';
+    let chatStartTime    = null;
 
     const HIGH_INTENT = /office|space|lease|rent|warehouse|retail|tour|price|pricing|available|property|properties|sell|offer|cash|buy|invest|venue|event|listing|sqft|square feet|city centre|jamestown|628|coca.cola|foundation|centre point|center point/i;
 
@@ -782,24 +813,47 @@
         localStorage.setItem('hurley_leads', JSON.stringify(leads));
       } catch(e) {}
 
-      // Hide form, show success
-      document.getElementById('riley-capture-card').querySelectorAll('input,button:last-of-type').forEach(el => el.style.display = 'none');
+      // Hide form, show success with celebration animation
+      const captureCard = document.getElementById('riley-capture-card');
+      captureCard.querySelectorAll('input,button:last-of-type').forEach(el => el.style.display = 'none');
       document.getElementById('riley-cap-success').style.display = 'block';
+      captureCard.style.borderColor = 'rgba(16,185,129,0.5)';
+      captureCard.style.background = 'linear-gradient(135deg,rgba(16,185,129,0.12),rgba(16,185,129,0.04))';
+
+      // Mini confetti burst
+      const confettiColors = ['#C9A84C','#10b981','#5b9bd5','#f59e0b','#ec4899'];
+      for (let i = 0; i < 12; i++) {
+        const dot = document.createElement('div');
+        dot.style.cssText = `position:absolute;width:6px;height:6px;border-radius:50%;background:${confettiColors[i%5]};top:50%;left:50%;pointer-events:none;z-index:10;`;
+        dot.style.animation = `rileyConfetti 0.8s ease-out ${i*40}ms forwards`;
+        dot.style.setProperty('--cx', (Math.random()-0.5)*120 + 'px');
+        dot.style.setProperty('--cy', (Math.random()-0.5)*80 + 'px');
+        captureCard.appendChild(dot);
+        setTimeout(() => dot.remove(), 1200);
+      }
 
       // Riley confirms in chat
       setTimeout(() => {
-        addMsg(`Perfect, ${name.split(' ')[0]}! 🙌 The Hurley team has your number and will be in touch within 2 hours. In the meantime — any other questions I can answer for you?`, 'bot');
+        addMsg(`Perfect, ${name.split(' ')[0]}! 🙌 You're all set — expect a call from Allen's team within 2 hours. They're genuinely great to talk to.\n\nAnything else I can help with in the meantime?`, 'bot');
       }, 600);
     };
 
     function checkLeadCapture(userText, botReply) {
       if (captureShown || leadCaptured) return;
+      totalExchanges++;
+      if (!chatStartTime) chatStartTime = Date.now();
       const combined = userText + ' ' + botReply;
       const prop = detectProperty(combined);
       if (prop) lastProperty = prop;
       if (HIGH_INTENT.test(combined)) exchangeCount++;
-      // Show capture after 2 high-intent exchanges
-      if (exchangeCount >= 2) {
+
+      const chatDuration = Date.now() - chatStartTime;
+      const shouldCapture =
+        exchangeCount >= 2 ||             // 2+ high-intent exchanges (existing)
+        totalExchanges >= 4 ||            // 4+ total exchanges regardless of intent
+        chatDuration >= 90000;            // 90 seconds of active chatting
+
+      if (shouldCapture) {
         setTimeout(injectCaptureCard, 800);
       }
     }

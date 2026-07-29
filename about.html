@@ -183,42 +183,6 @@
     .team-card.support .team-name  { font-size: 0.82rem; }
     .team-card.support .team-info  { padding: 0.85rem 1rem 1rem; }
 
-    /* Principal bio (Allen) — full width hero card */
-    .principal-card {
-      background: var(--card, #17171f);
-      border: 1px solid rgba(201,168,76,0.2);
-      border-radius: 20px; overflow: hidden;
-      display: grid; grid-template-columns: 340px 1fr;
-      gap: 0; margin-bottom: 2.5rem;
-    }
-    @media(max-width:800px){ .principal-card { grid-template-columns: 1fr; } }
-    .principal-photo { position: relative; overflow: hidden; min-height: 380px; }
-    .principal-photo img {
-      width: 100%; height: 100%; object-fit: cover; object-position: top center;
-      display: block; filter: grayscale(10%); transition: filter 0.3s;
-    }
-    .principal-photo:hover img { filter: grayscale(0%); }
-    .principal-info { padding: 2.5rem 2.25rem; display: flex; flex-direction: column; justify-content: center; }
-    .principal-badge {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3);
-      border-radius: 999px; padding: 0.3em 0.85em;
-      font-size: 0.58rem; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--gold, #C9A84C); margin-bottom: 1rem; width: fit-content;
-    }
-    .principal-name { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 0.2rem; }
-    .principal-title { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold, #C9A84C); margin-bottom: 1.5rem; }
-    .principal-bio p { font-size: 0.83rem; color: var(--text-secondary, #aaa); line-height: 1.75; margin-bottom: 1rem; }
-    .principal-bio p:last-child { margin-bottom: 0; }
-    .principal-awards {
-      display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.25rem;
-    }
-    .pa-chip {
-      font-size: 0.58rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
-      color: var(--text-secondary, #aaa); padding: 0.25em 0.7em; border-radius: 999px;
-    }
-
     /* CTA section */
     .about-cta {
       background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.03));
@@ -374,12 +338,12 @@
         <!-- Left: Company story -->
         <div class="mission-body">
           <p class="section-overline">Our Story</p>
-          <h2 class="section-heading">An Entrepreneurial-Based Enterprise</h2>
-          <p>Hurley Enterprise is different — our team takes a hands-on approach, taking time to understand each client's needs and budget, then building a comprehensive plan to execute. We have a proven track record successfully managing millions of dollars in assets, construction and development projects.</p>
+          <h2 class="section-heading" data-cms="about-mission">An Entrepreneurial-Based Enterprise</h2>
+          <p data-cms="about-story">Hurley Enterprise is different — our team takes a hands-on approach, taking time to understand each client's needs and budget, then building a comprehensive plan to execute. We have a proven track record successfully managing millions of dollars in assets, construction and development projects.</p>
           <p>Holding over 1 million square feet of commercial and residential property, we definitely know our way around the real estate world. We use our experience to attack each project from multiple angles — leveraging decades of expertise to simplify the process for our clients at the best value, with lightning fast speed.</p>
           <p>Whether that's helping a seller close fast on a property, finding a business the perfect location, or delivering a ground-up development project — we go the extra mile because we believe that's simply part of the job.</p>
           <blockquote style="border-left:3px solid var(--gold,#C9A84C);margin:1.5rem 0 0;padding:0.75rem 1.25rem;background:rgba(201,168,76,0.04);border-radius:0 10px 10px 0;">
-            <p style="font-style:italic;font-weight:700;color:var(--text-primary,#f2f2f2);margin:0;font-size:0.92rem;">"People do business with People — and Said Done means exactly what it says."</p>
+            <p style="font-style:italic;font-weight:700;color:var(--text-primary,#f2f2f2);margin:0;font-size:0.92rem;" data-cms="about-quote">"People do business with People — and Said Done means exactly what it says."</p>
             <p style="font-size:0.7rem;color:var(--gold,#C9A84C);font-weight:800;margin:0.4rem 0 0;letter-spacing:0.05em;text-transform:uppercase;">— J. Allen Hurley II, CEO &amp; President</p>
           </blockquote>
         </div>

@@ -356,3 +356,9 @@ body.menu-open #chat-pop-card {
   pointer-events: none;
   transition: opacity 0.2s;
 }
+
+/* ── Lead capture confetti ───────────────────────────────── */
+@keyframes rileyConfetti {
+  0%   { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--cx, 40px), var(--cy, -30px)) scale(0); opacity: 0; }
+}
