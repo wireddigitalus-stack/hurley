@@ -1897,9 +1897,9 @@
       <label class="ml">Image Photo URL or Preset Asset</label>
       <input type="text" class="mi" id="mp-img" placeholder="img/office.png or custom image URL">
       <div style="display:flex;gap:0.4rem;margin-top:0.4rem;flex-wrap:wrap;">
-        <button type="button" class="crm-tools-btn" onclick="setPresetImg('img/office.png')" style="font-size:0.65rem;padding:0.25em 0.6em;">📷 Office (img/office.png)</button>
+        <button type="button" class="crm-tools-btn" onclick="setPresetImg('img/city-centre-1779300321500.webp')" style="font-size:0.65rem;padding:0.25em 0.6em;">📷 City Centre</button>
+        <button type="button" class="crm-tools-btn" onclick="setPresetImg('img/628-state-street-1777443229841.webp')" style="font-size:0.65rem;padding:0.25em 0.6em;">📷 628 State St</button>
         <button type="button" class="crm-tools-btn" onclick="setPresetImg('img/home.png')" style="font-size:0.65rem;padding:0.25em 0.6em;">📷 Home (img/home.png)</button>
-        <button type="button" class="crm-tools-btn" onclick="setPresetImg('img/hardrock.jpg')" style="font-size:0.65rem;padding:0.25em 0.6em;">📷 Hard Rock (img/hardrock.jpg)</button>
       </div>
     </div>
     <div class="mf"><label class="ml">Highlights / Key Features (comma separated)</label><input type="text" class="mi" id="mp-specs" placeholder="All-Inclusive, No CAM Fees, 24/7 Security, Fitness Center"></div>
@@ -3123,7 +3123,7 @@ function parseCost(s) {
 }
 const TICKETS_KEY = 'hurley_tickets';
 const DEMO_DATA_VERSION_KEY = 'hurley_demo_version';
-const DEMO_DATA_VERSION = '2026.07.29a'; // Bump this to force-reseed demo data
+const DEMO_DATA_VERSION = '2026.07.29c'; // Bump this to force-reseed demo data
 
 /* Helper: ISO date string offset from today */
 function daysFromNow(n) {
@@ -3138,6 +3138,7 @@ function daysFromNow(n) {
     localStorage.removeItem('hurley_tickets');
     localStorage.removeItem('hurley_materials');
     localStorage.removeItem('hurley_crew');
+    localStorage.removeItem('hurley_site_properties');
     localStorage.setItem(DEMO_DATA_VERSION_KEY, DEMO_DATA_VERSION);
   }
 })();
@@ -3741,7 +3742,7 @@ const DEFAULT_PROPERTIES = [
     address: '100 5th St, Suite 2W, Bristol, TN 37620',
     category: 'office',
     price: 'All-Inclusive Rent · 120–6,000 sqft',
-    img: 'img/office.png',
+    img: 'img/city-centre-1779300321500.webp',
     status: '⭐ Featured Listing',
     specs: 'All-Inclusive, No CAM Fees, 24/7 Security, Fitness Center',
     desc: 'Secure the premier address for your business in downtown Bristol TN. Class A office suites with truly all-inclusive rent covering utilities, WiFi, cleaning, security, and fitness access.'
@@ -3752,7 +3753,7 @@ const DEFAULT_PROPERTIES = [
     address: '628 State St, Bristol, TN 37620',
     category: 'retail',
     price: '8,500 sqft · Full Restaurant Build-Out',
-    img: 'img/hardrock.jpg',
+    img: 'img/628-state-street-1777443229841.webp',
     status: 'For Lease',
     specs: 'Full Bar Buildout, Commercial Kitchen, High Foot Traffic, Hard Rock Corridor',
     desc: 'Prime 8,500 sqft restaurant and entertainment facility on State Street. Fully built-out bar, dining space, and kitchen equipment in downtown Bristol.'
