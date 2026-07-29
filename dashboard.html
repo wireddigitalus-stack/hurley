@@ -275,7 +275,7 @@
     .bar-item { }
     .bar-label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem; }
     .bar-name { font-size: 0.78rem; font-weight: 700; color: var(--off-white); }
-    .bar-count { font-size: 0.72rem; font-weight: 800; color: var(--t2); }
+    .bar-count { font-size: 0.72rem; font-weight: 800; color: var(--t2); min-width: 24px; text-align: right; margin-left: 0.75rem; }
     .bar-track { height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
     .bar-fill { height: 100%; border-radius: 3px; transition: width 0.8s var(--ease); }
 
@@ -342,6 +342,32 @@
     .act-text { flex: 1; font-size: 0.78rem; color: var(--t2); line-height: 1.45; }
     .act-text strong { color: var(--off-white); font-weight: 700; }
     .act-time { font-size: 0.65rem; color: var(--t3); flex-shrink: 0; }
+
+    /* ── PIPELINE FUNNEL ──────────────────────────── */
+    .pipeline-funnel { display: flex; align-items: stretch; gap: 0; margin-top: 0.65rem; }
+    .funnel-stage {
+      flex: 1; text-align: center; padding: 0.85rem 0.5rem;
+      position: relative; cursor: pointer; transition: all 0.2s;
+      border-top: 3px solid transparent;
+    }
+    .funnel-stage:hover { background: rgba(255,255,255,0.03); }
+    .funnel-stage .funnel-count { font-size: 1.5rem; font-weight: 900; line-height: 1; margin-bottom: 0.2rem; }
+    .funnel-stage .funnel-label { font-size: 0.58rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--t3); }
+    .funnel-stage .funnel-pct { font-size: 0.55rem; font-weight: 700; margin-top: 0.25rem; }
+    .funnel-arrow { display: flex; align-items: center; color: var(--t3); font-size: 0.7rem; padding: 0 0.15rem; flex-shrink: 0; }
+    .funnel-stage.s-new     { border-color: var(--gold); }
+    .funnel-stage.s-new .funnel-count { color: var(--gold); }
+    .funnel-stage.s-contacted { border-color: var(--info); }
+    .funnel-stage.s-contacted .funnel-count { color: var(--info); }
+    .funnel-stage.s-qualified { border-color: #a882ff; }
+    .funnel-stage.s-qualified .funnel-count { color: #a882ff; }
+    .funnel-stage.s-offer   { border-color: var(--cool); }
+    .funnel-stage.s-offer .funnel-count { color: var(--cool); }
+    .funnel-stage.s-closed  { border-color: rgba(62,207,142,0.6); }
+    .funnel-stage.s-closed .funnel-count { color: var(--cool); }
+    .funnel-stage.s-dead    { border-color: var(--hot); }
+    .funnel-stage.s-dead .funnel-count { color: var(--hot); }
+    @media(max-width:600px){ .pipeline-funnel { flex-wrap: wrap; } .funnel-stage { min-width: 30%; } .funnel-arrow { display: none; } }
 
     /* ── CONTROLS ───────────────────────────────── */
     .controls-bar {
@@ -1523,15 +1549,28 @@
   <!-- ═══ PANEL 3: ANALYTICS ═══ -->
   <div class="dash-panel" id="panel-analytics">
 
+    <!-- ANALYTICS KPI SUMMARY -->
+    <div id="analytics-kpi-cards" class="stats-grid" style="margin-bottom:1.25rem;"></div>
+
+    <!-- PIPELINE FUNNEL -->
+    <div class="insight-card" style="margin-bottom:1rem;">
+      <div class="insight-title">Lead Pipeline Funnel</div>
+      <div id="pipeline-funnel" class="pipeline-funnel"></div>
+    </div>
+
     <!-- INSIGHTS ROW: Source breakdown + Activity Feed -->
     <div class="insights-row" style="margin-bottom:0;">
       <!-- Lead breakdown -->
       <div class="insight-card">
-        <div class="insight-title">Lead Source &amp; Type Breakdown</div>
+        <div class="insight-title">Lead Source Breakdown</div>
         <div class="bar-row" id="source-bars"></div>
-        <div style="margin-top:0.5rem;border-top:1px solid var(--border);padding-top:0.75rem;">
+        <div style="margin-top:0.75rem;border-top:1px solid var(--border);padding-top:0.75rem;">
           <div class="insight-title" style="margin-bottom:0.5rem;">Property Type Mix</div>
           <div class="bar-row" id="type-bars"></div>
+        </div>
+        <div style="margin-top:0.75rem;border-top:1px solid var(--border);padding-top:0.75rem;">
+          <div class="insight-title" style="margin-bottom:0.5rem;">Top Properties by Lead Volume</div>
+          <div class="bar-row" id="property-bars"></div>
         </div>
       </div>
       <!-- Latest Activity card -->
@@ -2466,7 +2505,7 @@ function updateStats() {
     strip.innerHTML = items.length
       ? items.map(([k,v]) => {
         const m = srcMeta[k] || {icon:'📋', label:k, cls:'b-src'};
-        return `<span class="badge ${m.cls}" style="font-size:0.62rem;padding:0.25em 0.65em;cursor:pointer;" onclick="switchDashPanel('pipeline');setFilter('${k==='riley'?'riley':k==='evaluator'?'evaluator':'all'}')">${m.icon} ${m.label} <strong>${v}</strong></span>`;
+        return `<span class="badge ${m.cls}" style="font-size:0.62rem;padding:0.25em 0.65em;cursor:pointer;display:inline-flex;align-items:center;gap:0.4em;" onclick="switchDashPanel('pipeline');setFilter('${k==='riley'?'riley':k==='evaluator'?'evaluator':'all'}')">${m.icon} ${m.label} <strong style="margin-left:0.15em;">${v}</strong></span>`;
       }).join('')
       : '';
   }
@@ -2478,13 +2517,17 @@ function updateStats() {
 function renderBreakdown(leads) {
   const srcCount={evaluator:0,riley:0,contact_form:0,market_report_homepage:0,phone:0,referral:0,walkin:0};
   const typCount={residential:0,commercial:0,industrial:0,land:0};
+  const propCount={};
   leads.forEach(l=>{
     if(srcCount[l.source]!==undefined) srcCount[l.source]++;
     if(l.property?.type && typCount[l.property.type]!==undefined) typCount[l.property.type]++;
+    // Property address tracking
+    const addr = l.property?.street || l.property?.address || '';
+    if (addr) propCount[addr] = (propCount[addr]||0) + 1;
   });
   const maxS=Math.max(...Object.values(srcCount),1);
   const maxT=Math.max(...Object.values(typCount),1);
-  const srcColors={'evaluator':'var(--gold)','riley':'var(--info)','contact_form':'var(--cool)','market_report_homepage':'#a882ff','phone':'var(--t2)','referral':'var(--purple)','walkin':'var(--t3)'};
+  const srcColors={'evaluator':'var(--gold)','riley':'var(--info)','contact_form':'var(--cool)','market_report_homepage':'#a882ff','phone':'var(--t2)','referral':'var(--purple,#a882ff)','walkin':'var(--t3)'};
   const typColors={'residential':'var(--gold)','commercial':'var(--info)','industrial':'var(--hot)','land':'var(--cool)'};
 
   document.getElementById('source-bars').innerHTML=Object.entries(srcCount)
@@ -2502,6 +2545,108 @@ function renderBreakdown(leads) {
       <div class="bar-label-row"><span class="bar-name">${typeLabel(k)}</span><span class="bar-count">${v}</span></div>
       <div class="bar-track"><div class="bar-fill" style="width:${(v/maxT)*100}%;background:${typColors[k]||'var(--gold)'}"></div></div>
     </div>`).join('') || '<div style="color:var(--t3);font-size:0.78rem">No data yet</div>';
+
+  // Top Properties
+  const propEl = document.getElementById('property-bars');
+  if (propEl) {
+    const topProps = Object.entries(propCount).sort((a,b)=>b[1]-a[1]).slice(0,5);
+    const maxP = topProps.length ? topProps[0][1] : 1;
+    propEl.innerHTML = topProps.length ? topProps.map(([addr,v])=>`
+    <div class="bar-item">
+      <div class="bar-label-row"><span class="bar-name">${addr}</span><span class="bar-count">${v}</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(v/maxP)*100}%;background:var(--gold)"></div></div>
+    </div>`).join('') : '<div style="color:var(--t3);font-size:0.78rem">No property data yet</div>';
+  }
+}
+
+/* ── ANALYTICS KPI CARDS ────────────────────── */
+function renderAnalyticsKPIs() {
+  const container = document.getElementById('analytics-kpi-cards');
+  if (!container) return;
+
+  const all = getLeads();
+  const live = all.filter(l => l.status !== 'closed' && l.status !== 'dead');
+  const closed = all.filter(l => l.status === 'closed');
+  const hot = live.filter(l => temp(l) === 'hot');
+  const contacted = live.filter(l => l.status === 'contacted' || l.status === 'qualified' || l.status === 'offer_sent');
+
+  // Pipeline value
+  const pipeVal = live.reduce((acc, l) => acc + parseOffer(l.offerRange), 0);
+  const fmt = n => '$' + n.toLocaleString('en-US', { minimumFractionDigits:0, maximumFractionDigits:0 });
+
+  // Conversion rate
+  const convRate = all.length > 0 ? Math.round((closed.length / all.length) * 100) : 0;
+
+  // Average lead age (days)
+  const now = Date.now();
+  const avgAge = live.length > 0
+    ? Math.round(live.reduce((acc, l) => acc + (now - new Date(l.timestamp).getTime()), 0) / live.length / 86400000)
+    : 0;
+
+  // Response rate (contacted / total live)
+  const respRate = live.length > 0 ? Math.round((contacted.length / live.length) * 100) : 0;
+
+  // Today's leads
+  const today = all.filter(l => new Date(l.timestamp).toDateString() === new Date().toDateString());
+
+  container.innerHTML = `
+    <div class="stat-card" onclick="switchDashPanel('pipeline')" style="cursor:pointer;">
+      <div class="stat-label">Pipeline Value</div>
+      <div class="stat-number" style="color:var(--gold);">${pipeVal > 0 ? fmt(pipeVal) : '$0'}</div>
+      <div class="stat-sub">${live.length} active lead${live.length !== 1 ? 's' : ''}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">🔥 Hot Leads</div>
+      <div class="stat-number" style="color:${hot.length > 0 ? 'var(--hot)' : 'var(--t2)'};">${hot.length}</div>
+      <div class="stat-sub">${hot.length > 0 ? 'Need immediate action' : 'None right now'}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Conversion Rate</div>
+      <div class="stat-number" style="color:${convRate >= 20 ? 'var(--cool)' : convRate >= 10 ? 'var(--gold)' : 'var(--t2)'};">${convRate}%</div>
+      <div class="stat-sub">${closed.length} closed of ${all.length} total</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Avg Lead Age</div>
+      <div class="stat-number" style="color:${avgAge <= 3 ? 'var(--cool)' : avgAge <= 7 ? 'var(--gold)' : 'var(--hot)'};">${avgAge}d</div>
+      <div class="stat-sub">${avgAge <= 3 ? 'Fresh pipeline' : avgAge <= 7 ? 'Moderate age' : 'Follow up needed'}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Response Rate</div>
+      <div class="stat-number" style="color:${respRate >= 60 ? 'var(--cool)' : respRate >= 30 ? 'var(--gold)' : 'var(--hot)'};">${respRate}%</div>
+      <div class="stat-sub">${contacted.length} contacted of ${live.length}</div>
+    </div>
+  `;
+}
+
+/* ── PIPELINE FUNNEL VISUALIZATION ──────────── */
+function renderPipelineFunnel() {
+  const container = document.getElementById('pipeline-funnel');
+  if (!container) return;
+
+  const all = getLeads();
+  const counts = { new:0, contacted:0, qualified:0, offer_sent:0, closed:0, dead:0 };
+  all.forEach(l => { if (counts[l.status] !== undefined) counts[l.status]++; });
+
+  const total = all.length || 1;
+  const stages = [
+    { key:'new',        label:'New',       cls:'s-new',       count: counts.new },
+    { key:'contacted',  label:'Contacted', cls:'s-contacted', count: counts.contacted },
+    { key:'qualified',  label:'Qualified', cls:'s-qualified', count: counts.qualified },
+    { key:'offer_sent', label:'Offer Sent',cls:'s-offer',     count: counts.offer_sent },
+    { key:'closed',     label:'Closed',    cls:'s-closed',    count: counts.closed },
+    { key:'dead',       label:'Lost',      cls:'s-dead',      count: counts.dead },
+  ];
+
+  container.innerHTML = stages.map((s, i) => {
+    const pct = Math.round((s.count / total) * 100);
+    const arrow = i < stages.length - 1 ? '<div class="funnel-arrow">›</div>' : '';
+    return `
+      <div class="funnel-stage ${s.cls}" onclick="switchDashPanel('pipeline');setFilter('${s.key === 'new' ? 'all' : s.key}')">
+        <div class="funnel-count">${s.count}</div>
+        <div class="funnel-label">${s.label}</div>
+        <div class="funnel-pct" style="color:var(--t3);">${pct}%</div>
+      </div>${arrow}`;
+  }).join('');
 }
 
 /* ── ACTIVITY FEED ───────────────────────────── */
@@ -2899,7 +3044,7 @@ function switchDashPanel(panelId) {
   // Render content on tab switch
   if (panelId === 'pipeline') { renderLeads(); updateStats(); renderTable(); }
   if (panelId === 'construction') { renderConstructionOverview(); renderTickets(); renderCalendar(); renderMaterials(); renderBudget(); renderCrew(); }
-  if (panelId === 'analytics') { renderActivityFeed(); renderBreakdown(getLeads().filter(l=>l.status!=='closed'&&l.status!=='dead')); }
+  if (panelId === 'analytics') { renderAnalyticsKPIs(); renderPipelineFunnel(); renderActivityFeed(); renderBreakdown(getLeads().filter(l=>l.status!=='closed'&&l.status!=='dead')); }
   if (panelId === 'editor') { loadCmsFormFields(); renderCmsProperties(); renderCmsStaffList(); }
   // Scroll nav into view
   const nav = document.getElementById('dash-nav');
