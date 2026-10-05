@@ -474,22 +474,23 @@
     .lc-status-sel:focus { border-color: var(--gold); }
     .lc-status-sel option { background: #1c1c1c; }
 
-    .lc-notes-row { display: flex; gap: 0.4rem; grid-column: 1/-1; align-items: flex-start; }
+    .lc-notes-row { display: flex; gap: 0.5rem; grid-column: 1/-1; align-items: stretch; margin-top: 0.5rem; }
     .lc-notes {
-      flex: 1; background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-      border-radius: 9px; padding: 0.55rem 0.75rem; font-size: 0.76rem; color: var(--off-white);
-      line-height: 1.5; resize: none; outline: none; min-height: 58px;
-      transition: border-color 0.2s;
+      flex: 1; background: rgba(255,255,255,0.05); border: 1.5px solid var(--border-md);
+      border-radius: 9px; padding: 0.65rem 0.85rem; font-size: 0.88rem; font-weight: 500; color: var(--off-white);
+      line-height: 1.5; resize: vertical; outline: none; min-height: 68px; font-family: var(--font);
+      transition: border-color 0.2s, background 0.2s;
     }
-    .lc-notes::placeholder { color: var(--t3); }
-    .lc-notes:focus { border-color: var(--gold); }
+    .lc-notes::placeholder { color: var(--t3); font-size: 0.84rem; font-weight: 400; }
+    .lc-notes:focus { border-color: var(--gold); background: rgba(255,255,255,0.08); box-shadow: 0 0 0 3px rgba(201,168,76,0.12); }
     .save-btn {
-      padding: 0.5em 0.8em; border-radius: 8px; font-size: 0.68rem; font-weight: 800;
+      padding: 0.6em 1em; border-radius: 9px; font-size: 0.82rem; font-weight: 800;
       background: var(--gold); color: #000; border: none; cursor: pointer; transition: all 0.18s;
-      white-space: nowrap; min-height: 36px; -webkit-tap-highlight-color: transparent;
+      white-space: nowrap; min-height: 40px; align-self: stretch; display: flex; align-items: center; justify-content: center;
+      -webkit-tap-highlight-color: transparent;
     }
-    .save-btn:hover { background: var(--gold-lt); }
-    .save-btn.saved { background: var(--cool); }
+    .save-btn:hover { background: var(--gold-lt); transform: translateY(-1px); }
+    .save-btn.saved { background: var(--cool); color: #fff; }
 
     .lc-actions {
       display: grid;
@@ -770,14 +771,28 @@
     .tc-det-lbl { font-size: 0.58rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--t3); }
     .tc-det-val { font-size: 0.78rem; font-weight: 700; color: var(--off-white); }
 
-    .tc-notes-row { display: flex; gap: 0.4rem; align-items: flex-start; margin-top: 0.5rem; }
-    .tc-notes {
-      flex: 1; background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-      border-radius: 9px; padding: 0.55rem 0.75rem; font-size: 0.76rem; color: var(--off-white);
-      line-height: 1.5; resize: none; outline: none; min-height: 52px;
-      transition: border-color 0.2s;
+    .tc-notes-row { display: flex; gap: 0.5rem; align-items: stretch; margin-top: 0.65rem; width: 100%; box-sizing: border-box; }
+    .tc-notes-row .tc-notes, textarea.tc-notes {
+      flex: 1 !important; width: auto !important; max-width: none !important; display: block !important;
+      background: rgba(255,255,255,0.05) !important; border: 1.5px solid var(--border-md) !important;
+      border-radius: 9px !important; padding: 0.65rem 0.85rem !important; font-size: 0.88rem !important;
+      font-weight: 500 !important; color: var(--off-white) !important; line-height: 1.5 !important;
+      resize: vertical !important; outline: none !important; min-height: 72px !important; font-family: var(--font) !important;
+      transition: border-color 0.2s, background 0.2s;
     }
-    .tc-notes:focus { border-color: var(--gold); }
+    .tc-notes-row .tc-notes:focus, textarea.tc-notes:focus {
+      border-color: var(--gold) !important; background: rgba(255,255,255,0.08) !important;
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+    }
+    .tc-notes-row .tc-notes::placeholder { color: var(--t3); font-size: 0.84rem; font-weight: 400; }
+    .tc-notes-save-btn {
+      padding: 0.6em 1.1em; border-radius: 9px; font-size: 0.82rem; font-weight: 800;
+      background: var(--gold); color: #000; border: none; cursor: pointer; transition: all 0.18s ease;
+      white-space: nowrap; align-self: stretch; display: flex; align-items: center; justify-content: center;
+      min-width: 70px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); -webkit-tap-highlight-color: transparent;
+    }
+    .tc-notes-save-btn:hover { background: var(--gold-lt); transform: translateY(-1px); }
+    .tc-notes-save-btn.saved { background: var(--cool); color: #fff; }
 
     .tc-actions { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap; }
     .tc-status-sel {
@@ -3382,7 +3397,7 @@ function renderTickets() {
 
         <div class="tc-notes-row">
           <textarea class="tc-notes" id="tnote-${t.id}" placeholder="Scope details, contractor notes…">${t.notes || ''}</textarea>
-          <button class="act-btn" onclick="saveTicketNotes('${t.id}')" style="font-size:0.68rem;padding:0.45em 0.75em;align-self:stretch;">Save</button>
+          <button class="tc-notes-save-btn" onclick="saveTicketNotes('${t.id}')">Save</button>
         </div>
 
         <div class="tc-actions">
@@ -3419,6 +3434,12 @@ function saveTicketNotes(id) {
     tickets[idx].notes = el.value.trim();
     saveTickets(tickets);
     toast('Job notes saved ✓', 'ok');
+  }
+  const btn = document.querySelector(`#ticket-${id} .tc-notes-save-btn`);
+  if (btn) {
+    btn.textContent = 'Saved ✓';
+    btn.classList.add('saved');
+    setTimeout(() => { btn.textContent = 'Save'; btn.classList.remove('saved'); }, 2000);
   }
 }
 
