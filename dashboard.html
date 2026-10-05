@@ -2224,6 +2224,19 @@ function lockDash() {
   const ps = document.getElementById('pin-screen');
   ps.style.display=''; ps.classList.remove('unlocked');
 }
+
+/* Allow typing PIN on physical keyboard */
+window.addEventListener('keydown', function(e) {
+  const ps = document.getElementById('pin-screen');
+  if (!ps || ps.style.display === 'none' || ps.classList.contains('unlocked')) return;
+  if (e.key >= '0' && e.key <= '9') {
+    e.preventDefault();
+    pinP(e.key);
+  } else if (e.key === 'Backspace' || e.key === 'Delete') {
+    e.preventDefault();
+    pinDel();
+  }
+});
 (function() {
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
@@ -3107,8 +3120,6 @@ function openStaffRosterPanel() {
   renderCmsStaffList();
   const el = document.getElementById('cms-staff-list');
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-  if (nav) nav.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 /* ── LEAD TABLE ─────────────────────────────── */
