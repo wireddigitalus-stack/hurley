@@ -654,7 +654,7 @@
       } else if (path.includes('we-buy') || path.includes('sell')) {
         greeting = "Hey! 👋 Thinking about selling? You're in the right place — we buy properties fast, cash, as-is. Tell me about what you've got!";
       } else if (path.includes('contact')) {
-        greeting = "Hey! 👋 I'm **Riley** — I can answer most questions right here, right now. Or I can connect you with Allen's team directly. What works best?";
+        greeting = "Hey! 👋 I'm **Riley** — I can answer most questions right here, right now. Or I can connect you with Jazmin's team directly. What works best?";
       } else if (path.includes('development') || path.includes('construction')) {
         greeting = "Hey! 👋 I'm **Riley** — checking out our development side? We've built everything from office suites to historic renovations. What are you working on?";
       } else {
@@ -761,7 +761,7 @@
       `;
       card.innerHTML = `
         <button onclick="document.getElementById('riley-capture-card').remove()" style="position:absolute;top:0.5rem;right:0.6rem;background:none;border:none;color:rgba(255,255,255,0.3);cursor:pointer;font-size:0.75rem;">✕</button>
-        <p style="font-size:0.65rem;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;color:#C9A84C;margin:0 0 0.5rem;">📞 Want Allen's team to reach out?</p>
+        <p style="font-size:0.65rem;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;color:#C9A84C;margin:0 0 0.5rem;">📞 Want Jazmin's team to reach out?</p>
         <p style="font-size:0.75rem;color:rgba(255,255,255,0.7);margin:0 0 0.65rem;line-height:1.4;">Drop your name and number — we'll call you within 2 hours.</p>
         <div style="display:flex;flex-direction:column;gap:0.4rem;">
           <input id="riley-cap-name" type="text" placeholder="Your name" autocomplete="name"
@@ -773,7 +773,7 @@
           </button>
         </div>
         <div id="riley-cap-success" style="display:none;text-align:center;padding:0.4rem 0 0;font-size:0.78rem;font-weight:700;color:#10b981;">
-          ✅ Got it! Expect a call from Allen's team within 2 hours.
+          ✅ Got it! Expect a call from Jazmin's team within 2 hours.
         </div>`;
       messages.appendChild(card);
       requestAnimationFrame(() => card.scrollIntoView({ block: 'start', behavior: 'smooth' }));
@@ -834,7 +834,7 @@
 
       // Riley confirms in chat
       setTimeout(() => {
-        addMsg(`Perfect, ${name.split(' ')[0]}! 🙌 You're all set — expect a call from Allen's team within 2 hours. They're genuinely great to talk to.\n\nAnything else I can help with in the meantime?`, 'bot');
+        addMsg(`Perfect, ${name.split(' ')[0]}! 🙌 You're all set — expect a call from Jazmin's team within 2 hours. They're genuinely great to talk to.\n\nAnything else I can help with in the meantime?`, 'bot');
       }, 600);
     };
 
