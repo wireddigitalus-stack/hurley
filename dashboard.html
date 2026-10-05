@@ -1393,12 +1393,86 @@
           <button class="crm-tools-btn" onclick="openStaffModal()" style="font-size:0.75rem;padding:0.4em 0.85em;background:var(--gold);color:#000;font-weight:800;">
             ➕ Add Member
           </button>
-          <button class="crm-tools-btn" onclick="resetStaffRoster()" style="font-size:0.75rem;padding:0.4em 0.85em;border-color:rgba(201,168,76,0.4);color:var(--gold);background:rgba(201,168,76,0.1);">
-            🔄 Reset Defaults
-          </button>
         </div>
       </div>
-      <div id="dash-quick-staff-list" class="cms-staff-grid"></div>
+      <div id="dash-quick-staff-list" class="cms-staff-grid">
+      <div class="cms-staff-card staff-card-item" data-id="s1" data-cat="leader" data-name="j. allen hurley ii" data-role="ceo & president" data-badge="⭐ founder & ceo" data-bio="entrepreneur for 32+ years across tech, real estate, and private equity. built a wireless company from a garage to 2,700 employees and a quarter-billion in sales before taking it public. leads hurley enterprise and vision llc across the tri-cities. fortune 5000, acg growth award, and tn chancellor's award recipient. operates on one principle: "said done."" onclick="if(!event.target.closest('button'))editCmsStaff('s1')">
+        <div class="cms-staff-cat-badge">⭐ Founder & Owner</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_dc70f3e33d4843ef80c6c734ea69c169~mv2.png/v1/fill/w_425,h_418,fp_0.41_0.45,lg_1,q_85,enc_avif,quality_auto/aaaaaa.png" alt="J. Allen Hurley II">
+        <div class="cms-staff-name">J. Allen Hurley II</div>
+        <div class="cms-staff-role">CEO & President</div>
+        <div class="cms-staff-badge-tag">🏷️ ⭐ Founder & CEO</div>
+        <div class="cms-staff-bio-preview">Entrepreneur for 32+ years across tech, real estate, and private equity. Built a wireless company from a garag…</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card staff-card-item" data-id="s2" data-cat="leader" data-name="jazmin hurley" data-role="director" data-badge="👑 site lead & director" data-bio="oversees administration and marketing at hurley enterprise, holding degrees in small business management and entrepreneurial studies. her streamlined operations and strategic marketing drive sustainable growth portfolio-wide. founded the love'n'people 501(c)3 at age 12 — earning the peg brown santa pal award in 2019." onclick="if(!event.target.closest('button'))editCmsStaff('s2')">
+        <div class="cms-staff-cat-badge">👑 Site Lead & Director</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_3e69b66a5dec47ed99fdf754fb874f79~mv2.avif/v1/fill/w_419,h_412,al_c,lg_1,q_80,enc_avif,quality_auto/jaz%20headshot_edited.avif" alt="Jazmin Hurley">
+        <div class="cms-staff-name">Jazmin Hurley</div>
+        <div class="cms-staff-role">Director</div>
+        <div class="cms-staff-badge-tag">🏷️ 👑 Site Lead & Director</div>
+        <div class="cms-staff-bio-preview">Oversees administration and marketing at Hurley Enterprise, holding degrees in Small Business Management and E…</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card staff-card-item" data-id="s3" data-cat="leader" data-name="noah hurley" data-role="project director" data-badge="" data-bio="directs project management from real estate acquisitions to transaction-based deals. a seasoned property manager, noah's hands-on experience with residential and commercial operations — maintenance, upkeep, and day-to-day oversight — plays a pivotal role in enhancing property value and portfolio success." onclick="if(!event.target.closest('button'))editCmsStaff('s3')">
+        <div class="cms-staff-cat-badge">⭐ Executive Leadership</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_78071fa2797943d3bd8fc3a617ae72ab~mv2.png/v1/fill/w_425,h_418,al_c,lg_1,q_85,enc_avif,quality_auto/nh.png" alt="Noah Hurley">
+        <div class="cms-staff-name">Noah Hurley</div>
+        <div class="cms-staff-role">Project Director</div>
+        
+        <div class="cms-staff-bio-preview">Directs project management from real estate acquisitions to transaction-based deals. A seasoned property manag…</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card staff-card-item" data-id="s4" data-cat="leader" data-name="denise myers" data-role="vice president" data-badge="" data-bio="b.s. from etsu. brings 16 years of healthcare leadership at bristol regional to her role as executive vp of vision llc. key member of the executive team in tactical planning, strategic decisions, and hands-on project development. rotarian, bristol chamber board member, and fca board executive." onclick="if(!event.target.closest('button'))editCmsStaff('s4')">
+        <div class="cms-staff-cat-badge">⭐ Executive Leadership</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_aee11fa05e9947f3b2f988dd052e1fdc~mv2.png/v1/fill/w_425,h_418,fp_0.65_0.37,lg_1,q_85,enc_avif,quality_auto/dm.png" alt="Denise Myers">
+        <div class="cms-staff-name">Denise Myers</div>
+        <div class="cms-staff-role">Vice President</div>
+        
+        <div class="cms-staff-bio-preview">B.S. from ETSU. Brings 16 years of healthcare leadership at Bristol Regional to her role as Executive VP of Vi…</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card support-cat staff-card-item" data-id="s5" data-cat="support" data-name="tonya arnold" data-role="finance director" data-badge="" data-bio="oversees financial operations across the hurley enterprise portfolio." onclick="if(!event.target.closest('button'))editCmsStaff('s5')">
+        <div class="cms-staff-cat-badge">🛠 Operations Team</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_ecef6108a4ff4df29302d66537d5761e~mv2.png/v1/fill/w_425,h_418,fp_0.59_0.50,lg_1,q_85,enc_avif,quality_auto/Tonya%20Arnold.png" alt="Tonya Arnold">
+        <div class="cms-staff-name">Tonya Arnold</div>
+        <div class="cms-staff-role">Finance Director</div>
+        
+        <div class="cms-staff-bio-preview">Oversees financial operations across the Hurley Enterprise portfolio.</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card support-cat staff-card-item" data-id="s6" data-cat="support" data-name="blake watson" data-role="superintendent" data-badge="" data-bio="leads field construction and site supervision on development projects." onclick="if(!event.target.closest('button'))editCmsStaff('s6')">
+        <div class="cms-staff-cat-badge">🛠 Operations Team</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_47dc1dbb98014d1f9beef57916d1c36d~mv2.png/v1/fill/w_425,h_418,al_c,lg_1,q_85,enc_avif,quality_auto/Blake%20Watson.png" alt="Blake Watson">
+        <div class="cms-staff-name">Blake Watson</div>
+        <div class="cms-staff-role">Superintendent</div>
+        
+        <div class="cms-staff-bio-preview">Leads field construction and site supervision on development projects.</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card support-cat staff-card-item" data-id="s7" data-cat="support" data-name="fred green" data-role="maintenance supervisor" data-badge="" data-bio="keeps the hurley property portfolio in top condition across all locations." onclick="if(!event.target.closest('button'))editCmsStaff('s7')">
+        <div class="cms-staff-cat-badge">🛠 Operations Team</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_13fcfd2d37254167b9bc668234c7d487~mv2.png/v1/fill/w_425,h_418,fp_0.67_0.36,lg_1,q_85,enc_avif,quality_auto/Fred%20Green_.png" alt="Fred Green">
+        <div class="cms-staff-name">Fred Green</div>
+        <div class="cms-staff-role">Maintenance Supervisor</div>
+        
+        <div class="cms-staff-bio-preview">Keeps the Hurley property portfolio in top condition across all locations.</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card support-cat staff-card-item" data-id="s8" data-cat="support" data-name="sherril keplinger" data-role="construction & services" data-badge="" data-bio="coordinates construction logistics and services delivery across active projects." onclick="if(!event.target.closest('button'))editCmsStaff('s8')">
+        <div class="cms-staff-cat-badge">🛠 Operations Team</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_8cf7a7efcf2d483fac8cb3757fe88895~mv2.png/v1/fill/w_425,h_418,fp_0.72_0.35,lg_1,q_85,enc_avif,quality_auto/Sherril%20Keplinger_.png" alt="Sherril Keplinger">
+        <div class="cms-staff-name">Sherril Keplinger</div>
+        <div class="cms-staff-role">Construction & Services</div>
+        
+        <div class="cms-staff-bio-preview">Coordinates construction logistics and services delivery across active projects.</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card ghost" onclick="openStaffModal()">
+        <div class="cms-staff-ghost-icon">➕</div>
+        <div class="cms-staff-ghost-text">Add Team Member</div>
+      </div>
+      </div>
     </div>
   </div>
 
@@ -1464,9 +1538,6 @@
         <button class="add-btn" onclick="openStaffModal()" style="font-size:0.78rem;padding:0.5em 1em;">
           ➕ Add Member
         </button>
-        <button class="crm-tools-btn" onclick="resetStaffRoster()" style="font-size:0.75rem;padding:0.45em 0.85em;border-color:rgba(201,168,76,0.4);color:var(--gold);background:rgba(201,168,76,0.1);">
-          🔄 Reset to Defaults
-        </button>
       </div>
     </div>
 
@@ -1485,7 +1556,84 @@
     </div>
 
     <!-- 3×3 Staff Grid -->
-    <div id="staff-panel-grid" class="cms-staff-grid"></div>
+    <div id="staff-panel-grid" class="cms-staff-grid">
+      <div class="cms-staff-card staff-card-item" data-id="s1" data-cat="leader" data-name="j. allen hurley ii" data-role="ceo & president" data-badge="⭐ founder & ceo" data-bio="entrepreneur for 32+ years across tech, real estate, and private equity. built a wireless company from a garage to 2,700 employees and a quarter-billion in sales before taking it public. leads hurley enterprise and vision llc across the tri-cities. fortune 5000, acg growth award, and tn chancellor's award recipient. operates on one principle: "said done."" onclick="if(!event.target.closest('button'))editCmsStaff('s1')">
+        <div class="cms-staff-cat-badge">⭐ Founder & Owner</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_dc70f3e33d4843ef80c6c734ea69c169~mv2.png/v1/fill/w_425,h_418,fp_0.41_0.45,lg_1,q_85,enc_avif,quality_auto/aaaaaa.png" alt="J. Allen Hurley II">
+        <div class="cms-staff-name">J. Allen Hurley II</div>
+        <div class="cms-staff-role">CEO & President</div>
+        <div class="cms-staff-badge-tag">🏷️ ⭐ Founder & CEO</div>
+        <div class="cms-staff-bio-preview">Entrepreneur for 32+ years across tech, real estate, and private equity. Built a wireless company from a garag…</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card staff-card-item" data-id="s2" data-cat="leader" data-name="jazmin hurley" data-role="director" data-badge="👑 site lead & director" data-bio="oversees administration and marketing at hurley enterprise, holding degrees in small business management and entrepreneurial studies. her streamlined operations and strategic marketing drive sustainable growth portfolio-wide. founded the love'n'people 501(c)3 at age 12 — earning the peg brown santa pal award in 2019." onclick="if(!event.target.closest('button'))editCmsStaff('s2')">
+        <div class="cms-staff-cat-badge">👑 Site Lead & Director</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_3e69b66a5dec47ed99fdf754fb874f79~mv2.avif/v1/fill/w_419,h_412,al_c,lg_1,q_80,enc_avif,quality_auto/jaz%20headshot_edited.avif" alt="Jazmin Hurley">
+        <div class="cms-staff-name">Jazmin Hurley</div>
+        <div class="cms-staff-role">Director</div>
+        <div class="cms-staff-badge-tag">🏷️ 👑 Site Lead & Director</div>
+        <div class="cms-staff-bio-preview">Oversees administration and marketing at Hurley Enterprise, holding degrees in Small Business Management and E…</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card staff-card-item" data-id="s3" data-cat="leader" data-name="noah hurley" data-role="project director" data-badge="" data-bio="directs project management from real estate acquisitions to transaction-based deals. a seasoned property manager, noah's hands-on experience with residential and commercial operations — maintenance, upkeep, and day-to-day oversight — plays a pivotal role in enhancing property value and portfolio success." onclick="if(!event.target.closest('button'))editCmsStaff('s3')">
+        <div class="cms-staff-cat-badge">⭐ Executive Leadership</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_78071fa2797943d3bd8fc3a617ae72ab~mv2.png/v1/fill/w_425,h_418,al_c,lg_1,q_85,enc_avif,quality_auto/nh.png" alt="Noah Hurley">
+        <div class="cms-staff-name">Noah Hurley</div>
+        <div class="cms-staff-role">Project Director</div>
+        
+        <div class="cms-staff-bio-preview">Directs project management from real estate acquisitions to transaction-based deals. A seasoned property manag…</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card staff-card-item" data-id="s4" data-cat="leader" data-name="denise myers" data-role="vice president" data-badge="" data-bio="b.s. from etsu. brings 16 years of healthcare leadership at bristol regional to her role as executive vp of vision llc. key member of the executive team in tactical planning, strategic decisions, and hands-on project development. rotarian, bristol chamber board member, and fca board executive." onclick="if(!event.target.closest('button'))editCmsStaff('s4')">
+        <div class="cms-staff-cat-badge">⭐ Executive Leadership</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_aee11fa05e9947f3b2f988dd052e1fdc~mv2.png/v1/fill/w_425,h_418,fp_0.65_0.37,lg_1,q_85,enc_avif,quality_auto/dm.png" alt="Denise Myers">
+        <div class="cms-staff-name">Denise Myers</div>
+        <div class="cms-staff-role">Vice President</div>
+        
+        <div class="cms-staff-bio-preview">B.S. from ETSU. Brings 16 years of healthcare leadership at Bristol Regional to her role as Executive VP of Vi…</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card support-cat staff-card-item" data-id="s5" data-cat="support" data-name="tonya arnold" data-role="finance director" data-badge="" data-bio="oversees financial operations across the hurley enterprise portfolio." onclick="if(!event.target.closest('button'))editCmsStaff('s5')">
+        <div class="cms-staff-cat-badge">🛠 Operations Team</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_ecef6108a4ff4df29302d66537d5761e~mv2.png/v1/fill/w_425,h_418,fp_0.59_0.50,lg_1,q_85,enc_avif,quality_auto/Tonya%20Arnold.png" alt="Tonya Arnold">
+        <div class="cms-staff-name">Tonya Arnold</div>
+        <div class="cms-staff-role">Finance Director</div>
+        
+        <div class="cms-staff-bio-preview">Oversees financial operations across the Hurley Enterprise portfolio.</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card support-cat staff-card-item" data-id="s6" data-cat="support" data-name="blake watson" data-role="superintendent" data-badge="" data-bio="leads field construction and site supervision on development projects." onclick="if(!event.target.closest('button'))editCmsStaff('s6')">
+        <div class="cms-staff-cat-badge">🛠 Operations Team</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_47dc1dbb98014d1f9beef57916d1c36d~mv2.png/v1/fill/w_425,h_418,al_c,lg_1,q_85,enc_avif,quality_auto/Blake%20Watson.png" alt="Blake Watson">
+        <div class="cms-staff-name">Blake Watson</div>
+        <div class="cms-staff-role">Superintendent</div>
+        
+        <div class="cms-staff-bio-preview">Leads field construction and site supervision on development projects.</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card support-cat staff-card-item" data-id="s7" data-cat="support" data-name="fred green" data-role="maintenance supervisor" data-badge="" data-bio="keeps the hurley property portfolio in top condition across all locations." onclick="if(!event.target.closest('button'))editCmsStaff('s7')">
+        <div class="cms-staff-cat-badge">🛠 Operations Team</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_13fcfd2d37254167b9bc668234c7d487~mv2.png/v1/fill/w_425,h_418,fp_0.67_0.36,lg_1,q_85,enc_avif,quality_auto/Fred%20Green_.png" alt="Fred Green">
+        <div class="cms-staff-name">Fred Green</div>
+        <div class="cms-staff-role">Maintenance Supervisor</div>
+        
+        <div class="cms-staff-bio-preview">Keeps the Hurley property portfolio in top condition across all locations.</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card support-cat staff-card-item" data-id="s8" data-cat="support" data-name="sherril keplinger" data-role="construction & services" data-badge="" data-bio="coordinates construction logistics and services delivery across active projects." onclick="if(!event.target.closest('button'))editCmsStaff('s8')">
+        <div class="cms-staff-cat-badge">🛠 Operations Team</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_8cf7a7efcf2d483fac8cb3757fe88895~mv2.png/v1/fill/w_425,h_418,fp_0.72_0.35,lg_1,q_85,enc_avif,quality_auto/Sherril%20Keplinger_.png" alt="Sherril Keplinger">
+        <div class="cms-staff-name">Sherril Keplinger</div>
+        <div class="cms-staff-role">Construction & Services</div>
+        
+        <div class="cms-staff-bio-preview">Coordinates construction logistics and services delivery across active projects.</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card ghost" onclick="openStaffModal()">
+        <div class="cms-staff-ghost-icon">➕</div>
+        <div class="cms-staff-ghost-text">Add Team Member</div>
+      </div>
+    </div>
   </div><!-- /panel-staff -->
 
   <!-- ═══ PANEL 3: CONSTRUCTION COMMAND CENTER ═══ -->
@@ -1727,9 +1875,7 @@
           <div class="cms-section-title">👥 Team Roster</div>
           <div class="cms-section-sub">Tap any card to edit. Changes sync live to <a href="about.html" target="_blank" style="color:var(--gold);text-decoration:underline;">about.html</a>.</div>
         </div>
-        <button class="crm-tools-btn" onclick="resetStaffRoster()" style="font-size:0.72rem;padding:0.4em 0.85em;border-color:rgba(201,168,76,0.4);color:var(--gold);background:rgba(201,168,76,0.1);">
-          🔄 Reset Defaults
-        </button>
+
       </div>
 
       <!-- Search & Filter Toolbar -->
@@ -1750,7 +1896,84 @@
       </div>
 
       <!-- 3×3 Staff Grid -->
-      <div id="cms-staff-list" class="cms-staff-grid"></div>
+      <div id="cms-staff-list" class="cms-staff-grid">
+      <div class="cms-staff-card staff-card-item" data-id="s1" data-cat="leader" data-name="j. allen hurley ii" data-role="ceo & president" data-badge="⭐ founder & ceo" data-bio="entrepreneur for 32+ years across tech, real estate, and private equity. built a wireless company from a garage to 2,700 employees and a quarter-billion in sales before taking it public. leads hurley enterprise and vision llc across the tri-cities. fortune 5000, acg growth award, and tn chancellor's award recipient. operates on one principle: "said done."" onclick="if(!event.target.closest('button'))editCmsStaff('s1')">
+        <div class="cms-staff-cat-badge">⭐ Founder & Owner</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_dc70f3e33d4843ef80c6c734ea69c169~mv2.png/v1/fill/w_425,h_418,fp_0.41_0.45,lg_1,q_85,enc_avif,quality_auto/aaaaaa.png" alt="J. Allen Hurley II">
+        <div class="cms-staff-name">J. Allen Hurley II</div>
+        <div class="cms-staff-role">CEO & President</div>
+        <div class="cms-staff-badge-tag">🏷️ ⭐ Founder & CEO</div>
+        <div class="cms-staff-bio-preview">Entrepreneur for 32+ years across tech, real estate, and private equity. Built a wireless company from a garag…</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card staff-card-item" data-id="s2" data-cat="leader" data-name="jazmin hurley" data-role="director" data-badge="👑 site lead & director" data-bio="oversees administration and marketing at hurley enterprise, holding degrees in small business management and entrepreneurial studies. her streamlined operations and strategic marketing drive sustainable growth portfolio-wide. founded the love'n'people 501(c)3 at age 12 — earning the peg brown santa pal award in 2019." onclick="if(!event.target.closest('button'))editCmsStaff('s2')">
+        <div class="cms-staff-cat-badge">👑 Site Lead & Director</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_3e69b66a5dec47ed99fdf754fb874f79~mv2.avif/v1/fill/w_419,h_412,al_c,lg_1,q_80,enc_avif,quality_auto/jaz%20headshot_edited.avif" alt="Jazmin Hurley">
+        <div class="cms-staff-name">Jazmin Hurley</div>
+        <div class="cms-staff-role">Director</div>
+        <div class="cms-staff-badge-tag">🏷️ 👑 Site Lead & Director</div>
+        <div class="cms-staff-bio-preview">Oversees administration and marketing at Hurley Enterprise, holding degrees in Small Business Management and E…</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card staff-card-item" data-id="s3" data-cat="leader" data-name="noah hurley" data-role="project director" data-badge="" data-bio="directs project management from real estate acquisitions to transaction-based deals. a seasoned property manager, noah's hands-on experience with residential and commercial operations — maintenance, upkeep, and day-to-day oversight — plays a pivotal role in enhancing property value and portfolio success." onclick="if(!event.target.closest('button'))editCmsStaff('s3')">
+        <div class="cms-staff-cat-badge">⭐ Executive Leadership</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_78071fa2797943d3bd8fc3a617ae72ab~mv2.png/v1/fill/w_425,h_418,al_c,lg_1,q_85,enc_avif,quality_auto/nh.png" alt="Noah Hurley">
+        <div class="cms-staff-name">Noah Hurley</div>
+        <div class="cms-staff-role">Project Director</div>
+        
+        <div class="cms-staff-bio-preview">Directs project management from real estate acquisitions to transaction-based deals. A seasoned property manag…</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card staff-card-item" data-id="s4" data-cat="leader" data-name="denise myers" data-role="vice president" data-badge="" data-bio="b.s. from etsu. brings 16 years of healthcare leadership at bristol regional to her role as executive vp of vision llc. key member of the executive team in tactical planning, strategic decisions, and hands-on project development. rotarian, bristol chamber board member, and fca board executive." onclick="if(!event.target.closest('button'))editCmsStaff('s4')">
+        <div class="cms-staff-cat-badge">⭐ Executive Leadership</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_aee11fa05e9947f3b2f988dd052e1fdc~mv2.png/v1/fill/w_425,h_418,fp_0.65_0.37,lg_1,q_85,enc_avif,quality_auto/dm.png" alt="Denise Myers">
+        <div class="cms-staff-name">Denise Myers</div>
+        <div class="cms-staff-role">Vice President</div>
+        
+        <div class="cms-staff-bio-preview">B.S. from ETSU. Brings 16 years of healthcare leadership at Bristol Regional to her role as Executive VP of Vi…</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card support-cat staff-card-item" data-id="s5" data-cat="support" data-name="tonya arnold" data-role="finance director" data-badge="" data-bio="oversees financial operations across the hurley enterprise portfolio." onclick="if(!event.target.closest('button'))editCmsStaff('s5')">
+        <div class="cms-staff-cat-badge">🛠 Operations Team</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_ecef6108a4ff4df29302d66537d5761e~mv2.png/v1/fill/w_425,h_418,fp_0.59_0.50,lg_1,q_85,enc_avif,quality_auto/Tonya%20Arnold.png" alt="Tonya Arnold">
+        <div class="cms-staff-name">Tonya Arnold</div>
+        <div class="cms-staff-role">Finance Director</div>
+        
+        <div class="cms-staff-bio-preview">Oversees financial operations across the Hurley Enterprise portfolio.</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card support-cat staff-card-item" data-id="s6" data-cat="support" data-name="blake watson" data-role="superintendent" data-badge="" data-bio="leads field construction and site supervision on development projects." onclick="if(!event.target.closest('button'))editCmsStaff('s6')">
+        <div class="cms-staff-cat-badge">🛠 Operations Team</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_47dc1dbb98014d1f9beef57916d1c36d~mv2.png/v1/fill/w_425,h_418,al_c,lg_1,q_85,enc_avif,quality_auto/Blake%20Watson.png" alt="Blake Watson">
+        <div class="cms-staff-name">Blake Watson</div>
+        <div class="cms-staff-role">Superintendent</div>
+        
+        <div class="cms-staff-bio-preview">Leads field construction and site supervision on development projects.</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card support-cat staff-card-item" data-id="s7" data-cat="support" data-name="fred green" data-role="maintenance supervisor" data-badge="" data-bio="keeps the hurley property portfolio in top condition across all locations." onclick="if(!event.target.closest('button'))editCmsStaff('s7')">
+        <div class="cms-staff-cat-badge">🛠 Operations Team</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_13fcfd2d37254167b9bc668234c7d487~mv2.png/v1/fill/w_425,h_418,fp_0.67_0.36,lg_1,q_85,enc_avif,quality_auto/Fred%20Green_.png" alt="Fred Green">
+        <div class="cms-staff-name">Fred Green</div>
+        <div class="cms-staff-role">Maintenance Supervisor</div>
+        
+        <div class="cms-staff-bio-preview">Keeps the Hurley property portfolio in top condition across all locations.</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card support-cat staff-card-item" data-id="s8" data-cat="support" data-name="sherril keplinger" data-role="construction & services" data-badge="" data-bio="coordinates construction logistics and services delivery across active projects." onclick="if(!event.target.closest('button'))editCmsStaff('s8')">
+        <div class="cms-staff-cat-badge">🛠 Operations Team</div>
+        <img class="cms-staff-photo" src="https://static.wixstatic.com/media/44d8da_8cf7a7efcf2d483fac8cb3757fe88895~mv2.png/v1/fill/w_425,h_418,fp_0.72_0.35,lg_1,q_85,enc_avif,quality_auto/Sherril%20Keplinger_.png" alt="Sherril Keplinger">
+        <div class="cms-staff-name">Sherril Keplinger</div>
+        <div class="cms-staff-role">Construction & Services</div>
+        
+        <div class="cms-staff-bio-preview">Coordinates construction logistics and services delivery across active projects.</div>
+        <div class="cms-staff-edit-hint">Tap to edit →</div>
+      </div>
+      <div class="cms-staff-card ghost" onclick="openStaffModal()">
+        <div class="cms-staff-ghost-icon">➕</div>
+        <div class="cms-staff-ghost-text">Add Team Member</div>
+      </div>
+      </div>
 
       <!-- About Page Copy Fields -->
       <div class="cms-field-group" style="margin-top:0.5rem;">
@@ -1827,7 +2050,7 @@
           <div class="cms-section-title">📞 Contact &amp; NAP Details</div>
           <div class="cms-section-sub">Synced across all page footers &amp; contact page</div>
         </div>
-        <button class="crm-tools-btn" onclick="resetSiteContent()" style="border-color:rgba(201,168,76,0.3);color:var(--gold);background:rgba(201,168,76,0.08);font-size:0.72rem;">🔄 Reset Defaults</button>
+
       </div>
 
       <div class="cms-field-group">
@@ -2277,17 +2500,17 @@ window.addEventListener('keydown', function(e) {
     pinDel();
   }
 });
+// Immediate visual unlock if valid auth session exists (avoids flash of PIN keypad)
 (function() {
-  if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-  }
-  window.scrollTo(0, 0);
-
-  const a = localStorage.getItem(CFG.authKey);
-  if (a && Date.now()-parseInt(a) < 8*3600000) {
-    document.getElementById('pin-screen').style.display='none';
-    initDash();
-  }
+  try {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    const a = localStorage.getItem(CFG.authKey);
+    if (a && Date.now() - parseInt(a) < 8 * 3600000) {
+      const ps = document.getElementById('pin-screen');
+      if (ps) ps.style.display = 'none';
+    }
+  } catch(e) {}
 })();
 
 window.addEventListener('pageshow', function() {
@@ -3148,8 +3371,20 @@ function switchDashPanel(panelId) {
   // Render content on tab switch
   if (panelId === 'pipeline') { renderLeads(); updateStats(); renderTable(); renderCmsStaffList(); }
   if (panelId === 'staff') { renderCmsStaffList(); }
-  if (panelId === 'construction') { renderConstructionOverview(); renderTickets(); renderCalendar(); renderMaterials(); renderBudget(); renderCrew(); }
-  if (panelId === 'analytics') { renderAnalyticsKPIs(); renderPipelineFunnel(); renderActivityFeed(); renderBreakdown(getLeads().filter(l=>l.status!=='closed'&&l.status!=='dead')); }
+  if (panelId === 'construction') {
+    if (typeof renderConstructionOverview === 'function') renderConstructionOverview();
+    if (typeof renderTickets === 'function') renderTickets();
+    if (typeof renderCalendar === 'function') renderCalendar();
+    if (typeof renderMaterials === 'function') renderMaterials();
+    if (typeof renderBudget === 'function') renderBudget();
+    if (typeof renderCrew === 'function') renderCrew();
+  }
+  if (panelId === 'analytics') {
+    if (typeof renderAnalyticsKPIs === 'function') renderAnalyticsKPIs();
+    if (typeof renderPipelineFunnel === 'function') renderPipelineFunnel();
+    if (typeof renderActivityFeed === 'function') renderActivityFeed();
+    if (typeof renderBreakdown === 'function') renderBreakdown(getLeads().filter(l=>l.status!=='closed'&&l.status!=='dead'));
+  }
   if (panelId === 'editor') { loadCmsFormFields(); renderCmsProperties(); renderCmsStaffList(); }
   // Scroll nav into view
   const nav = document.getElementById('dash-nav');
@@ -4075,28 +4310,46 @@ function resetStaffRoster() {
 }
 
 function applyStaffFilters() {
-  const q1 = document.getElementById('panel-staff-search')?.value || '';
-  const q2 = document.getElementById('staff-search-input')?.value || '';
-  const query = (q1 || q2 || '').toLowerCase().trim();
+  const pQuery = (document.getElementById('panel-staff-search')?.value || '').toLowerCase().trim();
+  const pCat = document.getElementById('panel-staff-cat-filter')?.value || 'all';
 
-  const c1 = document.getElementById('panel-staff-cat-filter')?.value;
-  const c2 = document.getElementById('staff-cat-filter')?.value;
-  const cat = (c1 && c1 !== 'all') ? c1 : ((c2 && c2 !== 'all') ? c2 : 'all');
+  const eQuery = (document.getElementById('staff-search-input')?.value || '').toLowerCase().trim();
+  const eCat = document.getElementById('staff-cat-filter')?.value || 'all';
 
-  const items = document.querySelectorAll('.staff-card-item');
+  const panelGrid = document.getElementById('staff-panel-grid');
+  if (panelGrid) {
+    panelGrid.querySelectorAll('.staff-card-item').forEach(card => {
+      const name = card.getAttribute('data-name') || '';
+      const role = card.getAttribute('data-role') || '';
+      const badge = card.getAttribute('data-badge') || '';
+      const bio = card.getAttribute('data-bio') || '';
+      const cat = card.getAttribute('data-cat') || '';
+      const match = (!pQuery || name.includes(pQuery) || role.includes(pQuery) || badge.includes(pQuery) || bio.includes(pQuery)) &&
+                    (pCat === 'all' || cat === pCat);
+      card.style.display = match ? '' : 'none';
+    });
+  }
 
-  items.forEach(card => {
-    const name = card.getAttribute('data-name') || '';
-    const role = card.getAttribute('data-role') || '';
-    const badge = card.getAttribute('data-badge') || '';
-    const bio = card.getAttribute('data-bio') || '';
-    const cardCat = card.getAttribute('data-cat') || '';
+  const cmsGrid = document.getElementById('cms-staff-list');
+  if (cmsGrid) {
+    cmsGrid.querySelectorAll('.staff-card-item').forEach(card => {
+      const name = card.getAttribute('data-name') || '';
+      const role = card.getAttribute('data-role') || '';
+      const badge = card.getAttribute('data-badge') || '';
+      const bio = card.getAttribute('data-bio') || '';
+      const cat = card.getAttribute('data-cat') || '';
+      const match = (!eQuery || name.includes(eQuery) || role.includes(eQuery) || badge.includes(eQuery) || bio.includes(eQuery)) &&
+                    (eCat === 'all' || cat === eCat);
+      card.style.display = match ? '' : 'none';
+    });
+  }
 
-    const matchesSearch = !query || name.includes(query) || role.includes(query) || badge.includes(query) || bio.includes(query);
-    const matchesCat = (cat === 'all' || cardCat === cat);
-
-    card.style.display = (matchesSearch && matchesCat) ? '' : 'none';
-  });
+  const quickGrid = document.getElementById('dash-quick-staff-list');
+  if (quickGrid) {
+    quickGrid.querySelectorAll('.staff-card-item').forEach(card => {
+      card.style.display = '';
+    });
+  }
 }
 function filterStaffList(q) { applyStaffFilters(); }
 function filterStaffListByCat(c) { applyStaffFilters(); }
@@ -4239,12 +4492,7 @@ function deleteCmsStaff(id) {
   toast('Team member removed', 'info');
 }
 
-function resetStaffRoster() {
-  if (!confirm('Reset staff roster to default team members?')) return;
-  saveCmsStaff(DEFAULT_STAFF);
-  renderCmsStaffList();
-  toast('Staff roster reset to defaults ✓', 'info');
-}
+
 
 function getCmsProperties() {
   try {
@@ -4454,22 +4702,53 @@ document.addEventListener('input', function(e) {
   }
 });
 
+
+// Safe stubs for construction command center sub-renders
+if (typeof renderMaterials !== 'function') window.renderMaterials = function() {};
+if (typeof renderBudget !== 'function') window.renderBudget = function() {};
+if (typeof renderCrew !== 'function') window.renderCrew = function() {};
+if (typeof renderCalendar !== 'function') window.renderCalendar = function() {};
+
 function initDash() {
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
   }
   window.scrollTo(0, 0);
   setTimeout(() => window.scrollTo(0, 0), 20);
-  setGreeting(); updateClock();
-  setInterval(updateClock, 15000);
-  setInterval(()=>{ renderLeads(); renderActivityFeed(); renderTable(); renderTickets(); }, 60000);
-  updateStats(); renderLeads(); renderActivityFeed(); renderTable(); renderTickets();
-  loadCmsFormFields(); renderCmsProperties(); renderCmsStaffList();
-  // Initialize construction command center tabs
-  renderMaterials();
-  renderBudget();
-  renderCrew();
+  try { setGreeting(); } catch(e) { console.warn(e); }
+  try { updateClock(); setInterval(updateClock, 15000); } catch(e) { console.warn(e); }
+  try { updateStats(); } catch(e) { console.warn(e); }
+  try { renderLeads(); } catch(e) { console.warn(e); }
+  try { renderActivityFeed(); } catch(e) { console.warn(e); }
+  try { renderTable(); } catch(e) { console.warn(e); }
+  try { if (typeof renderTickets === 'function') renderTickets(); } catch(e) { console.warn(e); }
+  try { loadCmsFormFields(); } catch(e) { console.warn(e); }
+  try { renderCmsProperties(); } catch(e) { console.warn(e); }
+  try { renderCmsStaffList(); } catch(e) { console.warn(e); }
+  try { if (typeof renderMaterials === 'function') renderMaterials(); } catch(e) {}
+  try { if (typeof renderBudget === 'function') renderBudget(); } catch(e) {}
+  try { if (typeof renderCrew === 'function') renderCrew(); } catch(e) {}
+  setInterval(() => {
+    try { renderLeads(); } catch(e) {}
+    try { renderActivityFeed(); } catch(e) {}
+    try { renderTable(); } catch(e) {}
+    try { if (typeof renderTickets === 'function') renderTickets(); } catch(e) {}
+  }, 60000);
 }
+
+// Auto-run initDash once full script and DOM are ready
+(function() {
+  try {
+    const a = localStorage.getItem(CFG.authKey);
+    if (a && Date.now() - parseInt(a) < 8 * 3600000) {
+      const ps = document.getElementById('pin-screen');
+      if (ps) ps.style.display = 'none';
+      initDash();
+    }
+  } catch(e) {
+    console.error('Init error:', e);
+  }
+})();
 </script>
 
 <!-- UNSAVED CHANGES STICKY NOTIFICATION BAR -->
