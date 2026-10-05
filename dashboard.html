@@ -2110,7 +2110,7 @@
 ════════════════════════════════════════════════════ */
 
 const CFG = {
-  name:       'Allen',
+  name:       'Jazmin',
   pin:        '1234',
   mondayUrl:  'https://hurleyenterprise.monday.com/boards/',
   leadsKey:   'hurley_leads',
@@ -2329,12 +2329,12 @@ function updateClock() {
 function setGreeting() {
   const d=estNow(), h=d.getHours(), min=d.getMinutes();
   // Time-specific greeting
-  let g, eyebrow;
-  if      (h >= 5  && h < 12) { g = 'Good Morning';    eyebrow = '\u2600\uFE0F Morning Brief';   }
-  else if (h >= 12 && h < 17) { g = 'Good Afternoon';  eyebrow = '\u2600\uFE0F Afternoon Brief'; }
-  else if (h >= 17 && h < 21) { g = 'Good Evening';    eyebrow = '\uD83C\uDF06 Evening Brief';   }
-  else                        { g = 'Working Late';     eyebrow = '\uD83C\uDF19 Late-Night Brief'; }
-  document.getElementById('g-name').innerHTML = `${g}, <em>${CFG.name}</em>`;
+  let eyebrow;
+  if      (h >= 5  && h < 12) { eyebrow = '☀️ Morning Brief';   }
+  else if (h >= 12 && h < 17) { eyebrow = '☀️ Afternoon Brief'; }
+  else if (h >= 17 && h < 21) { eyebrow = '🌆 Evening Brief';   }
+  else                        { eyebrow = '🌙 Late-Night Brief'; }
+  document.getElementById('g-name').innerHTML = `Welcome, <em>${CFG.name}</em>`;
   document.getElementById('g-time-label').textContent = '●  ' + eyebrow + ' · Eastern Time';
   const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
