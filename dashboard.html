@@ -1260,7 +1260,7 @@
   <!-- TOP NAVIGATION BAR (very top of page) -->
   <div class="dash-nav" id="dash-nav" style="margin-bottom:0.5rem;">
     <button class="dash-nav-btn active" onclick="switchDashPanel('pipeline')">📊 Pipeline</button>
-    <button class="dash-nav-btn" onclick="openStaffRosterPanel()">👥 Team Roster (<span id="nav-staff-count">8</span>)</button>
+    <button class="dash-nav-btn" onclick="switchDashPanel('staff')">👥 Team Roster (<span id="nav-staff-count">8</span>)</button>
     <button class="dash-nav-btn" onclick="switchDashPanel('construction')">🏗️ Construction</button>
     <button class="dash-nav-btn" onclick="switchDashPanel('analytics')">📈 Analytics</button>
     <button class="dash-nav-btn" onclick="switchDashPanel('editor')" style="border-color:var(--gold);color:var(--gold);font-weight:800;">🌐 Site Editor</button>
@@ -1453,7 +1453,42 @@
 
   </div><!-- /panel-pipeline -->
 
-  <!-- ═══ PANEL 2: CONSTRUCTION COMMAND CENTER ═══ -->
+  <!-- ═══ PANEL 2: TEAM ROSTER & STAFF MANAGER ═══ -->
+  <div class="dash-panel" id="panel-staff">
+    <div class="cms-section-hdr" style="margin-top:1.25rem;">
+      <div>
+        <div class="cms-section-title">👥 Company Owners, Executive Leadership &amp; Staff Roster</div>
+        <div class="cms-section-sub">Individual editable cards for all 8 team members. Tap any card to edit headshot, job title, and bio text. Changes sync live to <a href="about.html" target="_blank" style="color:var(--gold);text-decoration:underline;">about.html</a>.</div>
+      </div>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <button class="add-btn" onclick="openStaffModal()" style="font-size:0.78rem;padding:0.5em 1em;">
+          ➕ Add Member
+        </button>
+        <button class="crm-tools-btn" onclick="resetStaffRoster()" style="font-size:0.75rem;padding:0.45em 0.85em;border-color:rgba(201,168,76,0.4);color:var(--gold);background:rgba(201,168,76,0.1);">
+          🔄 Reset to Defaults
+        </button>
+      </div>
+    </div>
+
+    <!-- Search & Filter Toolbar -->
+    <div class="cms-toolbar">
+      <div class="cms-search-wrap">
+        <input type="text" class="mi" id="panel-staff-search" oninput="applyStaffFilters()" placeholder="Search by name, title, or role..." style="min-height:40px;font-size:0.82rem;">
+        <span class="cms-search-icon">🔍</span>
+        <button class="cms-search-clear" onclick="document.getElementById('panel-staff-search').value='';applyStaffFilters();" title="Clear search">✕</button>
+      </div>
+      <select class="ms" id="panel-staff-cat-filter" onchange="applyStaffFilters()" style="min-height:40px;font-size:0.78rem;padding:0.4em 0.8em;background:rgba(0,0,0,0.3);border-color:var(--border);min-width:180px;">
+        <option value="all">All Team Members</option>
+        <option value="leader">⭐ Executive Leadership</option>
+        <option value="support">🛠 Operations Team</option>
+      </select>
+    </div>
+
+    <!-- 3×3 Staff Grid -->
+    <div id="staff-panel-grid" class="cms-staff-grid"></div>
+  </div><!-- /panel-staff -->
+
+  <!-- ═══ PANEL 3: CONSTRUCTION COMMAND CENTER ═══ -->
   <div class="dash-panel" id="panel-construction">
 
       <!-- CONSTRUCTION OVERVIEW KPIs -->
@@ -3112,6 +3147,7 @@ function switchDashPanel(panelId) {
   if (navBtns[map[panelId]]) navBtns[map[panelId]].classList.add('active');
   // Render content on tab switch
   if (panelId === 'pipeline') { renderLeads(); updateStats(); renderTable(); renderCmsStaffList(); }
+  if (panelId === 'staff') { renderCmsStaffList(); }
   if (panelId === 'construction') { renderConstructionOverview(); renderTickets(); renderCalendar(); renderMaterials(); renderBudget(); renderCrew(); }
   if (panelId === 'analytics') { renderAnalyticsKPIs(); renderPipelineFunnel(); renderActivityFeed(); renderBreakdown(getLeads().filter(l=>l.status!=='closed'&&l.status!=='dead')); }
   if (panelId === 'editor') { loadCmsFormFields(); renderCmsProperties(); renderCmsStaffList(); }
@@ -3121,10 +3157,8 @@ function switchDashPanel(panelId) {
 }
 
 function openStaffRosterPanel() {
-  switchDashPanel('editor');
-  switchCmsPage('staff');
-  renderCmsStaffList();
-  const el = document.getElementById('cms-staff-list');
+  switchDashPanel('staff');
+  const el = document.getElementById('staff-panel-grid');
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -3200,7 +3234,7 @@ function parseCost(s) {
 }
 const TICKETS_KEY = 'hurley_tickets';
 const DEMO_DATA_VERSION_KEY = 'hurley_demo_version';
-const DEMO_DATA_VERSION = '2026.07.29c'; // Bump this to force-reseed demo data
+const DEMO_DATA_VERSION = '2026.10.05b'; // Bump this to force-reseed demo data
 
 /* Helper: ISO date string offset from today */
 function daysFromNow(n) {
@@ -3216,6 +3250,7 @@ function daysFromNow(n) {
     localStorage.removeItem('hurley_materials');
     localStorage.removeItem('hurley_crew');
     localStorage.removeItem('hurley_site_properties');
+    localStorage.removeItem('hurley_site_staff');
     localStorage.setItem(DEMO_DATA_VERSION_KEY, DEMO_DATA_VERSION);
   }
 })();
@@ -3856,7 +3891,7 @@ const DEFAULT_PROPERTIES = [
 
 const DEFAULT_STAFF = [
   { id: 's1', name: 'J. Allen Hurley II', role: 'CEO & President', cat: 'leader', photo: 'https://static.wixstatic.com/media/44d8da_dc70f3e33d4843ef80c6c734ea69c169~mv2.png/v1/fill/w_425,h_418,fp_0.41_0.45,lg_1,q_85,enc_avif,quality_auto/aaaaaa.png', badge: '⭐ Founder & CEO', bio: 'Entrepreneur for 32+ years across tech, real estate, and private equity. Built a wireless company from a garage to 2,700 employees and a quarter-billion in sales before taking it public. Leads Hurley Enterprise and Vision LLC across the Tri-Cities. Fortune 5000, ACG Growth Award, and TN Chancellor\'s Award recipient. Operates on one principle: "Said Done."' },
-  { id: 's2', name: 'Jazmin Hurley', role: 'Director', cat: 'leader', photo: 'https://static.wixstatic.com/media/44d8da_3e69b66a5dec47ed99fdf754fb874f79~mv2.avif/v1/fill/w_419,h_412,al_c,lg_1,q_80,enc_avif,quality_auto/jaz%20headshot_edited.avif', badge: '', bio: 'Oversees administration and marketing at Hurley Enterprise, holding degrees in Small Business Management and Entrepreneurial Studies. Her streamlined operations and strategic marketing drive sustainable growth portfolio-wide. Founded the Love\'N\'People 501(c)3 at age 12 — earning the Peg Brown Santa Pal Award in 2019.' },
+  { id: 's2', name: 'Jazmin Hurley', role: 'Director', cat: 'leader', photo: 'https://static.wixstatic.com/media/44d8da_3e69b66a5dec47ed99fdf754fb874f79~mv2.avif/v1/fill/w_419,h_412,al_c,lg_1,q_80,enc_avif,quality_auto/jaz%20headshot_edited.avif', badge: '👑 Site Lead & Director', bio: 'Oversees administration and marketing at Hurley Enterprise, holding degrees in Small Business Management and Entrepreneurial Studies. Her streamlined operations and strategic marketing drive sustainable growth portfolio-wide. Founded the Love\'N\'People 501(c)3 at age 12 — earning the Peg Brown Santa Pal Award in 2019.' },
   { id: 's3', name: 'Noah Hurley', role: 'Project Director', cat: 'leader', photo: 'https://static.wixstatic.com/media/44d8da_78071fa2797943d3bd8fc3a617ae72ab~mv2.png/v1/fill/w_425,h_418,al_c,lg_1,q_85,enc_avif,quality_auto/nh.png', badge: '', bio: 'Directs project management from real estate acquisitions to transaction-based deals. A seasoned property manager, Noah\'s hands-on experience with residential and commercial operations — maintenance, upkeep, and day-to-day oversight — plays a pivotal role in enhancing property value and portfolio success.' },
   { id: 's4', name: 'Denise Myers', role: 'Vice President', cat: 'leader', photo: 'https://static.wixstatic.com/media/44d8da_aee11fa05e9947f3b2f988dd052e1fdc~mv2.png/v1/fill/w_425,h_418,fp_0.65_0.37,lg_1,q_85,enc_avif,quality_auto/dm.png', badge: '', bio: 'B.S. from ETSU. Brings 16 years of healthcare leadership at Bristol Regional to her role as Executive VP of Vision LLC. Key member of the executive team in tactical planning, strategic decisions, and hands-on project development. Rotarian, Bristol Chamber Board member, and FCA board executive.' },
   { id: 's5', name: 'Tonya Arnold', role: 'Finance Director', cat: 'support', photo: 'https://static.wixstatic.com/media/44d8da_ecef6108a4ff4df29302d66537d5761e~mv2.png/v1/fill/w_425,h_418,fp_0.59_0.50,lg_1,q_85,enc_avif,quality_auto/Tonya%20Arnold.png', badge: '', bio: 'Oversees financial operations across the Hurley Enterprise portfolio.' },
@@ -3981,7 +4016,11 @@ function getCmsStaff() {
 function saveCmsStaff(s) { localStorage.setItem(SITE_STAFF_KEY, JSON.stringify(s)); }
 
 function renderCmsStaffList() {
-  const containers = [document.getElementById('cms-staff-list'), document.getElementById('dash-quick-staff-list')].filter(Boolean);
+  const containers = [
+    document.getElementById('staff-panel-grid'),
+    document.getElementById('cms-staff-list'),
+    document.getElementById('dash-quick-staff-list')
+  ].filter(Boolean);
   if (!containers.length) return;
   const staff = getCmsStaff();
   const counter = document.getElementById('cms-staff-count');
@@ -4005,9 +4044,9 @@ function renderCmsStaffList() {
     const catLabel = sName.includes('Jazmin') ? '👑 Site Lead & Director' : (sName.includes('Allen') ? '⭐ Founder & Owner' : (s.cat === 'leader' ? '⭐ Executive Leadership' : '🛠 Operations Team'));
 
     return `
-      <div class="cms-staff-card${catClass} staff-card-item" id="cmsstaff-${s.id}" data-cat="${s.cat || 'leader'}" data-name="${sName.toLowerCase()}" data-role="${sRole.toLowerCase()}" data-badge="${sBadge.toLowerCase()}" data-bio="${sBio.toLowerCase()}" onclick="if(!event.target.closest('button'))editCmsStaff('${s.id}')">
+      <div class="cms-staff-card${catClass} staff-card-item" data-id="${s.id}" data-cat="${s.cat || 'leader'}" data-name="${sName.toLowerCase()}" data-role="${sRole.toLowerCase()}" data-badge="${sBadge.toLowerCase()}" data-bio="${sBio.toLowerCase()}" onclick="if(!event.target.closest('button'))editCmsStaff('${s.id}')">
         <div class="cms-staff-cat-badge">${catLabel}</div>
-        <img class="cms-staff-photo" id="staff-img-prev-${s.id}" src="${s.photo || 'img/office.png'}" alt="${sName}">
+        <img class="cms-staff-photo" src="${s.photo || 'img/office.png'}" alt="${sName}">
         <div class="cms-staff-name">${sName}</div>
         <div class="cms-staff-role">${sRole}</div>
         ${sBadge ? `<div class="cms-staff-badge-tag">🏷️ ${sBadge}</div>` : ''}
@@ -4036,8 +4075,14 @@ function resetStaffRoster() {
 }
 
 function applyStaffFilters() {
-  const query = (document.getElementById('staff-search-input')?.value || '').toLowerCase().trim();
-  const cat = document.getElementById('staff-cat-filter')?.value || 'all';
+  const q1 = document.getElementById('panel-staff-search')?.value || '';
+  const q2 = document.getElementById('staff-search-input')?.value || '';
+  const query = (q1 || q2 || '').toLowerCase().trim();
+
+  const c1 = document.getElementById('panel-staff-cat-filter')?.value;
+  const c2 = document.getElementById('staff-cat-filter')?.value;
+  const cat = (c1 && c1 !== 'all') ? c1 : ((c2 && c2 !== 'all') ? c2 : 'all');
+
   const items = document.querySelectorAll('.staff-card-item');
 
   items.forEach(card => {
