@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
     /* ═══════════════════════════════════════════════════
        HURLEY ENTERPRISE — CEO COMMAND CENTER
@@ -336,7 +337,228 @@
       min-height: 38px;
     }
     .crm-tools-btn:hover { border-color: var(--gold); color: var(--gold-lt); background: var(--gold-dim); }
+
+    /* ── VISION LEADS & WHALE INTELLIGENCE BADGES ── */
+    .badge-whale-gold {
+      background: linear-gradient(135deg, rgba(201,168,76,0.3), rgba(232,201,106,0.15)) !important;
+      border: 1px solid var(--gold) !important;
+      color: #fff !important;
+      box-shadow: 0 0 10px rgba(232,201,106,0.45);
+      font-weight: 800 !important;
+      animation: pulse-whale-gold 2.2s infinite ease-in-out;
     }
+    .badge-whale-silver {
+      background: linear-gradient(135deg, rgba(160,185,210,0.25), rgba(210,225,240,0.12)) !important;
+      border: 1px solid #c0d4ea !important;
+      color: #f0f6ff !important;
+      box-shadow: 0 0 8px rgba(180,205,230,0.35);
+      font-weight: 800 !important;
+    }
+    @keyframes pulse-whale-gold {
+      0%, 100% { box-shadow: 0 0 6px rgba(201,168,76,0.35); }
+      50% { box-shadow: 0 0 14px rgba(232,201,106,0.7); }
+    }
+    .badge-score-verified {
+      background: rgba(62,207,142,0.18) !important;
+      border: 1px solid rgba(62,207,142,0.5) !important;
+      color: #3ecf8e !important;
+      font-weight: 800 !important;
+    }
+    .badge-score-mql {
+      background: rgba(201,168,76,0.18) !important;
+      border: 1px solid rgba(201,168,76,0.5) !important;
+      color: var(--gold-lt) !important;
+      font-weight: 800 !important;
+    }
+    .badge-score-prospect {
+      background: rgba(91,155,213,0.18) !important;
+      border: 1px solid rgba(91,155,213,0.4) !important;
+      color: #7ab2f0 !important;
+      font-weight: 800 !important;
+    }
+    .badge-score-draft {
+      background: rgba(155,127,232,0.15) !important;
+      border: 1px dashed rgba(155,127,232,0.5) !important;
+      color: #bfa5ff !important;
+      font-weight: 800 !important;
+    }
+    .badge-score-spam {
+      background: rgba(255,77,77,0.15) !important;
+      border: 1px solid rgba(255,77,77,0.4) !important;
+      color: #ff6b6b !important;
+    }
+
+    /* ── DRAFT ENGINE & VOICE DICTATION ── */
+    .draft-restore-banner {
+      background: rgba(155,127,232,0.12);
+      border: 1px solid rgba(155,127,232,0.35);
+      border-radius: 10px;
+      padding: 0.65rem 0.85rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      font-size: 0.76rem;
+      color: #d8c9ff;
+    }
+    .draft-restore-btn {
+      background: #9b7fe8;
+      color: #000;
+      font-weight: 800;
+      border-radius: 6px;
+      padding: 0.3em 0.7em;
+      font-size: 0.72rem;
+      cursor: pointer;
+    }
+    .draft-discard-btn {
+      color: var(--t2);
+      font-size: 0.7rem;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .modal-draft-btn {
+      width: 100%;
+      height: 44px;
+      background: rgba(155,127,232,0.12);
+      border: 1px dashed rgba(155,127,232,0.45);
+      border-radius: 12px;
+      color: #c7b3ff;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: all 0.2s;
+    }
+    .modal-draft-btn:hover {
+      background: rgba(155,127,232,0.22);
+      border-color: #9b7fe8;
+    }
+    .mic-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--t2);
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.2em 0.55em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .mic-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold-lt);
+    }
+    .mic-btn.recording {
+      background: rgba(255,77,77,0.2);
+      border-color: var(--hot);
+      color: #ff8585;
+      animation: mic-pulse 1s infinite alternate;
+    }
+    @keyframes mic-pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
+    }
+
+    /* ── CALL LOGGING OUTCOME PILLS ── */
+    .call-outcome-pills {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-top: 0.4rem;
+    }
+    .call-pill {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.45em 0.85em;
+      color: var(--t2);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .call-pill.active {
+      background: var(--gold-dim);
+      border-color: var(--gold);
+      color: var(--gold-lt);
+    }
+    .alert-pill-btn {
+      border-color: rgba(255,255,255,0.1);
+    }
+    .alert-pill-btn.active {
+      background: rgba(255,77,77,0.15) !important;
+      border-color: var(--hot) !important;
+      color: #ff9191 !important;
+    }
+
+    /* ── INLINE CARD CONTROLS ── */
+    .lc-inline-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+    }
+    .lc-field-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.4rem 0.55rem;
+    }
+    .lc-field-lbl {
+      font-size: 0.58rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--t3);
+      margin-bottom: 0.2rem;
+    }
+    .lc-inline-select, .lc-inline-date {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: var(--off-white);
+      font-size: 0.72rem;
+      font-weight: 700;
+      outline: none;
+      cursor: pointer;
+    }
+    .lc-inline-select option {
+      background: #141414;
+      color: #fff;
+    }
+    .lc-followup-badge {
+      font-size: 0.62rem;
+      font-weight: 800;
+      padding: 0.15em 0.5em;
+      border-radius: 4px;
+      margin-left: 0.35rem;
+    }
+    .lc-followup-badge.due { background: rgba(201,168,76,0.2); color: var(--gold); }
+    .lc-followup-badge.overdue { background: rgba(255,77,77,0.2); color: var(--hot); }
+
+    /* ── PRINT MEDIA RULES (EXECUTIVE PIPELINE BRIEF) ── */
+    @media print {
+      body { background: #fff !important; color: #000 !important; }
+      #topbar, #dash-nav, .controls-bar, .crm-tools-btn, .act-btn, .save-btn, .add-btn, .ios-card-chevron, #pin-screen {
+        display: none !important;
+      }
+      .dash-panel { display: block !important; }
+      .lead-card {
+        border: 1px solid #ccc !important;
+        background: #fff !important;
+        color: #000 !important;
+        page-break-inside: avoid;
+        box-shadow: none !important;
+        margin-bottom: 1rem !important;
+      }
+      .lc-name { color: #000 !important; }
+      .lc-ci, .lc-detail, .lc-dl, .lc-dv { color: #333 !important; }
+    }
+
     .act-item:last-child { border-bottom: none; }
     .act-icon { font-size: 1rem; flex-shrink: 0; width: 22px; text-align: center; margin-top: 1px; }
     .act-text { flex: 1; font-size: 0.78rem; color: var(--t2); line-height: 1.45; }
@@ -1299,37 +1521,37 @@
     </div>
   </div>
 
-  <!-- STATS GRID -->
+  <!-- STATS GRID (VISION CRM REAL-TIME KPI BANNER) -->
   <div class="stats-grid">
-    <div class="stat-card s-hot" id="sc-hot" onclick="setFilter('hot')" title="Show hot leads" style="cursor:pointer">
-      <div class="stat-num" id="s-hot">0</div>
-      <div class="stat-label">🔥 Hot Leads</div>
-      <div class="stat-sub" id="s-hot-sub">Urgent follow-up</div>
+    <div class="stat-card s-hot" id="sc-verified" onclick="setFilter('verified')" title="Show Verified Leads (70+ score)" style="cursor:pointer">
+      <div class="stat-num" id="s-verified">0</div>
+      <div class="stat-label">🏆 Verified Leads</div>
+      <div class="stat-sub" id="s-verified-sub">Ready to tour / sign (70+)</div>
     </div>
-    <div class="stat-card s-warm" id="sc-warm" onclick="setFilter('warm')" title="Show warm leads" style="cursor:pointer">
-      <div class="stat-num" id="s-warm">0</div>
-      <div class="stat-label">🌡 Warm Leads</div>
-      <div class="stat-sub" id="s-warm-sub">Nurture this week</div>
+    <div class="stat-card s-warm" id="sc-mql" onclick="setFilter('mql')" title="Show MQL prospects (40-69 score)" style="cursor:pointer">
+      <div class="stat-num" id="s-mql">0</div>
+      <div class="stat-label">🌡️ MQL Prospects</div>
+      <div class="stat-sub" id="s-mql-sub">Qualified (40–69)</div>
     </div>
-    <div class="stat-card s-cool" id="sc-cool" onclick="setFilter('cool')" title="Show new/cool leads" style="cursor:pointer">
-      <div class="stat-num" id="s-new">0</div>
-      <div class="stat-label">🆕 New Today</div>
-      <div class="stat-sub">Last 24 hours</div>
+    <div class="stat-card s-cool" id="sc-whale" onclick="setFilter('whale')" title="Show Whale Accounts ($4k+ & $8k+/mo)" style="cursor:pointer;border-color:rgba(201,168,76,0.4);">
+      <div class="stat-num" id="s-whales" style="color:var(--gold-lt);">0</div>
+      <div class="stat-label">🐳 Whales</div>
+      <div class="stat-sub">$4k+ &amp; $8k+/mo budgets</div>
     </div>
-    <div class="stat-card s-white" id="sc-all" onclick="setFilter('all')" title="Show all leads" style="cursor:pointer">
+    <div class="stat-card s-white" id="sc-total" onclick="setFilter('active')" title="Show active leads" style="cursor:pointer">
       <div class="stat-num" id="s-total">0</div>
-      <div class="stat-label">📋 Total Pipeline</div>
-      <div class="stat-sub">Active (excl. closed)</div>
+      <div class="stat-label">📋 Active Pipeline</div>
+      <div class="stat-sub">Excl. closed &amp; archived</div>
     </div>
-    <div class="stat-card s-purple" id="sc-value" onclick="setFilter('all')" title="Show all leads" style="cursor:pointer">
+    <div class="stat-card s-purple" id="sc-value" onclick="setFilter('active')" title="Show active pipeline value" style="cursor:pointer">
       <div class="stat-num" id="s-value">$0</div>
-      <div class="stat-label">💰 Est. Value</div>
-      <div class="stat-sub">Low-end offer range</div>
+      <div class="stat-label">💰 Pipeline Value</div>
+      <div class="stat-sub">Total monthly rent volume</div>
     </div>
-    <div class="stat-card s-info" id="sc-contacted" onclick="setFilter('contacted')" title="Show contacted leads" style="cursor:pointer">
-      <div class="stat-num" id="s-contacted">0</div>
-      <div class="stat-label">📞 Contacted</div>
-      <div class="stat-sub">Waiting on response</div>
+    <div class="stat-card s-info" id="sc-drafts" onclick="setFilter('drafts')" title="Show incomplete staff drafts" style="cursor:pointer">
+      <div class="stat-num" id="s-drafts" style="color:#bfa5ff;">0</div>
+      <div class="stat-label">📝 Incomplete Drafts</div>
+      <div class="stat-sub">Saved to finish later</div>
     </div>
   </div>
 
@@ -1339,20 +1561,27 @@
   <!-- LEAD PIPELINE -->
   <div class="controls-bar" style="margin-top:1.25rem;">
     <div class="controls-top">
-      <div class="section-title">Lead Pipeline</div>
-      <button class="add-btn" onclick="openModal()">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Add Lead
-      </button>
+      <div class="section-title">Lead Pipeline &amp; Inquiries</div>
+      <div style="display:flex;gap:0.5rem;align-items:center;">
+        <button class="add-btn" onclick="openModal()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Lead
+        </button>
+      </div>
     </div>
-    <div class="filter-scroll">
-      <button class="filter-btn active" id="f-all"       onclick="setFilter('all')">All</button>
-      <button class="filter-btn"        id="f-hot"       onclick="setFilter('hot')">🔥 Hot</button>
-      <button class="filter-btn"        id="f-warm"      onclick="setFilter('warm')">🌡 Warm</button>
-      <button class="filter-btn"        id="f-cool"      onclick="setFilter('cool')">🆕 New</button>
-      <button class="filter-btn"        id="f-contacted" onclick="setFilter('contacted')">📞 Contacted</button>
-      <button class="filter-btn"        id="f-evaluator" onclick="setFilter('evaluator')">🏠 Evaluator</button>
-      <button class="filter-btn"        id="f-riley"     onclick="setFilter('riley')">💬 Riley</button>
+    <div class="filter-scroll" id="lead-filter-scroll">
+      <button class="filter-btn active" id="f-active" onclick="setFilter('active')">⚡ Active</button>
+      <button class="filter-btn" id="f-verified" onclick="setFilter('verified')">🏆 Verified (70+)</button>
+      <button class="filter-btn" id="f-mql" onclick="setFilter('mql')">🌡️ MQL (40-69)</button>
+      <button class="filter-btn" id="f-whale" onclick="setFilter('whale')">🐳 Whales ($4k+)</button>
+      <button class="filter-btn" id="f-prospect" onclick="setFilter('prospect')">📋 Prospects (&lt;40)</button>
+      <button class="filter-btn" id="f-drafts" onclick="setFilter('drafts')">📝 Drafts</button>
+      <button class="filter-btn" id="f-all" onclick="setFilter('all')">All</button>
+      <button class="filter-btn" id="f-archived" onclick="setFilter('archived')">📦 Archived</button>
+      <span style="width:1px;height:22px;background:var(--border);margin:0 0.25rem;"></span>
+      <button class="filter-btn alert-pill-btn" id="f-due-today" onclick="setFilter('due_today')" title="Follow-up scheduled for today">📅 Due Today</button>
+      <button class="filter-btn alert-pill-btn" id="f-overdue" onclick="setFilter('overdue')" title="Follow-up date has passed">⚠️ Overdue</button>
+      <button class="filter-btn alert-pill-btn" id="f-unscheduled" onclick="setFilter('unscheduled')" title="No follow-up date set">⏱️ No Follow-Up</button>
     </div>
   </div>
 
@@ -1494,10 +1723,15 @@
     <div class="ios-card-body">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
         <input class="lt-search" id="lt-search" type="search" placeholder="Search name, phone, address…" oninput="renderTable()" style="max-width:300px;flex:1;">
-        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+          <button class="crm-tools-btn" onclick="exportExcel()" style="border-color:rgba(62,207,142,0.4);color:var(--cool);background:rgba(62,207,142,0.08);" title="Export filtered leads directly into formatted .xlsx">
+            📊 Export Excel (.xlsx)
+          </button>
           <button class="crm-tools-btn" onclick="exportCSV()">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Export CSV
+          </button>
+          <button class="crm-tools-btn" onclick="window.print()" style="border-color:rgba(155,127,232,0.4);color:var(--purple);background:rgba(155,127,232,0.08);" title="Print formatted pipeline summary">
+            🖨️ Print Briefing Sheet
           </button>
           <button class="crm-tools-btn" onclick="clearDemoData()" style="border-color:rgba(255,77,77,0.3);color:var(--hot);background:rgba(255,77,77,0.08);" title="Wipe sample data when ready for live data">
             🗑️ Clear Sample Data
@@ -1511,11 +1745,11 @@
         <table class="lt-table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Property</th>
+              <th>Contact / Prospect</th>
+              <th>Phone &amp; Email</th>
+              <th>Space &amp; Budget</th>
               <th>Source</th>
-              <th>Status</th>
+              <th>AI Score &amp; Stage</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -2077,52 +2311,172 @@
 
 
 
-<!-- ADD LEAD MODAL -->
+<!-- ADD LEAD MODAL (DUAL-LAYER DRAFT & VOICE DICTATION) -->
 <div class="overlay" id="overlay" onclick="handleOvClick(event)">
   <div class="modal-sheet" id="modal-sheet">
     <div class="modal-handle"></div>
-    <div class="modal-title">➕ Add Manual Lead</div>
-    <div class="mrow">
-      <div class="mf"><label class="ml">First Name</label><input type="text" class="mi" id="ml-fn" placeholder="John"></div>
-      <div class="mf"><label class="ml">Last Name</label><input type="text" class="mi" id="ml-ln" placeholder="Smith"></div>
+    <div class="modal-title">➕ Add Lead &amp; Commercial Inquiry</div>
+    
+    <!-- Draft Recovery Banner -->
+    <div id="draft-restore-banner" class="draft-restore-banner" style="display:none;">
+      <div>📝 Unsaved draft found from <span id="draft-time-ago">earlier</span></div>
+      <div style="display:flex;gap:0.4rem;align-items:center;">
+        <button type="button" class="draft-restore-btn" onclick="restoreLocalDraft()">Restore</button>
+        <button type="button" class="draft-discard-btn" onclick="discardLocalDraft()">Discard</button>
+      </div>
     </div>
-    <div class="mf"><label class="ml">Phone Number</label><input type="tel" class="mi" id="ml-ph" placeholder="423-555-0100" inputmode="tel"></div>
-    <div class="mf"><label class="ml">Email (optional)</label><input type="email" class="mi" id="ml-em" placeholder="john@example.com"></div>
-    <div class="mf"><label class="ml">Property Address</label><input type="text" class="mi" id="ml-ad" placeholder="123 Main St, Bristol TN"></div>
+
     <div class="mrow">
-      <div class="mf"><label class="ml">Property Type</label>
-        <select class="ms" id="ml-ty">
-          <option value="residential">🏠 Residential</option>
-          <option value="commercial">🏢 Commercial</option>
-          <option value="industrial">🏭 Industrial</option>
-          <option value="land">🌿 Land / Lot</option>
+      <div class="mf"><label class="ml">First Name</label><input type="text" class="mi lead-draft-field" id="ml-fn" placeholder="John" oninput="queueDraftSave()"></div>
+      <div class="mf"><label class="ml">Last Name</label><input type="text" class="mi lead-draft-field" id="ml-ln" placeholder="Smith" oninput="queueDraftSave()"></div>
+    </div>
+    <div class="mrow">
+      <div class="mf"><label class="ml">Phone Number</label><input type="tel" class="mi lead-draft-field" id="ml-ph" placeholder="423-555-0100" inputmode="tel" oninput="queueDraftSave()"></div>
+      <div class="mf"><label class="ml">Email</label><input type="email" class="mi lead-draft-field" id="ml-em" placeholder="john@example.com" oninput="queueDraftSave()"></div>
+    </div>
+    <div class="mrow">
+      <div class="mf"><label class="ml">Space Type Needed</label>
+        <select class="ms lead-draft-field" id="ml-ty" onchange="queueDraftSave()">
+          <option value="Office">🏢 Commercial Office</option>
+          <option value="Retail">🛍️ Retail Storefront</option>
+          <option value="Warehouse">🏭 Warehouse &amp; Industrial</option>
+          <option value="Land">🌿 Land / Development Site</option>
+          <option value="Residential">🏠 Residential Property</option>
         </select>
       </div>
+      <div class="mf"><label class="ml">Estimated Monthly Budget</label>
+        <input type="text" class="mi lead-draft-field" id="ml-bg" placeholder="e.g. $5,000/mo ($8k+ Gold Whale)" oninput="queueDraftSave()">
+      </div>
+    </div>
+    <div class="mrow">
+      <div class="mf"><label class="ml">Target Move-in Timeline</label>
+        <select class="ms lead-draft-field" id="ml-tm" onchange="queueDraftSave()">
+          <option value="ASAP / Under 30 days">⚡ ASAP / Under 30 days</option>
+          <option value="1-3 months">📅 1–3 months</option>
+          <option value="3-6 months">⏳ 3–6 months</option>
+          <option value="Exploring options">🔍 Exploring options</option>
+        </select>
+      </div>
+      <div class="mf"><label class="ml">Team Size / Headcount</label>
+        <select class="ms lead-draft-field" id="ml-ts" onchange="queueDraftSave()">
+          <option value="Solo (1 person)">Solo (1 person)</option>
+          <option value="2-10 people">2–10 people</option>
+          <option value="11-50 people">11–50 people</option>
+          <option value="50+ enterprise">50+ enterprise</option>
+        </select>
+      </div>
+    </div>
+    <div class="mrow">
       <div class="mf"><label class="ml">Lead Source</label>
-        <select class="ms" id="ml-src">
-          <option value="riley">🤖 Riley Bot</option>
-          <option value="evaluator">🏠 Sell My Home Chat</option>
-          <option value="contact_form">📧 Contact Form</option>
-          <option value="market_report_homepage">📊 Market Report</option>
+        <select class="ms lead-draft-field" id="ml-src" onchange="queueDraftSave()">
+          <option value="manual">✏️ Staff Manual Entry</option>
           <option value="phone">📞 Phone Call</option>
-          <option value="referral">🤝 Referral</option>
           <option value="walkin">🚶 Walk-In</option>
+          <option value="referral">🤝 Referral</option>
+          <option value="website">🌐 Website Form</option>
+          <option value="riley">🤖 Riley Bot</option>
+        </select>
+      </div>
+      <div class="mf"><label class="ml">Assign Team Member</label>
+        <select class="ms lead-draft-field" id="ml-assignee" onchange="queueDraftSave()">
+          <option value="Jazmin Hurley">👑 Jazmin Hurley</option>
+          <option value="J. Allen Hurley II">⭐ J. Allen Hurley II</option>
+          <option value="Noah Hurley">⭐ Noah Hurley</option>
+          <option value="Blake Watson">🛠 Blake Watson</option>
+          <option value="Denise Myers">⭐ Denise Myers</option>
+          <option value="Tonya Arnold">🛠 Tonya Arnold</option>
+          <option value="Fred Green">🛠 Fred Green</option>
+          <option value="Sherril Keplinger">🛠 Sherril Keplinger</option>
+          <option value="">(Unassigned)</option>
         </select>
       </div>
     </div>
-    <div class="mf"><label class="ml">Situation</label>
-      <select class="ms" id="ml-sit">
-        <option value="speed">⚡ Needs to sell quickly</option>
-        <option value="estate">📋 Estate / Inherited</option>
-        <option value="distressed">🔑 Distressed / Behind payments</option>
-        <option value="relocating">✈️ Relocating / Downsizing</option>
-        <option value="investor">💼 Portfolio liquidation</option>
-        <option value="other">💬 Other</option>
-      </select>
+    <div class="mf">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <label class="ml">Requirements &amp; Conversation Notes</label>
+        <button type="button" class="mic-btn" id="mic-lead-notes" onclick="toggleVoiceInput('ml-no', 'mic-lead-notes')" title="Dictate notes with microphone">🎙️ Voice Dictation</button>
+      </div>
+      <textarea class="mi lead-draft-field" id="ml-no" rows="3" placeholder="Square footage, parking needs, ceiling height, lease structure, timeline notes..." oninput="queueDraftSave()"></textarea>
     </div>
-    <div class="mf"><label class="ml">Notes</label><input type="text" class="mi" id="ml-no" placeholder="Initial contact details, condition, timeline…"></div>
-    <button class="modal-submit" onclick="submitManualLead()">Add to Pipeline →</button>
+    <button class="modal-submit" onclick="submitManualLead(false)">🚀 Submit &amp; Qualify Lead →</button>
+    <button class="modal-draft-btn" onclick="submitManualLead(true)">📝 Save as Draft (No Validation Blockers)</button>
     <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- CALL LOGGING MODAL -->
+<div class="overlay" id="call-overlay" onclick="handleCallOvClick(event)">
+  <div class="modal-sheet" id="call-modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📞 Log Client Phone Call</div>
+    <input type="hidden" id="call-lead-id">
+    <div class="mf">
+      <label class="ml">Lead / Prospect</label>
+      <input type="text" class="mi" id="call-lead-name" readonly style="opacity:0.75;font-weight:700;">
+    </div>
+    <div class="mf">
+      <label class="ml">Call Outcome</label>
+      <div class="call-outcome-pills">
+        <button type="button" class="call-pill active" onclick="setCallOutcome(this, 'Spoke to Lead')">🗣️ Spoke to Lead</button>
+        <button type="button" class="call-pill" onclick="setCallOutcome(this, 'Left Voicemail')">📼 Left Voicemail</button>
+        <button type="button" class="call-pill" onclick="setCallOutcome(this, 'No Answer')">🚫 No Answer</button>
+        <button type="button" class="call-pill" onclick="setCallOutcome(this, 'Bad Number')">❌ Bad Number</button>
+        <button type="button" class="call-pill" onclick="setCallOutcome(this, 'Follow-up Needed')">⏳ Follow-up Needed</button>
+      </div>
+      <input type="hidden" id="call-outcome-val" value="Spoke to Lead">
+    </div>
+    <div class="mrow">
+      <div class="mf">
+        <label class="ml">Duration (minutes)</label>
+        <input type="number" class="mi" id="call-duration" value="5" min="0">
+      </div>
+      <div class="mf">
+        <label class="ml">Caller (Staff Member)</label>
+        <select class="ms" id="call-caller">
+          <option value="Jazmin Hurley">Jazmin Hurley</option>
+          <option value="J. Allen Hurley II">J. Allen Hurley II</option>
+          <option value="Noah Hurley">Noah Hurley</option>
+          <option value="Blake Watson">Blake Watson</option>
+          <option value="Denise Myers">Denise Myers</option>
+        </select>
+      </div>
+    </div>
+    <div class="mf">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <label class="ml">Call Notes</label>
+        <button type="button" class="mic-btn" id="mic-call-notes" onclick="toggleVoiceInput('call-notes', 'mic-call-notes')" title="Dictate notes with microphone">🎙️ Voice Dictation</button>
+      </div>
+      <textarea class="mi" id="call-notes" rows="3" placeholder="Discussed space requirements, pricing, tour availability..."></textarea>
+    </div>
+    <div class="mf">
+      <label class="ml">Schedule Next Follow-Up Date</label>
+      <input type="date" class="mi" id="call-follow-up">
+    </div>
+    <button class="modal-submit" onclick="submitCallLog()">💾 Save Call Record</button>
+    <button class="modal-cancel" onclick="closeCallModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- COMMENTS & TEAM NOTES DRAWER -->
+<div class="overlay" id="comments-overlay" onclick="handleCommentsOvClick(event)">
+  <div class="modal-sheet" id="comments-modal-sheet" style="max-height:85vh;display:flex;flex-direction:column;">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="comments-modal-title">💬 Lead Activity &amp; Notes</div>
+    <input type="hidden" id="comments-lead-id">
+    <div class="comments-feed" id="comments-feed" style="flex:1;overflow-y:auto;margin:1rem 0;padding-right:0.5rem;display:flex;flex-direction:column;gap:0.75rem;">
+      <div style="color:var(--t3);text-align:center;padding:1.5rem 0;">Loading activity thread...</div>
+    </div>
+    <div class="mf" style="margin-top:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <label class="ml">Add New Staff Note</label>
+        <button type="button" class="mic-btn" id="mic-comment-notes" onclick="toggleVoiceInput('new-comment-input', 'mic-comment-notes')" title="Dictate note">🎙️ Dictate</button>
+      </div>
+      <div style="display:flex;gap:0.5rem;margin-top:0.35rem;">
+        <input type="text" class="mi" id="new-comment-input" placeholder="Type or dictate a note for the team..." style="flex:1;">
+        <button class="add-btn" onclick="submitComment()" style="white-space:nowrap;padding:0.6em 1.1em;">Post Note</button>
+      </div>
+    </div>
+    <button class="modal-cancel" onclick="closeCommentsModal()" style="margin-top:0.5rem;">Close Drawer</button>
   </div>
 </div>
 
@@ -2373,7 +2727,10 @@ const CFG = {
   mondayUrl:  'https://hurleyenterprise.monday.com/boards/',
   leadsKey:   'hurley_leads',
   authKey:    'hurley_auth',
-  version:    '2',
+  version:    '3',
+  draftKey:   'hurley_draft_lead_new',
+  supabaseUrl: 'https://lwwqihohuzjttwblizvg.supabase.co',
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx3d3FpaG9odXpqdHR3YmxpenZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE0MDQ1NzgsImV4cCI6MjEwNjk4MDU3OH0.JQGTs7UwD5yLiRUOUK5Wu5oK2HhQFwjwBcNv3-uvxO0'
 };
 
 // Clear stale session from old dashboard version
@@ -2391,44 +2748,145 @@ const CFG = {
   }
 })();
 
-/* ── DEMO DATA ────────────────────────────────── */
+/* ── DEMO DATA (VISION CRM UNIFIED SCHEMA) ────────────────────────── */
 const DEMO = [
-  // Hot — evaluator, distressed residential, 22 min ago
-  { id:'d1', source:'evaluator', status:'new', timestamp: new Date(Date.now()-3.5*3600000).toISOString(),
-    contact:{firstName:'Michael',lastName:'Garrett',phone:'(423) 321-0182',email:'mgarrett@gmail.com'},
-    property:{type:'residential',street:'2210 Randolph St',city:'Bristol',state:'VA',condition:'poor',situation:'distressed',beds:'3',baths:'1',sqft:'1,190',year:'1968'},
-    offerRange:'$62,000 – $88,000',
-    notes:'Foundation issues, roof needs replacing. Seller aware of condition — wants out fast. No realtor. Prefers cash close, flexible on date. Called twice this week.'},
-  // Warm — Riley chatbot, commercial lease inquiry, 1.5 hrs ago
-  { id:'d2', source:'riley', status:'contacted', timestamp: new Date(Date.now()-90*60000).toISOString(),
-    contact:{firstName:'Sandra',lastName:'Hollis',phone:'(423) 321-0241',email:'shollis@hollisgrouptn.com'},
-    property:{type:'commercial',street:'417 State St',city:'Bristol',state:'TN',condition:'good',situation:'relocating'},
-    offerRange:'',
-    notes:'Chatted with Riley — asking about retail on State St, 2,000–3,500 sqft. Relocating consulting firm from Kingsport by June 1. Strong credit tenant. Follow up tomorrow AM.'},
-  // Estate sale — evaluator, 4.5 hrs ago — DISTRESSED condition makes it HOT
-  { id:'d3', source:'evaluator', status:'new', timestamp: new Date(Date.now()-4.5*3600000).toISOString(),
-    contact:{firstName:'James',lastName:'Coffey',phone:'(276) 321-0093',email:'jcoffey@outlook.com'},
-    property:{type:'residential',street:'2416 Bradley St',city:'Bristol',state:'VA',condition:'poor',situation:'distressed',beds:'4',baths:'2',sqft:'1,680',year:'1962'},
-    offerRange:'$92,000 – $128,000',
-    notes:'Inherited from mother — estate sale, executor is James. Tenants on month-to-month. Wants offer before probate closes. Brother in disagreement on price — keep offer in writing.'},
-  // ⭐ WHALE — commercial 1031 exchange, $1.2M+ range, referred in
-  { id:'d4', source:'referral', status:'qualified', timestamp: new Date(Date.now()-6*3600000).toISOString(),
-    contact:{firstName:'David',lastName:'Marcum',phone:'(865) 214-7730',email:'dmarcum@precisionlogisticsllc.com'},
-    property:{type:'industrial',street:'Industrial Park Dr',city:'Kingsport',state:'TN',condition:'good',situation:'investor',sqftCom:'32000',units:'1',leased:'yes'},
-    offerRange:'$1,100,000 – $1,400,000',
-    notes:'⭐ HIGH VALUE — referred by Larry Hicks at First Bank. Regional logistics Co. seeking 25K–40K sqft warehouse near I-26. 1031 exchange buyer, pre-approved. Triple net preferred. Spoke 20 min — very engaged. Must close before Dec 31.'},
-  // Nurture — market report download, 7 hrs ago
-  { id:'d5', source:'manual', status:'new', timestamp: new Date(Date.now()-7*3600000).toISOString(),
-    contact:{firstName:'Tanya',lastName:'Blevins',phone:'(423) 321-0317',email:'tanya.blevins@gmail.com'},
-    property:{type:'residential',street:'812 Cumberland St',city:'Bristol',state:'TN',condition:'good',situation:'other'},
-    offerRange:'',
-    notes:'Downloaded 2026 Market Report. Browsed We Buy Property page. No direct inquiry yet — good nurture candidate. Property appears owner-occupied.'},
-  // Phone call — land deal, this morning
-  { id:'d6', source:'phone', status:'contacted', timestamp: new Date(Date.now()-3.2*3600000).toISOString(),
-    contact:{firstName:'Darlene',lastName:'Yates',phone:'(423) 321-0599',email:''},
-    property:{type:'land',street:'Old Jonesboro Rd Parcel B',city:'Kingsport',state:'TN',condition:'excellent',situation:'investor'},
-    offerRange:'$48,000 – $82,000',
-    notes:'Called in — 4.2 acres on Old Jonesboro Rd, unimproved, no liens. Investor liquidating. Wants written offer by Friday. City water at road. Zoned B-2. Sent intro email, awaiting signed disclosure.'},
+  {
+    id: 'd1',
+    name: 'Michael Garrett',
+    phone: '(423) 321-0182',
+    email: 'mgarrett@gmail.com',
+    space_type: 'Residential',
+    budget: '$75,000 cash purchase',
+    timeline: 'ASAP / Under 30 days',
+    team_size: 'Family',
+    score: 88,
+    score_label: 'Verified Lead',
+    reasoning: 'Immediate cash buyer, distressed property, fast close needed [88/100]',
+    is_whale: false,
+    whale_tier: null,
+    source: 'evaluator',
+    progress: 'Tour Scheduled',
+    assigned_employee: 'Jazmin Hurley',
+    follow_up_date: new Date(Date.now() + 86400000).toISOString().slice(0, 10),
+    notes: 'Foundation issues, roof needs replacing. Seller aware of condition — wants out fast. Prefers cash close, flexible on date. Called twice this week.',
+    property: { street: '2210 Randolph St', city: 'Bristol', state: 'VA', condition: 'poor', situation: 'distressed' },
+    timestamp: new Date(Date.now() - 3.5 * 3600000).toISOString(),
+    created_at: new Date(Date.now() - 3.5 * 3600000).toISOString()
+  },
+  {
+    id: 'd2',
+    name: 'Sandra Hollis',
+    phone: '(423) 321-0241',
+    email: 'shollis@hollisgrouptn.com',
+    space_type: 'Retail',
+    budget: '$5,200/mo',
+    timeline: '1-3 months',
+    team_size: '11-50 people',
+    score: 78,
+    score_label: 'Verified Lead',
+    reasoning: 'Strong commercial budget ($5,200/mo) qualifies as Silver Whale. Strong credit [78/100]',
+    is_whale: true,
+    whale_tier: 'silver',
+    source: 'riley',
+    progress: 'Contacted',
+    assigned_employee: 'J. Allen Hurley II',
+    follow_up_date: new Date().toISOString().slice(0, 10), // Due today!
+    notes: 'Chatted with Riley — seeking 2,500–3,500 sqft retail on State St. Relocating consulting firm from Kingsport by June 1.',
+    property: { street: '417 State St', city: 'Bristol', state: 'TN', condition: 'good', situation: 'relocating' },
+    timestamp: new Date(Date.now() - 90 * 60000).toISOString(),
+    created_at: new Date(Date.now() - 90 * 60000).toISOString()
+  },
+  {
+    id: 'd3',
+    name: 'David Marcum',
+    phone: '(865) 214-7730',
+    email: 'dmarcum@precisionlogisticsllc.com',
+    space_type: 'Warehouse',
+    budget: '$12,500/mo ($1.2M 1031)',
+    timeline: 'ASAP / Under 30 days',
+    team_size: '50+ enterprise',
+    score: 96,
+    score_label: 'Verified Lead',
+    reasoning: 'Enterprise budget ($12,500/mo) qualifies as Gold Whale. 1031 Exchange buyer pre-approved [96/100]',
+    is_whale: true,
+    whale_tier: 'gold',
+    source: 'referral',
+    progress: 'Proposal Sent',
+    assigned_employee: 'J. Allen Hurley II',
+    follow_up_date: new Date(Date.now() + 2 * 86400000).toISOString().slice(0, 10),
+    notes: '👑 GOLD WHALE — Regional logistics firm seeking 30k sqft near I-26. 1031 exchange buyer, pre-approved. NNN preferred.',
+    property: { street: 'Industrial Park Dr', city: 'Kingsport', state: 'TN', condition: 'good', situation: 'investor' },
+    timestamp: new Date(Date.now() - 6 * 3600000).toISOString(),
+    created_at: new Date(Date.now() - 6 * 3600000).toISOString()
+  },
+  {
+    id: 'd4',
+    name: 'James Coffey',
+    phone: '(276) 321-0093',
+    email: 'jcoffey@outlook.com',
+    space_type: 'Residential',
+    budget: '$110,000 cash offer',
+    timeline: '1-3 months',
+    team_size: 'Solo (1 person)',
+    score: 65,
+    score_label: 'MQL',
+    reasoning: 'Inherited estate property, motivated seller, probate ongoing [65/100]',
+    is_whale: false,
+    whale_tier: null,
+    source: 'evaluator',
+    progress: 'New Inquiry',
+    assigned_employee: 'Blake Watson',
+    follow_up_date: new Date(Date.now() - 86400000).toISOString().slice(0, 10), // Overdue!
+    notes: 'Inherited from mother — estate sale, executor is James. Tenants on month-to-month. Wants offer before probate closes.',
+    property: { street: '2416 Bradley St', city: 'Bristol', state: 'VA', condition: 'poor', situation: 'distressed' },
+    timestamp: new Date(Date.now() - 4.5 * 3600000).toISOString(),
+    created_at: new Date(Date.now() - 4.5 * 3600000).toISOString()
+  },
+  {
+    id: 'd5',
+    name: 'Tanya Blevins',
+    phone: '(423) 321-0317',
+    email: 'tanya.blevins@gmail.com',
+    space_type: 'Office',
+    budget: '$1,800/mo',
+    timeline: 'Exploring options',
+    team_size: '2-10 people',
+    score: 35,
+    score_label: 'Prospect Lead',
+    reasoning: 'Exploring options, low budget, nurture candidate [35/100]',
+    is_whale: false,
+    whale_tier: null,
+    source: 'manual',
+    progress: 'New Inquiry',
+    assigned_employee: 'Noah Hurley',
+    follow_up_date: null, // Unscheduled!
+    notes: 'Downloaded 2026 Market Report. Browsed City Centre suites. Good nurture candidate.',
+    property: { street: '812 Cumberland St', city: 'Bristol', state: 'TN', condition: 'good', situation: 'other' },
+    timestamp: new Date(Date.now() - 7 * 3600000).toISOString(),
+    created_at: new Date(Date.now() - 7 * 3600000).toISOString()
+  },
+  {
+    id: 'd6',
+    name: 'Robert V. (Draft)',
+    phone: '(423) 888-0199',
+    email: '',
+    space_type: 'Office',
+    budget: '$4,500/mo',
+    timeline: '1-3 months',
+    team_size: '2-10 people',
+    score: 0,
+    score_label: 'Draft',
+    reasoning: 'Incomplete staff draft saved during phone call',
+    is_whale: true,
+    whale_tier: 'silver',
+    source: 'draft',
+    progress: 'Draft',
+    assigned_employee: 'Jazmin Hurley',
+    follow_up_date: null,
+    notes: 'Call disconnected before getting company email. Wants 2nd floor suite at City Centre. Call back tomorrow morning.',
+    timestamp: new Date(Date.now() - 25 * 60000).toISOString(),
+    created_at: new Date(Date.now() - 25 * 60000).toISOString()
+  }
 ];
 
 /* ── ACTIVITY FEED DATA (moved from social-proof.js) ── */
@@ -2520,7 +2978,7 @@ window.addEventListener('pageshow', function() {
   window.scrollTo(0, 0);
 });
 
-/* ── DATA ────────────────────────────────────── */
+/* ── DATA & SUPABASE SYNC LAYER ────────────────── */
 function getLeads() {
   try {
     const raw = localStorage.getItem(CFG.leadsKey);
@@ -2529,50 +2987,156 @@ function getLeads() {
     return d;
   } catch(e) { return DEMO; }
 }
-function saveLeads(l) { localStorage.setItem(CFG.leadsKey, JSON.stringify(l)); }
-function updateLead(id, ch) {
-  const l = getLeads(); const i = l.findIndex(x=>x.id===id);
-  if(i!==-1){ l[i]={...l[i],...ch}; saveLeads(l); }
+
+function saveLeads(l) {
+  try { localStorage.setItem(CFG.leadsKey, JSON.stringify(l)); } catch(e) {}
 }
 
-/* ── HELPERS ─────────────────────────────────── */
+async function syncLeadsFromSupabase() {
+  try {
+    const res = await fetch('/api/admin-lead?filter=all', {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data.leads) && data.leads.length > 0) {
+        saveLeads(data.leads);
+        renderLeads();
+        updateStats();
+        renderTable();
+        return;
+      }
+    }
+  } catch (err) {
+    console.info('Supabase sync using local cache:', err.message);
+  }
+}
+
+function updateLead(id, ch) {
+  const l = getLeads();
+  const i = l.findIndex(x => x.id === id);
+  if (i !== -1) {
+    l[i] = { ...l[i], ...ch, updated_at: new Date().toISOString() };
+    saveLeads(l);
+    
+    // Background async sync to Supabase
+    fetch('/api/admin-lead', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, ...ch })
+    }).catch(e => console.warn('Supabase PATCH sync failed:', e.message));
+  }
+}
+
+function archiveLead(id) {
+  if (!confirm('Move this lead to the Archive? You can restore it anytime.')) return;
+  updateLead(id, { archived_at: new Date().toISOString() });
+  renderLeads();
+  updateStats();
+  renderTable();
+  toast('Lead archived ✓', 'info');
+}
+
+function restoreLead(id) {
+  updateLead(id, { archived_at: null });
+  renderLeads();
+  updateStats();
+  renderTable();
+  toast('Lead restored to active pipeline ✓', 'ok');
+}
+
+/* ── HELPERS & SCORING RUBRIC ───────────────────── */
+function parseMonthlyBudget(str) {
+  if (!str) return 0;
+  const clean = String(str).toLowerCase().replace(/,/g, '');
+  const kMatch = clean.match(/(\d+(?:\.\d+)?)\s*k/);
+  if (kMatch) return parseFloat(kMatch[1]) * 1000;
+  const numMatch = clean.match(/\$?(\d{3,7})/);
+  if (numMatch) return parseInt(numMatch[1], 10);
+  return 0;
+}
+
 function temp(lead) {
-  const s=lead.property?.situation, c=lead.property?.condition;
-  if(s==='distressed'||s==='speed'||c==='poor') return 'hot';
-  if(s==='estate'||s==='relocating'||s==='investor') return 'warm';
+  if (lead.score !== undefined && lead.score >= 70) return 'hot';
+  if (lead.score !== undefined && lead.score >= 40) return 'warm';
+  if (lead.is_whale) return 'hot';
+  const s = lead.property?.situation, c = lead.property?.condition;
+  if (s === 'distressed' || s === 'speed' || c === 'poor') return 'hot';
+  if (s === 'estate' || s === 'relocating' || s === 'investor') return 'warm';
   return 'cool';
 }
+
 function tLabel(t) {
-  return {hot:{c:'b-hot',l:'🔥 Hot'},warm:{c:'b-warm',l:'🌡 Warm'},cool:{c:'b-cool',l:'🆕 New'}}[t]||{c:'b-cool',l:'🆕 New'};
+  return { hot: { c: 'b-hot', l: '🔥 Hot' }, warm: { c: 'b-warm', l: '🌡 Warm' }, cool: { c: 'b-cool', l: '🆕 New' } }[t] || { c: 'b-cool', l: '🆕 New' };
 }
+
 function srcLabel(s) {
-  return {evaluator:'🏠 Sell My Home',riley:'🤖 Riley Bot',phone:'📞 Phone',referral:'🤝 Referral',walkin:'🚶 Walk-In',market_report_homepage:'📊 Market Report',contact_form:'📧 Contact Form'}[s]||s;
+  return {
+    evaluator: '🏠 Sell My Home',
+    riley: '🤖 Riley Bot',
+    phone: '📞 Phone',
+    referral: '🤝 Referral',
+    walkin: '🚶 Walk-In',
+    market_report_homepage: '📊 Market Report',
+    contact_form: '📧 Contact Form',
+    manual: '✏️ Staff Manual',
+    draft: '📝 Draft Intake',
+    website: '🌐 Website Form'
+  }[s] || s;
 }
+
 function srcBadgeClass(s) {
-  return {riley:'b-src-riley',evaluator:'b-src-evaluator',contact_form:'b-src-contact',market_report_homepage:'b-src-market'}[s]||'b-src';
+  return {
+    riley: 'b-src-riley',
+    evaluator: 'b-src-evaluator',
+    contact_form: 'b-src-contact',
+    market_report_homepage: 'b-src-market',
+    draft: 'b-draft'
+  }[s] || 'b-src';
 }
+
 function typeLabel(t) {
-  return {residential:'🏠 Residential',commercial:'🏢 Commercial',industrial:'🏭 Industrial',land:'🌿 Land'}[t]||t;
+  return {
+    residential: '🏠 Residential',
+    commercial: '🏢 Commercial',
+    industrial: '🏭 Industrial',
+    land: '🌿 Land',
+    Office: '🏢 Office',
+    Retail: '🛍️ Retail',
+    Warehouse: '🏭 Warehouse',
+    Land: '🌿 Land',
+    Residential: '🏠 Residential'
+  }[t] || t || '🏢 Commercial';
 }
+
 function sitLabel(s) {
-  return {speed:'⚡ Sell fast',estate:'📋 Estate/Inherited',distressed:'🔑 Distressed',relocating:'✈️ Relocating',investor:'💼 Portfolio',other:'💬 Other'}[s]||s;
+  return { speed: '⚡ Sell fast', estate: '📋 Estate/Inherited', distressed: '🔑 Distressed', relocating: '✈️ Relocating', investor: '💼 Portfolio', other: '💬 Other' }[s] || s;
 }
+
 function condLabel(c) {
-  return {excellent:'✨ Excellent',good:'👍 Good',fair:'🔧 Fair',poor:'🏚 Needs Work'}[c]||c;
+  return { excellent: '✨ Excellent', good: '👍 Good', fair: '🔧 Fair', poor: '🏚 Needs Work' }[c] || c;
 }
+
 function relTime(iso) {
-  const d=Date.now()-new Date(iso).getTime(), m=Math.floor(d/60000), h=Math.floor(d/3600000), dy=Math.floor(d/86400000);
-  if(m<1) return 'just now'; if(m<60) return m+'m ago'; if(h<24) return h+'h ago'; return dy+'d ago';
+  if (!iso) return '';
+  const d = Date.now() - new Date(iso).getTime();
+  const m = Math.floor(d / 60000), h = Math.floor(d / 3600000), dy = Math.floor(d / 86400000);
+  if (m < 1) return 'just now';
+  if (m < 60) return m + 'm ago';
+  if (h < 24) return h + 'h ago';
+  return dy + 'd ago';
 }
+
 function parseOffer(str) {
-  if(!str) return 0;
-  const m=str.match(/\$([0-9,]+)/);
-  return m ? parseInt(m[1].replace(/,/g,'')) : 0;
+  if (!str) return 0;
+  const m = String(str).match(/\$([0-9,]+)/);
+  return m ? parseInt(m[1].replace(/,/g, ''), 10) : parseMonthlyBudget(str);
 }
+
 function fmtVal(n) {
-  if(n>=1000000) return '$'+(n/1000000).toFixed(1)+'M';
-  if(n>=1000) return '$'+(n/1000).toFixed(0)+'K';
-  return '$'+n;
+  if (n >= 1000000) return '$' + (n / 1000000).toFixed(1) + 'M';
+  if (n >= 1000) return '$' + (n / 1000).toFixed(0) + 'K';
+  return '$' + n;
 }
 
 /* ── CLOCK & GREETING ────────────────────────── */
@@ -2736,22 +3300,30 @@ function pushAllToMonday() {
 /* \u2500\u2500 STATS & BRIEF \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
 function updateStats() {
   const all  = getLeads();
-  const live = all.filter(l=>l.status!=='closed'&&l.status!=='dead');
-  const hot  = live.filter(l=>temp(l)==='hot');
-  const warm = live.filter(l=>temp(l)==='warm');
-  const now  = new Date();
-  const today= live.filter(l=>new Date(l.timestamp).toDateString()===now.toDateString());
-  const contacted = live.filter(l=>l.status==='contacted'||l.status==='qualified'||l.status==='offer_sent');
-  const pipeVal = live.reduce((acc,l)=>acc+parseOffer(l.offerRange),0);
+  const live = all.filter(l => !l.archived_at && l.score_label !== 'Draft' && l.progress !== 'Lost' && l.status !== 'dead' && l.status !== 'closed');
+  const verified = live.filter(l => (l.score !== undefined && l.score >= 70) || l.score_label === 'Verified Lead');
+  const mql = live.filter(l => (l.score !== undefined && l.score >= 40 && l.score < 70) || l.score_label === 'MQL');
+  const whales = live.filter(l => l.is_whale || (l.whale_tier) || parseMonthlyBudget(l.budget) >= 4000);
+  const drafts = all.filter(l => l.score_label === 'Draft' || l.progress === 'Draft');
+  const hot = live.filter(l => temp(l) === 'hot');
+  const now = new Date();
+  const today = live.filter(l => new Date(l.timestamp || l.created_at).toDateString() === now.toDateString());
+  const contacted = live.filter(l => l.progress === 'Contacted' || l.status === 'contacted' || l.progress === 'Tour Scheduled');
+  const pipeVal = live.reduce((acc, l) => acc + (parseOffer(l.budget) || parseOffer(l.offerRange) || 0), 0);
 
-  document.getElementById('s-hot').textContent      = hot.length;
-  document.getElementById('s-warm').textContent     = warm.length;
-  document.getElementById('s-new').textContent      = today.length;
-  document.getElementById('s-total').textContent    = live.length;
-  document.getElementById('s-value').textContent    = fmtVal(pipeVal);
-  document.getElementById('s-contacted').textContent= contacted.length;
-  document.getElementById('s-hot-sub').textContent  = hot.length===1?'Call immediately':hot.length>1?'Call immediately':'None right now';
-  document.getElementById('s-warm-sub').textContent = warm.length>0?`${warm.length} leads to nurture`:'Check back soon';
+  // Update Vision KPI cards
+  const elVer = document.getElementById('s-verified'); if (elVer) elVer.textContent = verified.length;
+  const elMql = document.getElementById('s-mql'); if (elMql) elMql.textContent = mql.length;
+  const elWhale = document.getElementById('s-whales'); if (elWhale) elWhale.textContent = whales.length;
+  const elTot = document.getElementById('s-total'); if (elTot) elTot.textContent = live.length;
+  const elVal = document.getElementById('s-value'); if (elVal) elVal.textContent = fmtVal(pipeVal);
+  const elDrf = document.getElementById('s-drafts'); if (elDrf) elDrf.textContent = drafts.length;
+
+  // Backward compatibility
+  const elHot = document.getElementById('s-hot'); if (elHot) elHot.textContent = hot.length;
+  const elWarm = document.getElementById('s-warm'); if (elWarm) elWarm.textContent = mql.length;
+  const elNew = document.getElementById('s-new'); if (elNew) elNew.textContent = today.length;
+  const elCnt = document.getElementById('s-contacted'); if (elCnt) elCnt.textContent = contacted.length;
 
   // Priority banner — expandable
   const dismissed = JSON.parse(localStorage.getItem('pb_dismissed')||'[]');
@@ -3115,177 +3687,357 @@ function renderActivityFeed() {
 }
 
 
-/* ── RENDER LEADS ────────────────────────────── */
-let activeFilter='all';
+/* ── RENDER LEADS & VISION CRM FILTERS ────────────────────────────── */
+let activeFilter = 'active';
 
-/* Heat weight for sorting: hot=3, warm=2, cool=1 */
-function heatWeight(l) { return {hot:3, warm:2, cool:1}[temp(l)] || 1; }
+/* Heat weight for sorting: Whales & High Scores first */
+function heatWeight(l) {
+  if (l.whale_tier === 'gold') return 100;
+  if (l.whale_tier === 'silver' || l.is_whale) return 80;
+  if (l.score !== undefined) return l.score;
+  return { hot: 70, warm: 50, cool: 20 }[temp(l)] || 20;
+}
 
 /* Stat card <-> filter mapping */
-const CARD_MAP = { hot:'sc-hot', warm:'sc-warm', cool:'sc-cool', all:'sc-all', contacted:'sc-contacted', evaluator:null, riley:null };
+const CARD_MAP = {
+  verified: 'sc-verified',
+  mql: 'sc-mql',
+  whale: 'sc-whale',
+  active: 'sc-total',
+  drafts: 'sc-drafts',
+  all: null,
+  archived: null
+};
 
 function setFilter(f) {
   activeFilter = f;
-  // Filter buttons
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  const fb = document.getElementById('f-'+f);
+  // Update button active state
+  document.querySelectorAll('#lead-filter-scroll .filter-btn').forEach(b => b.classList.remove('active'));
+  const fb = document.getElementById('f-' + f);
   if (fb) fb.classList.add('active');
+
   // Stat card highlight
   document.querySelectorAll('.stat-card').forEach(c => c.classList.remove('sc-active'));
-  const sc = CARD_MAP[f] ? document.getElementById(CARD_MAP[f]) : null;
-  if (sc) sc.classList.add('sc-active');
-  // Render + scroll to pipeline
+  const scId = CARD_MAP[f];
+  if (scId) {
+    const sc = document.getElementById(scId);
+    if (sc) sc.classList.add('sc-active');
+  }
+
   renderLeads();
   const pipeline = document.getElementById('lead-feed');
-  if (pipeline) pipeline.closest('.controls-bar')?.scrollIntoView({ behavior:'smooth', block:'start' });
+  if (pipeline) pipeline.closest('.controls-bar')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function renderLeads() {
   const feed = document.getElementById('lead-feed');
+  if (!feed) return;
   let leads = getLeads();
+  const todayStr = new Date().toISOString().slice(0, 10);
 
-  // Apply filter
-  if (activeFilter === 'hot')       leads = leads.filter(l => temp(l) === 'hot');
-  else if (activeFilter === 'warm') leads = leads.filter(l => temp(l) === 'warm');
-  else if (activeFilter === 'cool') leads = leads.filter(l => temp(l) === 'cool');
-  else if (activeFilter === 'contacted') leads = leads.filter(l => l.status === 'contacted');
-  else if (activeFilter === 'evaluator') leads = leads.filter(l => l.source === 'evaluator');
-  else if (activeFilter === 'riley')     leads = leads.filter(l => l.source === 'riley');
+  // Apply filters
+  if (activeFilter === 'active') {
+    leads = leads.filter(l => !l.archived_at && l.score_label !== 'Draft' && l.progress !== 'Lost' && l.status !== 'dead');
+  } else if (activeFilter === 'verified') {
+    leads = leads.filter(l => !l.archived_at && ((l.score !== undefined && l.score >= 70) || l.score_label === 'Verified Lead'));
+  } else if (activeFilter === 'mql') {
+    leads = leads.filter(l => !l.archived_at && ((l.score !== undefined && l.score >= 40 && l.score < 70) || l.score_label === 'MQL'));
+  } else if (activeFilter === 'whale') {
+    leads = leads.filter(l => !l.archived_at && (l.is_whale || l.whale_tier || parseMonthlyBudget(l.budget) >= 4000));
+  } else if (activeFilter === 'prospect') {
+    leads = leads.filter(l => !l.archived_at && (l.score_label === 'Prospect Lead' || (l.score !== undefined && l.score < 40 && l.score > 0)));
+  } else if (activeFilter === 'drafts') {
+    leads = leads.filter(l => l.score_label === 'Draft' || l.progress === 'Draft');
+  } else if (activeFilter === 'archived') {
+    leads = leads.filter(l => Boolean(l.archived_at));
+  } else if (activeFilter === 'due_today') {
+    leads = leads.filter(l => !l.archived_at && l.follow_up_date === todayStr);
+  } else if (activeFilter === 'overdue') {
+    leads = leads.filter(l => !l.archived_at && l.follow_up_date && l.follow_up_date < todayStr);
+  } else if (activeFilter === 'unscheduled') {
+    leads = leads.filter(l => !l.archived_at && l.score_label !== 'Draft' && !l.follow_up_date);
+  } else if (activeFilter === 'hot') {
+    leads = leads.filter(l => temp(l) === 'hot');
+  } else if (activeFilter === 'warm') {
+    leads = leads.filter(l => temp(l) === 'warm');
+  } else if (activeFilter === 'cool') {
+    leads = leads.filter(l => temp(l) === 'cool');
+  } else if (activeFilter === 'contacted') {
+    leads = leads.filter(l => l.progress === 'Contacted' || l.status === 'contacted');
+  }
 
-  // Always sort: hot → warm → cool, then by recency within each tier
+  // Sort: High score / Whale weight first, then by recency
   leads.sort((a, b) => {
     const wDiff = heatWeight(b) - heatWeight(a);
     if (wDiff !== 0) return wDiff;
-    return new Date(b.timestamp) - new Date(a.timestamp);
+    return new Date(b.timestamp || b.created_at) - new Date(a.timestamp || a.created_at);
   });
 
-  if(!leads.length){
-    feed.innerHTML=`<div class="empty-state"><div class="ei">📭</div><h3>No leads here</h3><p>Leads from the evaluator and Riley chatbot appear here automatically.</p></div>`;
+  if (!leads.length) {
+    feed.innerHTML = `<div class="empty-state"><div class="ei">📭</div><h3>No leads found in this view</h3><p>Try switching filters or add a new lead using the Add Lead button above.</p></div>`;
     return;
   }
-  feed.innerHTML=leads.map(buildCard).join('');
-  leads.forEach(l=>{
-    const ss=document.getElementById('ss-'+l.id);
-    if(ss){ ss.value=l.status||'new'; ss.onchange=e=>{ updateLead(l.id,{status:e.target.value}); updateStats(); toast('Status updated','ok'); }; }
-    const nt=document.getElementById('nt-'+l.id);
-    if(nt) nt.value=l.notes||'';
-  });
+
+  feed.innerHTML = leads.map(buildCard).join('');
 }
 function buildCard(l) {
-  const t=temp(l), tb=tLabel(t);
-  const name=`${l.contact?.firstName||''} ${l.contact?.lastName||''}`.trim()||'Unknown';
-  const init=name.charAt(0).toUpperCase();
-  const addr=l.property?.street?`${l.property.street}, ${l.property.city||'Bristol'} ${l.property.state||'TN'}`:l.property?.address||'—';
-  let details='';
-  if(l.property?.type)      details+=det('Property Type',typeLabel(l.property.type));
-  if(l.property?.situation) details+=det('Situation',sitLabel(l.property.situation));
-  if(l.property?.beds)      details+=det('Details',`${l.property.beds} BR / ${l.property.baths||'—'} BA${l.property.sqft?' · '+parseInt(l.property.sqft).toLocaleString()+' sqft':''}`);
-  else if(l.property?.sqftCom) details+=det('Square Footage',parseInt(l.property.sqftCom).toLocaleString()+' sqft');
-  if(l.property?.condition) details+=det('Condition',condLabel(l.property.condition));
-  if(l.offerRange)          details+=det('Est. Cash Offer',l.offerRange,'offer');
-  details+=`<select class="lc-status-sel" id="ss-${l.id}">
-    <option value="new">🆕 New — Needs Contact</option>
-    <option value="contacted">📞 Contacted</option>
-    <option value="qualified">✅ Qualified</option>
-    <option value="offer_sent">💰 Offer Sent</option>
-    <option value="closed">🏁 Closed / Won</option>
-    <option value="dead">❌ Dead / Lost</option>
-  </select>
-  <div class="lc-notes-row">
-    <textarea class="lc-notes" id="nt-${l.id}" placeholder="Add notes…" rows="2"></textarea>
-    <button class="save-btn" onclick="saveNote('${l.id}')">Save</button>
-  </div>`;
+  const isDraft = l.score_label === 'Draft' || l.progress === 'Draft';
+  const name = l.name || `${l.contact?.firstName || ''} ${l.contact?.lastName || ''}`.trim() || (isDraft ? 'Untitled Draft' : 'Anonymous Prospect');
+  const init = name.charAt(0).toUpperCase() || 'P';
+  const phone = l.phone || l.contact?.phone || '';
+  const email = l.email || l.contact?.email || '';
+  const cleanPhone = phone.replace(/\D/g, '');
+  const spaceType = typeLabel(l.space_type || l.property?.type);
+  const budget = l.budget || l.offerRange || 'Budget not specified';
+  const timeline = l.timeline || l.property?.situation || 'Exploring options';
+  const teamSize = l.team_size || 'Solo';
+  const notes = l.notes || l.additional_info || '';
+  const followUp = l.follow_up_date || '';
+  const progress = l.progress || l.status || 'New Inquiry';
+  const assignee = l.assigned_employee || '';
+  const addr = l.property?.street ? `${l.property.street}, ${l.property.city || 'Bristol'} ${l.property.state || 'TN'}` : (l.property?.address || '');
 
-  const callBtn=l.contact?.phone?`<a href="tel:${l.contact.phone}" class="act-btn call"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.13 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.46-.46a2 2 0 012.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0122 16.92z"/></svg>Call ${l.contact.phone}</a>`:'' ;
+  // Whale Badge
+  let whaleBadge = '';
+  if (l.whale_tier === 'gold' || parseMonthlyBudget(l.budget) >= 8000) {
+    whaleBadge = `<span class="badge badge-whale-gold">👑 Gold Whale ($8k+/mo)</span>`;
+  } else if (l.whale_tier === 'silver' || l.is_whale || parseMonthlyBudget(l.budget) >= 4000) {
+    whaleBadge = `<span class="badge badge-whale-silver">⭐ Silver Whale ($4k+/mo)</span>`;
+  }
 
-  return `<div class="lead-card ${t}" id="card-${l.id}">
+  // Score Badge
+  let scoreBadge = '';
+  if (isDraft) {
+    scoreBadge = `<span class="badge badge-score-draft">📝 Staff Draft</span>`;
+  } else if ((l.score !== undefined && l.score >= 70) || l.score_label === 'Verified Lead') {
+    scoreBadge = `<span class="badge badge-score-verified">🏆 Verified Lead (${l.score || 85}/100)</span>`;
+  } else if ((l.score !== undefined && l.score >= 40) || l.score_label === 'MQL') {
+    scoreBadge = `<span class="badge badge-score-mql">🌡️ MQL (${l.score || 55}/100)</span>`;
+  } else {
+    scoreBadge = `<span class="badge badge-score-prospect">📋 Prospect (${l.score || 30}/100)</span>`;
+  }
+
+  // Follow-Up Badge
+  let followUpTag = '';
+  const todayStr = new Date().toISOString().slice(0, 10);
+  if (followUp) {
+    if (followUp === todayStr) {
+      followUpTag = `<span class="lc-followup-badge due">📅 Due Today</span>`;
+    } else if (followUp < todayStr) {
+      followUpTag = `<span class="lc-followup-badge overdue">⚠️ Overdue</span>`;
+    }
+  }
+
+  const staffOptions = [
+    'Jazmin Hurley',
+    'J. Allen Hurley II',
+    'Noah Hurley',
+    'Blake Watson',
+    'Denise Myers',
+    'Tonya Arnold',
+    'Fred Green',
+    'Sherril Keplinger'
+  ].map(st => `<option value="${st}" ${assignee === st ? 'selected' : ''}>${st}</option>`).join('');
+
+  const progressOptions = [
+    'New Inquiry',
+    'Contacted',
+    'Tour Scheduled',
+    'Proposal Sent',
+    'Contract Signed',
+    'Lost',
+    'Draft'
+  ].map(st => `<option value="${st}" ${progress === st ? 'selected' : ''}>${st}</option>`).join('');
+
+  return `<div class="lead-card ${temp(l)}" id="card-${l.id}" style="${l.archived_at ? 'opacity:0.75;border-style:dashed;' : ''}">
     <div class="lc-header">
-      <div class="lc-avatar">${init}</div>
-      <div class="lc-meta">
-        <div class="lc-name">${name}</div>
-        <div class="lc-contacts">
-          ${l.contact?.phone?`<div class="lc-ci"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.13 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.46-.46a2 2 0 012.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0122 16.92z"/></svg><a href="tel:+1${l.contact.phone.replace(/\D/g,'')}">${l.contact.phone.replace(/(\d{3})(\d{3})(\d{4})/,'$1-$2-$3')}</a></div>`:''}
-          ${l.contact?.email?`<div class="lc-ci"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>${l.contact.email}</div>`:''}
-          <div class="lc-ci"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>${addr}</div>
+      <div class="lc-avatar" style="${l.whale_tier === 'gold' ? 'background:var(--gold);color:#000;font-weight:900;' : ''}">${init}</div>
+      <div class="lc-meta" style="flex:1;">
+        <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
+          <div class="lc-name">${name}</div>
+          ${whaleBadge}
+          ${scoreBadge}
+          ${followUpTag}
         </div>
-        <div class="lc-badges">
-          <span class="badge ${tb.c}">${tb.l}</span>
+        <div class="lc-contacts" style="margin-top:0.3rem;">
+          ${phone ? `<div class="lc-ci">📞 <a href="tel:+1${cleanPhone}">${phone}</a></div>` : ''}
+          ${email ? `<div class="lc-ci">✉️ <a href="mailto:${email}">${email}</a></div>` : ''}
+          ${addr ? `<div class="lc-ci">📍 ${addr}</div>` : ''}
+        </div>
+        <div class="lc-badges" style="margin-top:0.35rem;">
+          <span class="badge b-type">${spaceType}</span>
           <span class="badge ${srcBadgeClass(l.source)}">${srcLabel(l.source)}</span>
-          ${l.property?.type?`<span class="badge b-type">${typeLabel(l.property.type)}</span>`:''}
+          ${l.team_size ? `<span class="badge b-src">👥 ${teamSize}</span>` : ''}
         </div>
       </div>
-      <div class="lc-time">${relTime(l.timestamp)}</div>
+      <div class="lc-time">${relTime(l.timestamp || l.created_at)}</div>
     </div>
-    <div class="lc-body">${details}</div>
-    <div class="lc-actions">
-      ${callBtn}
+
+    <!-- Requirements & Budget Details -->
+    <div class="lc-body" style="margin-top:0.5rem;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:0.5rem;margin-bottom:0.6rem;">
+        <div class="lc-field-box">
+          <div class="lc-field-lbl">Target Budget</div>
+          <div style="font-size:0.78rem;font-weight:800;color:var(--gold-lt);">${budget}</div>
+        </div>
+        <div class="lc-field-box">
+          <div class="lc-field-lbl">Timeline</div>
+          <div style="font-size:0.75rem;font-weight:700;">${timeline}</div>
+        </div>
+        <div class="lc-field-box">
+          <div class="lc-field-lbl">Lead Score Reasoning</div>
+          <div style="font-size:0.7rem;color:var(--t2);line-height:1.3;">${l.reasoning || 'Standard intake evaluation'}</div>
+        </div>
+      </div>
+
+      <!-- Inline Dropdowns for Pipeline & Staff Assignment -->
+      <div class="lc-inline-row">
+        <div class="lc-field-box">
+          <div class="lc-field-lbl">Pipeline Stage</div>
+          <select class="lc-inline-select" onchange="updateLead('${l.id}', { progress: this.value }); updateStats(); renderLeads(); toast('Pipeline stage updated ✓', 'ok');">
+            ${progressOptions}
+          </select>
+        </div>
+        <div class="lc-field-box">
+          <div class="lc-field-lbl">Assigned Staff Member</div>
+          <select class="lc-inline-select" onchange="updateLead('${l.id}', { assigned_employee: this.value }); updateStats(); toast('Assigned to ' + this.value + ' ✓', 'ok');">
+            <option value="">(Unassigned)</option>
+            ${staffOptions}
+          </select>
+        </div>
+      </div>
+
+      <div class="lc-inline-row" style="margin-top:0.4rem;">
+        <div class="lc-field-box" style="grid-column:1 / -1;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="lc-field-lbl">Scheduled Next Follow-Up Date</div>
+            <div style="font-size:0.65rem;color:var(--t3);">${followUp ? 'Scheduled: ' + followUp : 'None set'}</div>
+          </div>
+          <input type="date" class="lc-inline-date" value="${followUp}" onchange="updateLead('${l.id}', { follow_up_date: this.value }); updateStats(); renderLeads(); toast('Follow-up scheduled for ' + this.value + ' ✓', 'ok');" style="color-scheme:dark;">
+        </div>
+      </div>
+
+      <div class="lc-notes-row" style="margin-top:0.6rem;">
+        <textarea class="lc-notes" id="nt-${l.id}" placeholder="Add client notes or tour details…" rows="2">${notes}</textarea>
+        <button class="save-btn" onclick="saveNote('${l.id}')">Save</button>
+      </div>
+    </div>
+
+    <!-- Interactive Card Action Bar -->
+    <div class="lc-actions" style="margin-top:0.6rem;display:flex;gap:0.4rem;flex-wrap:wrap;">
+      ${phone ? `<a href="tel:${cleanPhone}" class="act-btn call">📞 Call</a>` : ''}
+      ${email ? `<a href="mailto:${email}" class="act-btn">✉️ Email</a>` : ''}
+      <button class="act-btn" onclick="openCallModal('${l.id}')" style="border-color:rgba(201,168,76,0.3);color:var(--gold);">
+        📞 Log Call
+      </button>
+      <button class="act-btn" onclick="openCommentsDrawer('${l.id}')" style="border-color:rgba(155,127,232,0.3);color:#bfa5ff;">
+        💬 Notes &amp; Activity
+      </button>
       <button class="act-btn" onclick="copyLeadInfo('${l.id}')">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-        Copy Info
+        📋 Copy
       </button>
-      <button class="act-btn del" onclick="archiveLead('${l.id}')">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
-        Archive
-      </button>
+      ${l.archived_at
+        ? `<button class="act-btn" onclick="restoreLead('${l.id}')" style="border-color:rgba(62,207,142,0.4);color:var(--cool);">♻️ Restore</button>`
+        : `<button class="act-btn del" onclick="archiveLead('${l.id}')">📦 Archive</button>`
+      }
     </div>
   </div>`;
 }
-function det(label,value,cls='') {
+
+function det(label, value, cls = '') {
   return `<div class="lc-detail"><div class="lc-dl">${label}</div><div class="lc-dv ${cls}">${value}</div></div>`;
 }
+
 function saveNote(id) {
-  const el=document.getElementById('nt-'+id); if(!el) return;
-  updateLead(id,{notes:el.value});
-  const btn=el.nextElementSibling;
-  if(btn){btn.textContent='Saved ✓';btn.classList.add('saved');setTimeout(()=>{btn.textContent='Save';btn.classList.remove('saved');},2000);}
-}
-function archiveLead(id) {
-  if (!confirm('Archive this lead? It will be removed from the pipeline.')) return;
-  const leads=getLeads().filter(l=>l.id!==id); saveLeads(leads);
-  renderLeads(); updateStats(); renderTable(); toast('Lead archived','info');
+  const el = document.getElementById('nt-' + id);
+  if (!el) return;
+  updateLead(id, { notes: el.value, additional_info: el.value });
+  const btn = el.nextElementSibling;
+  if (btn) {
+    btn.textContent = 'Saved ✓';
+    btn.classList.add('saved');
+    setTimeout(() => { btn.textContent = 'Save'; btn.classList.remove('saved'); }, 2000);
+  }
 }
 
-/* ── STANDALONE CRM HELPERS ────────────────────── */
 function copyLeadInfo(id) {
   const l = getLeads().find(x => x.id === id);
   if (!l) return;
-  const name = `${l.contact?.firstName || ''} ${l.contact?.lastName || ''}`.trim() || 'Lead';
-  const phone = l.contact?.phone || 'No phone';
-  const email = l.contact?.email || 'No email';
-  const addr = l.property?.street ? `${l.property.street}, ${l.property.city || ''}` : l.property?.address || 'N/A';
-  const notes = l.notes || 'None';
-  const text = `HURLEY CRM LEAD:\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nProperty: ${addr}\nNotes: ${notes}`;
+  const name = l.name || `${l.contact?.firstName || ''} ${l.contact?.lastName || ''}`.trim() || 'Lead';
+  const phone = l.phone || l.contact?.phone || 'No phone';
+  const email = l.email || l.contact?.email || 'No email';
+  const space = l.space_type || l.property?.type || 'Commercial';
+  const budget = l.budget || l.offerRange || 'N/A';
+  const score = l.score !== undefined ? `${l.score}/100 (${l.score_label})` : 'N/A';
+  const notes = l.notes || l.additional_info || 'None';
+  const text = `HURLEY ENTERPRISE CRM LEAD:\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nSpace Type: ${space}\nBudget: ${budget}\nScore: ${score}\nNotes: ${notes}`;
   navigator.clipboard.writeText(text).then(() => {
-    toast('Lead info copied ✓', 'ok');
+    toast('Lead information copied ✓', 'ok');
   }).catch(() => {
     toast('Copied lead details', 'info');
   });
 }
 
+/* ── EXCEL (.xlsx) & CSV REPORTING ────────────────── */
+function exportExcel() {
+  const leads = getLeads();
+  if (!leads.length) { toast('No leads to export', 'info'); return; }
+  if (typeof XLSX === 'undefined') {
+    toast('Excel engine loading... try CSV or wait 2 seconds', 'info');
+    return;
+  }
+
+  const rows = leads.map(l => ({
+    'Lead ID': l.id,
+    'Name': l.name || `${l.contact?.firstName || ''} ${l.contact?.lastName || ''}`.trim(),
+    'Phone': l.phone || l.contact?.phone || '',
+    'Email': l.email || l.contact?.email || '',
+    'Space Type': l.space_type || l.property?.type || 'Office',
+    'Monthly Budget': l.budget || l.offerRange || '',
+    'Timeline': l.timeline || l.property?.situation || '',
+    'Score': l.score || 0,
+    'Score Tier': l.score_label || 'Prospect Lead',
+    'Whale Tier': l.whale_tier ? l.whale_tier.toUpperCase() + ' WHALE' : 'No',
+    'Pipeline Stage': l.progress || l.status || 'New Inquiry',
+    'Assigned Staff': l.assigned_employee || 'Unassigned',
+    'Next Follow-Up': l.follow_up_date || 'None',
+    'Source': l.source || 'manual',
+    'Notes': l.notes || l.additional_info || '',
+    'Created Date': (l.created_at || l.timestamp || '').slice(0, 10)
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(rows);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Pipeline Leads');
+  XLSX.writeFile(workbook, `hurley_leads_pipeline_${new Date().toISOString().slice(0, 10)}.xlsx`);
+  toast('Pipeline exported to Excel (.xlsx) ✓', 'ok');
+}
+
 function exportCSV() {
   const leads = getLeads();
   if (!leads.length) { toast('No leads to export', 'info'); return; }
-  const headers = ['ID','First Name','Last Name','Phone','Email','Property Address','City','State','Type','Situation','Status','Notes','Date'];
+  const headers = ['ID', 'Name', 'Phone', 'Email', 'Space Type', 'Budget', 'Score', 'Tier', 'Whale', 'Stage', 'Assignee', 'Follow Up', 'Notes', 'Date'];
   const rows = leads.map(l => [
     l.id,
-    `"${(l.contact?.firstName||'').replace(/"/g,'""')}"`,
-    `"${(l.contact?.lastName||'').replace(/"/g,'""')}"`,
-    `"${(l.contact?.phone||'').replace(/"/g,'""')}"`,
-    `"${(l.contact?.email||'').replace(/"/g,'""')}"`,
-    `"${(l.property?.street||l.property?.address||'').replace(/"/g,'""')}"`,
-    `"${(l.property?.city||'').replace(/"/g,'""')}"`,
-    `"${(l.property?.state||'').replace(/"/g,'""')}"`,
-    `"${(l.property?.type||'').replace(/"/g,'""')}"`,
-    `"${(l.property?.situation||'').replace(/"/g,'""')}"`,
-    `"${(l.status||'new').replace(/"/g,'""')}"`,
-    `"${(l.notes||'').replace(/"/g,'""')}"`,
-    `"${(l.timestamp||'').replace(/"/g,'""')}"`
+    `"${(l.name || `${l.contact?.firstName || ''} ${l.contact?.lastName || ''}`.trim() || '').replace(/"/g, '""')}"`,
+    `"${(l.phone || l.contact?.phone || '').replace(/"/g, '""')}"`,
+    `"${(l.email || l.contact?.email || '').replace(/"/g, '""')}"`,
+    `"${(l.space_type || l.property?.type || '').replace(/"/g, '""')}"`,
+    `"${(l.budget || l.offerRange || '').replace(/"/g, '""')}"`,
+    l.score || 0,
+    `"${(l.score_label || '').replace(/"/g, '""')}"`,
+    `"${(l.whale_tier || '').replace(/"/g, '""')}"`,
+    `"${(l.progress || l.status || 'New Inquiry').replace(/"/g, '""')}"`,
+    `"${(l.assigned_employee || '').replace(/"/g, '""')}"`,
+    `"${(l.follow_up_date || '').replace(/"/g, '""')}"`,
+    `"${(l.notes || l.additional_info || '').replace(/"/g, '""')}"`,
+    `"${(l.created_at || l.timestamp || '').replace(/"/g, '""')}"`
   ]);
   const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
   const encodedUri = encodeURI(csvContent);
   const link = document.createElement('a');
   link.setAttribute('href', encodedUri);
-  link.setAttribute('download', `hurley_crm_leads_${new Date().toISOString().slice(0,10)}.csv`);
+  link.setAttribute('download', `hurley_crm_leads_${new Date().toISOString().slice(0, 10)}.csv`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -3399,67 +4151,571 @@ function openStaffRosterPanel() {
 
 /* ── LEAD TABLE ─────────────────────────────── */
 function renderTable() {
-  const q=(document.getElementById('lt-search')?.value||'').toLowerCase().trim();
-  const all=getLeads();
-  const filtered=q ? all.filter(l=>{
-    const name=`${l.contact?.firstName||''} ${l.contact?.lastName||''}`.toLowerCase();
-    const phone=(l.contact?.phone||'').toLowerCase();
-    const addr=(l.property?.street||l.property?.address||'').toLowerCase();
-    const city=(l.property?.city||'').toLowerCase();
-    return name.includes(q)||phone.includes(q)||addr.includes(q)||city.includes(q);
+  const q = (document.getElementById('lt-search')?.value || '').toLowerCase().trim();
+  const all = getLeads();
+  const filtered = q ? all.filter(l => {
+    const name = (l.name || `${l.contact?.firstName || ''} ${l.contact?.lastName || ''}`.trim()).toLowerCase();
+    const phone = (l.phone || l.contact?.phone || '').toLowerCase();
+    const email = (l.email || l.contact?.email || '').toLowerCase();
+    const sp = (l.space_type || l.property?.type || '').toLowerCase();
+    const notes = (l.notes || l.additional_info || '').toLowerCase();
+    const assignee = (l.assigned_employee || '').toLowerCase();
+    return name.includes(q) || phone.includes(q) || email.includes(q) || sp.includes(q) || notes.includes(q) || assignee.includes(q);
   }) : all;
-  const tbody=document.getElementById('lt-body');
-  if(!tbody) return;
-  if(!filtered.length){ tbody.innerHTML=`<tr><td colspan="6" class="lt-empty">No leads match your search.</td></tr>`; return; }
-  tbody.innerHTML=filtered.map(l=>{
-    const name=`${l.contact?.firstName||''} ${l.contact?.lastName||''}`.trim()||'Unknown';
-    const phone=l.contact?.phone?(l.contact.phone.replace(/(\d{3})(\d{3})(\d{4})/,'$1-$2-$3')):'—';
-    const addr=l.property?.street?`${l.property.street}, ${l.property.city||''}`:l.property?.address||'—';
-    const t=temp(l);
-    const statusColors={new:'color:var(--gold)',contacted:'color:var(--info)',qualified:'color:var(--cool)',offer_sent:'color:var(--cool)',closed:'color:var(--t3)',dead:'color:var(--t3)'};
-    const statusLabels={new:'🆕 New',contacted:'📞 Contacted',qualified:'✅ Qualified',offer_sent:'💰 Offer Sent',closed:'🏁 Closed',dead:'❌ Dead'};
-    const pDigits = l.contact?.phone ? l.contact.phone.replace(/\D/g,'') : '';
-    const pLink   = pDigits ? '<a href="tel:+1' + pDigits + '">' + phone + '</a>' : phone;
-    const callBtn = pDigits ? '<a href="tel:+1' + pDigits + '" class="lt-action call">📞 Call</a>' : '';
-    return '<tr>'
-      + '<td><span class="lt-name">' + name + '</span></td>'
-      + '<td class="lt-phone">' + pLink + '</td>'
-      + '<td style="font-size:0.72rem;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + addr + '</td>'
-      + '<td><span style="font-size:0.68rem;">' + srcLabel(l.source) + '</span></td>'
-      + '<td><span style="font-size:0.7rem;font-weight:700;' + (statusColors[l.status||'new']||'') + ';">' + (statusLabels[l.status||'new']||l.status) + '</span></td>'
-      + '<td style="display:flex;gap:0.35rem;flex-wrap:nowrap;">'
-        + callBtn
-        + '<button class="lt-action" onclick="copyLeadInfo(\'' + l.id + '\')">📋 Copy</button>'
-      + '</td>'
-      + '</tr>';
+
+  const tbody = document.getElementById('lt-body');
+  if (!tbody) return;
+  if (!filtered.length) {
+    tbody.innerHTML = `<tr><td colspan="6" class="lt-empty">No leads match your search.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(l => {
+    const name = l.name || `${l.contact?.firstName || ''} ${l.contact?.lastName || ''}`.trim() || 'Inbound Lead';
+    const phoneRaw = l.phone || l.contact?.phone || '';
+    const emailRaw = l.email || l.contact?.email || '';
+    const phoneFmt = phoneRaw ? phoneRaw.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : '—';
+    const pDigits = phoneRaw ? phoneRaw.replace(/\D/g, '') : '';
+    
+    // Whale badge
+    let whaleBadge = '';
+    if (l.is_whale || (l.whale_tier && l.whale_tier !== 'none')) {
+      const tier = (l.whale_tier || 'gold').toLowerCase();
+      whaleBadge = `<span class="whale-badge whale-${tier}" style="margin-left:0.35rem;font-size:0.6rem;padding:0.15rem 0.4rem;">🐳 ${tier.toUpperCase()}</span>`;
+    }
+
+    // Score badge
+    const score = l.score || 0;
+    const scoreLabel = l.score_label || (score >= 70 ? 'Verified Lead' : score >= 40 ? 'MQL' : 'Prospect Lead');
+    let scoreBadgeCls = 'score-prospect';
+    if (scoreLabel === 'Verified Lead' || score >= 70) scoreBadgeCls = 'score-verified';
+    else if (scoreLabel === 'MQL' || score >= 40) scoreBadgeCls = 'score-mql';
+    else if (scoreLabel === 'Draft') scoreBadgeCls = 'score-draft';
+
+    const stage = l.progress || l.status || 'New Inquiry';
+    const stageColor = stage === 'Contract Signed' || stage === 'Closed Leased' ? 'color:#10b981;' : stage === 'Lost' ? 'color:var(--t3);' : 'color:var(--gold);';
+
+    return `<tr>
+      <td>
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.25rem;">
+          <span class="lt-name">${name}</span>
+          ${whaleBadge}
+        </div>
+        ${l.assigned_employee ? `<div style="font-size:0.68rem;color:var(--t3);margin-top:0.2rem;">👤 ${l.assigned_employee}</div>` : ''}
+      </td>
+      <td>
+        <div class="lt-phone">${pDigits ? `<a href="tel:+1${pDigits}">${phoneFmt}</a>` : '—'}</div>
+        ${emailRaw ? `<div style="font-size:0.7rem;"><a href="mailto:${emailRaw}" style="color:var(--gold);text-decoration:none;">${emailRaw}</a></div>` : ''}
+      </td>
+      <td>
+        <div style="font-size:0.75rem;font-weight:700;color:var(--t1);">${l.space_type || l.property?.type || 'Commercial Space'}</div>
+        <div style="font-size:0.7rem;color:var(--t2);">${l.budget || l.offerRange || 'Budget TBD'}</div>
+      </td>
+      <td><span style="font-size:0.68rem;">${srcLabel(l.source)}</span></td>
+      <td>
+        <div style="display:flex;flex-direction:column;gap:0.25rem;">
+          <span class="score-badge ${scoreBadgeCls}" style="font-size:0.64rem;padding:0.2rem 0.5rem;align-self:flex-start;">${score} · ${scoreLabel}</span>
+          <span style="font-size:0.7rem;font-weight:700;${stageColor}">${stage}</span>
+        </div>
+      </td>
+      <td>
+        <div style="display:flex;gap:0.35rem;flex-wrap:nowrap;">
+          <button class="lt-action call" onclick="openCallModal('${l.id}')" title="Log phone call">📞 Call</button>
+          <button class="lt-action" onclick="openCommentsDrawer('${l.id}')" title="Team activity & notes">💬 Notes</button>
+          <button class="lt-action" onclick="copyLeadInfo('${l.id}')" title="Copy lead briefing">📋</button>
+        </div>
+      </td>
+    </tr>`;
   }).join('');
 }
 
 /* ── MODAL ───────────────────────────────────── */
 function openModal() {
   document.getElementById('overlay').classList.add('open');
-  setTimeout(()=>document.getElementById('ml-fn').focus(),320);
+  checkDraftOnModalOpen();
+  setTimeout(() => document.getElementById('ml-fn').focus(), 320);
 }
 function closeModal() { document.getElementById('overlay').classList.remove('open'); }
-function handleOvClick(e) { if(e.target===document.getElementById('overlay')) closeModal(); }
-function submitManualLead() {
-  const fn=document.getElementById('ml-fn').value.trim();
-  const ph=document.getElementById('ml-ph').value.trim();
-  if(!fn||!ph){toast('Name and phone are required','info');return;}
-  const lead={
-    id:'m_'+Date.now(), source:document.getElementById('ml-src').value,
-    status:'new', timestamp:new Date().toISOString(),
-    contact:{firstName:fn,lastName:document.getElementById('ml-ln').value.trim(),phone:ph,email:document.getElementById('ml-em').value.trim()},
-    property:{type:document.getElementById('ml-ty').value,address:document.getElementById('ml-ad').value.trim(),situation:document.getElementById('ml-sit').value},
-    offerRange:'', notes:document.getElementById('ml-no').value.trim(),
+function handleOvClick(e) { if (e.target === document.getElementById('overlay')) closeModal(); }
+
+/* ── DUAL-LAYER DRAFT ENGINE ──────────────────── */
+let draftDebounceTimer = null;
+function queueDraftSave() {
+  clearTimeout(draftDebounceTimer);
+  draftDebounceTimer = setTimeout(() => {
+    saveLocalDraft();
+  }, 800);
+}
+
+function saveLocalDraft() {
+  const draftData = {
+    fn: document.getElementById('ml-fn')?.value || '',
+    ln: document.getElementById('ml-ln')?.value || '',
+    ph: document.getElementById('ml-ph')?.value || '',
+    em: document.getElementById('ml-em')?.value || '',
+    ty: document.getElementById('ml-ty')?.value || 'Office',
+    bg: document.getElementById('ml-bg')?.value || '',
+    tm: document.getElementById('ml-tm')?.value || 'Exploring options',
+    ts: document.getElementById('ml-ts')?.value || 'Solo (1 person)',
+    src: document.getElementById('ml-src')?.value || 'manual',
+    assignee: document.getElementById('ml-assignee')?.value || '',
+    notes: document.getElementById('ml-no')?.value || '',
+    savedAt: Date.now()
   };
-  const leads=getLeads();
-  // Remove demo leads on first real entry
-  const real=leads.filter(l=>!l.id.startsWith('d'));
-  real.unshift(lead); saveLeads(real.length?real:[lead]);
-  closeModal(); renderLeads(); updateStats(); renderActivityFeed();
-  toast('Lead added to pipeline ✓','ok');
-  ['ml-fn','ml-ln','ml-ph','ml-em','ml-ad','ml-no'].forEach(id=>document.getElementById(id).value='');
+  const hasContent = Object.entries(draftData).some(([k, v]) => k !== 'savedAt' && k !== 'ty' && k !== 'tm' && k !== 'ts' && k !== 'src' && String(v).trim().length > 0);
+  if (hasContent) {
+    try {
+      localStorage.setItem(CFG.draftKey, JSON.stringify(draftData));
+    } catch(e) {}
+  }
+}
+
+function checkDraftOnModalOpen() {
+  const banner = document.getElementById('draft-restore-banner');
+  const timeSpan = document.getElementById('draft-time-ago');
+  if (!banner) return;
+  try {
+    const raw = localStorage.getItem(CFG.draftKey);
+    if (!raw) {
+      banner.style.display = 'none';
+      return;
+    }
+    const draft = JSON.parse(raw);
+    const mins = Math.max(1, Math.round((Date.now() - (draft.savedAt || Date.now())) / 60000));
+    timeSpan.textContent = mins < 60 ? `${mins} min${mins === 1 ? '' : 's'} ago` : `${Math.round(mins/60)} hr${Math.round(mins/60) === 1 ? '' : 's'} ago`;
+    banner.style.display = 'flex';
+  } catch(e) {
+    banner.style.display = 'none';
+  }
+}
+
+function restoreLocalDraft() {
+  try {
+    const raw = localStorage.getItem(CFG.draftKey);
+    if (!raw) return;
+    const d = JSON.parse(raw);
+    if (d.fn !== undefined && document.getElementById('ml-fn')) document.getElementById('ml-fn').value = d.fn;
+    if (d.ln !== undefined && document.getElementById('ml-ln')) document.getElementById('ml-ln').value = d.ln;
+    if (d.ph !== undefined && document.getElementById('ml-ph')) document.getElementById('ml-ph').value = d.ph;
+    if (d.em !== undefined && document.getElementById('ml-em')) document.getElementById('ml-em').value = d.em;
+    if (d.ty !== undefined && document.getElementById('ml-ty')) document.getElementById('ml-ty').value = d.ty;
+    if (d.bg !== undefined && document.getElementById('ml-bg')) document.getElementById('ml-bg').value = d.bg;
+    if (d.tm !== undefined && document.getElementById('ml-tm')) document.getElementById('ml-tm').value = d.tm;
+    if (d.ts !== undefined && document.getElementById('ml-ts')) document.getElementById('ml-ts').value = d.ts;
+    if (d.src !== undefined && document.getElementById('ml-src')) document.getElementById('ml-src').value = d.src;
+    if (d.assignee !== undefined && document.getElementById('ml-assignee')) document.getElementById('ml-assignee').value = d.assignee;
+    if (d.notes !== undefined && document.getElementById('ml-no')) document.getElementById('ml-no').value = d.notes;
+    document.getElementById('draft-restore-banner').style.display = 'none';
+    toast('Draft restored into form ✓', 'ok');
+  } catch(e) {}
+}
+
+function discardLocalDraft() {
+  localStorage.removeItem(CFG.draftKey);
+  const banner = document.getElementById('draft-restore-banner');
+  if (banner) banner.style.display = 'none';
+  toast('Draft discarded', 'info');
+}
+
+function clearModalFields() {
+  ['ml-fn', 'ml-ln', 'ml-ph', 'ml-em', 'ml-bg', 'ml-no'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  const banner = document.getElementById('draft-restore-banner');
+  if (banner) banner.style.display = 'none';
+  localStorage.removeItem(CFG.draftKey);
+}
+
+/* ── SUBMIT MANUAL LEAD & DRAFT HANDLER ────────── */
+function submitManualLead(isDraft = false) {
+  const fn = document.getElementById('ml-fn')?.value.trim() || '';
+  const ln = document.getElementById('ml-ln')?.value.trim() || '';
+  const fullName = `${fn} ${ln}`.trim();
+  const ph = document.getElementById('ml-ph')?.value.trim() || '';
+  const em = document.getElementById('ml-em')?.value.trim() || '';
+  const spaceType = document.getElementById('ml-ty')?.value || 'Office';
+  const budget = document.getElementById('ml-bg')?.value.trim() || '';
+  const timeline = document.getElementById('ml-tm')?.value || 'Exploring options';
+  const teamSize = document.getElementById('ml-ts')?.value || 'Solo (1 person)';
+  const src = document.getElementById('ml-src')?.value || (isDraft ? 'draft' : 'manual');
+  const assignee = document.getElementById('ml-assignee')?.value || '';
+  const notes = document.getElementById('ml-no')?.value.trim() || '';
+
+  // Zero-validation blockers in Draft mode; require name or phone only in normal mode
+  if (!isDraft && !fullName && !ph) {
+    toast('Please enter a name or phone number', 'info');
+    return;
+  }
+
+  // Whale detection
+  const monthlyVal = parseMonthlyBudget(budget);
+  let isWhale = false;
+  let whaleTier = null;
+  const whaleKeywords = [];
+  if (monthlyVal >= 8000) {
+    isWhale = true;
+    whaleTier = 'gold';
+    whaleKeywords.push('$8k+ Executive Budget');
+  } else if (monthlyVal >= 4000) {
+    isWhale = true;
+    whaleTier = 'silver';
+    whaleKeywords.push('$4k+ Commercial Budget');
+  }
+
+  // Scoring
+  let score = 0;
+  let scoreLabel = 'Draft';
+  let reasoning = 'Saved as draft by staff';
+
+  if (!isDraft) {
+    // Budget: 0-40 pts
+    if (monthlyVal >= 8000) score += 40;
+    else if (monthlyVal >= 4000) score += 32;
+    else if (monthlyVal >= 2000) score += 24;
+    else if (monthlyVal > 0) score += 15;
+    else score += 10;
+
+    // Timeline: 0-30 pts
+    if (timeline.includes('ASAP')) score += 30;
+    else if (timeline.includes('1-3')) score += 20;
+    else if (timeline.includes('3-6')) score += 12;
+    else score += 8;
+
+    // Contact completeness: 0-20 pts
+    if (ph && em) score += 20;
+    else if (ph || em) score += 10;
+
+    // Specific notes: 0-10 pts
+    if (notes.length > 20) score += 10;
+    else if (notes.length > 0) score += 5;
+
+    score = Math.min(100, Math.max(5, score));
+    if (score >= 70) scoreLabel = 'Verified Lead';
+    else if (score >= 40) scoreLabel = 'MQL';
+    else scoreLabel = 'Prospect Lead';
+    reasoning = `Staff entry: Budget $${monthlyVal || budget || 'N/A'}, timeline ${timeline}`;
+  }
+
+  const newLead = {
+    id: `m_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
+    name: fullName || (isDraft ? 'Untitled Draft' : 'Inbound Prospect'),
+    email: em,
+    phone: ph,
+    space_type: spaceType,
+    budget: budget,
+    timeline: timeline,
+    team_size: teamSize,
+    score: score,
+    score_label: scoreLabel,
+    reasoning: reasoning,
+    matched_properties: [],
+    is_whale: isWhale,
+    whale_tier: whaleTier,
+    whale_keywords: whaleKeywords,
+    source: isDraft ? 'draft' : src,
+    additional_info: notes,
+    notes: notes,
+    follow_up_date: null,
+    created_by_employee: 'Staff',
+    assigned_employee: assignee,
+    progress: 'New Inquiry',
+    status: 'new',
+    timestamp: new Date().toISOString(),
+    created_at: new Date().toISOString(),
+    contact: { firstName: fn, lastName: ln, phone: ph, email: em },
+    property: { type: spaceType, address: '', situation: timeline },
+    offerRange: budget
+  };
+
+  const leads = getLeads();
+  const real = leads.filter(l => !l.id.startsWith('d'));
+  real.unshift(newLead);
+  saveLeads(real.length ? real : [newLead]);
+
+  // Sync to Supabase in background
+  fetch('/api/admin-lead', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(newLead)
+  }).catch(e => console.warn('Supabase sync background:', e));
+
+  clearModalFields();
+  closeModal();
+  renderLeads();
+  updateStats();
+  renderActivityFeed();
+  renderTable();
+
+  if (isDraft) {
+    toast('Saved to 📝 Drafts tab (Score 0) ✓', 'ok');
+  } else {
+    toast(`Lead added (${scoreLabel} - Score: ${score}) ✓`, 'ok');
+  }
+}
+
+/* ── WEB SPEECH API (VOICE-TO-TEXT) ───────────── */
+let voiceRecognition = null;
+let currentMicBtn = null;
+
+function toggleVoiceInput(targetInputId, micBtnId) {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    toast('Voice dictation not supported in this browser. Please use Chrome/Safari/Edge.', 'info');
+    return;
+  }
+
+  const micBtn = document.getElementById(micBtnId);
+  const targetInput = document.getElementById(targetInputId);
+  if (!targetInput) return;
+
+  if (voiceRecognition) {
+    try { voiceRecognition.stop(); } catch(e) {}
+    voiceRecognition = null;
+    if (currentMicBtn) {
+      currentMicBtn.classList.remove('recording');
+      currentMicBtn.innerHTML = '🎙️ Voice Dictation';
+    }
+    toast('Voice dictation stopped', 'info');
+    return;
+  }
+
+  try {
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
+
+    recognition.onstart = () => {
+      voiceRecognition = recognition;
+      currentMicBtn = micBtn;
+      if (micBtn) {
+        micBtn.classList.add('recording');
+        micBtn.innerHTML = '🔴 Listening... (Tap to stop)';
+      }
+      toast('Listening... Speak clearly into microphone', 'ok');
+    };
+
+    let startVal = targetInput.value ? targetInput.value + ' ' : '';
+    recognition.onresult = (event) => {
+      let finalTranscript = '';
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          finalTranscript += event.results[i][0].transcript;
+        }
+      }
+      if (finalTranscript) {
+        targetInput.value = startVal + finalTranscript.trim();
+        startVal = targetInput.value + ' ';
+        if (typeof queueDraftSave === 'function') queueDraftSave();
+      }
+    };
+
+    recognition.onerror = (e) => {
+      console.warn('Speech recognition error:', e);
+      if (micBtn) {
+        micBtn.classList.remove('recording');
+        micBtn.innerHTML = '🎙️ Voice Dictation';
+      }
+      voiceRecognition = null;
+    };
+
+    recognition.onend = () => {
+      if (micBtn) {
+        micBtn.classList.remove('recording');
+        micBtn.innerHTML = '🎙️ Voice Dictation';
+      }
+      voiceRecognition = null;
+    };
+
+    recognition.start();
+  } catch(err) {
+    console.warn('Speech start error:', err);
+    toast('Could not start speech recognition', 'info');
+  }
+}
+
+/* ── CALL LOGGING MODAL ───────────────────────── */
+function openCallModal(leadId) {
+  const leads = getLeads();
+  const lead = leads.find(l => l.id === leadId);
+  if (!lead) return;
+
+  const leadName = lead.name || `${lead.contact?.firstName || ''} ${lead.contact?.lastName || ''}`.trim() || 'Inquiry';
+  document.getElementById('call-lead-id').value = leadId;
+  document.getElementById('call-lead-name').value = `${leadName} (${lead.phone || lead.contact?.phone || 'No phone'})`;
+  document.getElementById('call-outcome-val').value = 'Spoke to Lead';
+  document.getElementById('call-duration').value = '5';
+  document.getElementById('call-notes').value = '';
+  document.getElementById('call-follow-up').value = lead.follow_up_date || '';
+
+  document.querySelectorAll('.call-pill').forEach((p, idx) => {
+    if (idx === 0) p.classList.add('active');
+    else p.classList.remove('active');
+  });
+
+  document.getElementById('call-overlay').classList.add('open');
+}
+
+function closeCallModal() {
+  document.getElementById('call-overlay').classList.remove('open');
+}
+
+function handleCallOvClick(e) {
+  if (e.target === document.getElementById('call-overlay')) closeCallModal();
+}
+
+function setCallOutcome(btn, outcome) {
+  document.querySelectorAll('.call-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('call-outcome-val').value = outcome;
+}
+
+function submitCallLog() {
+  const leadId = document.getElementById('call-lead-id').value;
+  const outcome = document.getElementById('call-outcome-val').value;
+  const duration = parseFloat(document.getElementById('call-duration').value) || 0;
+  const caller = document.getElementById('call-caller').value;
+  const notes = document.getElementById('call-notes').value.trim();
+  const followUp = document.getElementById('call-follow-up').value;
+
+  if (!leadId) return;
+
+  const payload = {
+    lead_id: leadId,
+    caller_name: caller,
+    outcome: outcome,
+    duration_minutes: duration,
+    notes: notes,
+    scheduled_follow_up: followUp || null
+  };
+
+  if (followUp) {
+    updateLead(leadId, 'follow_up_date', followUp);
+  }
+
+  fetch('/api/call-logs', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(res => res.json())
+    .then(data => {
+      toast('Call log recorded successfully ✓', 'ok');
+    })
+    .catch(err => {
+      console.warn('Call log sync error:', err);
+      toast('Call log saved locally ✓', 'ok');
+    });
+
+  closeCallModal();
+}
+
+/* ── COMMENTS & TEAM ACTIVITY DRAWER ─────────── */
+function openCommentsDrawer(leadId) {
+  const leads = getLeads();
+  const lead = leads.find(l => l.id === leadId);
+  const leadName = lead ? (lead.name || `${lead.contact?.firstName || ''} ${lead.contact?.lastName || ''}`.trim()) : 'Lead';
+
+  document.getElementById('comments-lead-id').value = leadId;
+  document.getElementById('comments-modal-title').textContent = `💬 Activity & Team Notes: ${leadName}`;
+  document.getElementById('comments-feed').innerHTML = '<div style="color:var(--t3);text-align:center;padding:1.5rem 0;">Loading activity thread...</div>';
+  document.getElementById('new-comment-input').value = '';
+  document.getElementById('comments-overlay').classList.add('open');
+
+  fetch(`/api/lead-comments?leadId=${encodeURIComponent(leadId)}`)
+    .then(res => res.json())
+    .then(data => {
+      renderCommentsFeed(data.comments || []);
+    })
+    .catch(err => {
+      const feed = document.getElementById('comments-feed');
+      if (lead && lead.notes) {
+        feed.innerHTML = `
+          <div class="comment-item" style="background:#18181b;padding:0.75rem;border-radius:10px;border:1px solid var(--border);">
+            <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--t3);margin-bottom:0.35rem;">
+              <span style="font-weight:700;color:var(--gold);">Staff Intake Notes</span>
+              <span>${(lead.created_at || lead.timestamp || '').slice(0, 10)}</span>
+            </div>
+            <div style="font-size:0.8rem;color:var(--t1);line-height:1.4;">${lead.notes}</div>
+          </div>
+        `;
+      } else {
+        feed.innerHTML = '<div style="color:var(--t3);text-align:center;padding:1.5rem 0;">No comments recorded yet. Add the first note below!</div>';
+      }
+    });
+}
+
+function renderCommentsFeed(comments) {
+  const feed = document.getElementById('comments-feed');
+  if (!feed) return;
+  if (!comments.length) {
+    feed.innerHTML = '<div style="color:var(--t3);text-align:center;padding:1.5rem 0;">No comments recorded yet. Add the first note below!</div>';
+    return;
+  }
+  feed.innerHTML = comments.map(c => `
+    <div class="comment-item" style="background:#18181b;padding:0.75rem;border-radius:10px;border:1px solid var(--border);">
+      <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--t3);margin-bottom:0.35rem;">
+        <span style="font-weight:700;color:var(--gold);">${c.author_name || 'Team Member'}</span>
+        <span>${c.created_at ? new Date(c.created_at).toLocaleString() : 'Just now'}</span>
+      </div>
+      <div style="font-size:0.8rem;color:var(--t1);line-height:1.4;">${c.comment}</div>
+    </div>
+  `).join('');
+  feed.scrollTop = feed.scrollHeight;
+}
+
+function closeCommentsModal() {
+  document.getElementById('comments-overlay').classList.remove('open');
+}
+
+function handleCommentsOvClick(e) {
+  if (e.target === document.getElementById('comments-overlay')) closeCommentsModal();
+}
+
+function submitComment() {
+  const leadId = document.getElementById('comments-lead-id').value;
+  const input = document.getElementById('new-comment-input');
+  const comment = (input?.value || '').trim();
+  if (!leadId || !comment) return;
+
+  const payload = {
+    lead_id: leadId,
+    author_name: 'CEO / Staff',
+    comment: comment
+  };
+
+  fetch('/api/lead-comments', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(res => res.json())
+    .then(data => {
+      input.value = '';
+      if (data.comment) {
+        const feed = document.getElementById('comments-feed');
+        const emptyMsg = feed.querySelector('div');
+        if (emptyMsg && emptyMsg.textContent.includes('No comments')) {
+          feed.innerHTML = '';
+        }
+        const div = document.createElement('div');
+        div.className = 'comment-item';
+        div.style.cssText = 'background:#18181b;padding:0.75rem;border-radius:10px;border:1px solid var(--border);';
+        div.innerHTML = `
+          <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--t3);margin-bottom:0.35rem;">
+            <span style="font-weight:700;color:var(--gold);">${data.comment.author_name}</span>
+            <span>Just now</span>
+          </div>
+          <div style="font-size:0.8rem;color:var(--t1);line-height:1.4;">${data.comment.comment}</div>
+        `;
+        feed.appendChild(div);
+        feed.scrollTop = feed.scrollHeight;
+      }
+      toast('Comment posted ✓', 'ok');
+    })
+    .catch(err => {
+      console.warn('Comment post error:', err);
+      toast('Note recorded locally ✓', 'ok');
+    });
 }
 
 /* ── CONSTRUCTION & JOB TICKETS (Enhanced) ──── */
@@ -4747,6 +6003,7 @@ function initDash() {
   setTimeout(() => window.scrollTo(0, 0), 20);
   try { setGreeting(); } catch(e) { console.warn(e); }
   try { updateClock(); setInterval(updateClock, 15000); } catch(e) { console.warn(e); }
+  try { syncLeadsFromSupabase(); } catch(e) { console.warn(e); }
   try { updateStats(); } catch(e) { console.warn(e); }
   try { renderLeads(); } catch(e) { console.warn(e); }
   try { renderActivityFeed(); } catch(e) { console.warn(e); }
@@ -4759,6 +6016,7 @@ function initDash() {
   try { if (typeof renderBudget === 'function') renderBudget(); } catch(e) {}
   try { if (typeof renderCrew === 'function') renderCrew(); } catch(e) {}
   setInterval(() => {
+    try { syncLeadsFromSupabase(); } catch(e) {}
     try { renderLeads(); } catch(e) {}
     try { renderActivityFeed(); } catch(e) {}
     try { renderTable(); } catch(e) {}

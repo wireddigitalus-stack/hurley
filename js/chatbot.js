@@ -502,6 +502,16 @@
       const existing = JSON.parse(localStorage.getItem('hurley_leads') || '[]');
       existing.unshift(lead);
       localStorage.setItem('hurley_leads', JSON.stringify(existing));
+      fetch('/api/lease-bot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: ctx.capturedName || 'Website Chat Lead',
+          phone: ctx.capturedPhone || '',
+          source: 'riley',
+          message: lead.notes
+        })
+      }).catch(e => console.warn('Riley bot lease-bot sync:', e));
     } catch(e) { console.warn('Lead save failed', e); }
   }
 
@@ -811,6 +821,17 @@
           notes: `Riley chat lead. Property interest: ${lastProperty || 'General inquiry'}. Conversation: ${chatHistory.slice(-4).map(t=>t.role+': '+t.text.slice(0,60)).join(' | ')}`
         });
         localStorage.setItem('hurley_leads', JSON.stringify(leads));
+        fetch('/api/lease-bot', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: name,
+            phone: phone,
+            space_type: lastProperty || 'Office',
+            source: 'riley',
+            message: `Riley chat lead. Property interest: ${lastProperty || 'General inquiry'}.`
+          })
+        }).catch(e => console.warn('Riley chat sync error:', e));
       } catch(e) {}
 
       // Hide form, show success with celebration animation
