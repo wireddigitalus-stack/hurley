@@ -1482,8 +1482,8 @@
   <!-- TOP NAVIGATION BAR (very top of page) -->
   <div class="dash-nav" id="dash-nav" style="margin-bottom:0.5rem;">
     <button class="dash-nav-btn active" id="nav-btn-pipeline" onclick="switchDashPanel('pipeline')">📊 Pipeline</button>
-    <button class="dash-nav-btn" id="nav-btn-construction" onclick="switchDashPanel('construction')">🏗️ Construction</button>
     <button class="dash-nav-btn" id="nav-btn-analytics" onclick="switchDashPanel('analytics')">📈 Analytics</button>
+    <button class="dash-nav-btn" id="nav-btn-construction" onclick="switchDashPanel('construction')">🏗️ Construction</button>
     <button class="dash-nav-btn" id="nav-btn-editor" onclick="switchDashPanel('editor')" style="border-color:var(--gold);color:var(--gold);font-weight:800;">🌐 Site Editor and Staff</button>
   </div>
 
@@ -3900,7 +3900,7 @@ function switchDashPanel(panelId) {
     targetBtn.classList.add('active');
   } else {
     const navBtns = document.querySelectorAll('.dash-nav-btn');
-    const map = { pipeline: 0, construction: 1, analytics: 2, editor: 3 };
+    const map = { pipeline: 0, analytics: 1, construction: 2, editor: 3 };
     if (navBtns[map[panelId]]) navBtns[map[panelId]].classList.add('active');
   }
   // Render content on tab switch
