@@ -714,31 +714,97 @@
     .save-btn:hover { background: var(--gold-lt); transform: translateY(-1px); }
     .save-btn.saved { background: var(--cool); color: #fff; }
 
+    /* ── LEAD CARD ACTIONS (NICE NEAT STACKED BUTTONS) ─ */
     .lc-actions {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.45rem;
-      padding: 0.75rem 1rem 1rem; border-top: 1px solid var(--border);
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.55rem;
+      padding: 0.85rem 1.1rem 1rem;
+      border-top: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.2);
     }
-    /* Call button spans full width when it's the only button */
-    .lc-actions:has(.act-btn.call:only-child),
-    .lc-actions .act-btn.call:first-child:last-child { grid-column: 1/-1; }
+    @media (max-width: 960px) {
+      .lc-actions {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 540px) {
+      .lc-actions {
+        grid-template-columns: 1fr;
+      }
+    }
     .act-btn {
-      width: 100%; padding: 0.7em 0.75em;
-      border-radius: 9px; font-size: 0.68rem; font-weight: 800;
-      cursor: pointer; border: 1px solid var(--border); background: var(--bg-3);
+      width: 100%; box-sizing: border-box;
+      padding: 0.65rem 0.85rem;
+      border-radius: 9px; font-size: 0.76rem; font-weight: 800;
+      letter-spacing: 0.02em; cursor: pointer;
+      border: 1px solid var(--border); background: rgba(255, 255, 255, 0.035);
       color: var(--t2); display: flex; align-items: center; justify-content: center;
-      gap: 0.3rem; transition: all 0.18s; -webkit-tap-highlight-color: transparent;
-      min-height: 42px;
+      gap: 0.45rem; transition: all 0.18s ease; -webkit-tap-highlight-color: transparent;
+      min-height: 42px; text-decoration: none; white-space: nowrap;
     }
-    .act-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
-    .act-btn:hover { border-color: var(--border-md); color: var(--off-white); }
-    .act-btn.call { background: var(--cool-dim); border-color: rgba(62,207,142,0.25); color: var(--cool); grid-column: 1/-1; }
-    .act-btn.call:hover { background: rgba(62,207,142,0.2); }
-    .act-btn.monday { background: var(--gold-dim); border-color: rgba(201,168,76,0.25); color: var(--gold-lt); }
-    .act-btn.monday:hover { background: rgba(201,168,76,0.2); }
-    .act-btn.del { color: rgba(255,77,77,0.5); }
-    .act-btn.del:hover { color: var(--hot); border-color: rgba(255,77,77,0.3); }
+    .act-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .act-btn:hover {
+      border-color: var(--border-md); color: var(--off-white);
+      background: rgba(255, 255, 255, 0.08); transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+    .act-btn.call {
+      background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.32);
+      color: #10b981;
+    }
+    .act-btn.call:hover {
+      background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: #34d399;
+    }
+    .act-btn.email {
+      background: rgba(201, 168, 76, 0.08); border-color: rgba(201, 168, 76, 0.3);
+      color: var(--gold-lt);
+    }
+    .act-btn.email:hover {
+      background: rgba(201, 168, 76, 0.2); border-color: var(--gold); color: #fff;
+    }
+    .act-btn.log-call {
+      background: rgba(201, 168, 76, 0.06); border-color: rgba(201, 168, 76, 0.25);
+      color: var(--gold);
+    }
+    .act-btn.log-call:hover {
+      background: rgba(201, 168, 76, 0.16); border-color: var(--gold); color: #fff;
+    }
+    .act-btn.notes {
+      background: rgba(167, 139, 250, 0.08); border-color: rgba(167, 139, 250, 0.28);
+      color: #c4b5fd;
+    }
+    .act-btn.notes:hover {
+      background: rgba(167, 139, 250, 0.18); border-color: #a78bfa; color: #fff;
+    }
+    .act-btn.copy {
+      background: rgba(255, 255, 255, 0.035); border-color: var(--border); color: var(--t2);
+    }
+    .act-btn.copy:hover {
+      border-color: var(--gold); color: var(--off-white); background: rgba(255, 255, 255, 0.08);
+    }
+    .act-btn.del {
+      background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.22);
+      color: rgba(248, 113, 113, 0.85);
+    }
+    .act-btn.del:hover {
+      background: rgba(239, 68, 68, 0.16); border-color: #ef4444; color: #fff;
+    }
+    .act-btn.restore {
+      background: rgba(62, 207, 142, 0.08); border-color: rgba(62, 207, 142, 0.3);
+      color: var(--cool);
+    }
+    .act-btn.restore:hover {
+      background: rgba(62, 207, 142, 0.18); border-color: var(--cool); color: #fff;
+    }
+    .act-btn.disabled {
+      background: rgba(255, 255, 255, 0.015); border-color: rgba(255, 255, 255, 0.05);
+      color: var(--t3); cursor: not-allowed; opacity: 0.5;
+    }
+    .act-btn.disabled:hover {
+      transform: none; box-shadow: none; border-color: rgba(255, 255, 255, 0.05);
+      color: var(--t3); background: rgba(255, 255, 255, 0.015);
+    }
 
     /* ── EMPTY STATE ────────────────────────────── */
     .empty-state { text-align: center; padding: 3.5rem 1.5rem; color: var(--t3); }
@@ -3697,22 +3763,22 @@ function buildCard(l) {
       </div>
     </div>
 
-    <!-- Interactive Card Action Bar -->
-    <div class="lc-actions" style="margin-top:0.6rem;display:flex;gap:0.4rem;flex-wrap:wrap;">
-      ${phone ? `<a href="tel:${cleanPhone}" class="act-btn call">📞 Call</a>` : ''}
-      ${email ? `<a href="mailto:${email}" class="act-btn">✉️ Email</a>` : ''}
-      <button class="act-btn" onclick="openCallModal('${l.id}')" style="border-color:rgba(201,168,76,0.3);color:var(--gold);">
-        📞 Log Call
+    <!-- Interactive Card Action Bar (Nice Neat Stacked Buttons) -->
+    <div class="lc-actions">
+      ${phone ? `<a href="tel:${cleanPhone}" class="act-btn call">📞 Call Lead</a>` : `<button type="button" class="act-btn disabled" disabled>📞 No Phone</button>`}
+      ${email ? `<a href="mailto:${email}" class="act-btn email">✉️ Email Client</a>` : `<button type="button" class="act-btn disabled" disabled>✉️ No Email</button>`}
+      <button type="button" class="act-btn log-call" onclick="openCallModal('${l.id}')">
+        📞 Log Phone Call
       </button>
-      <button class="act-btn" onclick="openCommentsDrawer('${l.id}')" style="border-color:rgba(155,127,232,0.3);color:#bfa5ff;">
+      <button type="button" class="act-btn notes" onclick="openCommentsDrawer('${l.id}')">
         💬 Notes &amp; Activity
       </button>
-      <button class="act-btn" onclick="copyLeadInfo('${l.id}')">
-        📋 Copy
+      <button type="button" class="act-btn copy" onclick="copyLeadInfo('${l.id}')">
+        📋 Copy Briefing
       </button>
       ${l.archived_at
-        ? `<button class="act-btn" onclick="restoreLead('${l.id}')" style="border-color:rgba(62,207,142,0.4);color:var(--cool);">♻️ Restore</button>`
-        : `<button class="act-btn del" onclick="archiveLead('${l.id}')">📦 Archive</button>`
+        ? `<button type="button" class="act-btn restore" onclick="restoreLead('${l.id}')">♻️ Restore Lead</button>`
+        : `<button type="button" class="act-btn del" onclick="archiveLead('${l.id}')">📦 Archive Lead</button>`
       }
     </div>
   </div>`;
