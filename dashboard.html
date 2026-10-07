@@ -179,8 +179,39 @@
       display: grid; grid-template-columns: 1fr auto;
       gap: 0.6rem; padding: 0.85rem 1.1rem;
       border-bottom: 1px solid rgba(255,255,255,0.04); align-items: start;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.12s ease;
+      -webkit-tap-highlight-color: transparent;
     }
+    .pb-lead-row:hover { background: rgba(255, 77, 77, 0.08); }
+    .pb-lead-row:active { background: rgba(255, 77, 77, 0.14); }
     .pb-lead-row:last-child { border-bottom: none; }
+    /* Flash highlight animation for anchored hot lead card */
+    .highlight-flash {
+      animation: hotLeadGlow 2.4s ease-out !important;
+      position: relative;
+      z-index: 10;
+    }
+    @keyframes hotLeadGlow {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 77, 77, 0);
+        border-color: var(--hot) !important;
+        transform: scale(1);
+      }
+      20% {
+        box-shadow: 0 0 0 8px rgba(255, 77, 77, 0.5), 0 8px 32px rgba(255, 77, 77, 0.35);
+        border-color: var(--hot) !important;
+        transform: scale(1.015);
+      }
+      40% {
+        box-shadow: 0 0 0 6px rgba(255, 77, 77, 0.25), 0 6px 20px rgba(255, 77, 77, 0.2);
+        border-color: var(--hot) !important;
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 77, 77, 0);
+        transform: scale(1);
+      }
+    }
     .pb-lead-name  { font-size: 0.82rem; font-weight: 800; color: var(--off-white); margin-bottom: 0.18rem; }
     .pb-lead-meta  { display: flex; align-items: center; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.3rem; }
     .pb-wait-badge {
@@ -1635,20 +1666,20 @@
     </div>
   </div>
 
-  <div class="lead-feed" id="lead-feed"></div>
-
   <!-- PRIORITY ALERT (HOT LEADS WAITING) -->
-  <div class="priority-banner hidden" id="priority-banner" style="margin-top:1.25rem;">
+  <div class="priority-banner hidden" id="priority-banner" style="margin-top:1rem;margin-bottom:1.25rem;">
     <div class="pb-header">
       <div class="priority-icon">🚨</div>
       <div class="pb-title-wrap">
         <div class="priority-title" id="priority-title">Hot leads waiting</div>
         <div class="pb-subtitle" id="pb-subtitle"></div>
       </div>
-      <button class="pb-dismiss-all-btn" onclick="dismissAllPriority()" style="margin-left:auto;font-size:0.62rem;font-weight:800;color:rgba(255,255,255,0.3);background:none;border:none;cursor:pointer;white-space:nowrap;padding:0 0.25rem;">Dismiss all</button>
+      <button class="pb-dismiss-all-btn" onclick="dismissAllPriority()" style="margin-left:auto;font-size:0.65rem;font-weight:800;color:rgba(255,255,255,0.45);background:none;border:none;cursor:pointer;white-space:nowrap;padding:0.35rem 0.6rem;border-radius:6px;">Dismiss all</button>
     </div>
     <div class="pb-leads" id="pb-leads"></div>
   </div>
+
+  <div class="lead-feed" id="lead-feed"></div>
 
 
 
@@ -3167,18 +3198,21 @@ function updateStats() {
 
   // Priority banner — expandable
   const dismissed = JSON.parse(localStorage.getItem('pb_dismissed')||'[]');
-  const urgentHot = hot.filter(l=>(Date.now()-new Date(l.timestamp).getTime())>2*3600000 && !dismissed.includes(l.id));
+  const urgentHot = hot.filter(l => !dismissed.includes(l.id));
   const banner = document.getElementById('priority-banner');
   if(urgentHot.length>0) {
     banner.classList.remove('hidden');
+    const waitingOver2h = urgentHot.filter(l => (Date.now()-new Date(l.timestamp || l.created_at || Date.now()).getTime())>2*3600000).length;
     document.getElementById('priority-title').textContent =
-      `${urgentHot.length} hot lead${urgentHot.length>1?'s':''} waiting over 2 hours — call now!`;
+      waitingOver2h > 0
+        ? `${urgentHot.length} hot lead${urgentHot.length>1?'s':''} waiting (${waitingOver2h} over 2h) — call now!`
+        : `${urgentHot.length} hot lead${urgentHot.length>1?'s':''} waiting — call now!`;
     document.getElementById('pb-subtitle').textContent =
-      urgentHot.map(l=>`${l.contact?.firstName||''} ${l.contact?.lastName||''}`.trim()).join(', ') + ' · tap to expand';
+      urgentHot.map(l=>`${l.contact?.firstName||''} ${l.contact?.lastName||''}`.trim()).join(', ') + ' · tap row to jump to card';
 
     // Build per-lead rows
     const hoursWaiting = l => {
-      const h = (Date.now()-new Date(l.timestamp).getTime())/3600000;
+      const h = (Date.now()-new Date(l.timestamp || l.created_at || Date.now()).getTime())/3600000;
       return h >= 24 ? Math.round(h/24)+'d' : (Math.round(h*10)/10)+'h';
     };
     document.getElementById('pb-leads').innerHTML = urgentHot.map(l => {
@@ -3188,9 +3222,12 @@ function updateStats() {
       const wait = hoursWaiting(l);
       const notes = l.notes ? l.notes.slice(0,120)+(l.notes.length>120?'…':'') : 'No notes';
       const addr = l.property?.street ? l.property.street+', '+l.property.city : (l.property?.address||'');
-      return `<div class="pb-lead-row" id="pbrow-${l.id}">
-        <div>
-          <div class="pb-lead-name">${name}</div>
+      return `<div class="pb-lead-row" id="pbrow-${l.id}" onclick="scrollToHotLead('${l.id}')" title="Jump to ${name}'s lead card">
+        <div style="min-width:0;">
+          <div style="display:flex;align-items:center;gap:0.45rem;flex-wrap:wrap;margin-bottom:0.2rem;">
+            <span class="pb-lead-name" style="margin-bottom:0;">${name}</span>
+            <span style="font-size:0.62rem;color:var(--gold);font-weight:800;letter-spacing:0.02em;">🎯 Jump to card &darr;</span>
+          </div>
           <div class="pb-lead-meta">
             <span class="pb-wait-badge">⏱ ${wait} waiting</span>
             <span class="pb-type-badge">${propType}</span>
@@ -3198,12 +3235,12 @@ function updateStats() {
           </div>
           <div class="pb-lead-notes">${notes}</div>
         </div>
-        <div class="pb-lead-actions">
+        <div class="pb-lead-actions" onclick="event.stopPropagation();">
           ${phone
-            ? `<a href="tel:${phone.replace(/\D/g,'')}" class="pb-call-btn">📞 Call</a>`
-            : `<button class="pb-call-btn" onclick="toast('No phone on file — check notes','info')">No phone</button>`
+            ? `<a href="tel:${phone.replace(/\D/g,'')}" class="pb-call-btn" onclick="event.stopPropagation();">📞 Call</a>`
+            : `<button class="pb-call-btn" onclick="event.stopPropagation();toast('No phone on file — check notes','info')">No phone</button>`
           }
-          <button class="pb-dismiss-btn" onclick="dismissPriorityLead('${l.id}')">Dismiss</button>
+          <button class="pb-dismiss-btn" onclick="event.stopPropagation();dismissPriorityLead('${l.id}')">Dismiss</button>
         </div>
       </div>`;
     }).join('');
@@ -3907,6 +3944,30 @@ function togglePriorityExpand() {
   }
 }
 
+function scrollToHotLead(id) {
+  if (!id) return;
+  // If card is filtered out, switch filter to 'all' so card is rendered in feed
+  let card = document.getElementById('card-' + id);
+  if (!card && typeof setFilter === 'function') {
+    setFilter('all');
+  }
+  // Brief timeout to allow feed re-render if filter changed
+  setTimeout(() => {
+    card = document.getElementById('card-' + id);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.remove('highlight-flash');
+      void card.offsetWidth; // trigger reflow for smooth re-animation
+      card.classList.add('highlight-flash');
+      setTimeout(() => {
+        card.classList.remove('highlight-flash');
+      }, 2500);
+    } else {
+      toast('Lead card not found in feed', 'info');
+    }
+  }, 60);
+}
+
 function dismissPriorityLead(id) {
   const d = JSON.parse(localStorage.getItem('pb_dismissed')||'[]');
   if (!d.includes(id)) d.push(id);
@@ -3919,9 +3980,8 @@ function dismissPriorityLead(id) {
 function dismissAllPriority() {
   const leads = getLeads();
   const hot   = leads.filter(l => temp(l)==='hot');
-  const urgent= hot.filter(l => (Date.now()-new Date(l.timestamp).getTime())>2*3600000);
   const d = JSON.parse(localStorage.getItem('pb_dismissed')||'[]');
-  urgent.forEach(l => { if (!d.includes(l.id)) d.push(l.id); });
+  hot.forEach(l => { if (!d.includes(l.id)) d.push(l.id); });
   localStorage.setItem('pb_dismissed', JSON.stringify(d));
   updateStats();
   toast('Priority alerts dismissed', 'ok');
