@@ -3469,7 +3469,7 @@ function parseCost(s) {
 }
 const TICKETS_KEY = 'hurley_tickets';
 const DEMO_DATA_VERSION_KEY = 'hurley_demo_version';
-const DEMO_DATA_VERSION = '2026.10.05b'; // Bump this to force-reseed demo data
+const DEMO_DATA_VERSION = '2026.10.07a'; // Bump this to force-reseed demo data
 
 /* Helper: ISO date string offset from today */
 function daysFromNow(n) {
@@ -3591,6 +3591,36 @@ const DEMO_TICKETS = [
     startDate: daysFromNow(-3), dueDate: daysFromNow(7),
     notes: 'Previous tenant moved out. Full repaint (walls + ceiling) in Bristol Warm Gray. Epoxy floor coating in warehouse section. Chris needs 2 more days for walls, then 1 day cure time before epoxy.',
     timestamp: new Date(Date.now() - 2*86400000).toISOString()
+  },
+  {
+    id: 't11', property: 'City Centre (601 State St)', unit: 'Elevator Shaft #2',
+    title: 'Passenger Elevator Modernization & Cab Refurbish',
+    category: 'construction', priority: 'high', status: 'progress',
+    contractor: 'Noah Hurley (In-House) / Otis', phone: '(423) 742-7219',
+    budget: '$32,000', actualCost: '$18,500', percentComplete: 60,
+    startDate: daysFromNow(-12), dueDate: daysFromNow(14),
+    notes: 'Passenger elevator cab modernization. Hydraulic ram inspection passed. Custom wood paneling & LED ceiling grid arriving ' + daysFromNow(4) + '. Inspection scheduled for ' + daysFromNow(12) + '.',
+    timestamp: new Date(Date.now() - 1*86400000).toISOString()
+  },
+  {
+    id: 't12', property: '628 State St (Kress Building)', unit: 'Utility Yard',
+    title: 'Emergency Standby Generator & Automatic Transfer Switch',
+    category: 'electrical', priority: 'high', status: 'open',
+    contractor: 'Tri-Cities Electrical (Marcus Bell)', phone: '(423) 555-0188',
+    budget: '$21,500', actualCost: '$0', percentComplete: 0,
+    startDate: daysFromNow(2), dueDate: daysFromNow(20),
+    notes: '150kW Kohler Diesel generator installation for emergency tenant backup. Concrete pad poured. Marcus Bell crew setting ATS switch ' + daysFromNow(5) + '. Power tie-in planned for Sunday off-hours.',
+    timestamp: new Date(Date.now() - 2*86400000).toISOString()
+  },
+  {
+    id: 't13', property: 'Former Coca-Cola Facility', unit: 'Main Facade',
+    title: 'Historic Facade Architectural Lighting & Accent Spotlights',
+    category: 'electrical', priority: 'normal', status: 'progress',
+    contractor: 'Elite Finishes (Chris Painter) / Marcus Bell', phone: '(423) 555-0955',
+    budget: '$7,800', actualCost: '$3,400', percentComplete: 45,
+    startDate: daysFromNow(-6), dueDate: daysFromNow(8),
+    notes: 'Warm 3000K LED uplighting along historic brick facade. Conduit runs complete. Fixture mounting underway by Chris Painter\'s crew. Timer and photocell calibration set for ' + daysFromNow(7) + '.',
+    timestamp: new Date(Date.now() - 3*86400000).toISOString()
   }
 ];
 

@@ -175,27 +175,45 @@ function selectCalDay(day) {
   const days = document.querySelectorAll('.cal-day:not(.other-month)');
   if (days[day - 1]) days[day - 1].classList.add('selected');
 
+  const formattedDate = new Date(calYear, calMonth, day).toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' });
+
   if (!tickets.length) {
-    container.innerHTML = `<div class="cal-day-detail">
-      <div class="cal-day-detail-title">📅 ${new Date(calYear, calMonth, day).toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' })}</div>
-      <div style="color:var(--t3);font-size:0.78rem;">No construction activity scheduled for this day.</div>
+    container.innerHTML = `<div class="cal-day-detail" style="margin-top:1rem;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:12px;padding:1.1rem;">
+      <div class="cal-day-detail-title" style="font-weight:800;color:var(--gold);font-size:0.88rem;margin-bottom:0.4rem;">📅 ${formattedDate}</div>
+      <div style="color:var(--t3);font-size:0.8rem;">No active construction work orders scheduled for this date.</div>
     </div>`;
     return;
   }
 
   const statusLabels = { open:'📋 Open', progress:'🚧 In Progress', blocked:'⏸️ On Hold', review:'🔍 Inspection', completed:'✅ Done' };
 
-  container.innerHTML = `<div class="cal-day-detail">
-    <div class="cal-day-detail-title">📅 ${new Date(calYear, calMonth, day).toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric' })} — ${tickets.length} Job${tickets.length !== 1 ? 's' : ''}</div>
-    ${tickets.map(t => `
-      <div class="cal-mini-ticket">
-        <div>
-          <div style="font-weight:800;color:var(--off-white);">${t.title}</div>
-          <div style="font-size:0.68rem;color:var(--t2);">${t.property} · ${t.contractor || 'In-House'}</div>
-        </div>
-        <span class="t-badge tb-${t.status}">${statusLabels[t.status] || t.status}</span>
-      </div>
-    `).join('')}
+  container.innerHTML = `<div class="cal-day-detail" style="margin-top:1rem;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:12px;padding:1.1rem;">
+    <div class="cal-day-detail-title" style="font-weight:800;color:var(--gold);font-size:0.92rem;margin-bottom:0.8rem;display:flex;align-items:center;justify-content:space-between;">
+      <span>📅 ${formattedDate}</span>
+      <span style="font-size:0.75rem;font-weight:700;color:var(--t2);">${tickets.length} Scheduled Job${tickets.length !== 1 ? 's' : ''}</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:0.65rem;">
+      ${tickets.map(t => {
+        const pDigits = t.phone ? t.phone.replace(/\D/g,'') : '';
+        const callLink = pDigits ? `<a href="tel:+1${pDigits}" class="act-btn call" style="font-size:0.68rem;padding:0.3em 0.65em;text-decoration:none;margin-left:0.5rem;">📞 Call</a>` : '';
+        const priColor = t.priority === 'high' ? 'var(--hot)' : t.priority === 'normal' ? 'var(--cool)' : 'var(--gold)';
+        const pct = t.percentComplete || 0;
+        return `
+          <div class="cal-mini-ticket" style="border-left:4px solid ${priColor};background:rgba(0,0,0,0.25);border-radius:8px;padding:0.75rem 0.9rem;display:flex;align-items:center;justify-content:space-between;gap:0.75rem;">
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:0.65rem;font-weight:800;color:var(--gold);text-transform:uppercase;letter-spacing:0.06em;">${t.property}${t.unit ? ' · ' + t.unit : ''}</div>
+              <div style="font-weight:800;font-size:0.85rem;color:var(--off-white);margin:0.15rem 0;">${t.title}</div>
+              <div style="font-size:0.72rem;color:var(--t2);display:flex;align-items:center;gap:0.3rem;flex-wrap:wrap;">
+                <span>👷 ${t.contractor || 'In-House'}</span>
+                ${callLink}
+                <span style="margin-left:auto;color:var(--gold);font-weight:700;">${t.actualCost || '$0'} / ${t.budget || 'TBD'} (${pct}%)</span>
+              </div>
+            </div>
+            <span class="t-badge tb-${t.status}" style="font-size:0.68rem;padding:0.35em 0.65em;white-space:nowrap;">${statusLabels[t.status] || t.status}</span>
+          </div>
+        `;
+      }).join('')}
+    </div>
   </div>`;
 }
 
