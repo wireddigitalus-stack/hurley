@@ -370,6 +370,10 @@
     background: #0d0e12 !important;
     font-family: inherit;
   }
+  /* Pure Open-Source Dark Theme Map Filter */
+  #hurley-map .leaflet-tile-pane {
+    filter: invert(100%) hue-rotate(180deg) brightness(92%) contrast(92%);
+  }
   /* Dark Zoom Controls */
   .leaflet-bar {
     border: 1px solid rgba(201,168,76,0.3) !important;
@@ -486,12 +490,17 @@
         touchZoom: true,               // always allow pinch-zoom
       }).setView([36.597, -82.185], isMobile ? 12 : 13);
 
-      // Open-Source OpenStreetMap / CARTO Dark Matter Basemap Pack
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
-        subdomains: 'abcd',
+      // 100% Free & Open-Source OpenStreetMap Tile Layer (no watermarks, no API key required)
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors',
         maxZoom: 19
       }).addTo(map);
+
+      // Invalidate map size so all tiles render smoothly across all screen sizes
+      setTimeout(() => { map.invalidateSize(); }, 120);
+      setTimeout(() => { map.invalidateSize(); }, 500);
+      window.addEventListener('resize', () => { map.invalidateSize(); });
+      window.addEventListener('load', () => { map.invalidateSize(); });
 
       // ── Gesture toast on mobile (non-blocking) ────────────
       const toast  = document.getElementById('map-gesture-toast');
