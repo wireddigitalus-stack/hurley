@@ -1524,6 +1524,457 @@
       font-size:0.8rem; padding:0.2rem;
     }
     .cms-search-clear:hover { color:var(--off-white); }
+
+    /* ── SUB ROSTER & CONTRACTOR TRACKER ────────── */
+    .sub-roster-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 1.15rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 640px) {
+      .sub-roster-grid { grid-template-columns: 1fr; }
+    }
+    .sub-card {
+      background: var(--card-bg, #161616);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+      position: relative;
+    }
+    .sub-card:hover {
+      border-color: rgba(201, 168, 76, 0.4);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+      transform: translateY(-2px);
+    }
+    .sub-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .sub-company-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .sub-company-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.01em;
+    }
+    .sub-trade-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.2em 0.65em;
+      border-radius: 999px;
+      background: rgba(201, 168, 76, 0.15);
+      color: var(--gold-lt);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .sub-trade-badge.trade-electrical { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: rgba(245, 158, 11, 0.35); }
+    .sub-trade-badge.trade-plumbing { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border-color: rgba(59, 130, 246, 0.35); }
+    .sub-trade-badge.trade-hvac { background: rgba(6, 182, 212, 0.15); color: #38bdf8; border-color: rgba(6, 182, 212, 0.35); }
+    .sub-trade-badge.trade-roofing { background: rgba(217, 119, 6, 0.15); color: #f59e0b; border-color: rgba(217, 119, 6, 0.35); }
+    .sub-trade-badge.trade-framing { background: rgba(168, 85, 247, 0.15); color: #c084fc; border-color: rgba(168, 85, 247, 0.35); }
+    .sub-trade-badge.trade-painting { background: rgba(236, 72, 153, 0.15); color: #f472b6; border-color: rgba(236, 72, 153, 0.35); }
+    .sub-trade-badge.trade-concrete { background: rgba(107, 114, 128, 0.2); color: #d1d5db; border-color: rgba(107, 114, 128, 0.4); }
+    .sub-trade-badge.trade-windows { background: rgba(45, 212, 191, 0.15); color: #2dd4bf; border-color: rgba(45, 212, 191, 0.35); }
+    
+    .sub-worked-badge {
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 0.18em 0.55em;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .sub-worked-badge.worked {
+      background: rgba(34, 197, 94, 0.12);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    .sub-worked-badge.prospective {
+      background: rgba(148, 163, 184, 0.12);
+      color: #94a3b8;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+    .sub-issue-pill {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.18em 0.55em;
+      border-radius: 6px;
+      background: rgba(239, 68, 68, 0.16);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      animation: pulseAlert 2.5s infinite;
+    }
+    @keyframes pulseAlert {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.75; }
+    }
+    .sub-card-top-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .sub-icon-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.8rem;
+      color: var(--t2);
+      transition: all 0.15s;
+    }
+    .sub-icon-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      transform: scale(1.05);
+    }
+    .sub-icon-btn.danger:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #ef4444;
+    }
+    .sub-rating-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.45rem 0.65rem;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .sub-stars-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.15rem;
+    }
+    .sub-star-btn {
+      background: none;
+      border: none;
+      color: #4b5563;
+      font-size: 1.15rem;
+      line-height: 1;
+      padding: 0 0.1rem;
+      cursor: pointer;
+      transition: color 0.15s, transform 0.15s;
+      user-select: none;
+    }
+    .sub-star-btn:hover {
+      transform: scale(1.25);
+      color: #facc15 !important;
+    }
+    .sub-star-btn.filled {
+      color: #eab308;
+      text-shadow: 0 0 6px rgba(234, 179, 8, 0.45);
+    }
+    .sub-rating-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--t2);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sub-contact-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.65rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .sub-poc-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .sub-poc-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(201, 168, 76, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+    }
+    .sub-poc-name {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .sub-poc-role {
+      font-size: 0.7rem;
+      color: var(--t3);
+    }
+    .sub-contact-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.45rem;
+    }
+    .sub-contact-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0.4em 0.6em;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--off-white);
+      transition: all 0.15s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sub-contact-btn:hover {
+      background: rgba(201, 168, 76, 0.15);
+      border-color: rgba(201, 168, 76, 0.35);
+      color: var(--gold-lt);
+    }
+    .sub-contact-btn.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    .sub-notes-section {
+      border-top: 1px solid var(--border);
+      padding-top: 0.65rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .sub-notes-hdr {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .sub-notes-title {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--gold-lt);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .sub-notes-count {
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 0.65rem;
+      padding: 0.1em 0.45em;
+      border-radius: 999px;
+      color: var(--t2);
+    }
+    .sub-toggle-notes-btn {
+      background: none;
+      border: none;
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+    .sub-toggle-notes-btn:hover {
+      background: rgba(201, 168, 76, 0.12);
+    }
+    .sub-note-composer {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border-md);
+      border-radius: 8px;
+      padding: 0.65rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      animation: fadeInDown 0.2s ease-out;
+    }
+    .sub-composer-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.45rem;
+    }
+    .sub-comp-select {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      color: var(--off-white);
+      border-radius: 6px;
+      padding: 0.35rem 0.5rem;
+      font-size: 0.72rem;
+      outline: none;
+    }
+    .sub-composer-input-row {
+      display: flex;
+      gap: 0.5rem;
+      align-items: stretch;
+    }
+    .sub-note-textarea {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.45rem 0.65rem;
+      font-size: 0.78rem;
+      color: #fff;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 52px;
+      outline: none;
+    }
+    .sub-note-textarea:focus {
+      border-color: var(--gold);
+    }
+    .sub-notes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      max-height: 240px;
+      overflow-y: auto;
+      padding-right: 0.25rem;
+    }
+    .sub-note-item {
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 3px solid var(--border);
+      border-radius: 0 6px 6px 0;
+      padding: 0.5rem 0.65rem;
+      font-size: 0.75rem;
+    }
+    .sub-note-item.sub-flag-issue {
+      background: rgba(239, 68, 68, 0.07);
+      border-left-color: #ef4444;
+    }
+    .sub-note-item.sub-flag-praise {
+      background: rgba(34, 197, 94, 0.07);
+      border-left-color: #22c55e;
+    }
+    .sub-note-item.sub-flag-note {
+      background: rgba(201, 168, 76, 0.07);
+      border-left-color: var(--gold);
+    }
+    .sub-note-item.sub-flag-billing {
+      background: rgba(6, 182, 212, 0.07);
+      border-left-color: #06b6d4;
+    }
+    .sub-note-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.3rem;
+    }
+    .sub-note-tags {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .sub-note-flag {
+      font-weight: 700;
+      font-size: 0.65rem;
+      color: #fff;
+    }
+    .sub-note-proj {
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 0.62rem;
+      padding: 0.1em 0.45em;
+      border-radius: 4px;
+      color: var(--t2);
+    }
+    .sub-note-time {
+      font-size: 0.62rem;
+      color: var(--t3);
+    }
+    .sub-note-del {
+      background: none;
+      border: none;
+      color: var(--t3);
+      font-size: 0.75rem;
+      cursor: pointer;
+      padding: 0 0.2rem;
+      line-height: 1;
+    }
+    .sub-note-del:hover {
+      color: #ef4444;
+    }
+    .sub-note-body {
+      color: var(--off-white);
+      line-height: 1.45;
+      word-break: break-word;
+    }
+    .sub-note-author {
+      font-size: 0.62rem;
+      color: var(--t3);
+      margin-top: 0.25rem;
+      font-style: italic;
+    }
+    .sub-empty-notes {
+      font-size: 0.72rem;
+      color: var(--t3);
+      text-align: center;
+      padding: 0.75rem 0.5rem;
+      font-style: italic;
+    }
+    .sub-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1c1c1c;
+      color: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1.15rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .sub-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .sub-toast.success {
+      border-color: rgba(34, 197, 94, 0.5);
+      background: #0f2316;
+      color: #86efac;
+    }
+    .sub-toast.error {
+      border-color: rgba(239, 68, 68, 0.5);
+      background: #2a1111;
+      color: #fca5a5;
+    }
+    .sub-toast.info {
+      border-color: rgba(201, 168, 76, 0.5);
+      background: #201a0f;
+      color: var(--gold-lt);
+    }
   </style>
 </head>
 <body>
@@ -1580,7 +2031,8 @@
   <div class="dash-nav" id="dash-nav" style="margin-bottom:0.5rem;">
     <button class="dash-nav-btn active" id="nav-btn-pipeline" onclick="switchDashPanel('pipeline')">📊 Pipeline</button>
     <button class="dash-nav-btn" id="nav-btn-analytics" onclick="switchDashPanel('analytics')">📈 Analytics</button>
-    <button class="dash-nav-btn" id="nav-btn-construction" onclick="switchDashPanel('construction')">🏗️ Construction</button>
+    <button class="dash-nav-btn" id="nav-btn-projects" onclick="switchDashPanel('projects')">📁 Projects</button>
+    <button class="dash-nav-btn" id="nav-btn-subroster" onclick="switchDashPanel('subroster')">👷 Sub Roster</button>
     <button class="dash-nav-btn" id="nav-btn-editor" onclick="switchDashPanel('editor')" style="border-color:var(--gold);color:var(--gold);font-weight:800;">🌐 Site Editor and Staff</button>
   </div>
 
@@ -1741,8 +2193,8 @@
 
 
 
-  <!-- ═══ PANEL 3: CONSTRUCTION COMMAND CENTER ═══ -->
-  <div class="dash-panel" id="panel-construction">
+  <!-- ═══ PANEL 3: PROJECTS COMMAND CENTER ═══ -->
+  <div class="dash-panel" id="panel-projects">
 
       <!-- CONSTRUCTION OVERVIEW KPIs -->
       <div id="cc-overview-kpis" class="stats-grid" style="margin-bottom:1.25rem;"></div>
@@ -1887,9 +2339,93 @@
         <div id="crew-outside-section"></div>
       </div>
 
-  </div><!-- /panel-construction -->
+  </div><!-- /panel-projects -->
 
-  <!-- ═══ PANEL 3: ANALYTICS ═══ -->
+  <!-- ═══ PANEL 4: SUB ROSTER & FIELD ISSUE TRACKER ═══ -->
+  <div class="dash-panel" id="panel-subroster">
+
+    <!-- KPI SUMMARY CARDS -->
+    <div class="stats-grid" style="margin-top:1.25rem;margin-bottom:1.25rem;">
+      <div class="stat-card" style="border-color:rgba(201,168,76,0.3);">
+        <div class="stat-num" id="sub-kpi-total" style="color:var(--gold-lt);">0</div>
+        <div class="stat-label">👷 Total Subcontractors</div>
+        <div class="stat-sub">Vetted trade partners</div>
+      </div>
+      <div class="stat-card s-hot">
+        <div class="stat-num" id="sub-kpi-5star" style="color:#facc15;">0</div>
+        <div class="stat-label">⭐⭐⭐⭐⭐ Premier Subs</div>
+        <div class="stat-sub">Top 5-star rating</div>
+      </div>
+      <div class="stat-card s-warm">
+        <div class="stat-num" id="sub-kpi-issues" style="color:#f87171;">0</div>
+        <div class="stat-label">⚠️ Active Site Issues</div>
+        <div class="stat-sub">Flagged project notes</div>
+      </div>
+      <div class="stat-card s-cool">
+        <div class="stat-num" id="sub-kpi-trades" style="color:#38bdf8;">0</div>
+        <div class="stat-label">🔧 Active Trades</div>
+        <div class="stat-sub">Specialties covered</div>
+      </div>
+    </div>
+
+    <!-- TOOLBAR: SEARCH, FILTERS & ADD BUTTON -->
+    <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:0.85rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;flex:1;min-width:280px;">
+        <!-- Search bar -->
+        <div class="cms-search-wrap" style="min-width:220px;max-width:340px;">
+          <input type="text" class="mi" id="sub-search-input" oninput="applySubFilters()" placeholder="Search company, POC, phone, issue..." style="min-height:38px;font-size:0.82rem;padding-left:2.2rem;">
+          <span class="cms-search-icon">🔍</span>
+          <button class="cms-search-clear" onclick="document.getElementById('sub-search-input').value='';applySubFilters();" title="Clear search">✕</button>
+        </div>
+
+        <!-- Filter: Trade -->
+        <select class="ms" id="sub-trade-filter" onchange="applySubFilters()" style="min-height:38px;padding:0.4rem 1.8rem 0.4rem 0.75rem;font-size:0.74rem;width:auto;">
+          <option value="all">🔧 All Trades</option>
+          <option value="electrical">⚡ Electrical</option>
+          <option value="plumbing">🚰 Plumbing</option>
+          <option value="hvac">❄️ HVAC</option>
+          <option value="roofing">🏠 Roofing</option>
+          <option value="framing">🔨 Framing &amp; Drywall</option>
+          <option value="painting">🎨 Painting</option>
+          <option value="concrete">🧱 Concrete &amp; Masonry</option>
+          <option value="windows">🪟 Windows &amp; Glass</option>
+          <option value="cleanup">🧹 Cleanup &amp; Demo</option>
+          <option value="general">🏗️ General Contractor</option>
+          <option value="other">⚙️ Specialized Trade</option>
+        </select>
+
+        <!-- Filter: Rating -->
+        <select class="ms" id="sub-rating-filter" onchange="applySubFilters()" style="min-height:38px;padding:0.4rem 1.8rem 0.4rem 0.75rem;font-size:0.74rem;width:auto;">
+          <option value="all">⭐ All Ratings</option>
+          <option value="5">⭐⭐⭐⭐⭐ (5 Stars)</option>
+          <option value="4+">⭐⭐⭐⭐ &amp; Up (4+ Stars)</option>
+          <option value="3+">⭐⭐⭐ &amp; Up (3+ Stars)</option>
+          <option value="low">⚠️ 1–2 Stars (Needs Review)</option>
+        </select>
+
+        <!-- Filter: Worked With -->
+        <select class="ms" id="sub-worked-filter" onchange="applySubFilters()" style="min-height:38px;padding:0.4rem 1.8rem 0.4rem 0.75rem;font-size:0.74rem;width:auto;">
+          <option value="all">🤝 All Partnerships</option>
+          <option value="worked">✅ Worked With</option>
+          <option value="prospective">🆕 Prospective</option>
+        </select>
+
+        <span id="sub-results-count" style="font-size:0.72rem;color:var(--t3);font-weight:600;margin-left:0.25rem;"></span>
+      </div>
+
+      <!-- Add Subcontractor CTA -->
+      <button class="add-btn" onclick="openSubModal()" style="font-size:0.8rem;padding:0.5em 1.1em;white-space:nowrap;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:0.35rem;"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Subcontractor
+      </button>
+    </div>
+
+    <!-- SUBCONTRACTORS GRID FEED -->
+    <div class="sub-roster-grid" id="sub-roster-feed"></div>
+
+  </div><!-- /panel-subroster -->
+
+  <!-- ═══ PANEL 5: ANALYTICS ═══ -->
   <div class="dash-panel" id="panel-analytics">
 
     <!-- ANALYTICS KPI SUMMARY -->
@@ -2584,7 +3120,97 @@
   </div>
 </div>
 
+<!-- ADD / EDIT SUBCONTRACTOR MODAL -->
+<div class="overlay" id="sub-modal-overlay" onclick="if(event.target===this)closeSubModal()">
+  <div class="modal-sheet" style="max-width:560px;">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="sub-modal-title">👷 Add Subcontractor to Roster</div>
+    <input type="hidden" id="ms-id" value="">
+    
+    <div class="mrow">
+      <div class="mf" style="flex:2;">
+        <label class="ml">Company / Business Name *</label>
+        <input type="text" class="mi" id="ms-company" placeholder="e.g. Apex Electrical &amp; Controls LLC">
+      </div>
+      <div class="mf" style="flex:1;">
+        <label class="ml">Type of Work (Trade)</label>
+        <select class="ms" id="ms-trade" onchange="handleSubTradeChange()">
+          <option value="electrical">⚡ Electrical</option>
+          <option value="plumbing">🚰 Plumbing</option>
+          <option value="hvac">❄️ HVAC</option>
+          <option value="roofing">🏠 Roofing</option>
+          <option value="framing">🔨 Framing &amp; Drywall</option>
+          <option value="painting">🎨 Painting</option>
+          <option value="concrete">🧱 Concrete &amp; Masonry</option>
+          <option value="windows">🪟 Windows &amp; Glass</option>
+          <option value="cleanup">🧹 Cleanup &amp; Demolition</option>
+          <option value="general">🏗️ General Contractor</option>
+          <option value="other">🔧 Other / Specialized</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Custom trade name if "other" is selected -->
+    <div class="mf" id="ms-custom-trade-wrap" style="display:none;">
+      <label class="ml">Custom Trade / Specialty Name</label>
+      <input type="text" class="mi" id="ms-custom-trade" placeholder="e.g. Fire Suppression, Elevator Tech, Asphalt">
+    </div>
+
+    <div class="mrow">
+      <div class="mf">
+        <label class="ml">POC Name (Primary Contact) *</label>
+        <input type="text" class="mi" id="ms-poc-name" placeholder="e.g. Dave Vance">
+      </div>
+      <div class="mf">
+        <label class="ml">POC Role / Title</label>
+        <input type="text" class="mi" id="ms-poc-role" placeholder="e.g. Master Electrician / Owner">
+      </div>
+    </div>
+
+    <div class="mrow">
+      <div class="mf">
+        <label class="ml">Phone Number</label>
+        <input type="tel" class="mi" id="ms-phone" placeholder="(423) 555-0144" inputmode="tel">
+      </div>
+      <div class="mf">
+        <label class="ml">Email Address</label>
+        <input type="email" class="mi" id="ms-email" placeholder="dave@apexelectricllc.com">
+      </div>
+    </div>
+
+    <div class="mrow">
+      <div class="mf">
+        <label class="ml">Rating (1 to 5 Stars)</label>
+        <select class="ms" id="ms-rating">
+          <option value="5">⭐⭐⭐⭐⭐ (5 - Premier Preferred)</option>
+          <option value="4">⭐⭐⭐⭐ (4 - Highly Recommended)</option>
+          <option value="3">⭐⭐⭐ (3 - Acceptable / Caution)</option>
+          <option value="2">⭐⭐ (2 - Needs Improvement)</option>
+          <option value="1">⭐ (1 - Critical Issues / Do Not Rehire)</option>
+        </select>
+      </div>
+      <div class="mf">
+        <label class="ml">Have We Worked With Them?</label>
+        <select class="ms" id="ms-worked">
+          <option value="true">✅ Yes — Active / Past Partner</option>
+          <option value="false">🆕 No — Prospective / Vetting</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Initial note / issue field for new subs -->
+    <div class="mf" id="ms-initial-note-wrap">
+      <label class="ml">Initial Project Note / Known Site Issues (Optional)</label>
+      <input type="text" class="mi" id="ms-initial-note" placeholder="e.g. Left lights on overnight at 628 State St, or great work on 3rd floor…">
+    </div>
+
+    <button class="modal-submit" onclick="submitSubModal()">Save Subcontractor →</button>
+    <button class="modal-cancel" onclick="closeSubModal()">Cancel</button>
+  </div>
+</div>
+
 <script src="js/construction.js"></script>
+<script src="js/subroster.js"></script>
 <script>
 /* ════════════════════════════════════════════════════
    HURLEY CEO COMMAND CENTER — v2
@@ -2834,6 +3460,10 @@ window.addEventListener('keydown', function(e) {
   try {
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('auth') === '1') {
+      localStorage.setItem(CFG.authKey, Date.now());
+    }
     const a = localStorage.getItem(CFG.authKey);
     if (a && Date.now() - parseInt(a) < 8 * 3600000) {
       const ps = document.getElementById('pin-screen');
@@ -4013,31 +4643,37 @@ function switchDashPanel(panelId) {
     panelId = 'editor';
     if (typeof switchCmsPage === 'function') switchCmsPage('staff');
   }
+  if (panelId === 'construction') {
+    panelId = 'projects';
+  }
   // Hide all panels
   document.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
   // Deactivate all nav buttons
   document.querySelectorAll('.dash-nav-btn').forEach(b => b.classList.remove('active'));
   // Show target panel
-  const panel = document.getElementById('panel-' + panelId);
+  const panel = document.getElementById('panel-' + panelId) || (panelId === 'projects' ? document.getElementById('panel-construction') : null);
   if (panel) panel.classList.add('active');
   // Activate matching nav button
-  const targetBtn = document.getElementById('nav-btn-' + panelId);
+  const targetBtn = document.getElementById('nav-btn-' + panelId) || (panelId === 'construction' ? document.getElementById('nav-btn-projects') : null);
   if (targetBtn) {
     targetBtn.classList.add('active');
   } else {
     const navBtns = document.querySelectorAll('.dash-nav-btn');
-    const map = { pipeline: 0, analytics: 1, construction: 2, editor: 3 };
+    const map = { pipeline: 0, analytics: 1, projects: 2, construction: 2, subroster: 3, editor: 4 };
     if (navBtns[map[panelId]]) navBtns[map[panelId]].classList.add('active');
   }
   // Render content on tab switch
   if (panelId === 'pipeline') { renderLeads(); updateStats(); renderTable(); }
-  if (panelId === 'construction') {
+  if (panelId === 'projects' || panelId === 'construction') {
     if (typeof renderConstructionOverview === 'function') renderConstructionOverview();
     if (typeof renderTickets === 'function') renderTickets();
     if (typeof renderCalendar === 'function') renderCalendar();
     if (typeof renderMaterials === 'function') renderMaterials();
     if (typeof renderBudget === 'function') renderBudget();
     if (typeof renderCrew === 'function') renderCrew();
+  }
+  if (panelId === 'subroster') {
+    if (typeof renderSubRoster === 'function') renderSubRoster();
   }
   if (panelId === 'analytics') {
     if (typeof renderAnalyticsKPIs === 'function') renderAnalyticsKPIs();
@@ -5928,6 +6564,12 @@ function initDash() {
   try { if (typeof renderMaterials === 'function') renderMaterials(); } catch(e) {}
   try { if (typeof renderBudget === 'function') renderBudget(); } catch(e) {}
   try { if (typeof renderCrew === 'function') renderCrew(); } catch(e) {}
+  try { if (typeof renderSubRoster === 'function') renderSubRoster(); } catch(e) {}
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const pParam = urlParams.get('panel');
+    if (pParam) switchDashPanel(pParam);
+  } catch(e) {}
   setInterval(() => {
     try { syncLeadsFromSupabase(); } catch(e) {}
     try { renderLeads(); } catch(e) {}
@@ -5940,6 +6582,10 @@ function initDash() {
 // Auto-run initDash once full script and DOM are ready
 (function() {
   try {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('auth') === '1') {
+      localStorage.setItem(CFG.authKey, Date.now());
+    }
     const a = localStorage.getItem(CFG.authKey);
     if (a && Date.now() - parseInt(a) < 8 * 3600000) {
       const ps = document.getElementById('pin-screen');
